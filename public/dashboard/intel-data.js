@@ -56,7 +56,7 @@ const INTEL_DATA = {
       ,
         { url: "https://images.unsplash.com/photo-1516937941344-00b4e0337589?auto=format&fit=crop&w=1201&q=80", caption: "Vista lateral del activo" },
         { url: "https://images.unsplash.com/photo-1516937941344-00b4e0337589?auto=format&fit=crop&w=1202&q=80", caption: "Detalle técnico y panel de control" }],
-      pdf_dossier: "https://storage.googleapis.com/wzukusers/user-13793616/documents/Liberty_Steel_Group_Presentation.pdf",
+      pdf_dossier: "https://libertysteelgroup.com/",
       documentation: {
         manuals: "Manuales de operación de altos hornos disponibles bajo NDA.",
         maintenance_logs: "Registros SAP de los últimos 5 años accesibles en VDR (Virtual Data Room)."
@@ -101,7 +101,7 @@ const INTEL_DATA = {
         { name: "Maynards Europe", role: "Gestión Activos", email: "fulda@maynards.com", phone: "+49 123 456 789" }
       ],
       links: [
-        { label: "Catálogo de Activos", url: "https://maynards.com/eu/" }
+        { label: "Catálogo de Activos", url: "https://www.maynards.com/" }
       ],
       images: [
         { url: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1200&q=80", caption: "Línea de producción de neumáticos" }
@@ -517,7 +517,7 @@ const INTEL_DATA = {
         { name: "Maynards Europe", role: "Venta Activos", email: "dusseldorf@maynards.com", phone: "+49 123 456 000" }
       ],
       links: [
-        { label: "Catálogo Vallourec", url: "https://maynards.com/eu/" }
+        { label: "Catálogo Vallourec", url: "https://www.maynards.com/" }
       ],
       images: [
         { url: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=1200&q=80", caption: "Banco de pruebas Vallourec" }
@@ -576,7 +576,7 @@ const INTEL_DATA = {
       ,
         { url: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=1201&q=80", caption: "Vista lateral del activo" },
         { url: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=1202&q=80", caption: "Detalle técnico y panel de control" }],
-      pdf_dossier: "https://www.caterpillar.com/",
+      pdf_dossier: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
       documentation: {
         manuals: "Manual SIS Caterpillar disponible en PDF.",
         maintenance_logs: "Registro de análisis de aceite S·O·S disponible."
@@ -624,10 +624,10 @@ const INTEL_DATA = {
         { label: "Ver Lote en RB", url: "https://www.rbauction.es/ocana" }
       ],
       images: [
-        { url: "https://images.unsplash.com/photo-1584464457692-bb864f7b2a9a?auto=format&fit=crop&w=1200&q=80", caption: "Liebherr LTM 1055 en posición de transporte" }
+        { url: "https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&w=1200&q=80", caption: "Liebherr LTM 1055 en posición de transporte" }
       ,
-        { url: "https://images.unsplash.com/photo-1584464457692-bb864f7b2a9a?auto=format&fit=crop&w=1201&q=80", caption: "Vista lateral del activo" },
-        { url: "https://images.unsplash.com/photo-1584464457692-bb864f7b2a9a?auto=format&fit=crop&w=1202&q=80", caption: "Detalle técnico y panel de control" }],
+        { url: "https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&w=1201&q=80", caption: "Vista lateral del activo" },
+        { url: "https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&w=1202&q=80", caption: "Detalle técnico y panel de control" }],
       pdf_dossier: "https://www.liebherr.com/en/int/products/mobile-and-crawler-cranes/mobile-cranes/ltm-mobile-cranes/ltm-1055-3.2.html",
       documentation: {
         manuals: "Tablas de carga originales Liebherr.",
@@ -680,7 +680,7 @@ const INTEL_DATA = {
       ,
         { url: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1201&q=80", caption: "Vista lateral del activo" },
         { url: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1202&q=80", caption: "Detalle técnico y panel de control" }],
-      pdf_dossier: "https://en.dmgmori.com/products/machines/turning/universal-turning/ctx-beta/ctx-beta-800",
+      pdf_dossier: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
       documentation: {
         manuals: "Manuales originales de programación y mantenimiento.",
         maintenance_logs: "Registro de horas de cabezal y herramientas motorizadas."
@@ -725,14 +725,14 @@ const INTEL_DATA = {
         { name: "Surplex Ibérica", role: "Gestor Activos", email: "info.es@surplex.com", phone: "+34 93 122 34 56" }
       ],
       links: [
-        { label: "Ver Lote Surplex", url: "https://www.surplex.com/es/home" }
+        { label: "Ver Lote Surplex", url: "https://www.surplex.com/es/" }
       ],
       images: [
         { url: "https://images.unsplash.com/photo-1537462715879-360eeb61a0ad?auto=format&fit=crop&w=1200&q=80", caption: "Okuma MX-60HB en producción" }
       ,
         { url: "https://images.unsplash.com/photo-1537462715879-360eeb61a0ad?auto=format&fit=crop&w=1201&q=80", caption: "Vista lateral del activo" },
         { url: "https://images.unsplash.com/photo-1537462715879-360eeb61a0ad?auto=format&fit=crop&w=1202&q=80", caption: "Detalle técnico y panel de control" }],
-      pdf_dossier: "https://www.okuma.com/products/mb-4000h",
+      pdf_dossier: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
       documentation: {
         manuals: "Esquemas eléctricos y de hidráulica incluidos.",
         maintenance_logs: "Historial de calibración geométrica anual."
@@ -784,7 +784,7 @@ const INTEL_DATA = {
       ,
         { url: "https://images.unsplash.com/photo-1565514020179-026b92b84bb6?auto=format&fit=crop&w=1201&q=80", caption: "Vista lateral del activo" },
         { url: "https://images.unsplash.com/photo-1565514020179-026b92b84bb6?auto=format&fit=crop&w=1202&q=80", caption: "Detalle técnico y panel de control" }],
-      pdf_dossier: "https://www.goldenlaser.cc/flatbed-co2-laser-cutting-machine.html",
+      pdf_dossier: "https://www.goldenlaser.cc/",
       documentation: {
         manuals: "Software original incluido.",
         maintenance_logs: "Log de horas de tubo láser."
@@ -829,7 +829,7 @@ const INTEL_DATA = {
         { name: "Surplex Ibérica", role: "Liquidación", email: "info.es@surplex.com", phone: "+34 93 122 34 56" }
       ],
       links: [
-        { label: "Detalles Línea Koyama", url: "https://www.surplex.com/es/home" }
+        { label: "Detalles Línea Koyama", url: "https://www.surplex.com/es/" }
       ],
       images: [
         { url: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1200&q=80", caption: "Línea Koyama en planta de Elorrio" }
@@ -1089,7 +1089,7 @@ const INTEL_DATA = {
         { name: "Network Steel Resources", role: "Propietario Actual", email: "info@networksteelresources.com", phone: "+34 911 234 567" }
       ],
       links: [
-        { label: "Noticia Adquisición", url: "https://www.eleconomista.es/industria/noticias/12818983/05/24/network-steel-compra-a-thyssenkrupp-su-planta-de-galmed-en-sagunto.html" }
+        { label: "Noticia Adquisición", url: "https://www.networksteel.net/" }
       ],
       images: [
         { url: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1200&q=80", caption: "Planta Galmed Sagunto - Línea de Galvanizado" }
@@ -1768,7 +1768,7 @@ const INTEL_DATA = {
         { name: "Ramiro & Asociados", role: "Liquidador judicial", email: "info@ramiroconcursal.es", phone: "+34 964 100 210" }
       ],
       links: [
-        { label: "Anuncio Liquidaci\u00f3n Frost-Trol", url: "https://www.linkedin.com/company/frost-trol-s.a." }
+        { label: "Anuncio Liquidaci\u00f3n Frost-Trol", url: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf" }
       ],
       images: [
         { url: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1200&q=80", caption: "Fachada de f\u00e1brica Frost-Trol" },

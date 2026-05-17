@@ -302,7 +302,7 @@ function renderGrid() {
 
   document.getElementById('gridBody').innerHTML = sorted.map(o => {
     const mc = getMarkerColor(o.financials.margin);
-    const link = o.links[0] ? `<a href="${o.links[0].url}" target="_blank" onclick="event.stopPropagation()">${o.links[0].label}</a>` : '—';
+    const link = o.links[0] ? `<a href="#" onclick="safeOpenLink(event, '${o.links[0].url}', '${o.links[0].label}')">${o.links[0].label}</a>` : '—';
     return `<tr onclick="openDossier('${o.id}')" style="cursor:pointer">
       <td><strong>${favorites.includes(o.id) ? '⭐ ' : ''}${o.name}</strong></td>
       <td><span class="tag tag-type">${o.type}</span></td>
@@ -464,13 +464,13 @@ function openDossier(id) {
     </div>` : ''}
 
     <div class="dos-links">
-      ${opp.links.map(l => `<a href="${l.url}" target="_blank" class="dos-link dos-link-s">🔗 ${l.label}</a>`).join('')}
+      ${opp.links.map(l => `<a href="#" onclick="safeOpenLink(event, '${l.url}', '${l.label}')" class="dos-link dos-link-s">🔗 ${l.label}</a>`).join('')}
       <button class="dos-link dos-link-p" onclick="loadSimFromDossier('${opp.id}')">🧮 Simular ROI</button>
       <button id="dosFavBtn" class="dos-link ${favorites.includes(opp.id) ? 'dos-link-p' : 'dos-link-s'}" onclick="toggleFavorite('${opp.id}')">${favorites.includes(opp.id) ? '🌟 Quitar Fav' : '⭐ Añadir Fav'}</button>
     </div>
 
     ${opp.pdf_dossier ? `
-      <a href="${opp.pdf_dossier}" target="_blank" class="dos-link dos-link-pdf" style="text-decoration: none; display: flex;">
+      <a href="#" onclick="safeOpenLink(event, '${opp.pdf_dossier}', 'Dossier Técnico PDF')" class="dos-link dos-link-pdf" style="text-decoration: none; display: flex;">
         📄 DESCARGAR DOSSIER TÉCNICO COMPLETO (PDF)
       </a>
     ` : ''}
@@ -494,4 +494,79 @@ function loadSimFromDossier(id) {
   const sel = document.getElementById('simAsset');
   sel.value = id;
   sel.dispatchEvent(new Event('change'));
+}
+
+// ── SAFE LINK REDIRECTOR ──
+function safeOpenLink(event, url, label) {
+  if (event) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+  if (!url || url === '#' || url === '') return;
+
+  const modal = document.createElement('div');
+  modal.className = 'link-redirect-modal';
+  modal.style.cssText = `
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(10px);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 10000;
+    font-family: 'Inter', sans-serif;
+  `;
+  
+  modal.innerHTML = `
+    <style>
+      @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+      @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
+      @keyframes scaleUp { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+      .link-redirect-content {
+        animation: scaleUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+    </style>
+    <div class="link-redirect-content" style="
+      background: linear-gradient(135deg, rgba(20, 20, 30, 0.95), rgba(10, 10, 15, 0.98));
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 2.5rem;
+      border-radius: 20px;
+      max-width: 500px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    ">
+      <div style="font-size: 3rem; margin-bottom: 1rem; filter: drop-shadow(0 0 10px rgba(255,215,64,0.3));">🌐</div>
+      <h3 style="color: #fff; margin: 0 0 1rem 0; font-size: 1.4rem; font-weight: 700;">Acceso Seguro a Activos</h3>
+      <p style="color: rgba(255, 255, 255, 0.7); font-size: 0.9rem; margin: 0 0 1.5rem 0; line-height: 1.5;">
+        Está saliendo de la terminal SURUS hacia el recurso externo:<br>
+        <strong style="color: var(--y); word-break: break-all;">${label}</strong>
+      </p>
+      <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.05); padding: 1rem; border-radius: 12px; margin-bottom: 2rem; font-size: 0.8rem; color: rgba(255, 255, 255, 0.5); text-align: left; line-height: 1.4;">
+        💡 <strong>Recomendación SURUS:</strong> Si el servidor de destino no responde o el lote ha expirado, consulte el sitio principal de la firma de liquidación correspondiente.
+      </div>
+      <div style="display: flex; gap: 1rem; justify-content: center;">
+        <button id="cancelRedirect" style="padding: 0.8rem 1.5rem; border-radius: 10px; cursor: pointer; border: 1px solid rgba(255,255,255,0.1); background: transparent; color: #fff; font-weight: 600; transition: all 0.2s;">Cancelar</button>
+        <a href="${url}" target="_blank" id="confirmRedirect" style="padding: 0.8rem 1.5rem; border-radius: 10px; text-decoration: none; display: inline-block; background: var(--y); color: #000; font-weight: bold; box-shadow: 0 0 15px rgba(255, 215, 64, 0.3); transition: all 0.2s;">Proceder 🚀</a>
+      </div>
+    </div>
+  `;
+
+  document.body.appendChild(modal);
+  
+  const closeModal = () => {
+    modal.style.animation = 'fadeOut 0.2s ease forwards';
+    setTimeout(() => modal.remove(), 200);
+  };
+  
+  modal.querySelector('#cancelRedirect').addEventListener('click', closeModal);
+  modal.querySelector('#confirmRedirect').addEventListener('click', closeModal);
+  
+  // Add hover effect
+  const cb = modal.querySelector('#cancelRedirect');
+  cb.addEventListener('mouseenter', () => cb.style.background = 'rgba(255,255,255,0.05)');
+  cb.addEventListener('mouseleave', () => cb.style.background = 'transparent');
+
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) closeModal();
+  });
 }
