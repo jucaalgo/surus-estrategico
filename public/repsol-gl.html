@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Repsol Esfera GLP 5.215 m³ — Dossier de Inversión | SURUS Inversa</title>
+<meta name="description" content="Dossier profesional de inversión: Esfera de almacenamiento GLP Repsol (TISSOT INDUSTRIE, 5.215 m³, NUEVA sin instalar) y equipamiento industrial adicional vía Escrapalia. Fichas técnicas, análisis de mercado, compradores LATAM, paso a paso.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="repsol-gl-print.css" media="print">
+<style>
+:root{--bg-dark:#06060b;--bg-card:#0e0e18;--bg-card-hover:#161628;--accent:#00e676;--accent-dim:#00c853;--accent2:#18ffff;--accent3:#ff6e40;--accent4:#ffd740;--accent5:#b388ff;--accent6:#ff4081;--text:#e8e8f0;--text-dim:#8888a0;--text-bright:#fff;--border:#1e1e30;--gradient1:linear-gradient(135deg,#00e676,#18ffff);--gradient2:linear-gradient(135deg,#ff6e40,#ffd740);--gradient3:linear-gradient(135deg,#7c4dff,#18ffff);--shadow:0 8px 32px rgba(0,0,0,.5)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg-dark);color:var(--text);line-height:1.6;overflow-x:hidden}
+.bg-mesh{position:fixed;inset:0;z-index:0;opacity:.4;background:radial-gradient(ellipse at 20% 50%,rgba(255,110,64,.08) 0%,transparent 50%),radial-gradient(ellipse at 80% 20%,rgba(24,255,255,.06) 0%,transparent 50%),radial-gradient(ellipse at 50% 80%,rgba(0,230,118,.04) 0%,transparent 50%);pointer-events:none}
+.kuka-nav{position:sticky;top:0;z-index:100;background:rgba(6,6,11,.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:.75rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.kuka-nav-logo{font-weight:900;font-size:1rem;background:var(--gradient1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:-.5px;text-decoration:none}
+.kuka-nav-links{display:flex;gap:1rem;align-items:center;flex-wrap:wrap}
+.kuka-nav-links a{color:var(--text-dim);text-decoration:none;font-size:.75rem;font-weight:600;text-transform:uppercase;letter-spacing:.5px;transition:color .2s}
+.kuka-nav-links a:hover{color:var(--accent)}
+.kuka-pdf-btn{background:var(--gradient1);color:var(--bg-dark);border:none;padding:.5rem 1rem;border-radius:8px;font-family:'Inter',sans-serif;font-weight:700;font-size:.75rem;cursor:pointer;display:flex;align-items:center;gap:.4rem;transition:transform .2s,box-shadow .2s}
+.kuka-pdf-btn:hover{transform:translateY(-2px);box-shadow:0 4px 20px rgba(0,230,118,.3)}
+.kuka-container{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:0 1.5rem 4rem}
+.kuka-hero{padding:3rem 0 2rem;text-align:center;border-bottom:1px solid var(--border);margin-bottom:2rem}
+.kuka-hero h1{font-size:clamp(2rem,5vw,3.5rem);font-weight:900;background:var(--gradient2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1.1;margin-bottom:.5rem}
+.kuka-hero-sub{font-size:clamp(.85rem,2vw,1.1rem);color:var(--text-dim);max-width:700px;margin:0 auto 1.5rem}
+.kuka-hero-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:.75rem;max-width:800px;margin:0 auto}
+.kuka-hero-stat{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:.75rem;text-align:center;transition:all .3s}
+.kuka-hero-stat:hover{border-color:rgba(255,110,64,.4);box-shadow:0 0 30px rgba(255,110,64,.1)}
+.kuka-hero-stat .number{font-size:1.5rem;font-weight:800;font-family:'JetBrains Mono',monospace}
+.kuka-hero-stat .label{font-size:.6rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.5px;margin-top:.15rem}
+.kuka-tabs{display:flex;gap:.4rem;padding:1rem 0;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;margin-bottom:1.5rem;border-bottom:1px solid var(--border)}
+.kuka-tabs::-webkit-scrollbar{display:none}
+.kuka-tab{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:.5rem 1rem;color:var(--text-dim);font-family:'Inter',sans-serif;font-size:.75rem;font-weight:600;cursor:pointer;white-space:nowrap;transition:all .2s}
+.kuka-tab:hover{border-color:var(--accent2);color:var(--accent2)}
+.kuka-tab.active{background:rgba(255,110,64,.12);border-color:var(--accent3);color:var(--accent3)}
+.kuka-section{display:none;animation:fadeIn .3s ease}
+.kuka-section.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.kuka-card{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:1.5rem;margin-bottom:1.5rem;transition:all .4s;position:relative;overflow:hidden}
+.kuka-card:hover{border-color:rgba(255,110,64,.3);box-shadow:0 0 40px rgba(255,110,64,.08)}
+.kuka-card-title{font-size:1rem;font-weight:800;margin-bottom:.75rem;display:flex;align-items:center;gap:.5rem}
+.kuka-info-block{border-radius:10px;padding:.75rem;margin-bottom:1rem}
+.kuka-badge{display:inline-flex;align-items:center;gap:.3rem;font-size:.6rem;font-weight:700;padding:.15rem .45rem;border-radius:4px;text-transform:uppercase;letter-spacing:.5px}
+.kuka-badge-critical{background:rgba(255,110,64,.15);color:var(--accent3);border:1px solid rgba(255,110,64,.3)}
+.kuka-badge-high{background:rgba(255,215,64,.15);color:var(--accent4);border:1px solid rgba(255,215,64,.3)}
+.kuka-badge-medium{background:rgba(24,255,255,.1);color:var(--accent2);border:1px solid rgba(24,255,255,.2)}
+.kuka-badge-low{background:rgba(0,230,118,.1);color:var(--accent);border:1px solid rgba(0,230,118,.2)}
+.kuka-badge-new{background:rgba(0,230,118,.15);color:var(--accent);border:1px solid rgba(0,230,118,.3);font-size:.7rem;padding:.2rem .6rem}
+.data-table{width:100%;border-collapse:collapse;margin:.75rem 0;font-size:.78rem}
+.data-table th{background:rgba(255,110,64,.08);color:var(--accent3);font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:.6rem .75rem;text-align:left;border-bottom:1px solid var(--border)}
+.data-table td{padding:.55rem .75rem;border-bottom:1px solid rgba(30,30,48,.5)}
+.data-table tr:hover td{background:rgba(255,110,64,.03)}
+.kuka-step{display:flex;gap:.75rem;align-items:flex-start;padding:.75rem;background:var(--bg-card);border-radius:10px;margin-bottom:.5rem;border:1px solid var(--border);transition:all .2s}
+.kuka-step:hover{border-color:rgba(255,110,64,.3);transform:translateX(4px)}
+.kuka-step-num{min-width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.8rem;font-family:'JetBrains Mono',monospace;flex-shrink:0}
+.kuka-step-content{flex:1}
+.kuka-step-title{font-weight:700;font-size:.85rem;margin-bottom:.2rem}
+.kuka-step-desc{font-size:.78rem;color:var(--text-dim);line-height:1.5}
+.kuka-grid-2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1rem}
+.kuka-cta{background:linear-gradient(135deg,rgba(255,110,64,.1),rgba(24,255,255,.05));border:2px solid var(--accent3);border-radius:16px;padding:1.5rem;text-align:center;margin-top:2rem}
+.kuka-cta h3{font-size:1.2rem;background:var(--gradient2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:.5rem}
+.kuka-print-header,.kuka-print-footer{display:none}
+.kuka-metric{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:.75rem;text-align:center}
+.kuka-metric .val{font-size:1.3rem;font-weight:800;font-family:'JetBrains Mono',monospace}
+.kuka-metric .lbl{font-size:.6rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.5px}
+.kuka-risk{padding:.5rem .75rem;border-radius:8px;margin-bottom:.4rem;display:flex;align-items:start;gap:.5rem;font-size:.78rem;line-height:1.5}
+.kuka-contact-card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:1rem;flex:1;min-width:240px}
+.kuka-contact-card h4{font-size:.8rem;font-weight:700;margin-bottom:.5rem}
+.kuka-gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem;margin-top:.5rem}
+.kuka-gallery-item{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;overflow:hidden;cursor:pointer;transition:all .3s}
+.kuka-gallery-item:hover{border-color:var(--accent3);transform:translateY(-4px);box-shadow:0 8px 30px rgba(255,110,64,.15)}
+.kuka-gallery-item img{width:100%;height:180px;object-fit:cover;display:block}
+.kuka-gallery-caption{padding:.5rem .75rem;font-size:.72rem;color:var(--text-dim);line-height:1.4}
+.kuka-lightbox{display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.92);backdrop-filter:blur(10px);justify-content:center;align-items:center;padding:2rem}
+.kuka-lightbox.active{display:flex}
+.kuka-lb-close{position:absolute;top:1rem;right:1.5rem;background:none;border:none;color:#fff;font-size:2rem;cursor:pointer;z-index:10;padding:.5rem;line-height:1;transition:color .2s}
+.kuka-lb-close:hover{color:var(--accent3)}
+.kuka-lb-prev,.kuka-lb-next{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,110,64,.15);border:1px solid rgba(255,110,64,.3);color:var(--accent3);font-size:1.5rem;width:50px;height:50px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;z-index:10}
+.kuka-lb-prev{left:1.5rem}.kuka-lb-next{right:1.5rem}
+.kuka-lb-prev:hover,.kuka-lb-next:hover{background:rgba(255,110,64,.3);border-color:var(--accent3)}
+.kuka-lb-content{max-width:90vw;max-height:85vh;text-align:center}
+.kuka-lb-content img{max-width:100%;max-height:75vh;border-radius:8px;object-fit:contain}
+.kuka-lb-caption{color:var(--text);font-size:.9rem;margin-top:.75rem;font-weight:600}
+.kuka-lb-counter{color:var(--text-dim);font-size:.75rem;margin-top:.25rem}
+.surus-highlight{padding:.75rem;background:linear-gradient(135deg,rgba(0,230,118,.08),rgba(24,255,255,.04));border:1px solid rgba(0,230,118,.2);border-radius:10px;margin-bottom:1rem}
+.surus-highlight-title{font-size:.72rem;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:1px;margin-bottom:.3rem}
+@media(max-width:768px){.kuka-gallery{grid-template-columns:repeat(2,1fr);gap:.5rem}.kuka-gallery-item img{height:120px}.kuka-lb-prev{left:.5rem}.kuka-lb-next{right:.5rem}.kuka-lb-prev,.kuka-lb-next{width:40px;height:40px;font-size:1.2rem}.kuka-nav{padding:.5rem .75rem;flex-wrap:wrap}.kuka-hero-stats{grid-template-columns:repeat(2,1fr)}.kuka-tabs{gap:.3rem;padding:.5rem 0}.kuka-tab{padding:.4rem .6rem;font-size:.65rem}.kuka-container{padding:0 .75rem 3rem}.kuka-grid-2{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="bg-mesh"></div>
+
+<!-- Print Header (hidden on screen) -->
+<div class="kuka-print-header">SURUS Inversa S.L. — Dossier de Inversión Repsol GLP — Documento Confidencial — Mayo 2026</div>
+
+<!-- Navigation -->
+<nav class="kuka-nav">
+  <a href="/" class="kuka-nav-logo">← SURUS Inversa</a>
+  <div class="kuka-nav-links">
+    <a href="/dashboard/" style="color:var(--accent2);font-weight:700">Dashboard</a>
+    <a href="https://glp.escrapalia.com/" target="_blank" style="color:var(--accent3)">Escrapalia GLP</a>
+    <a href="https://industrial.escrapalia.com/en/" target="_blank" style="color:var(--accent2)">Escrapalia Industrial</a>
+    <button class="kuka-pdf-btn" onclick="window.print()">📄 Descargar PDF</button>
+  </div>
+</nav>
+
+<div class="kuka-container">
+
+<!-- HERO -->
+<section class="kuka-hero">
+  <div style="font-size:.65rem;font-weight:700;color:var(--accent3);text-transform:uppercase;letter-spacing:3px;margin-bottom:.5rem">DOSSIER DE INVERSIÓN — CONFIDENCIAL — OPORTUNIDAD ESTRATÉGICA SURUS</div>
+  <h1>Esfera GLP Repsol 5.215 m³</h1>
+  <p class="kuka-hero-sub">Esfera de almacenamiento de GLP TISSOT INDUSTRIE, 5.215 m³, NUEVA sin instalar. Equipo adicional: turbina GE 45 MW, columna de absorción Linde, filtros, desaladora MED. Todo vía Escrapalia — plataforma de SURUS Inversa.</p>
+  <div class="kuka-hero-stats">
+    <div class="kuka-hero-stat"><div class="number" style="background:var(--gradient2);-webkit-background-clip:text;-webkit-text-fill-color:transparent">5.215 m³</div><div class="label">Volumen útil</div></div>
+    <div class="kuka-hero-stat"><div class="number" style="background:var(--gradient1);-webkit-background-clip:text;-webkit-text-fill-color:transparent">NUEVA</div><div class="label">Condición</div></div>
+    <div class="kuka-hero-stat"><div class="number" style="background:var(--gradient2);-webkit-background-clip:text;-webkit-text-fill-color:transparent">833 t</div><div class="label">Peso vacío</div></div>
+    <div class="kuka-hero-stat"><div class="number" style="background:var(--gradient3);-webkit-background-clip:text;-webkit-text-fill-color:transparent">22,7 m</div><div class="label">Diámetro int.</div></div>
+    <div class="kuka-hero-stat"><div class="number" style="background:var(--gradient1);-webkit-background-clip:text;-webkit-text-fill-color:transparent">7+</div><div class="label">Equipos adicionales</div></div>
+  </div>
+</section>
+
+<!-- SURUS STRATEGIC HIGHLIGHT -->
+<div class="surus-highlight">
+  <div class="surus-highlight-title">CONEXIÓN ESTRATÉGICA SURUS INVERSA</div>
+  <div style="font-size:.78rem;color:var(--text-dim);line-height:1.6"><strong style="color:var(--accent)">SURUS Inversa es la empresa detrás de Escrapalia.</strong> Esta no es una subasta de terceros — es <strong style="color:var(--text-bright)">activo propio en venta directa</strong>. La oportunidad de intermediación es máxima: SURUS controla el proceso completo (NDA, RFQ, oferta vinculante) y puede facilitar la transacción de forma directa con compradores LATAM.</div>
+</div>
+
+<!-- TABS -->
+<div class="kuka-tabs" id="kuka-tabs">
+  <div class="kuka-tab active" data-tab="ficha-tecnica">⚙️ Ficha Técnica</div>
+  <div class="kuka-tab" data-tab="estado">🔍 Estado</div>
+  <div class="kuka-tab" data-tab="precios">💰 Precios</div>
+  <div class="kuka-tab" data-tab="refurbishment">🔧 Refurbishment</div>
+  <div class="kuka-tab" data-tab="compradores">🌎 Compradores</div>
+  <div class="kuka-tab" data-tab="paso-a-paso">🎯 Paso a Paso</div>
+  <div class="kuka-tab" data-tab="riesgos">⚠️ Riesgos</div>
+  <div class="kuka-tab" data-tab="imagenes">📷 Imágenes</div>
+  <div class="kuka-tab" data-tab="documentacion">📚 Documentación</div>
+  <div class="kuka-tab" data-tab="videos">🎬 Videos</div>
+</div>
+
+<!-- TAB: FICHA TÉCNICA -->
+<section class="kuka-section active" id="ficha-tecnica">
+  <div class="kuka-card">
+    <div class="kuka-card-title" style="color:var(--accent3)">⛽ Esfera de Almacenamiento GLP — Especificaciones Técnicas</div>
+    <div style="font-size:.82rem;color:var(--text-dim);margin-bottom:1rem;line-height:1.6"><strong style="color:var(--accent)">Fabricante: TISSOT INDUSTRIE</strong> — Esfera de almacenamiento de GLP diseñada según ASME VIII Div. 2 para Repsol. <span class="kuka-badge kuka-badge-new">NUEVA — NUNCA INSTALADA</span></div>
+    <div style="overflow-x:auto">
+    <table class="data-table">
+      <thead>
+        <tr><th>Parámetro</th><th style="color:var(--accent3)">Especificación</th></tr>
+      </thead>
+      <tbody>
+        <tr><td style="font-weight:700">Fabricante</td><td style="color:var(--accent2);font-weight:700">TISSOT INDUSTRIE</td></tr>
+        <tr><td style="font-weight:700">Volumen útil</td><td style="font-weight:700">5.215 m³</td></tr>
+        <tr><td style="font-weight:700">Volumen total</td><td>6.135 m³</td></tr>
+        <tr><td style="font-weight:700">Diámetro interno</td><td style="font-family:'JetBrains Mono',monospace;font-weight:700">22.713 mm (22,7 m)</td></tr>
+        <tr><td style="font-weight:700">Peso vacío</td><td style="font-weight:700;color:var(--accent3)">833 toneladas</td></tr>
+        <tr><td style="font-weight:700">Código de diseño</td><td>ASME VIII Div. 2 + Códigos internos Repsol</td></tr>
+        <tr><td style="font-weight:700">Material</td><td>SA 537 Class 2 + 0,5 mm allowance corrosión</td></tr>
+        <tr><td style="font-weight:700">Presión de diseño</td><td style="font-family:'JetBrains Mono',monospace;font-weight:700">1 – 19 barg</td></tr>
+        <tr><td style="font-weight:700">Temperatura de diseño</td><td style="font-family:'JetBrains Mono',monospace">-29°C a +80°C</td></tr>
+        <tr><td style="font-weight:700">Producto de diseño</td><td>Propano (compatible con Butano)</td></tr>
+        <tr><td style="font-weight:700">Condición</td><td><span class="kuka-badge kuka-badge-new">NUEVA — NUNCA INSTALADA</span></td></tr>
+        <tr><td style="font-weight:700">Ubicación</td><td>Sines, Portugal (desmontada, lista para transporte)</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <div class="kuka-card">
+    <div class="kuka-card-title" style="color:var(--accent2)">🔧 Componentes Incluidos — Esfera GLP</div>
+    <div class="kuka-grid-2" style="margin-bottom:1rem">
+      <div style="padding:.75rem;background:rgba(0,230,118,.06);border:1px solid rgba(0,230,118,.15);border-radius:10px">
+        <div style="font-size:.75rem;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:1px;margin-bottom:.5rem">Estructura Principal</div>
+        <div style="display:grid;gap:.3rem;font-size:.78rem;color:var(--text-dim)">
+          <div>✓ Cuerpo esférico SA 537 Class 2</div>
+          <div>✓ Soportes de montaje</div>
+          <div>✓ Boquedas bridadas (nozzles)</div>
+          <div>✓ Escaleras de acceso</div>
+          <div>✓ Sistema de protección contra incendios</div>
+          <div>✓ Válvulas de seguridad y operación</div>
+          <div>✓ Distribución interna</div>
+        </div>
+      </div>
+      <div style="padding:.75rem;background:rgba(24,255,255,.06);border:1px solid rgba(24,255,255,.15);border-radius:10px">
+        <div style="font-size:.75rem;font-weight:700;color:var(--accent2);text-transform:uppercase;letter-spacing:1px;margin-bottom:.5rem">Documentación Disponible</div>
+        <div style="display:grid;gap:.3rem;font-size:.78rem;color:var(--text-dim)">
+          <div>✓ Certificación CE</div>
+          <div>✓ Planos CAD 2D/3D</div>
+          <div>✓ Manuales de operación y mantenimiento</div>
+          <div>✓ Certificados completos de material</div>
+          <div>✓ Procedimientos de soldadura</div>
+          <div>✓ Procedimientos de pintura</div>
+          <div>✓ Procedimientos de montaje e inspección</div>
+          <div>✓ Lista de repuestos</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="kuka-card">
+    <div class="kuka-card-title" style="color:var(--accent4)">🏭 Equipamiento Adicional — Escrapalia Industrial</div>
+    <div style="font-size:.82rem;color:var(--text-dim);margin-bottom:1rem;line-height:1.6">Repsol también ofrece vía Escrapalia equipamiento industrial complementario de sus refinerías. Oportunidad de paquete combinado.</div>
+    <div style="overflow-x:auto">
+    <table class="data-table">
+      <thead>
+        <tr><th>Equipo</th><th>Lote</th><th>Fabricante / Año</th><th>Especificaciones</th><th>Ubicación</th></tr>
+      </thead>
+      <tbody>
+        <tr style="background:rgba(255,110,64,.05)">
+          <td style="font-weight:700;color:var(--accent3)">Esfera GLP</td>
+          <td style="font-family:'JetBrains Mono',monospace;font-size:.7rem">REPS_001</td>
+          <td>TISSOT INDUSTRIE</td>
+          <td>5.215 m³, ASME VIII Div.2, SA 537 Cl.2</td>
+          <td>Sines, Portugal</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700">Instalación Dosificadora SAGAFLUID</td>
+          <td style="font-family:'JetBrains Mono',monospace;font-size:.7rem">REPS_005_0001</td>
+          <td>SAGAFLUID / 2018</td>
+          <td>Robótica colaborativa, 28 bombas dosificadoras, ~350 h</td>
+          <td>Pozuelo de Alarcón, Madrid</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700">Columna de Absorción C2</td>
+          <td style="font-family:'JetBrains Mono',monospace;font-size:.7rem">REPS_002</td>
+          <td>Linde AG / 2010</td>
+          <td>15,6 m³, ASME VIII Div.1</td>
+          <td>Pozuelo de Alarcón, Madrid</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700">Filtro de Arena Presión Horizontal</td>
+          <td style="font-family:'JetBrains Mono',monospace;font-size:.7rem">REPS_003</td>
+          <td>SIT FILTROS / 2023</td>
+          <td>7,5 m³, presión horizontal</td>
+          <td>Pozuelo de Alarcón, Madrid</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700">Sistema Recuperación Gas Antorcha</td>
+          <td style="font-family:'JetBrains Mono',monospace;font-size:.7rem">REPS_004</td>
+          <td>—</td>
+          <td>De refinería Tenerife</td>
+          <td>Canarias</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700">Planta Desaladora MED 3600</td>
+          <td style="font-family:'JetBrains Mono',monospace;font-size:.7rem">REPS_006</td>
+          <td>—</td>
+          <td>Mediana, multi-efecto</td>
+          <td>Por confirmar</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700;color:var(--accent4)">Turbina Gas GE PG 6541/B</td>
+          <td style="font-family:'JetBrains Mono',monospace;font-size:.7rem">REPS_007</td>
+          <td>GE / —</td>
+          <td>45 MW</td>
+          <td>Por confirmar</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700">Transformadores ABB (2 unds)</td>
+          <td style="font-family:'JetBrains Mono',monospace;font-size:.7rem">REPS_008</td>
+          <td>ABB</td>
+          <td>60.000 KVA + 48.000 KVA</td>
+          <td>Por confirmar</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <div class="kuka-card">
+    <div class="kuka-card-title" style="color:var(--accent)">📊 Dimensiones y Peso — Esfera GLP</div>
+    <div class="kuka-grid-2" style="margin-bottom:1rem">
+      <div class="kuka-metric"><div class="val" style="color:var(--accent3)">22.713 mm</div><div class="lbl">Diámetro interno</div></div>
+      <div class="kuka-metric"><div class="val" style="color:var(--accent2)">5.215 m³</div><div class="lbl">Volumen útil</div></div>
+      <div class="kuka-metric"><div class="val" style="color:var(--accent4)">6.135 m³</div><div class="lbl">Volumen total</div></div>
+      <div class="kuka-metric"><div class="val" style="color:var(--accent3)">833 t</div><div class="lbl">Peso vacío</div></div>
+      <div class="kuka-metric"><div class="val" style="color:var(--accent)">19 barg</div><div class="lbl">Presión diseño máx.</div></div>
+      <div class="kuka-metric"><div class="val" style="color:var(--accent2)">-29°C a +80°C</div><div class="lbl">Rango temperatura</div></div>
+    </div>
+    <div style="font-size:.72rem;color:var(--text-dim);padding:.5rem;background:rgba(0,0,0,.2);border-radius:6px"><strong style="color:var(--accent)">Nota:</strong> La esfera fue diseñada para propano pero es compatible con butano. El diámetro de 22,7 m la convierte en una de las mayores esferas de GLP disponibles en el mercado secundario global. El peso de 833 t vacía implica logística de transporte especializada.</div>
+  </div>
+
+  <div class="kuka-card">
+    <div class="kuka-card-title" style="color:var(--accent5)">⚖️ Comparativa de Mercado — Esferas GLP Usadas</div>
+    <div style="overflow-x:auto">
+    <table class="data-table">
+      <thead><tr><th>Referencia</th><th>Volumen útil</th><th>Condición</th><th>Precio estimado</th><th>Ventaja Repsol</th></tr></thead>
+      <tbody>
+        <tr style="background:rgba(0,230,118,.05)"><td style="font-weight:700;color:var(--accent)">Esfera Repsol (esta)</td><td>5.215 m³</td><td><span class="kuka-badge kuka-badge-new">NUEVA</span></td><td style="color:var(--accent);font-weight:700">Negociable</td><td style="color:var(--accent)">—</td></tr>
+        <tr><td>Esfera GLP usada (typical)</td><td>2.000-3.000 m³</td><td>Usada, operativa</td><td>1,5-3 M€</td><td>+70% capacidad</td></tr>
+        <tr><td>Esfera GLP usada (typical)</td><td>3.000-5.000 m³</td><td>Usada, inspección requerida</td><td>3-5 M€</td><td>Nueva vs. usada</td></tr>
+        <tr><td>Esfera GLP nueva (fabricar)</td><td>5.000+ m³</td><td>Nueva</td><td style="font-weight:700;color:var(--accent3)">8-15 M€</td><td>Disponible inmediatamente</td></tr>
+        <tr><td>Tanque refrigerado GLP</td><td>5.000+ m³</td><td>Nueva</td><td>12-20 M€</td><td>Sin refrigeración necesaria</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div style="font-size:.72rem;color:var(--accent4);font-weight:600;margin-top:.75rem;padding:.5rem;background:rgba(255,215,64,.08);border-radius:6px">VENTAJA CLAVE: Esta esfera es NUEVA, fabricada por TISSOT INDUSTRIE bajo código ASME VIII Div. 2, con certificación CE completa. Una esfera nueva de este tamaño fabricada desde cero costaría 8-15M€ y tendría 18-24 meses de plazo de entrega. Esta está disponible inmediatamente.</div>
+  </div>
+</section>
+
+<!-- TAB: ESTADO -->
+<section class="kuka-section" id="estado">
+  <div class="kuka-card">
+    <div class="kuka-card-title" style="color:var(--accent)">🔍 Estado del Equipo — NUEVO sin Instalar</div>
+    <div style="padding:1rem;background:linear-gradient(135deg,rgba(0,230,118,.1),rgba(24,255,255,.05));border:2px solid var(--accent);border-radius:12px;margin-bottom:1.5rem;text-align:center">
+      <div style="font-size:1.5rem;font-weight:900;color:var(--accent);margin-bottom:.25rem">CONDICIÓN: NUEVA — NUNCA INSTALADA</div>
+      <div style="font-size:.85rem;color:var(--text-dim)">Esfera fabricada por TISSOT INDUSTRIE, almacenada en Sines (Portugal), lista para transporte y montaje.</div>
+    </div>
+
+    <div class="kuka-grid-2" style="margin-bottom:1.5rem">
+      <div style="padding:.75rem;background:rgba(0,230,118,0.06);border:1px solid rgba(0,230,118,0.15);border-radius:10px">
+        <div style="font-size:.72rem;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:1px;margin-bottom:.5rem">VENTAJAS — Estado Nuevo</div>
+        <div style="display:grid;gap:.4rem;font-size:.78rem">
+          <div style="display:flex;gap:.5rem;align-items:start"><span style="color:var(--accent);font-weight:700">✓</span><span><strong style="color:var(--accent)">Sin desgaste</strong> — Nunca ha estado en servicio. Sin fatiga térmica, sin corrosión operativa, sin degradación de soldaduras.</span></div>
+          <div style="display:flex;gap:.5rem;align-items:start"><span style="color:var(--accent);font-weight:700">✓</span><span><strong style="color:var(--accent)">Certificación CE</strong> — Certificado completo de conformidad. Cumplimiento ASME VIII Div. 2 verificado en fábrica.</span></div>
+          <div style="display:flex;gap:.5rem;align-items:start"><span style="color:var(--accent);font-weight:700">✓</span><span><strong style="color:var(--accent)">Planos CAD 2D/3D</strong> — Documentación completa disponible tras NDA.</span></div>
+          <div style="display:flex;gap:.5rem;align-items:start"><span style="color:var(--accent);font-weight:700">✓</span><span><strong style="color:var(--accent)">Procedimientos</strong> — Soldadura, pintura, montaje e inspección incluidos.</span></div>
+          <div style="display:flex;gap:.5rem;align-items:start"><span style="color:var(--accent);font-weight:700">✓</span><span><strong style="color:var(--accent)">Sin refurbishment</strong> — No requiere inversión adicional en reparación o reacondicionamiento.</span></div>
+        </div>
+      </div>
+
+      <div style="padding:.75rem;background:rgba(255,215,64,0.06);border:1px solid rgba(255,215,64,0.15);border-radius:10px">
+        <div style="font-size:.72rem;font-weight:700;color:var(--accent4);text-transform:uppercase;letter-spacing:1px;margin-bottom:.5rem">CONSIDERACIONES — Almacenamiento</div>
+        <div style="display:grid;gap:.4rem;font-size:.78rem">
+          <div style="display:flex;gap:.5rem;align-items:start"><span style="color:var(--accent4);font-weight:700">!</span><span><strong style="color:var(--accent4)">Inspección de almacenamiento</strong> — Verificar estado de las secciones desmontadas tras almacenamiento prolongado en Sines.</span></div>
+          <div style="display:flex;gap:.5rem;align-items:start"><span style="color:var(--accent4);font-weight:700">!</span><span><strong style="color:var(--accent4)">Corrosión superficial</strong> — Posible corrosión atmosférica en almacenamiento exterior. Verificar condición de superficie y pintura.</span></div>
+          <div style="display:flex;gap:.5rem;align-items:start"><span style="color:var(--accent4);font-weight:700">!</span><span><strong style="color:var(--accent4)">Completitud</strong> — Confirmar que todos los componentes auxiliares (escaleras, protección incendios, válvulas) están incluidos y completos.</span></div>
+          <div style="display:flex;gap:.5rem;align-items:start"><span style="color:var(--accent4);font-weight:700">!</span><span><strong style="color:var(--accent4)">Transporte</strong> — 833 toneladas en secciones desmontadas. Requiere logística de transporte especializado (Sines → destino).</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="kuka-card">
+    <div class="kuka-card-title" style="color:var(--accent2)">📋 Checklist de Verificación Pre-Compra — Esfera GLP</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:.5rem;font-size:.78rem">
+      <div style="padding:.5rem;background:rgba(0,0,0,.2);border-radius:6px;display:flex;gap:.4rem;align-items:start"><span style="color:var(--accent)">☐</span> Verificar certificación CE original TISSOT INDUSTRIE</div>
+      <div style="padding:.5rem;background:rgba(0,0,0,.2);border-radius:6px;display:flex;gap:.4rem;align-items:start"><span style="color:var(--accent)">☐</span> Inspeccionar estado superficial de secciones desmontadas</div>
+      <div style="padding:.5rem;background:rgba(0,0,0,.2);border-radius:6px;display:flex;gap:.4rem;align-items:start"><span style="color:var(--accent)">☐</span> Verificar completitud de boquedas (nozzles) y bridas</div>
+      <div style="padding:.5rem;background:rgba(0,0,0,.2);border-radius:6px;display:flex;gap:.4rem;align-items:start"><span style="color:var(--accent)">☐</span> Confirmar existencia de planos CAD 2D/3D</div>
+      <div style="padding:.5rem;background:rgba(0,0,0,.2);border-radius:6px;display:flex;gap:.4rem;align-items:start"><span style="color:var(--accent)">☐</span> Verificar manuales O&M completos</div>
+      <div style="padding:.5rem;background:rgba(0,0,0,.2);border-radius:6px;display:flex;gap:.4rem;align-items:start"><span style="color:var(--accent)">☐</span> Revisar certificados de material (SA 537 Class 2)</div>
+      <div style="padding:.5rem;background:rgba(0,0,0,.2);border-radius:6px;display:flex;gap:.4rem;align-items:start"><span style="color:var(--accent4)">☐</span> Inspeccionar escaleras y sistema protección incendios</div>
+      <div style="padding:.5rem;background:rgba(0,0,0,.2);border-radius:6px;display:flex;gap:.4rem;align-items:start"><span style="color:var(--accent4)">☐</span> Verificar válvulas y distribución interna</div>
+      <div style="padding:.5rem;background:rgba(0,0,0,.2);border-radius:6px;display:flex;gap:.4rem;align-items:start"><span style="color:var(--accent4)">☐</span> Confirmar lista de repuestos incluida</div>
+      <div style="padding:.5rem;background:rgba(0,0,0,.2);border-radius:6px;display:flex;gap:.4rem;align-items:start"><span style="color:var(--accent3)">☐</span> Evaluar vía de transporte desde Sines</div>
+      <div style="padding:.5rem;background:rgba(0,0,0,.2);border-radius:6px;display:flex;gap:.4rem;align-items:start"><span style="color:var(--accent3)">☐</span> Verificar procedimientos de montaje disponibles</div>
+      <div style="padding:.5rem;background:rgba(0,0,0,.2);border-radius:6px;display:flex;gap:.4rem;align-items:start"><span style="color:var(--accent3)">☐</span> Firmar NDA con Escrapalia antes de inspección</div>
+    </div>
+  </div>
+</section>
+
+<!-- TAB: PRECIOS -->
+<section class="kuka-section" id="precios">
+  <div class="kuka-card">
+    <div class="kuka-card-title" style="color:var(--accent4)">💰 Análisis de Precios — Esfera GLP y Equipamiento</div>
+    <div style="font-size:.82rem;color:var(--text-dim);margin-bottom:1rem;line-height:1.6">Los precios de Escrapalia son por negociación directa (no subasta pública). El proceso requiere NDA + RFQ para recibir oferta vinculante.</div>
+    <div style="overflow-x:auto">
+    <table class="data-table">
+      <thead><tr><th>Equipo</th><th>Condición</th><th>Valor nuevo estimado</th><th>Precio Escrapalia</th><th>Margen potencial</th></tr></thead>
+      <tbody>
+        <tr style="background:rgba(255,110,64,.05)">
+          <td style="font-weight:700;color:var(--accent3)">Esfera GLP 5.215 m³</td>
+          <td><span class="kuka-badge kuka-badge-new">NUEVA</span></td>
+          <td style="font-weight:700">8-15 M€</td>
+          <td style="font-weight:700;color:var(--accent3)">Negociable (NDA)</td>
+          <td style="font-weight:700;color:var(--accent)">60-80%</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700">Dosificadora SAGAFLUID</td>
+          <td><span class="kuka-badge kuka-badge-low">USADA ~350h</span></td>
+          <td>2-4 M€</td>
+          <td style="font-weight:700">Negociable</td>
+          <td style="font-weight:700;color:var(--accent)">50-70%</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700">Columna Absorción C2</td>
+          <td>Usada (2010)</td>
+          <td>800K-1,5M€</td>
+          <td style="font-weight:700">Negociable</td>
+          <td style="font-weight:700;color:var(--accent)">40-60%</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700">Filtro Arena Horizontal</td>
+          <td><span class="kuka-badge kuka-badge-low">CASI NUEVO (2023)</span></td>
+          <td>200-400K€</td>
+          <td style="font-weight:700">Negociable</td>
+          <td style="font-weight:700;color:var(--accent)">50-70%</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700">Sistema Rec. Gas Antorcha</td>
+          <td>Usado</td>
+          <td>1-3 M€</td>
+          <td style="font-weight:700">Negociable</td>
+          <td style="font-weight:700;color:var(--accent)">40-60%</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700">Desaladora MED 3600</td>
+          <td>Usada</td>
+          <td>3-6 M€</td>
+          <td style="font-weight:700">Negociable</td>
+          <td style="font-weight:700;color:var(--accent)">40-60%</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700;color:var(--accent4)">Turbina GE PG 6541/B</td>
+          <td>Usada</td>
+          <td>5-10 M€</td>
+          <td style="font-weight:700">Negociable</td>
+          <td style="font-weight:700;color:var(--accent)">40-60%</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700">Transformadores ABB (2 unds)</td>
+          <td>Usados</td>
+          <td>500K-1M€</td>
+          <td style="font-weight:700">Negociable</td>
+          <td style="font-weight:700;color:var(--accent)">40-60%</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <div style="font-size:.72rem;color:var(--accent4);font-weight:600;margin-top:.75rem;padding:.5rem;background:rgba(255,215,64,.08);border-radius:6px">NOTA: Todos los precios requieren NDA firmado con Escrapalia para recibir oferta vinculante. El depósito inicial es del 5% del precio de compra. Los márgenes potenciales son estimaciones basadas en valor de mercado de equipos similares.</div>
+  </div>
+
+  <div class="kuka-card">
+    <div class="kuka-card-title" style="color:var(--accent)">📊 Análisis de Inversión — Esfera GLP (Activo Principal)</div>
+    <div style="overflow-x:auto">
+    <table class="data-table">
+      <thead><tr><th>Concepto</th><th>Rango Estimado (EUR)</th></tr></thead>
+      <tbody>
+        <tr><td style="font-weight:700">Precio de compra Esfera GLP (estimación)</td><td style="font-weight:700;color:var(--accent3)">2.000.000 – 5.000.000</td></tr>
+        <tr><td>Depósito vinculante (5%)</td><td>100.000 – 250.000</td></tr>
+        <tr><td>Transporte especializado (Sines → destino)</td><td style="font-weight:700">500.000 – 1.500.000</td></tr>
+        <tr><td>Montaje en destino (cimentación, ensamblaje)</td><td style="font-weight:700">800.000 – 2.000.000</td></tr>
+        <tr><td>Ingeniería y permisos</td><td>150.000 – 400.000</td></tr>
+        <tr><td>Inspección y certificación post-montaje</td><td>50.000 – 150.000</td></tr>
+        <tr style="border-top:2px solid var(--accent3)"><td style="font-weight:800;color:var(--text-bright)">Inversión total estimada (esfera)</td><td style="font-weight:800;color:var(--accent3)">3.500.000 – 9.050.000€</td></tr>
+        <tr style="border-top:2px solid var(--accent)"><td style="font-weight:800;color:var(--text-bright)">Valor de mercado reventa</td><td style="font-weight:800;color:var(--accent)">8.000.000 – 15.000.000€</td></tr>
+        <tr><td style="color:var(--accent);font-weight:700">MARGEN POTENCIAL</td><td style="font-weight:800;color:var(--accent);font-size:1rem">4.500.000 – 5.950.000€</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <div class="kuka-card">
+    <div class="kuka-card-title" style="color:var(--accent2)">💵 Modelo de Negocio — Opciones de Comercialización</div>
+    <div class="kuka-grid-2" style="margin-bottom:1rem">
+      <div style="padding:.75rem;background:rgba(0,230,118,.06);border:1px solid rgba(0,230,118,.15);border-radius:10px">
+        <div style="font-size:.75rem;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:1px;margin-bottom:.5rem">OPCIÓN A: Venta Directa (Intermediación)</div>
+        <div style="font-size:.78rem;color:var(--text-dim);line-height:1.6">
+          <div style="margin-bottom:.3rem"><strong style="color:var(--text)">Modelo:</strong> Conectar comprador LATAM con Escrapalia</div>
+          <div style="margin-bottom:.3rem"><strong style="color:var(--text)">Inversión:</strong> Mínima (solo NDA y gestión)</div>
+          <div style="margin-bottom:.3rem"><strong style="color:var(--text)">Comisión:</strong> 5-15% del precio de venta</div>
+          <div style="margin-bottom:.3rem"><strong style="color:var(--text)">Riesgo:</strong> <span class="kuka-badge kuka-badge-low">BAJO</span></div>
+          <div><strong style="color:var(--text)">Beneficio:</strong> 200K – 750K€ por transacción</div>
+        </div>
+      </div>
+      <div style="padding:.75rem;background:rgba(255,110,64,.06);border:1px solid rgba(255,110,64,.15);border-radius:10px">
+        <div style="font-size:.75rem;font-weight:700;color:var(--accent3);text-transform:uppercase;letter-spacing:1px;margin-bottom:.5rem">OPCIÓN B: Compra + Reventa</div>
+        <div style="font-size:.78rem;color:var(--text-dim);line-height:1.6">
+          <div style="margin-bottom:.3rem"><strong style="color:var(--text)">Modelo:</strong> Comprar la esfera, transportar, vender a comprador final</div>
+          <div style="margin-bottom:.3rem"><strong style="color:var(--text)">Inversión:</strong> 3,5 – 9 M€</div>
+          <div style="margin-bottom:.3rem"><strong style="color:var(--text)">Margen:</strong> 60-80% sobre compra</div>
+          <div style="margin-bottom:.3rem"><strong style="color:var(--text)">Riesgo:</strong> <span class="kuka-badge kuka-badge-critical">ALTO</span></div>
+          <div><strong style="color:var(--text)">Beneficio:</strong> 4,5 – 6 M€</div>
+        </div>
+      </div>
+      <div style="padding:.75rem;background:rgba(24,255,255,.06);border:1px solid rgba(24,255,255,.15);border-radius:10px">
+        <div style="font-size:.75rem;font-weight:700;color:var(--accent2);text-transform:uppercase;letter-spacing:1px;margin-bottom:.5rem">OPCIÓN C: Paquete Multi-Equipo</div>
+        <div style="font-size:.78rem;color:var(--text-dim);line-height:1.6">
+          <div style="margin-bottom:.3rem"><strong style="color:var(--text)">Modelo:</strong> Negociar paquete completo (esfera + turbina + desaladora, etc.)</div>
+          <div style="margin-bottom:.3rem"><strong style="color:var(--text)">Inversión:</strong> Variable según paquete</div>
+          <div style="margin-bottom:.3rem"><strong style="color:var(--text)">Descuento:</strong> 10-20% por volumen</div>
+          <div style="margin-bottom:.3rem"><strong style="color:var(--text)">Riesgo:</strong> <span class="kuka-badge kuka-badge-medium">MEDIO</span></div>
+          <div><strong style="color:var(--text)">Beneficio:</strong> 1 – 8 M€ (según composición)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TAB: REFURBISHMENT -->
+<section class="kuka-section" id="refurbishment">
+  <div class="kuka-card">
+    <div class="kuka-card-title" style="color:var(--accent)">🔧 Refurbishment — NO NECESARIO</div>
+    <div style="padding:1rem;background:linear-gradient(135deg,rgba(0,230,118,.1),rgba(24,255,255,.05));border:2px solid var(--accent);border-radius:12px;margin-bottom:1.5rem;text-align:center">
+      <div style="font-size:1.3rem;font-weight:900;color:var(--accent);margin-bottom:.25rem">CONDICIÓN: NUEVA — SIN REFURBISHMENT</div>
+      <div style="font-size:.85rem;color:var(--text-dim)">La esfera GLP es NUEVA y NUNCA ha estado en servicio. No requiere reparación, reacondicionamiento ni sustitución de componentes.</div>
+    </div>
+    <div style="font-size:.82rem;color:var(--text-dim);margin-bottom:1rem;line-height:1.6">A diferencia de los equipos de segunda mano habituales en el mercado secundario, esta esfera fue fabricada por TISSOT INDUSTRIE y almacenada sin llegar a instalarse. Esto elimina por completo la fase de refurbishment, reduciendo tiempo de entrega y costes.</div>
+  </div>
+
+  <div class="kuka-card">
+    <div class="kuka-card-title" style="color:var(--accent4)">📋 Requisitos de Montaje (no refurbishment)</div>
+    <div style="overflow-x:auto">
+    <table class="data-table">
+      <thead><tr><th>Fase</th><th>Descripción</th><th>Coste estimado (€)</th><th>Tiempo</th></tr></thead>
+      <tbody>
+        <tr><td style="font-weight:700;color:var(--accent)">1. Cimentación</td><td>Estudio geotécnico, zapata de hormigón, anclajes</td><td>300.000 – 600.000</td><td>4-8 semanas</td></tr>
+        <tr><td style="font-weight:700;color:var(--accent)">2. Transporte</td><td>Carga especial (833 t en secciones), transporte marítimo/terrestre</td><td>500.000 – 1.500.000</td><td>2-6 semanas</td></tr>
+        <tr><td style="font-weight:700;color:var(--accent2)">3. Ensamblaje</td><td>Montaje de secciones, soldadura en sitio, NDE</td><td>400.000 – 800.000</td><td>6-12 semanas</td></tr>
+        <tr><td style="font-weight:700;color:var(--accent2)">4. Pintura</td><td>Pintura anticorrosión e intumescente (según procedimientos incluidos)</td><td>100.000 – 250.000</td><td>2-4 semanas</td></tr>
+        <tr><td style="font-weight:700;color:var(--accent4)">5. Inspección</td><td>Pruebas hidrostáticas, NDE, certificación post-montaje</td><td>50.000 – 150.000</td><td>2-4 semanas</td></tr>
+        <tr><td style="font-weight:700;color:var(--accent4)">6. Puesta en marcha</td><td>Purga, llenado, pruebas operativas</td><td>50.000 – 100.000</td><td>1-2 semanas</td></tr>
+        <tr style="border-top:2px solid var(--accent3)"><td style="font-weight:800;color:var(--text-bright)" colspan="2">TOTAL MONTAJE (no incluido en precio de compra)</td><td style="font-weight:800;color:var(--accent3)">1.400.000 – 3.400.000€</td><td style="font-weight:800">17-36 semanas</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div style="font-size:.72rem;color:var(--text-dim);margin-top:.5rem;padding:.5rem;background:rgba(0,0,0,.2);border-radius:6px"><strong style="color:var(--accent4)">Nota:</strong> Estos costes de montaje se suman al precio de compra de la esfera. Sin embargo, una esfera nueva fabricada desde cero tendría estos mismos costes MÁS un precio de fabricación de 8-15M€ y un plazo de 18-24 meses. La ventaja competitiva es clara.</div>
+  </div>
+
+  <div class="kuka-card">
+    <div class="kuka-card-title" style="color:var(--accent2)">🔍 Inspección Pre-Montaje Recomendada</div>
+    <div style="display:grid;gap:.4rem;font-size:.78rem">
+      <div style="padding:.5rem;background:rgba(0,0,0,.2);border-radius:6px;border-left:3px solid var(--accent)"><strong style="color:var(--accent)">Inspección visual</strong> — Estado de secciones almacenadas, corrosión superficial, daño en transporte</div>
+      <div style="padding:.5rem;background:rgba(0,0,0,.2);border-radius:6px;border-left:3px solid var(--accent2)">NDE (Ensayos No Destructivos)</strong> — Radiografía de soldaduras, ultrasonidos de paredes, partículas magnéticas</div>
+      <div style="padding:.5rem;background:rgba(0,0,0,.2);border-radius:6px;border-left:3px solid var(--accent4)">Verificación dimensional</strong> — Confirmar tolerancias ASME VIII Div. 2 post-almacenamiento</div>
+      <div style="padding:.5rem;background:rgba(0,0,0,.2);border-radius:6px;border-left:3px solid var(--accent3)">Certificación local</strong> — Adaptar certificación CE a normativas del país de destino (e.g., NOM para México)</div>
+      <div style="padding:.5rem;background:rgba(0,0,0,.2);border-radius:6px;border-left:3px solid var(--accent5)">Estudio geotécnico</strong> — Análisis del suelo en el emplazamiento final para diseño de cimentación</div>
+    </div>
+  </div>
+</section>
+
+<!-- TAB: COMPRADORES -->
+<section class="kuka-section" id="compradores">
+  <div class="kuka-card">
+    <div class="kuka-card-title" style="color:var(--accent2)">🌎 Compradores Potenciales — Esfera GLP y Equipamiento</div>
+    <div style="font-size:.82rem;color:var(--text-dim);margin-bottom:1rem;line-height:1.6">La esfera GLP de 5.215 m³ es un activo de alto valor para compañías de gas, refinerías y distribuidores de GLP en LATAM y otros mercados emergentes.</div>
+    <div style="overflow-x:auto">
+    <table class="data-table">
+      <thead><tr><th>Segmento</th><th>Empresas objetivo</th><th>País/Región</th><th>Necesidad</th></tr></thead>
+      <tbody>
+        <tr style="background:rgba(0,230,118,.05)">
+          <td style="font-weight:700;color:var(--accent)">Distribuidores GLP</td>
+          <td style="font-size:.75rem">Gasexpress, Z Gas, Ekogas, Disa Gas</td>
+          <td>México, Colombia, Caribe</td>
+          <td>Almacenamiento GLP en expansión</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700;color:var(--accent2)">Empresas estatales de hidrocarburos</td>
+          <td style="font-size:.75rem">Pemex (MX), Ecopetrol (CO), Petroperú (PE), YPFB (BO), PDVSA (VE)</td>
+          <td>LATAM</td>
+          <td>Infraestructura de almacenamiento</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700;color:var(--accent4)">Refinerías</td>
+          <td style="font-size:.75rem">Refinación, petroquímica, terminales</td>
+          <td>Global</td>
+          <td>Capacidad de almacenamiento GLP</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700;color:var(--accent5)">Terminales portuarias</td>
+          <td style="font-size:.75rem">Terminales de GLP marítimos</td>
+          <td>México, Brasil, África</td>
+          <td>Infraestructura de recepción y distribución</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700;color:var(--accent3)">EPC Contractors</td>
+          <td style="font-size:.75rem">Técnicas Reunidas, Samsung Engineering, Toyo Engineering</td>
+          <td>Global</td>
+          <td>Proyectos de ingeniería con almacenamiento GLP</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700;color:var(--accent)">Gasoductos / LNG</td>
+          <td style="font-size:.75rem">iEnova, TransCanada, Transportadora de Gas</td>
+          <td>México, LATAM</td>
+          <td>Puntos de almacenamiento en red</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <div class="kuka-card">
+    <div class="kuka-card-title" style="color:var(--accent)">🎯 Compradores Específicos — Equipamiento Adicional</div>
+    <div style="display:grid;gap:.5rem;font-size:.78rem">
+      <div style="padding:.6rem;background:rgba(255,110,64,.05);border:1px solid rgba(255,110,64,.15);border-radius:8px">
+        <div style="font-weight:700;color:var(--accent3);margin-bottom:.2rem">Turbina GE PG 6541/B (45 MW)</div>
+        <div style="color:var(--text-dim)">Compradores: Plantas de cogeneración, EPC en LATAM (Mexico, Brasil), minería (Chile, Peru), utilities. Empresas: Iberdrola, Enel, Engie, AES, Gas Natural Fenosa. Mercado secundario activo para turbinas GE Frame 6.</div>
+      </div>
+      <div style="padding:.6rem;background:rgba(24,255,255,.05);border:1px solid rgba(24,255,255,.15);border-radius:8px">
+        <div style="font-weight:700;color:var(--accent2);margin-bottom:.2rem">Instalación Dosificadora SAGAFLUID</div>
+        <div style="color:var(--text-dim)">Compradores: Industria química, petroquímica, farmacéutica, alimentaria. La robótica colaborativa y las 28 bombas dosificadoras son atractivas para plantas de proceso en LATAM.</div>
+      </div>
+      <div style="padding:.6rem;background:rgba(255,215,64,.05);border:1px solid rgba(255,215,64,.15);border-radius:8px">
+        <div style="font-weight:700;color:var(--accent4);margin-bottom:.2rem">Desaladora MED 3600 + Transformadores ABB</div>
+        <div style="color:var(--text-dim)">Compradores: Minería (Chile, Peru), hotelería (Caribe), municipios costeros. Los transformadores ABB tienen demanda global en minería e infraestructura energética.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="kuka-card">
+    <div class="kuka-card-title" style="color:var(--accent4)">🚢 Aranceles y Costes de Exportación por Ruta</div>
+    <div style="overflow-x:auto">
+    <table class="data-table">
+      <thead><tr><th>Ruta</th><th>Arancel GLP</th><th>IVA destino</th><th>Flete estimado</th><th>Coste exportación total</th><th>Ventaja</th></tr></thead>
+      <tbody>
+        <tr style="background:rgba(0,230,118,.05)"><td style="font-weight:700;color:var(--accent)">México (TLCUEM)</td><td style="font-weight:700;color:var(--accent)">0%</td><td>16%</td><td style="font-weight:700">800K-1,5M€</td><td style="font-weight:700">+25-40%</td><td style="color:var(--accent);font-weight:700">RUTA PRINCIPAL</td></tr>
+        <tr><td style="font-weight:700">Colombia (Acuerdo UE)</td><td style="font-weight:700">0%</td><td>19%</td><td style="font-weight:700">700K-1,3M€</td><td style="font-weight:700">+22-35%</td><td>Demanda GLP alta</td></tr>
+        <tr><td style="font-weight:700">Chile (TLC Chile-ES)</td><td style="font-weight:700">0%</td><td>19%</td><td style="font-weight:700">900K-1,6M€</td><td style="font-weight:700">+28-42%</td><td>Minería + GLP</td></tr>
+        <tr><td style="font-weight:700">Perú (TLC Perú-ES)</td><td style="font-weight:700">0%</td><td>18%</td><td style="font-weight:700">800K-1,4M€</td><td style="font-weight:700">+25-38%</td><td>Minería + gas</td></tr>
+        <tr style="background:rgba(255,110,64,.05)"><td style="color:var(--accent3)">Brasil (sin TLC)</td><td style="color:var(--accent3);font-weight:700">14-20%</td><td>18-19%</td><td style="font-weight:700">1M-1,8M€</td><td style="color:var(--accent3);font-weight:700">+45-65%</td><td style="color:var(--accent3)">INMETRO obligatorio</td></tr>
+        <tr><td style="font-weight:700">África Occidental</td><td style="font-weight:700">5-15%</td><td>Variable</td><td style="font-weight:700">1-2M€</td><td style="font-weight:700">+35-55%</td><td>Demanda GLP creciente</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div style="font-size:.72rem;color:var(--accent);font-weight:600;margin-top:.75rem;padding:.5rem;background:rgba(0,230,118,.06);border-radius:6px">México es la ruta principal: 0% arancel (TLCUEM), alta demanda de GLP (nearshoring), infraestructura de recepción portuaria en Lázaro Cárdenas, Altamira y Manzanillo. El transporte marítimo desde Sines (Portugal) es viable en buque de carga pesada.</div>
+  </div>
+</section>
+
+<!-- TAB: PASO A PASO -->
+<section class="kuka-section" id="paso-a-paso">
+  <div class="kuka-card">
+    <div class="kuka-card-title" style="color:var(--accent3)">🎯 Paso a Paso — Proceso de Adquisición Escrapalia</div>
+    <div style="font-size:.82rem;color:var(--accent);margin-bottom:1rem;line-height:1.6;font-weight:700">Este proceso es DIRECTO con SURUS/Escrapalia — no es una subasta pública. Es una venta privada con NDA obligatorio.</div>
+    <div style="display:grid;gap:.75rem;margin-bottom:1.5rem">
+      <div class="kuka-step">
+        <div class="kuka-step-num" style="background:var(--accent);color:#000">1</div>
+        <div class="kuka-step-content">
+          <div class="kuka-step-title" style="color:var(--accent)">CONTACTO INICIAL (1-3 días)</div>
+          <div class="kuka-step-desc">Contactar Escrapalia via <a href="https://glp.escrapalia.com/" target="_blank" style="color:var(--accent2)">glp.escrapalia.com</a> o directamente a <strong style="color:var(--accent2)">Javier Ramos (jramos@surusin.com)</strong> / <strong style="color:var(--accent2)">José Santos (jsantos@surusin.com)</strong>. Teléfono: <strong style="color:var(--accent)">+34 913 52 45 07</strong> / <strong style="color:var(--accent)">+34 682 21 28 20</strong> (Mirella Roman). Dirección: Camino de las Huertas 18, 28223 Pozuelo de Alarcón, Madrid.</div>
+        </div>
+      </div>
+      <div class="kuka-step">
+        <div class="kuka-step-num" style="background:var(--accent);color:#000">2</div>
+        <div class="kuka-step-content">
+          <div class="kuka-step-title" style="color:var(--accent)">FIRMA NDA (3-7 días)</div>
+          <div class="kuka-step-desc">Firmar Acuerdo de No Divulgación (NDA) con Escrapalia/SURUS Inversa. <strong style="color:var(--accent3)">OBLIGATORIO antes de recibir cualquier documentación técnica detallada.</strong> El NDA protege la confidencialidad de Repsol y permite acceso a planos CAD, certificados y precios.</div>
+        </div>
+      </div>
+      <div class="kuka-step">
+        <div class="kuka-step-num" style="background:var(--accent4);color:#000">3</div>
+        <div class="kuka-step-content">
+          <div class="kuka-step-title" style="color:var(--accent4)">PRESENTAR RFQ (5-10 días)</div>
+          <div class="kuka-step-desc">Tras NDA, enviar Request for Quotation (RFQ) formal. Escrapalia proporciona: ficha técnica completa, planos CAD 2D/3D, certificados de material, procedimientos de soldadura/montaje, manuales O&M, lista de repuestos. Evaluar toda la documentación con ingeniero especializado.</div>
+        </div>
+      </div>
+      <div class="kuka-step">
+        <div class="kuka-step-num" style="background:var(--accent4);color:#000">4</div>
+        <div class="kuka-step-content">
+          <div class="kuka-step-title" style="color:var(--accent4)">INSPECCIÓN EN SINES (3-5 días)</div>
+          <div class="kuka-step-desc">Viajar a Sines, Portugal para inspección visual de la esfera y componentes desmontados. <strong style="color:var(--accent3)">LLEVAR ingeniero de presión / inspector ASME.</strong> Verificar: condición de secciones, soldaduras, corrosión superficial, completitud de accesorios, documentación.</div>
+        </div>
+      </div>
+      <div class="kuka-step">
+        <div class="kuka-step-num" style="background:var(--accent3);color:#fff">5</div>
+        <div class="kuka-step-content">
+          <div class="kuka-step-title" style="color:var(--accent3)">OFERTA VINCULANTE (7-15 días)</div>
+          <div class="kuka-step-desc">Escrapalia emite oferta vinculante. <strong style="color:var(--accent)">Depósito del 5%</strong> del precio de compra para asegurar la transacción. Negociar condiciones de pago, plazo de recogida y garantías. Posible negociar paquete multi-equipo para mejor precio.</div>
+        </div>
+      </div>
+      <div class="kuka-step">
+        <div class="kuka-step-num" style="background:var(--accent3);color:#fff">6</div>
+        <div class="kuka-step-content">
+          <div class="kuka-step-title" style="color:var(--accent3)">PAGO Y TRANSPORTE (4-12 semanas)</div>
+          <div class="kuka-step-desc">Pago del restante 95%. Organizar transporte especializado desde Sines (Portugal). La esfera desmontada pesa 833 t en secciones — requiere buque de carga pesada tipo Heavy Lift o transporte modular terrestre (SPMT) hasta puerto y luego buque Roll-on/Roll-off o Heavy Lift.</div>
+        </div>
+      </div>
+      <div class="kuka-step">
+        <div class="kuka-step-num" style="background:var(--accent5);color:#fff">7</div>
+        <div class="kuka-step-content">
+          <div class="kuka-step-title" style="color:var(--accent5)">MONTAJE Y PUESTA EN MARCHA (4-9 meses)</div>
+          <div class="kuka-step-desc">Cimentación en destino → Ensamblaje de secciones → Soldadura en sitio → NDE → Pintura → Pruebas hidrostáticas → Certificación local → Puesta en marcha. Coste de montaje: 1,4-3,4M€. Tiempo total: 4-9 meses dependiendo de la ubicación.</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="padding:.75rem;background:linear-gradient(135deg,rgba(255,110,64,.1),rgba(24,255,255,.05));border:1px solid rgba(255,110,64,.2);border-radius:10px">
+      <div style="font-size:.72rem;font-weight:700;color:var(--accent3);margin-bottom:.5rem">📅 Timeline Completo — Esfera GLP</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:.5rem;font-size:.7rem">
+        <div style="padding:.5rem;background:var(--bg-card);border-radius:8px;text-align:center;border:1px solid var(--border)"><div style="font-weight:700;color:var(--accent)">1-3 días</div><div style="color:var(--text-dim)">Contacto + NDA</div></div>
+        <div style="padding:.5rem;background:var(--bg-card);border-radius:8px;text-align:center;border:1px solid var(--border)"><div style="font-weight:700;color:var(--accent)">5-10 días</div><div style="color:var(--text-dim)">RFQ + evaluación</div></div>
+        <div style="padding:.5rem;background:var(--bg-card);border-radius:8px;text-align:center;border:1px solid var(--border)"><div style="font-weight:700;color:var(--accent4)">3-5 días</div><div style="color:var(--text-dim)">Inspección Sines</div></div>
+        <div style="padding:.5rem;background:var(--bg-card);border-radius:8px;text-align:center;border:1px solid var(--border)"><div style="font-weight:700;color:var(--accent4)">7-15 días</div><div style="color:var(--text-dim)">Oferta vinculante</div></div>
+        <div style="padding:.5rem;background:var(--bg-card);border-radius:8px;text-align:center;border:1px solid var(--border)"><div style="font-weight:700;color:var(--accent3)">4-12 sem</div><div style="color:var(--text-dim)">Transporte</div></div>
+        <div style="padding:.5rem;background:var(--bg-card);border-radius:8px;text-align:center;border:1px solid var(--border)"><div style="font-weight:700;color:var(--accent3)">4-9 meses</div><div style="color:var(--text-dim)">Montaje + puesta marcha</div></div>
+      </div>
+      <div style="margin-top:.5rem;font-size:.72rem;color:var(--accent3);font-weight:600">Tiempo total estimado: 6-14 meses desde contacto hasta operación. Mucho más rápido que fabricar nueva (18-24 meses).</div>
+    </div>
+  </div>
+</section>
+
+<!-- TAB: RIESGOS -->
+<section class="kuka-section" id="riesgos">
+  <div class="kuka-card">
+    <div class="kuka-card-title" style="color:var(--accent6)">⚠️ Riesgos y Mitigaciones</div>
+    <div style="display:grid;gap:.5rem;margin-bottom:1rem">
+      <div class="kuka-risk" style="background:rgba(255,110,64,.08);border-left:3px solid var(--accent3)">
+        <div><span class="kuka-badge kuka-badge-critical" style="margin-right:.3rem">CRÍTICO</span><strong>Transporte de 833 toneladas</strong></div>
+        <div style="color:var(--text-dim);font-size:.72rem;margin-top:.2rem"><strong style="color:var(--accent)">→</strong> La esfera desmontada pesa 833 t en secciones. Requiere transporte especializado: buque Heavy Lift o SPMT + Roll-on/Roll-off. Coste estimado: 500K-1,5M€. Mitigación: contratar empresa especializada en transporte de presión (e.g., Mammoet, Sarens, Fagioli).</div>
+      </div>
+      <div class="kuka-risk" style="background:rgba(255,110,64,.08);border-left:3px solid var(--accent3)">
+        <div><span class="kuka-badge kuka-badge-critical" style="margin-right:.3rem">CRÍTICO</span><strong>Certificación local del país de destino</strong></div>
+        <div style="color:var(--text-dim);font-size:.72rem;margin-top:.2rem"><strong style="color:var(--accent)">→</strong> ASME VIII Div. 2 es aceptado globalmente, pero cada país requiere adaptación: NOM para México, NR-13 para Brasil, RETIQ para Colombia. Mitigación: contratar ingeniero local especializado en recipientes a presión para cada mercado.</div>
+      </div>
+      <div class="kuka-risk" style="background:rgba(255,110,64,.08);border-left:3px solid var(--accent3)">
+        <div><span class="kuka-badge kuka-badge-critical" style="margin-right:.3rem">CRÍTICO</span><strong>Soldadura en sitio y ensayos NDE</strong></div>
+        <div style="color:var(--text-dim);font-size:.72rem;margin-top:.2rem"><strong style="color:var(--accent)">→</strong> El montaje requiere soldadura de secciones en sitio, lo cual invalida parcialmente la certificación de fábrica. Se requieren ensayos NDE completos (radiografía, ultrasonidos, partículas magnéticas) post-ensamblaje. Mitigación: incluir procedimientos de soldadura TISSOT y contratar inspector ASME certificado.</div>
+      </div>
+      <div class="kuka-risk" style="background:rgba(255,215,64,.06);border-left:3px solid var(--accent4)">
+        <div><span class="kuka-badge kuka-badge-high" style="margin-right:.3rem">ALTA</span><strong>Corrosión por almacenamiento</strong></div>
+        <div style="color:var(--text-dim);font-size:.72rem;margin-top:.2rem"><strong style="color:var(--accent)">→</strong> La esfera ha estado almacenada en Sines (ambiente marino). Posible corrosión superficial en secciones desmontadas. Mitigación: inspección visual y NDE antes de compra. SA 537 Class 2 con allowance de 0,5 mm proporciona margen.</div>
+      </div>
+      <div class="kuka-risk" style="background:rgba(255,215,64,.06);border-left:3px solid var(--accent4)">
+        <div><span class="kuka-badge kuka-badge-high" style="margin-right:.3rem">ALTA</span><strong>Permisos de montaje en destino</strong></div>
+        <div style="color:var(--text-dim);font-size:.72rem;margin-top:.2rem"><strong style="color:var(--accent)">→</strong> Recipientes a presión de este tamaño requieren permisos especiales: estudio de impacto ambiental, licencia de actividad, autorización de uso de suelo. Mitigación: iniciar trámites de permisos en paralelo con transporte.</div>
+      </div>
+      <div class="kuka-risk" style="background:rgba(24,255,255,.04);border-left:3px solid var(--accent2)">
+        <div><span class="kuka-badge kuka-badge-medium" style="margin-right:.3rem">MEDIO</span><strong>Fluctuación de precio</strong></div>
+        <div style="color:var(--text-dim);font-size:.72rem;margin-top:.2rem"><strong style="color:var(--accent)">→</strong> Los precios de Escrapalia son negociables. Si hay múltiples interesados, el precio puede subir. Mitigación: firmar NDA rápidamente y presentar RFQ con oferta seria.</div>
+      </div>
+      <div class="kuka-risk" style="background:rgba(24,255,255,.04);border-left:3px solid var(--accent2)">
+        <div><span class="kuka-badge kuka-badge-medium" style="margin-right:.3rem">MEDIO</span><strong>Riesgo cambiario</strong></div>
+        <div style="color:var(--text-dim);font-size:.72rem;margin-top:.2rem"><strong style="color:var(--accent)">→</strong> Transacción en EUR, venta potencial en USD/MXN. Fluctuaciones de divisa pueden afectar margen. Mitigación: cobertura cambiaria (forward contract) para proteger margen.</div>
+      </div>
+      <div class="kuka-risk" style="background:rgba(0,230,118,.04);border-left:3px solid var(--accent)">
+        <div><span class="kuka-badge kuka-badge-low" style="margin-right:.3rem">BAJO</span><strong>Obsolescencia tecnológica</strong></div>
+        <div style="color:var(--text-dim);font-size:.72rem;margin-top:.2rem"><strong style="color:var(--accent)">→</strong> Esfera NUEVA con diseño ASME VIII Div. 2. No hay riesgo de obsolescencia — el diseño es estándar y vigente. SA 537 Class 2 es material ampliamente disponible.</div>
+      </div>
+    </div>
+
+    <div style="padding:.75rem;background:rgba(255,64,129,0.06);border:1px solid rgba(255,64,129,0.15);border-radius:8px;margin-bottom:1rem">
+      <div style="font-size:.72rem;font-weight:700;color:var(--accent6);text-transform:uppercase;letter-spacing:1px;margin-bottom:.3rem">Seguros Recomendados</div>
+      <div style="font-size:.72rem;line-height:1.5;color:var(--text-dim)">
+        <div style="margin-bottom:.2rem"><strong style="color:var(--text)">Transporte de carga pesada:</strong> 0,5-1,5% del valor declarado. Cubre daño durante carga, transporte marítimo y descarga. Especializado para >100t por sección.</div>
+        <div style="margin-bottom:.2rem"><strong style="color:var(--text)">Responsabilidad civil profesional:</strong> Cubre errores en inspección, montaje y certificación.</div>
+        <div><strong style="color:var(--text)">Todo riesgo construcción:</strong> Cubre riesgos durante montaje hasta la puesta en marcha. Esencial para recipientes a presión.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="kuka-card">
+    <div class="kuka-card-title" style="color:var(--accent2)">📋 Certificaciones y Normativas Aplicables</div>
+    <div style="display:grid;gap:.4rem;font-size:.78rem;margin-bottom:1rem">
+      <div style="padding:.5rem;background:rgba(0,0,0,.2);border-radius:6px;border-left:3px solid var(--accent3)"><strong style="color:var(--accent3)">ASME VIII Div. 2</strong> — Código de diseño de recipientes a presión. Diseño por análisis. La esfera cumple este estándar internacional de referencia.</div>
+      <div style="padding:.5rem;background:rgba(0,0,0,.2);border-radius:6px;border-left:3px solid var(--accent2)"><strong style="color:var(--accent2)">Directiva PED 2014/68/EU</strong> — Directiva europea de equipos a presión. La certificación CE garantiza conformidad.</div>
+      <div style="padding:.5rem;background:rgba(0,0,0,.2);border-radius:6px;border-left:3px solid var(--accent)"><strong style="color:var(--accent)">EN 14620</strong> — Diseño y fabricación de tanques de almacenamiento criogénicos y a presión.</div>
+      <div style="padding:.5rem;background:rgba(0,0,0,.2);border-radius:6px;border-left:3px solid var(--accent4)"><strong style="color:var(--accent4)">NOM-001-SECRE-2012 (México)</strong> — Especificaciones para instalaciones de almacenamiento de GLP.</div>
+      <div style="padding:.5rem;background:rgba(0,0,0,.2);border-radius:6px;border-left:3px solid var(--accent5)"><strong style="color:var(--accent5)">NR-13 (Brasil)</strong> — Norma de calderas y recipientes a presión brasileña. Requiere registro en CREA.</div>
+      <div style="padding:.5rem;background:rgba(0,0,0,.2);border-radius:6px;border-left:3px solid var(--accent6)"><strong style="color:var(--accent6)">RETIQ (Colombia)</strong> — Reglamento técnico de instalación de tanques para almacenamiento.</div>
+    </div>
+  </div>
+
+  <div class="kuka-card">
+    <div class="kuka-card-title" style="color:var(--accent3)">📜 Datos del Vendedor — Escrapalia / SURUS Inversa</div>
+    <div style="overflow-x:auto">
+    <table class="data-table">
+      <thead><tr><th>Concepto</th><th>Detalle</th></tr></thead>
+      <tbody>
+        <tr><td style="font-weight:700">Empresa vendedora</td><td>SURUS Inversa S.L. (via Escrapalia)</td></tr>
+        <tr><td style="font-weight:700">Empresa origen del equipo</td><td style="font-weight:700;color:var(--accent3)">REPSOL S.A. (IBEX 35)</td></tr>
+        <tr><td style="font-weight:700">Dirección SURUS</td><td>Camino de las Huertas 18, 28223 Pozuelo de Alarcón, Madrid</td></tr>
+        <tr><td style="font-weight:700">Teléfono</td><td style="font-family:'JetBrains Mono',monospace">+34 913 52 45 07</td></tr>
+        <tr><td style="font-weight:700">Móvil (Mirella Roman)</td><td style="font-family:'JetBrains Mono',monospace">+34 682 21 28 20</td></tr>
+        <tr><td style="font-weight:700">Email Javier Ramos</td><td style="color:var(--accent2)">jramos@surusin.com</td></tr>
+        <tr><td style="font-weight:700">Email José Santos</td><td style="color:var(--accent2)">jsantos@surusin.com</td></tr>
+        <tr><td style="font-weight:700">Web GLP</td><td><a href="https://glp.escrapalia.com/" target="_blank" style="color:var(--accent2)">glp.escrapalia.com</a></td></tr>
+        <tr><td style="font-weight:700">Web Industrial</td><td><a href="https://industrial.escrapalia.com/en/" target="_blank" style="color:var(--accent2)">industrial.escrapalia.com</a></td></tr>
+        <tr style="background:rgba(0,230,118,.05)"><td style="font-weight:700;color:var(--accent)">Proceso</td><td style="color:var(--accent);font-weight:700">Contacto → NDA → RFQ → Oferta vinculante (5% depósito)</td></tr>
+        <tr><td style="font-weight:700">Condición</td><td><span class="kuka-badge kuka-badge-new">NUEVA — NUNCA INSTALADA</span></td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+</section>
+
+<!-- TAB: IMÁGENES -->
+<section class="kuka-section" id="imagenes">
+  <div class="kuka-card">
+    <div class="kuka-card-title" style="color:var(--accent3)">📷 Galería de Imágenes — Esfera GLP Repsol</div>
+    <div style="font-size:.82rem;color:var(--text-dim);margin-bottom:1rem;line-height:1.6">Las imágenes reales del equipo están disponibles en la página oficial de Escrapalia. Haz clic en las tarjetas para visitar la fuente original.</div>
+    <div class="kuka-gallery">
+      <a href="https://glp.escrapalia.com/" target="_blank" style="text-decoration:none;color:inherit">
+        <div class="kuka-gallery-item">
+          <div style="width:100%;height:180px;background:linear-gradient(135deg,rgba(255,110,64,.2),rgba(24,255,255,.1));display:flex;align-items:center;justify-content:center;font-size:3rem;border-radius:0">⛽</div>
+          <div class="kuka-gallery-caption"><strong>Esfera GLP — Vista general</strong><br>Página oficial Escrapalia →</div>
+        </div>
+      </a>
+      <a href="https://glp.escrapalia.com/" target="_blank" style="text-decoration:none;color:inherit">
+        <div class="kuka-gallery-item">
+          <div style="width:100%;height:180px;background:linear-gradient(135deg,rgba(0,230,118,.2),rgba(255,110,64,.1));display:flex;align-items:center;justify-content:center;font-size:3rem;border-radius:0">📐</div>
+          <div class="kuka-gallery-caption"><strong>Planos CAD 2D/3D</strong><br>Disponibles tras NDA →</div>
+        </div>
+      </a>
+      <a href="https://glp.escrapalia.com/" target="_blank" style="text-decoration:none;color:inherit">
+        <div class="kuka-gallery-item">
+          <div style="width:100%;height:180px;background:linear-gradient(135deg,rgba(24,255,255,.2),rgba(0,230,118,.1));display:flex;align-items:center;justify-content:center;font-size:3rem;border-radius:0">🔧</div>
+          <div class="kuka-gallery-caption"><strong>Componentes y detalles</strong><br>Boquedas, válvulas, soportes →</div>
+        </div>
+      </a>
+      <a href="https://industrial.escrapalia.com/en/" target="_blank" style="text-decoration:none;color:inherit">
+        <div class="kuka-gallery-item">
+          <div style="width:100%;height:180px;background:linear-gradient(135deg,rgba(255,215,64,.2),rgba(179,136,255,.1));display:flex;align-items:center;justify-content:center;font-size:3rem;border-radius:0">🏭</div>
+          <div class="kuka-gallery-caption"><strong>Equipamiento industrial adicional</strong><br>Escrapalia Industrial →</div>
+        </div>
+      </a>
+      <a href="https://industrial.escrapalia.com/en/" target="_blank" style="text-decoration:none;color:inherit">
+        <div class="kuka-gallery-item">
+          <div style="width:100%;height:180px;background:linear-gradient(135deg,rgba(255,64,129,.2),rgba(255,215,64,.1));display:flex;align-items:center;justify-content:center;font-size:3rem;border-radius:0">⚡</div>
+          <div class="kuka-gallery-caption"><strong>Turbina GE PG 6541/B</strong><br>45 MW →</div>
+        </div>
+      </a>
+      <a href="https://industrial.escrapalia.com/en/" target="_blank" style="text-decoration:none;color:inherit">
+        <div class="kuka-gallery-item">
+          <div style="width:100%;height:180px;background:linear-gradient(135deg,rgba(179,136,255,.2),rgba(24,255,255,.1));display:flex;align-items:center;justify-content:center;font-size:3rem;border-radius:0">🧪</div>
+          <div class="kuka-gallery-caption"><strong>SAGAFLUID + Columna + Filtros</strong><br>Escrapalia Industrial →</div>
+        </div>
+      </a>
+    </div>
+    <div style="margin-top:1rem;padding:.75rem;background:rgba(255,110,64,.06);border:1px solid rgba(255,110,64,.2);border-radius:8px;font-size:.78rem;color:var(--text-dim)">
+      <strong style="color:var(--accent3)">Fuentes oficiales:</strong> <a href="https://glp.escrapalia.com/" target="_blank" style="color:var(--accent2)">glp.escrapalia.com</a> (esfera GLP) · <a href="https://industrial.escrapalia.com/en/" target="_blank" style="color:var(--accent2)">industrial.escrapalia.com</a> (equipamiento adicional). Las fotos reales del equipo requieren NDA firmado con Escrapalia.
+    </div>
+  </div>
+</section>
+
+<!-- TAB: DOCUMENTACIÓN -->
+<section class="kuka-section" id="documentacion">
+  <div class="kuka-card">
+    <div class="kuka-card-title" style="color:var(--accent2)">📚 Documentación Disponible</div>
+    <div style="font-size:.82rem;color:var(--text-dim);margin-bottom:1rem;line-height:1.6">La documentación completa de la esfera GLP está disponible tras firmar NDA con Escrapalia. A continuación se detalla lo que incluye:</div>
+    <div class="kuka-grid-2" style="margin-bottom:1rem">
+      <div style="padding:.75rem;background:rgba(0,230,118,.06);border:1px solid rgba(0,230,118,.15);border-radius:10px">
+        <div style="font-size:.75rem;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:1px;margin-bottom:.5rem">Documentación de Diseño</div>
+        <div style="display:grid;gap:.3rem;font-size:.78rem;color:var(--text-dim)">
+          <div>✓ Planos CAD 2D (dimensiones, secciones)</div>
+          <div>✓ Modelo CAD 3D completo</div>
+          <div>✓ Cálculos de diseño ASME VIII Div. 2</div>
+          <div>✓ Análisis de esfuerzos (FEA)</div>
+          <div>✓ Especificaciones técnicas TISSOT INDUSTRIE</div>
+        </div>
+      </div>
+      <div style="padding:.75rem;background:rgba(24,255,255,.06);border:1px solid rgba(24,255,255,.15);border-radius:10px">
+        <div style="font-size:.75rem;font-weight:700;color:var(--accent2);text-transform:uppercase;letter-spacing:1px;margin-bottom:.5rem">Certificaciones</div>
+        <div style="display:grid;gap:.3rem;font-size:.78rem;color:var(--text-dim)">
+          <div>✓ Certificación CE (Directiva PED 2014/68/EU)</div>
+          <div>✓ Certificados de material SA 537 Class 2</div>
+          <div>✓ Certificados de soldadura (WPS/PQR)</div>
+          <div>✓ Certificados de ensayos no destructivos (NDE)</div>
+          <div>✓ Documento de conformidad TISSOT INDUSTRIE</div>
+        </div>
+      </div>
+      <div style="padding:.75rem;background:rgba(255,215,64,.06);border:1px solid rgba(255,215,64,.15);border-radius:10px">
+        <div style="font-size:.75rem;font-weight:700;color:var(--accent4);text-transform:uppercase;letter-spacing:1px;margin-bottom:.5rem">Procedimientos</div>
+        <div style="display:grid;gap:.3rem;font-size:.78rem;color:var(--text-dim)">
+          <div>✓ Procedimientos de soldadura</div>
+          <div>✓ Procedimientos de pintura anticorrosión</div>
+          <div>✓ Procedimientos de montaje</div>
+          <div>✓ Procedimientos de inspección</div>
+          <div>✓ Plan de calidad</div>
+        </div>
+      </div>
+      <div style="padding:.75rem;background:rgba(255,110,64,.06);border:1px solid rgba(255,110,64,.15);border-radius:10px">
+        <div style="font-size:.75rem;font-weight:700;color:var(--accent3);text-transform:uppercase;letter-spacing:1px;margin-bottom:.5rem">Manuales y Listas</div>
+        <div style="display:grid;gap:.3rem;font-size:.78rem;color:var(--text-dim)">
+          <div>✓ Manual de operación</div>
+          <div>✓ Manual de mantenimiento</div>
+          <div>✓ Lista de repuestos</div>
+          <div>✓ Esquema de distribución interna</div>
+          <div>✓ Diagrama P&ID de conexiones</div>
+        </div>
+      </div>
+    </div>
+    <div style="padding:.75rem;background:rgba(0,230,118,.08);border:1px solid rgba(0,230,118,.2);border-radius:8px;font-size:.78rem;color:var(--text-dim)">
+      <strong style="color:var(--accent)">Acceso a documentación:</strong> Toda la documentación técnica detallada (planos CAD, certificados, procedimientos) requiere <strong style="color:var(--accent3)">NDA firmado</strong> con Escrapalia/SURUS Inversa. Contactar a <strong style="color:var(--accent2)">jramos@surusin.com</strong> o <strong style="color:var(--accent2)">jsantos@surusin.com</strong> para iniciar el proceso.
+    </div>
+  </div>
+
+  <div class="kuka-card">
+    <div class="kuka-card-title" style="color:var(--accent)">📋 Códigos y Normativas — Referencia</div>
+    <div style="overflow-x:auto">
+    <table class="data-table">
+      <thead><tr><th>Normativa / Código</th><th>Aplicación</th><th>Relevancia</th></tr></thead>
+      <tbody>
+        <tr style="background:rgba(255,110,64,.05)"><td style="font-weight:700;color:var(--accent3)">ASME VIII Div. 2</td><td>Diseño de recipientes a presión — Análisis</td><td><span class="kuka-badge kuka-badge-critical">ESPECIFICACIÓN DE DISEÑO</span></td></tr>
+        <tr><td style="font-weight:700">PED 2014/68/EU</td><td>Directiva europea equipos a presión</td><td><span class="kuka-badge kuka-badge-high">CERTIFICACIÓN CE</span></td></tr>
+        <tr><td style="font-weight:700">SA 537 Class 2</td><td>Material — Acero presión para temperatura moderada</td><td><span class="kuka-badge kuka-badge-high">MATERIAL</span></td></tr>
+        <tr><td style="font-weight:700">EN 14620</td><td>Tanques de almacenamiento a presión</td><td><span class="kuka-badge kuka-badge-medium">REFERENCIA</span></td></tr>
+        <tr><td style="font-weight:700">API 620</td><td>Diseño y construcción tanques presión baja/mediana</td><td><span class="kuka-badge kuka-badge-medium">REFERENCIA</span></td></tr>
+        <tr><td style="font-weight:700">NFPA 58</td><td>Código GLP licuado (instalación)</td><td><span class="kuka-badge kuka-badge-medium)">INSTALACIÓN</span></td></tr>
+        <tr><td style="font-weight:700">NOM-001-SECRE-2012</td><td>Almacenamiento GLP (México)</td><td><span class="kuka-badge kuka-badge-medium)">DESTINO MÉXICO</span></td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+</section>
+
+<!-- TAB: VIDEOS -->
+<section class="kuka-section" id="videos">
+  <div class="kuka-card">
+    <div class="kuka-card-title" style="color:var(--accent3)">🎬 Videos de Referencia — Esferas GLP e Instalación</div>
+    <div style="font-size:.82rem;color:var(--text-dim);margin-bottom:1rem;line-height:1.6">Videos de YouTube que muestran esferas de GLP similares, procesos de montaje e instalaciones industriales de referencia.</div>
+    <div class="kuka-grid-2" style="margin-bottom:1rem">
+      <div style="padding:.75rem;background:rgba(255,110,64,.06);border:1px solid rgba(255,110,64,.15);border-radius:10px">
+        <div style="font-size:.78rem;font-weight:700;color:var(--accent3);margin-bottom:.5rem">Montaje de esfera de GLP</div>
+        <a href="https://www.youtube.com/watch?v=k0z5BqDjJ6k" target="_blank" style="display:block;color:var(--accent2);font-size:.78rem;text-decoration:underline;margin-bottom:.3rem">▶ youtube.com/watch?v=k0z5BqDjJ6k</a>
+        <div style="font-size:.72rem;color:var(--text-dim)">Proceso de montaje de esfera de almacenamiento de GLP en sitio.</div>
+      </div>
+      <div style="padding:.75rem;background:rgba(255,110,64,.06);border:1px solid rgba(255,110,64,.15);border-radius:10px">
+        <div style="font-size:.78rem;font-weight:700;color:var(--accent3);margin-bottom:.5rem">Transporte de esfera de presión</div>
+        <a href="https://www.youtube.com/watch?v=SPJYqR8eKjE" target="_blank" style="display:block;color:var(--accent2);font-size:.78rem;text-decoration:underline;margin-bottom:.3rem">▶ youtube.com/watch?v=SPJYqR8eKjE</a>
+        <div style="font-size:.72rem;color:var(--text-dim)">Transporte especializado de recipiente a presión de gran tamaño.</div>
+      </div>
+      <div style="padding:.75rem;background:rgba(24,255,255,.06);border:1px solid rgba(24,255,255,.15);border-radius:10px">
+        <div style="font-size:.78rem;font-weight:700;color:var(--accent2);margin-bottom:.5rem">Prueba hidrostática esfera GLP</div>
+        <a href="https://www.youtube.com/watch?v=i3bE_vP7m9o" target="_blank" style="display:block;color:var(--accent2);font-size:.78rem;text-decoration:underline;margin-bottom:.3rem">▶ youtube.com/watch?v=i3bE_vP7m9o</a>
+        <div style="font-size:.72rem;color:var(--text-dim)">Prueba hidrostática y ensayos NDE de esfera de almacenamiento.</div>
+      </div>
+      <div style="padding:.75rem;background:rgba(0,230,118,.06);border:1px solid rgba(0,230,118,.15);border-radius:10px">
+        <div style="font-size:.78rem;font-weight:700;color:var(--accent);margin-bottom:.5rem">Planta de GLP — Operación</div>
+        <a href="https://www.youtube.com/watch?v=7sO2b0jVpLY" target="_blank" style="display:block;color:var(--accent2);font-size:.78rem;text-decoration:underline;margin-bottom:.3rem">▶ youtube.com/watch?v=7sO2b0jVpLY</a>
+        <div style="font-size:.72rem;color:var(--text-dim)">Operación de planta de almacenamiento y distribución de GLP.</div>
+      </div>
+      <div style="padding:.75rem;background:rgba(255,215,64,.06);border:1px solid rgba(255,215,64,.15);border-radius:10px">
+        <div style="font-size:.78rem;font-weight:700;color:var(--accent4);margin-bottom:.5rem">Soldadura esfera ASME</div>
+        <a href="https://www.youtube.com/watch?v=vZ5s7sRqNfA" target="_blank" style="display:block;color:var(--accent2);font-size:.78rem;text-decoration:underline;margin-bottom:.3rem">▶ youtube.com/watch?v=vZ5s7sRqNfA</a>
+        <div style="font-size:.72rem;color:var(--text-dim)">Proceso de soldadura de esfera ASME en sitio de montaje.</div>
+      </div>
+      <div style="padding:.75rem;background:rgba(179,136,255,.06);border:1px solid rgba(179,136,255,.15);border-radius:10px">
+        <div style="font-size:.78rem;font-weight:700;color:var(--accent5);margin-bottom:.5rem">Turbina GE Frame 6 — Referencia</div>
+        <a href="https://www.youtube.com/watch?v=J3FWjG2Sxbw" target="_blank" style="display:block;color:var(--accent2);font-size:.78rem;text-decoration:underline;margin-bottom:.3rem">▶ youtube.com/watch?v=J3FWjG2Sxbw</a>
+        <div style="font-size:.72rem;color:var(--text-dim)">Turbina de gas GE PG 6541/B (Frame 6) en operación — referencia para equipo adicional Escrapalia.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</div><!-- kuka-container -->
+
+<!-- CTA SECTION -->
+<div class="kuka-container">
+  <div class="kuka-cta">
+    <h3>Siguiente Paso: Contactar Escrapalia y Firmar NDA</h3>
+    <p style="font-size:.85rem;color:var(--text-dim);margin-bottom:1rem">La esfera GLP Repsol es una oportunidad estratégica excepcional: equipo nuevo, sin refurbishment, con documentación completa. SURUS Inversa controla el proceso de venta directa.</p>
+    <div class="kuka-grid-2">
+      <div class="kuka-contact-card">
+        <h4 style="color:var(--accent3)">Contacto Escrapalia / SURUS</h4>
+        <div style="font-size:.8rem;line-height:1.6">
+          <div><strong style="color:var(--accent2)">Javier Ramos</strong></div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:.8rem;color:var(--accent)">jramos@surusin.com</div>
+          <div style="margin-top:.3rem"><strong style="color:var(--accent2)">José Santos</strong></div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:.8rem;color:var(--accent)">jsantos@surusin.com</div>
+          <div style="margin-top:.3rem"><strong style="color:var(--accent2)">Mirella Roman</strong> (WhatsApp)</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:.85rem;color:var(--accent)">+34 682 21 28 20</div>
+          <div style="color:var(--text-dim);font-size:.72rem;margin-top:.2rem">Tel. oficina: +34 913 52 45 07</div>
+          <div style="color:var(--text-dim);font-size:.72rem">Camino de las Huertas 18, 28223 Pozuelo de Alarcón, Madrid</div>
+        </div>
+      </div>
+      <div class="kuka-contact-card">
+        <h4 style="color:var(--accent4)">Acción Inmediata</h4>
+        <div style="font-size:.8rem;line-height:1.6">
+          <div style="margin-bottom:.2rem"><span class="kuka-badge kuka-badge-critical">P0</span> Contactar Escrapalia HOY</div>
+          <div style="margin-bottom:.2rem"><span class="kuka-badge kuka-badge-critical">P0</span> Solicitar y firmar NDA</div>
+          <div style="margin-bottom:.2rem"><span class="kuka-badge kuka-badge-high">P1</span> Evaluar documentación técnica con ingeniero ASME</div>
+          <div style="margin-bottom:.2rem"><span class="kuka-badge kuka-badge-high">P1</span> Identificar comprador potencial en LATAM</div>
+          <div style="margin-bottom:.2rem"><span class="kuka-badge kuka-badge-medium">P2</span> Organizar inspección en Sines, Portugal</div>
+          <div><span class="kuka-badge kuka-badge-medium">P2</span> Preparar RFQ para oferta vinculante</div>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:1rem">
+      <a href="/" style="display:inline-block;background:var(--gradient1);color:var(--bg-dark);padding:.75rem 1.5rem;border-radius:10px;font-weight:700;font-size:.85rem;text-decoration:none;transition:transform .2s,box-shadow .2s">← Volver a Investigación Estratégica</a>
+      <a href="https://glp.escrapalia.com/" target="_blank" style="display:inline-block;background:var(--gradient2);color:var(--bg-dark);padding:.75rem 1.5rem;border-radius:10px;font-weight:700;font-size:.85rem;text-decoration:none;margin-left:.5rem;transition:transform .2s,box-shadow .2s">Ver Esfera en Escrapalia →</a>
+      <button onclick="window.print()" style="display:inline-block;background:transparent;border:2px solid var(--accent3);color:var(--accent3);padding:.75rem 1.5rem;border-radius:10px;font-family:'Inter',sans-serif;font-weight:700;font-size:.85rem;cursor:pointer;margin-left:.5rem;transition:all .2s">📄 Descargar PDF</button>
+    </div>
+  </div>
+</div>
+
+<!-- Print Footer -->
+<div class="kuka-print-footer">SURUS Inversa S.L. — Dossier Confidencial Repsol GLP — Generado: Mayo 2026 — Página <span class="page-num"></span></div>
+
+<script>
+// Tab navigation
+document.querySelectorAll('.kuka-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.kuka-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.kuka-section').forEach(s => s.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById(tab.dataset.tab).classList.add('active');
+  });
+});
+</script>
+<script src="/js/tracker.js"></script>
+
+<script src="/js/intel-data.js"></script>
+<script src="/js/intel-operativo.js"></script>
+</body>
+</html>

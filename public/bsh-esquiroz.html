@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<div class="bsh-cta">
+  <h3>&#127919; Accion Inmediata: Subasta Cierra 27 de Mayo</h3>
+  <p style="font-size:.85rem;color:var(--text-dim);margin-bottom:1rem">La ventana es estrecha. Registrar, inspeccionar, y definir estrategia de puja en menos de 2 semanas. Cada dia de retraso reduce la oportunidad.</p>
+  <div class="bsh-grid-2">
+    <div class="bsh-contact-card" style="border-left:3px solid var(--accent)">
+      <h4 style="color:var(--accent)">&#128188; Contacto NetBid</h4>
+      <div style="font-size:.8rem;line-height:1.6">
+        <div><strong style="color:var(--accent2)">Agustin Fernandez</strong></div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:.85rem;color:var(--accent)">fernandez@netbid.com</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:.85rem;color:var(--accent)">+34 627 80 84 08</div>
+        <div style="margin-top:.5rem"><strong style="color:var(--accent2)">Zahira Ortiz</strong></div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:.85rem;color:var(--accent)">ortiz@netbid.com</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:.85rem;color:var(--accent)">+34 637 88 46 09</div>
+      </div>
+    </div>
+    <div class="bsh-contact-card" style="border-left:3px solid var(--accent2)">
+      <h4 style="color:var(--accent2)">&#9203; Accion Inmediata</h4>
+      <div style="font-size:.8rem;line-height:1.6">
+        <div style="margin-bottom:.2rem"><span class="bsh-badge bsh-badge-p0">P0</span> Registrar en NetBid HOY</div>
+        <div style="margin-bottom:.2rem"><span class="bsh-badge bsh-badge-p0">P0</span> Inspeccionar 20-21 mayo</div>
+        <div style="margin-bottom:.2rem"><span class="bsh-badge bsh-badge-p0">P0</span> Definir limites de puja antes del 25 mayo</div>
+        <div style="margin-bottom:.2rem"><span class="bsh-badge bsh-badge-p1">P1</span> Confirmar capacidad financiera</div>
+        <div><span class="bsh-badge bsh-badge-p1">P1</span> Contratar equipo desmontaje con PRL</div>
+      </div>
+    </div>
+  </div>
+  <div style="margin-top:1rem">
+    <a href="/" style="display:inline-block;background:var(--gradient1);color:var(--bg-dark);padding:.75rem 1.5rem;border-radius:10px;font-weight:700;font-size:.85rem;text-decoration:none;transition:transform .2s,box-shadow .2s">&larr; Volver a Investigacion Estrategica</a>
+    <button onclick="window.print()" style="display:inline-block;background:transparent;border:2px solid var(--accent);color:var(--accent);padding:.75rem 1.5rem;border-radius:10px;font-family:'Inter',sans-serif;font-weight:700;font-size:.85rem;cursor:pointer;margin-left:.5rem;transition:all .2s">&#128424; Descargar PDF</button>
+    <a href="https://www.netbid.com/es/subasta/19429" target="_blank" rel="noopener" style="display:inline-block;background:linear-gradient(135deg,var(--accent),var(--accent2));color:var(--bg-dark);padding:.75rem 1.5rem;border-radius:10px;font-weight:700;font-size:.85rem;text-decoration:none;margin-left:.5rem;transition:transform .2s,box-shadow .2s">&#127760; Ir a la Subasta NetBid</a>
+  </div>
+</div>
+
+</div><!-- bsh-container -->
+
+<!-- LIGHTBOX MODAL -->
+<div id="bsh-lightbox" class="bsh-lightbox" onclick="closeLightbox()">
+  <button class="bsh-lb-close" onclick="closeLightbox()" title="Cerrar">&#10005;</button>
+  <button class="bsh-lb-prev" onclick="event.stopPropagation();prevImage()" title="Anterior">&larr;</button>
+  <button class="bsh-lb-next" onclick="event.stopPropagation();nextImage()" title="Siguiente">&rarr;</button>
+  <div class="bsh-lb-content" onclick="event.stopPropagation()">
+    <img id="bsh-lb-img" src="" alt="">
+    <div id="bsh-lb-caption" class="bsh-lb-caption"></div>
+    <div id="bsh-lb-counter" class="bsh-lb-counter"></div>
+  </div>
+</div>
+
+<!-- Print Footer -->
+<div class="bsh-print-footer">SURUS Inversa S.L. &mdash; Dossier P0 Confidencial: BSH Esquiroz &mdash; Generado: Mayo 2026 &mdash; Pagina <span class="page-num"></span></div>
+
+<script>
+// Gallery lightbox
+const galleryImages=[
+  {src:'https://files.netbid.com/images/19492/A19492-4_1_slide.jpg?width=768&height=768&format=webp',caption:'Línea de corte de chapa ARRASATE — Foto real subasta NetBid #19429'},
+  {src:'https://files.netbid.com/images/19492/A19492-7_1_slide.jpg?width=768&height=768&format=webp',caption:'Prensa ARRASATE PE 2-400-2130-1220 — Foto real subasta'},
+  {src:'https://files.netbid.com/images/19492/A19492-11_1_slide.jpg?width=768&height=768&format=webp',caption:'Línea fabricación puertas frigorífico ARRASATE — Foto real'},
+  {src:'https://files.netbid.com/images/19492/A19492-133_1_slide.jpg?width=768&height=768&format=webp',caption:'Robot KUKA KR 150-2 2000 — Foto real subasta'},
+  {src:'https://files.netbid.com/images/19492/A19492-5_1_slide.jpg?width=768&height=768&format=webp',caption:'Puente grúa JASO 3/5 TM — Foto real subasta'},
+  {src:'https://files.netbid.com/images/19492/A19492-135_1_slide.jpg?width=768&height=768&format=webp',caption:'ESA REA 1001A — Helium Recovery System (foto real)'}
+];
+let currentImage=0;
+
+function openLightbox(i){
+  currentImage=i;
+  const lb=document.getElementById('bsh-lightbox');
+  const img=document.getElementById('bsh-lb-img');
+  const cap=document.getElementById('bsh-lb-caption');
+  const cnt=document.getElementById('bsh-lb-counter');
+  img.src=galleryImages[i].src;
+  img.alt=galleryImages[i].caption;
+  cap.textContent=galleryImages[i].caption;
+  cnt.textContent=(i+1)+' / '+galleryImages.length;
+  lb.classList.add('active');
+  document.body.style.overflow='hidden';
+}
+
+function closeLightbox(){
+  document.getElementById('bsh-lightbox').classList.remove('active');
+  document.body.style.overflow='';
+}
+
+function nextImage(){
+  currentImage=(currentImage+1)%galleryImages.length;
+  openLightbox(currentImage);
+}
+
+function prevImage(){
+  currentImage=(currentImage-1+galleryImages.length)%galleryImages.length;
+  openLightbox(currentImage);
+}
+
+document.addEventListener('keydown',(e)=>{
+  if(!document.getElementById('bsh-lightbox').classList.contains('active'))return;
+  if(e.key==='Escape')closeLightbox();
+  if(e.key==='ArrowRight')nextImage();
+  if(e.key==='ArrowLeft')prevImage();
+});
+
+// Smooth scroll for nav links
+document.querySelectorAll('.bsh-nav-links a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',(e)=>{
+    e.preventDefault();
+    const target=document.querySelector(a.getAttribute('href'));
+    if(target)target.scrollIntoView({behavior:'smooth',block:'start'});
+  });
+});
+
+</script>
+<script src="/js/tracker.js"></script>
+
+<script src="/js/intel-data.js"></script>
+<script src="/js/intel-operativo.js"></script>
+</body>
+</html>

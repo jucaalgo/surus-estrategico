@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SURUS Inversa — Inteligencia Estratégica</title>
+<meta name="description" content="Investigación estratégica de subastas industriales activas. Datos verificados, estudios de rentabilidad y contactos directos.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#030308;--card:#0c0c20;--card-h:#141438;--g:#00e676;--c:#18ffff;--o:#ff6e40;--y:#ffd740;--p:#b388ff;--r:#ff4081;--tx:#e8e8f0;--dm:#5a5a7a;--bd:#1a1a32;--grad1:linear-gradient(135deg,#00e676,#18ffff)}
+html{scroll-behavior:smooth}body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--tx);line-height:1.6;overflow-x:hidden}
+a{color:inherit;text-decoration:none}.mono{font-family:'JetBrains Mono',monospace}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(0,230,118,.4)}50%{box-shadow:0 0 0 8px rgba(0,230,118,0)}}
+@keyframes countUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.anim{opacity:0;animation:fadeUp .5s ease forwards}.anim.d1{animation-delay:.1s}.anim.d2{animation-delay:.2s}.anim.d3{animation-delay:.3s}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:100;background:rgba(3,3,8,.92);backdrop-filter:blur(20px);border-bottom:1px solid rgba(26,26,50,.5);padding:0 1.25rem;display:flex;align-items:center;justify-content:space-between;height:52px}
+.nav-logo{font-weight:900;font-size:1rem;background:var(--grad1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;display:flex;align-items:center;gap:.5rem}
+.nav-logo .dot{width:8px;height:8px;border-radius:50%;background:var(--g);animation:pulse 2s infinite}
+.nav-controls{display:flex;gap:.3rem;flex-wrap:wrap;justify-content:flex-end}
+.nav-controls button,.nav-controls select{background:rgba(255,255,255,.04);border:1px solid var(--bd);color:var(--dm);font-size:.6rem;font-weight:700;padding:.3rem .6rem;border-radius:8px;cursor:pointer;transition:.3s;font-family:inherit;text-transform:uppercase;letter-spacing:.3px}
+.nav-controls button:hover,.nav-controls button.active{color:var(--g);background:rgba(0,230,118,.1);border-color:rgba(0,230,118,.3)}
+.nav-controls select{appearance:none;padding-right:1.2rem;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%235a5a7a'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .4rem center}
+
+/* HERO */
+.hero{min-height:40vh;display:flex;align-items:center;justify-content:center;padding:3rem 2rem 1.5rem;position:relative;text-align:center}
+.hero-glow{position:absolute;width:400px;height:400px;border-radius:50%;filter:blur(100px);opacity:.12;pointer-events:none}
+.hero-glow.g1{background:var(--g);top:-80px;left:15%}.hero-glow.g2{background:var(--c);bottom:-80px;right:10%}
+.hero-content{position:relative;z-index:2;max-width:800px}
+.hero h1{font-size:clamp(1.8rem,4.5vw,3rem);font-weight:900;line-height:1.05;margin-bottom:.75rem;letter-spacing:-.5px}
+.hero h1 .hl{background:var(--grad1);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero p{font-size:.85rem;color:var(--dm);max-width:550px;margin:0 auto;line-height:1.7}
+.hero-stats{display:flex;gap:2rem;justify-content:center;margin-top:1.5rem;flex-wrap:wrap}
+.hero-stat .num{font-size:1.8rem;font-weight:900;font-family:'JetBrains Mono',monospace;display:block;line-height:1}
+.hero-stat .lbl{font-size:.55rem;color:var(--dm);text-transform:uppercase;letter-spacing:1px;margin-top:.15rem;display:block}
+
+/* MAP */
+#map{width:100%;height:360px;border-radius:16px;border:1px solid var(--bd);margin-bottom:2rem;overflow:hidden;position:relative}
+.map-legend{position:absolute;top:10px;right:10px;z-index:1000;background:rgba(12,12,32,.92);backdrop-filter:blur(8px);border:1px solid var(--bd);border-radius:10px;padding:.6rem .8rem;font-size:.6rem}
+.map-legend-title{font-weight:800;font-size:.65rem;margin-bottom:.35rem;color:var(--tx)}
+.map-legend-item{display:flex;align-items:center;gap:.4rem;margin-bottom:.2rem}
+.map-legend-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.map-legend-label{color:var(--dm)}
+.leaflet-popup-content-wrapper{background:rgba(12,12,32,.95)!important;color:#e8e8f0!important;border:1px solid rgba(0,230,118,.3)!important;border-radius:12px!important;box-shadow:0 8px 30px rgba(0,230,118,.1),0 4px 20px rgba(0,0,0,.5)!important}
+.leaflet-popup-tip{background:rgba(12,12,32,.95)!important}
+.leaflet-popup-content{margin:10px 14px!important;font-family:'Inter',sans-serif!important;font-size:.75rem!important;line-height:1.5!important}
+.popup-title{font-weight:800;font-size:.9rem;margin-bottom:.2rem}
+.popup-desc{color:#b0b0cc;font-size:.7rem}
+.popup-tag{display:inline-block;font-size:.55rem;font-weight:700;padding:.1rem .45rem;border-radius:12px;margin-right:.2rem}
+.popup-link{color:#18ffff;font-weight:700;font-size:.7rem;text-decoration:none;display:inline-block;margin-top:.4rem}
+
+/* KPI */
+.kpi-bar{display:grid;grid-template-columns:repeat(6,1fr);gap:.5rem;max-width:1200px;margin:0 auto 1.5rem;padding:0 1.25rem}
+.kpi{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:.75rem .5rem;text-align:center;transition:.3s}
+.kpi:hover{transform:translateY(-3px);border-color:rgba(0,230,118,.3);box-shadow:0 8px 25px rgba(0,230,118,.06)}
+.kpi .v{font-size:1.4rem;font-weight:900;font-family:'JetBrains Mono',monospace;line-height:1.1}
+.kpi .l{font-size:.5rem;color:var(--dm);text-transform:uppercase;letter-spacing:.3px;margin-top:.15rem}
+
+.wrap{max-width:1200px;margin:0 auto;padding:0 1.25rem;position:relative;z-index:1}
+.sh{font-size:1.1rem;font-weight:800;margin-bottom:1.25rem;display:flex;align-items:center;gap:.6rem}
+.sh .icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
+
+/* OPP CARDS */
+.opp{background:var(--card);border:1px solid var(--bd);border-radius:16px;margin-bottom:.75rem;overflow:hidden;transition:.4s;position:relative}
+.opp::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;opacity:0;transition:.3s}
+.opp:hover::before{opacity:1}
+.opp.p0::before{background:var(--o)}.opp.p1::before{background:var(--c)}.opp.p2::before{background:var(--y)}
+.opp:hover{border-color:rgba(0,230,118,.2);box-shadow:0 6px 30px rgba(0,0,0,.25)}
+.opp-h{display:flex;gap:.85rem;padding:1rem;cursor:pointer;align-items:flex-start}
+.opp-ico{font-size:1.7rem;flex-shrink:0;width:44px;height:44px;display:flex;align-items:center;justify-content:center;border-radius:10px;background:rgba(255,255,255,.02)}
+.opp-inf{flex:1;min-width:0}
+.opp-t{font-size:.95rem;font-weight:800;line-height:1.3}
+.opp-d{font-size:.75rem;color:var(--dm);margin-top:.15rem;line-height:1.5}
+.opp-tags{display:flex;flex-wrap:wrap;gap:.25rem;margin-top:.5rem}
+.t{font-size:.52rem;font-weight:700;padding:.12rem .45rem;border-radius:20px;text-transform:uppercase;letter-spacing:.3px;white-space:nowrap}
+.t-p0{background:rgba(255,110,64,.12);color:#ff6e40;border:1px solid rgba(255,110,64,.25)}
+.t-p1{background:rgba(24,255,255,.08);color:#18ffff;border:1px solid rgba(24,255,255,.2)}
+.t-p2{background:rgba(255,215,64,.08);color:#ffd740;border:1px solid rgba(255,215,64,.2)}
+.t-ok{background:rgba(0,230,118,.08);color:#00e676;border:1px solid rgba(0,230,118,.2)}
+.t-m{background:rgba(0,230,118,.08);color:#00e676;border:1px solid rgba(0,230,118,.2)}
+.t-loc{background:rgba(255,255,255,.03);color:var(--tx);border:1px solid rgba(255,255,255,.07)}
+.t-neg{background:rgba(179,136,255,.08);color:#b388ff;border:1px solid rgba(179,136,255,.2)}
+
+.opp-toggle{display:flex;align-items:center;justify-content:center;padding:.35rem;font-size:.6rem;font-weight:700;color:var(--dm);cursor:pointer;transition:.3s;background:rgba(255,255,255,.015);text-transform:uppercase;letter-spacing:.8px;gap:.25rem}
+.opp-toggle:hover{color:var(--g);background:rgba(0,230,118,.03)}
+.opp-toggle .arr{transition:.3s;font-size:.65rem}
+.opp.exp .opp-toggle .arr{transform:rotate(180deg)}
+.opp-det{max-height:0;overflow:hidden;transition:max-height .5s ease}
+.opp.exp .opp-det{max-height:3000px}
+
+.ds{padding:0 1rem .75rem}.ds+.ds{border-top:1px solid rgba(255,255,255,.03);padding-top:.75rem;margin-top:.4rem}
+.ds-t{font-size:.65rem;font-weight:800;text-transform:uppercase;letter-spacing:.8px;margin-bottom:.5rem;display:flex;align-items:center;gap:.35rem}
+.ds-t.tp0{color:var(--o)}.ds-t.tp1{color:var(--c)}.ds-t.tp2{color:var(--y)}.ds-t.tg{color:var(--g)}.ds-t.tpr{color:var(--p)}
+
+.pg{display:grid;grid-template-columns:repeat(3,1fr);gap:.4rem}
+.pi{background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.03);border-radius:8px;padding:.5rem;text-align:center;transition:.2s}
+.pi:hover{border-color:rgba(0,230,118,.15)}
+.pi .pv{font-size:.85rem;font-weight:900;font-family:'JetBrains Mono',monospace;line-height:1.2}
+.pi .pl{font-size:.45rem;color:var(--dm);text-transform:uppercase;letter-spacing:.2px;margin-top:.1rem}
+
+.sts{display:flex;flex-wrap:wrap;gap:.3rem}
+.st{font-size:.6rem;color:var(--dm);background:rgba(255,110,64,.04);border:1px solid rgba(255,110,64,.12);padding:.2rem .5rem;border-radius:6px;line-height:1.4;transition:.2s}
+.st:hover{border-color:rgba(255,110,64,.3)}.st b{color:var(--o)}
+
+/* BUYERS */
+.buyers{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:.4rem;margin-top:.4rem}
+.buyer{background:rgba(179,136,255,.04);border:1px solid rgba(179,136,255,.1);border-radius:8px;padding:.5rem;transition:.2s}
+.buyer:hover{border-color:rgba(179,136,255,.25)}
+.buyer .bn{font-size:.72rem;font-weight:800;color:var(--p)}
+.buyer .bd{font-size:.6rem;color:var(--dm);margin-top:.1rem}
+
+.cl{display:flex;align-items:center;gap:.5rem;padding:.4rem 0;flex-wrap:wrap}
+.cl .stars{color:#ffd740;font-size:.65rem;letter-spacing:1px}
+.cl .name{font-weight:800;font-size:.8rem}
+.cl .role{font-size:.65rem;color:var(--dm)}
+.cl a{color:var(--c);font-size:.68rem;font-weight:600}
+
+.acts{display:flex;gap:.4rem;padding:0 1rem 1rem;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:.25rem;font-size:.62rem;font-weight:700;padding:.4rem .75rem;border-radius:8px;transition:.3s;cursor:pointer;font-family:inherit;border:none}
+.btn-p{background:rgba(0,230,118,.12);color:#00e676;border:1px solid rgba(0,230,118,.25)}
+.btn-p:hover{background:rgba(0,230,118,.2);box-shadow:0 0 15px rgba(0,230,118,.1)}
+.btn-s{background:rgba(24,255,255,.06);color:#18ffff;border:1px solid rgba(24,255,255,.15)}
+.btn-s:hover{background:rgba(24,255,255,.12)}
+
+/* TABLE */
+.pt{width:100%;border-collapse:collapse;font-size:.65rem;margin-top:1rem}
+.pt th{background:rgba(0,230,118,.04);color:var(--g);font-size:.5rem;font-weight:700;text-transform:uppercase;letter-spacing:.3px;padding:.45rem .3rem;text-align:left;border-bottom:1px solid var(--bd);white-space:nowrap}
+.pt td{padding:.35rem .3rem;border-bottom:1px solid rgba(255,255,255,.02);vertical-align:middle}
+.pt tr:hover td{background:rgba(0,230,118,.01)}
+.pt a{color:var(--c);text-decoration:none;font-weight:600}.pt a:hover{text-decoration:underline}
+
+/* TIMELINE */
+.tl{position:relative;padding-left:1.75rem;margin-top:1rem}
+.tl::before{content:'';position:absolute;left:6px;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--o),var(--c),var(--y),var(--p))}
+.tli{position:relative;padding:.6rem 0 .6rem .85rem;animation:fadeUp .4s ease forwards;opacity:0}
+.tli:nth-child(1){animation-delay:.05s}.tli:nth-child(2){animation-delay:.1s}.tli:nth-child(3){animation-delay:.15s}.tli:nth-child(4){animation-delay:.2s}.tli:nth-child(5){animation-delay:.25s}.tli:nth-child(6){animation-delay:.3s}.tli:nth-child(7){animation-delay:.35s}
+.tli::before{content:'';position:absolute;left:-1.75rem;top:.9rem;width:14px;height:14px;border-radius:50%;border:2px solid var(--bd);background:var(--bg)}
+.tli.p0::before{border-color:var(--o);background:rgba(255,110,64,.3);box-shadow:0 0 8px rgba(255,110,64,.3)}
+.tli.p1::before{border-color:var(--c);background:rgba(24,255,255,.3);box-shadow:0 0 8px rgba(24,255,255,.3)}
+.tli.p2::before{border-color:var(--y);background:rgba(255,215,64,.3);box-shadow:0 0 8px rgba(255,215,64,.3)}
+.tli-d{font-size:.6rem;font-weight:800;text-transform:uppercase;letter-spacing:.4px}
+.tli.p0 .tli-d{color:var(--o)}.tli.p1 .tli-d{color:var(--c)}.tli.p2 .tli-d{color:var(--y)}
+.tli-t{font-size:.82rem;font-weight:800;margin-top:.05rem}
+.tli-ds{font-size:.65rem;color:var(--dm);margin-top:.05rem;line-height:1.4}
+
+footer{text-align:center;padding:2rem 1.25rem 1rem;border-top:1px solid var(--bd);margin-top:1rem}
+footer p{font-size:.6rem;color:var(--dm);line-height:1.6}
+footer a{color:var(--c);text-decoration:none}footer a:hover{text-decoration:underline}
+
+/* BACK TO TOP */
+.back-top{position:fixed;bottom:1.5rem;right:1.5rem;width:40px;height:40px;border-radius:50%;background:rgba(0,230,118,.15);border:1px solid rgba(0,230,118,.3);color:var(--g);display:none;align-items:center;justify-content:center;cursor:pointer;font-size:1.1rem;z-index:999;transition:.3s;backdrop-filter:blur(8px)}
+.back-top:hover{background:rgba(0,230,118,.25);transform:translateY(-2px)}
+.back-top.show{display:flex}
+
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--bd);border-radius:3px}
+@media(max-width:768px){.kpi-bar{grid-template-columns:repeat(3,1fr)}.pg{grid-template-columns:1fr 1fr}.hero h1{font-size:1.5rem}.hero-stats{gap:1rem}.nav-controls{gap:.2rem}.nav-controls button,.nav-controls select{font-size:.5rem;padding:.2rem .4rem}.buyers{grid-template-columns:1fr}#map{height:250px}}
+@media(max-width:480px){.kpi-bar{grid-template-columns:repeat(2,1fr)}.pg{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="#" class="nav-logo"><span class="dot"></span> SURUS Intel</a>
+  <div class="nav-controls">
+    <button class="active" data-filter="all">Todas</button>
+    <button data-filter="p0">P0</button>
+    <button data-filter="p1">P1</button>
+    <button data-filter="p2">P2</button>
+    <button data-filter="concurso" style="border-color:rgba(179,136,255,.3)">&#9878; Concurso</button>
+    <select id="statusFilter" title="Estado" style="background:rgba(255,255,255,.04);border:1px solid var(--bd);color:var(--dm);font-size:.6rem;font-weight:700;padding:.3rem 1.2rem .3rem .6rem;border-radius:8px;cursor:pointer;font-family:inherit;appearance:none;background-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%235a5a7a'/%3E%3C/svg%3E&quot;);background-repeat:no-repeat;background-position:right .4rem center">
+      <option value="all">Estado</option>
+      <option value="activa">Activas</option>
+      <option value="cerrada">Cerradas</option>
+      <option value="pendiente">Pendientes</option>
+    </select>
+    <input id="searchBox" type="text" placeholder="Buscar..." style="background:rgba(255,255,255,.04);border:1px solid var(--bd);color:var(--tx);font-size:.6rem;font-weight:600;padding:.3rem .6rem;border-radius:8px;width:110px;font-family:inherit;outline:none;transition:.3s" onfocus="this.style.borderColor='rgba(0,230,118,.4)'" onblur="this.style.borderColor='var(--bd)'">
+    <select id="sortSelect" title="Ordenar">
+      <option value="priority">Prioridad</option>
+      <option value="margin">Margen %</option>
+      <option value="investment">Inversión</option>
+    </select>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-glow g1"></div>
+  <div class="hero-glow g2"></div>
+  <div class="hero-content anim">
+    <div style="margin-bottom:.75rem"><span class="t t-ok" style="font-size:.65rem;padding:.2rem .7rem">&#10003; 18 oportunidades verificadas · Mayo 2026</span></div>
+    <h1>Inteligencia de <span class="hl">Oportunidades Reales</span></h1>
+    <p>Subastas industriales + concursos de acreedores con estudio de rentabilidad, contactos calificados y guías de acceso.</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><span class="num" style="color:var(--o)">4</span><span class="lbl">P0 Urgentes</span></div>
+      <div class="hero-stat"><span class="num" style="color:var(--c)">8</span><span class="lbl">P1 Alta</span></div>
+      <div class="hero-stat"><span class="num" style="color:var(--g)">25-55%</span><span class="lbl">Margen Neto</span></div>
+      <div class="hero-stat"><span class="num" style="color:var(--o)">5</span><span class="lbl">Concursos</span></div>
+    </div>
+  </div>
+</section>
+
+<div style="position:relative">
+<div id="map"></div>
+<div class="map-legend">
+  <div class="map-legend-title">Margen Neto Est.</div>
+  <div class="map-legend-item"><div class="map-legend-dot" style="background:#00e676"></div><span class="map-legend-label">50%+ Alto</span></div>
+  <div class="map-legend-item"><div class="map-legend-dot" style="background:#ffd740"></div><span class="map-legend-label">40-50% Medio-Alto</span></div>
+  <div class="map-legend-item"><div class="map-legend-dot" style="background:#ff6e40"></div><span class="map-legend-label">35-40% Medio</span></div>
+  <div class="map-legend-item"><div class="map-legend-dot" style="background:#ff4444"></div><span class="map-legend-label">&lt;35% Bajo</span></div>
+</div>
+</div>
+
+<div class="kpi-bar">
+  <div class="kpi anim d1"><div class="v" style="color:var(--o)">4</div><div class="l">P0 Urgentes</div></div>
+  <div class="kpi anim d2"><div class="v" style="color:var(--c)">8</div><div class="l">P1 Alta</div></div>
+  <div class="kpi anim d3"><div class="v" style="color:var(--y)">7</div><div class="l">P2 Monitoreo</div></div>
+  <div class="kpi anim d4"><div class="v" style="color:var(--g)">25-55%</div><div class="l">Margen Neto</div></div>
+  <div class="kpi anim d5"><div class="v" style="color:var(--p)">€5M+</div><div class="l">Inversión Total Est.</div></div>
+  <div class="kpi anim d6"><div class="v" style="color:var(--r)">5</div><div class="l">Concursos Activos</div></div>
+</div>
+
+<div class="wrap" id="opps-container">
+
+<div class="sh"><span class="icon" style="background:rgba(0,230,118,.1);color:var(--g)">&#127919;</span> Oportunidades Verificadas</div>
+
+<div id="opps-list">
+
+<div class="opp p0" data-p="p0" data-margin="40" data-invest="800" data-status="activa" id="bsh">
+  <div class="opp-h" onclick="toggle('bsh')">
+    <div class="opp-ico">&#9889;</div>
+    <div class="opp-inf">
+      <div class="opp-t">BSH Esquiroz — Cierre Planta Electrodomésticos</div>
+      <div class="opp-d">225 lotos · Prensas ARISA 1600tn, líneas ARRASATE, grúas JASO, robots ABB · <strong>27 Mayo 2026</strong> · Navarra, España · <em style="color:#ffd740">+18% comisión + 21% IVA</em></div>
+      <div class="opp-tags"><span class="t t-p0">&#128293; P0</span><span class="t t-ok">&#10003;</span><span class="t t-m">35-50%</span><span class="t t-loc">&#127466;&#127480; España</span></div>
+    </div>
+  </div>
+  <div class="opp-toggle" onclick="toggle('bsh')"><span>Estudio completo y compradores</span><span class="arr">&#9660;</span></div>
+  <div class="opp-det">
+    <div class="ds"><div class="ds-t tp0">&#128200; Rentabilidad</div>
+      <div class="pg"><div class="pi"><div class="pv" style="color:var(--o)">€940K-3M</div><div class="pl">Inversión (+18%+21%)</div></div><div class="pi"><div class="pv" style="color:var(--g)">€1.2M-4.5M</div><div class="pl">Reventa</div></div><div class="pi"><div class="pv" style="color:var(--y)">35-50%</div><div class="pl">Margen Neto</div></div><div class="pi"><div class="pv" style="color:var(--c)">40-70%</div><div class="pl">ROI</div></div><div class="pi"><div class="pv" style="color:var(--p)">3-6m</div><div class="pl">Payback</div></div><div class="pi"><div class="pv" style="color:var(--o)">Medio</div><div class="pl">Riesgo</div></div></div>
+      <div style="background:rgba(24,255,255,.06);border:1px solid rgba(24,255,255,.15);border-radius:8px;padding:.5rem;margin-top:.5rem;font-size:.7rem;color:#18ffff">&#9432; Precio de salida ARISA: €16.000 (no €32.000). NetBid cobra 18% comisión comprador + 21% IVA. El lote estrella es EISENMANN KTL (Allgaier) con margen 233-567%.</div>
+    </div>
+    <div class="ds"><div class="ds-t tpr">&#127919; Cómo Pujar — NetBid</div>
+      <div class="sts"><span class="st"><b>1.</b> Registrarse en netbid.com</span><span class="st"><b>2.</b> Verificar identidad (CIF/pasaporte)</span><span class="st"><b>3.</b> Depósito fianza 10-25%</span><span class="st"><b>4.</b> Inspección: 20-21 Mayo</span><span class="st"><b>5.</b> Pujar online 27 Mayo</span><span class="st"><b>6.</b> Pago 7-14 días</span></div>
+    </div>
+    <div class="ds"><div class="ds-t tpr">&#128101; Posibles Compradores</div>
+      <div class="buyers">
+        <div class="buyer"><div class="bn">Fabricantes electrodomésticos</div><div class="bd">Beko, Vestel (Turquía), Midea, Haier (China) — expansión de capacidad</div></div>
+        <div class="buyer"><div class="bn">Estampadoras metalúrgicas</div><div class="bd">Empresas de conformado que compran prensas ARISA de segunda mano</div></div>
+        <div class="buyer"><div class="bn">Integradores de robots</div><div class="bd">System integrators que revenden ABB robots con margen 30-50%</div></div>
+        <div class="buyer"><div class="bn">Dealers de maquinaria</div><div class="bd">HERRLES, Surplex Marketplace, Machineseeker — reventa directa</div></div>
+      </div>
+    </div>
+    <div class="ds"><div class="ds-t tg">&#128100; Contactos</div>
+      <div class="cl"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span><span class="name">Agustín Fernández Fibla</span><span class="role">Operations Manager Spain · +34 627 80 8408</span><a href="mailto:fernandez@netbid.com">fernandez@netbid.com</a><span class="t t-ok" style="font-size:.45rem">ES/EN</span></div>
+      <div class="cl" style="margin-top:.2rem"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9734;</span><span class="name">Zahira Ortiz Padilla</span><span class="role">Business Operations Manager · +34 637 88 4609</span><a href="mailto:ortiz@netbid.com">ortiz@netbid.com</a><span class="t" style="background:rgba(24,255,255,.08);color:#18ffff;border:1px solid rgba(24,255,255,.2);font-size:.45rem;padding:.12rem .45rem;border-radius:20px">Logística</span></div>
+    </div>
+    <div class="acts"><a href="/bsh-esquiroz.html" class="btn btn-p">&#128196; Dossier</a><a href="https://www.netbid.com/en/auctions/32223233-32222740-industrial-auction-spain-factory-closure-bsh-esquiroz-plant-production-assembly-lines-for-home-appliances" target="_blank" class="btn btn-s">&#128279; NetBid</a></div>
+  </div>
+</div>
+
+<div class="opp p0" data-p="p0" data-margin="57" data-invest="1500" data-status="activa" id="kuka471">
+  <div class="opp-h" onclick="toggle('kuka471')">
+    <div class="opp-ico">&#129302;</div>
+    <div class="opp-inf">
+      <div class="opp-t">471 Robots KUKA — Planta Automotriz Alemana</div>
+      <div class="opp-d">143 KRC2 (2002) + 328 KRC4 (2013-2018) + DÃœRR + FRONIUS + ATLAS COPCO · <strong>Inspección: solo con cita</strong> · <em style="color:#ffd740">+18% comisión comprador + 21% IVA</em></div>
+      <div class="opp-tags"><span class="t t-p0">&#128293; P0</span><span class="t t-ok">&#10003;</span><span class="t t-m">40-55%</span><span class="t t-loc">&#127465;&#127466; Alemania</span></div>
+    </div>
+  </div>
+  <div class="opp-toggle" onclick="toggle('kuka471')"><span>Estudio completo y compradores</span><span class="arr">&#9660;</span></div>
+  <div class="opp-det">
+    <div class="ds"><div class="ds-t tp0">&#128200; Rentabilidad</div>
+      <div class="pg"><div class="pi"><div class="pv" style="color:var(--o)">€2.1M-3.8M</div><div class="pl">Inversión (+comisión+IVA)</div></div><div class="pi"><div class="pv" style="color:var(--g)">€4.5M-7.5M</div><div class="pl">Reventa</div></div><div class="pi"><div class="pv" style="color:var(--y)">40-55%</div><div class="pl">Margen Neto</div></div><div class="pi"><div class="pv" style="color:var(--c)">50-100%</div><div class="pl">ROI</div></div><div class="pi"><div class="pv" style="color:var(--p)">3-6m</div><div class="pl">Payback</div></div><div class="pi"><div class="pv" style="color:var(--o)">Medio</div><div class="pl">Riesgo</div></div></div>
+    </div>
+    <div class="ds"><div class="ds-t tp0">&#127919; Cómo Pujar</div>
+      <div class="sts"><span class="st"><b>1.</b> Registrarse en netbid.com</span><span class="st"><b>2.</b> Verificar identidad corporativa</span><span class="st"><b>3.</b> Solicitar inspección con Ingo Weyand</span><span class="st"><b>4.</b> Depósito fianza según lote</span><span class="st"><b>5.</b> Pujar online Q2 2026</span><span class="st"><b>6.</b> Pago y recogida 14 días</span></div>
+    </div>
+    <div class="ds"><div class="ds-t tpr">&#128101; Posibles Compradores</div>
+      <div class="buyers">
+        <div class="buyer"><div class="bn">Dealers de robots usados</div><div class="bd">IRS Robotics, Eurobots, Global Robots, RobotWorx — compran por lote, revenden individual</div></div>
+        <div class="buyer"><div class="bn">Fabricantes automotrices en expansión</div><div class="bd">BYD, Tesla, VinFast — necesidad masiva de robots para nuevas plantas</div></div>
+        <div class="buyer"><div class="bn">Integradores de sistemas</div><div class="bd">Siemens, Bosch Rexroth, GÃœDEL — integración en proyectos llave en mano</div></div>
+        <div class="buyer"><div class="bn">Mercado Este Europeo / India</div><div class="bd">Fabricantes que buscan robots KRC4 a 40-60% del precio nuevo</div></div>
+      </div>
+    </div>
+    <div class="ds"><div class="ds-t tg">&#128100; Contacto</div>
+      <div class="cl"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span><span class="name">Ingo Weyand</span><span class="role">NetBid Senior · +49 173 718 70 00</span><a href="mailto:weyand@netbid.com">weyand@netbid.com</a><span class="t t-ok" style="font-size:.45rem">24/7</span></div>
+    </div>
+    <div class="acts"><a href="/kuka-robots-471.html" class="btn btn-p">&#128196; Dossier</a><a href="https://www.netbid.com/de/auktionen/30689056-30688767-roboter-schweissgeraete-und-montagezubehoer-aus-der-automobilindustrie" target="_blank" class="btn btn-s">&#128279; NetBid</a></div>
+  </div>
+</div>
+
+<div class="opp p0" data-p="p0" data-margin="35" data-invest="500" data-status="cerrada" id="kuka134">
+  <div class="opp-h" onclick="toggle('kuka134')">
+    <div class="opp-ico">&#129302;</div>
+    <div class="opp-inf">
+      <div class="opp-t">134 Robots Industriales — Surplex <span style="color:#ff4444;font-size:.7rem;font-weight:700">SUBASTA CERRADA</span></div>
+      <div class="opp-d">92 KUKA (KR140-420, LBR IIWA) + 12 ABB (IRB1600, YUMI) + EPSON, StÃ¤ubli, Yaskawa · <strong>132/134 lotos sin precio de reserva alcanzado</strong> · Recklinghausen & Lünen</div>
+      <div class="opp-tags"><span class="t t-p0">&#128293; P0</span><span class="t" style="background:rgba(255,68,68,.12);color:#ff4444;border:1px solid rgba(255,68,68,.25)">&#9888; CERRADA — Negociar post-subasta</span><span class="t t-m">35-50%</span><span class="t t-loc">&#127465;&#127466; Alemania</span></div>
+    </div>
+  </div>
+  <div class="opp-toggle" onclick="toggle('kuka134')"><span>Estudio completo y compradores</span><span class="arr">&#9660;</span></div>
+  <div class="opp-det">
+    <div class="ds"><div class="ds-t tp0">&#128200; Rentabilidad</div>
+      <div class="pg"><div class="pi"><div class="pv" style="color:var(--o)">€500K-1.5M</div><div class="pl">Inversión (negociación)</div></div><div class="pi"><div class="pv" style="color:var(--g)">€750K-2.2M</div><div class="pl">Reventa</div></div><div class="pi"><div class="pv" style="color:var(--y)">35-50%</div><div class="pl">Margen Neto</div></div><div class="pi"><div class="pv" style="color:var(--c)">50-85%</div><div class="pl">ROI</div></div><div class="pi"><div class="pv" style="color:var(--p)">2-4m</div><div class="pl">Payback</div></div><div class="pi"><div class="pv" style="color:var(--o)">Medio</div><div class="pl">Riesgo</div></div></div>
+      <div style="background:rgba(255,68,68,.06);border:1px solid rgba(255,68,68,.15);border-radius:8px;padding:.5rem;margin-top:.5rem;font-size:.7rem;color:#ff6e40"><strong>&#9888; Subasta cerrada:</strong> 132 de 134 lotos no alcanzaron precio de reserva. <strong>Estrategia:</strong> Contactar a Surplex/TBAuctions para negociar precios post-subasta — mejor posición compradora.</div>
+    </div>
+    <div class="ds"><div class="ds-t tpr">&#128101; Posibles Compradores</div>
+      <div class="buyers">
+        <div class="buyer"><div class="bn">Dealers robots usados</div><div class="bd">IRS Robotics, Eurobots, RobotWorx — revenden individual con 40-80% margen</div></div>
+        <div class="buyer"><div class="bn">Universidades / centros formación</div><div class="bd">Escuelas de robótica y automación que necesitan KUKA/ABB para formación</div></div>
+        <div class="buyer"><div class="bn">PYME manufactureras</div><div class="bd">Empresas que necesitan automatización pero no pueden pagar robots nuevos (€50-150K)</div></div>
+      </div>
+    </div>
+    <div class="ds"><div class="ds-t tg">&#128100; Contacto</div>
+      <div class="cl"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9734;</span><span class="name">P. Schulze</span><span class="role">TBAuctions / Surplex</span><a href="mailto:p.schulze@tbauctions.com">p.schulze@tbauctions.com</a><span class="t t-p1" style="font-size:.45rem">Con cita</span></div>
+    </div>
+    <div class="acts"><a href="https://www.tbauctions.com/en/auctions/?q=industrial+robots" target="_blank" class="btn btn-p">&#128279; Buscar en TBAuctions</a><a href="https://www.surplex.com/en/a/" target="_blank" class="btn btn-s">&#128279; Surplex (catálogo robots)</a></div>
+  </div>
+</div>
+
+<div class="opp p1" data-p="p1" data-margin="52" data-invest="300" data-status="cerrada" id="allgaier">
+  <div class="opp-h" onclick="toggle('allgaier')">
+    <div class="opp-ico">&#9881;&#65039;</div>
+    <div class="opp-inf">
+      <div class="opp-t">Allgaier France — Cierre Planta Automotriz</div>
+      <div class="opp-d">56 lotos + 2.000+ items · ARISA 1600tn (€367K), EISENMANN KTL (€60K â†’ reventa &gt;€300K), 4 ABB · <strong>Subasta cerró 12 Mayo — After Sale — verificar lotes sin vender</strong></div>
+      <div class="opp-tags"><span class="t t-p1">&#9889; P1</span><span class="t" style="background:rgba(255,68,68,.12);color:#ff4444;border:1px solid rgba(255,68,68,.25)">&#9888; After Sale</span><span class="t t-m">40-65%</span><span class="t t-loc">&#127465;&#127467; Francia</span></div>
+    </div>
+  </div>
+  <div class="opp-toggle" onclick="toggle('allgaier')"><span>Estudio completo y compradores</span><span class="arr">&#9660;</span></div>
+  <div class="opp-det">
+    <div class="ds"><div class="ds-t tp1">&#128200; Rentabilidad</div>
+      <div class="pg"><div class="pi"><div class="pv" style="color:var(--o)">€300K-800K</div><div class="pl">Inversión</div></div><div class="pi"><div class="pv" style="color:var(--g)">€500K-1.3M</div><div class="pl">Reventa</div></div><div class="pi"><div class="pv" style="color:var(--y)">40-65%</div><div class="pl">Margen</div></div><div class="pi"><div class="pv" style="color:var(--c)">50-120%</div><div class="pl">ROI</div></div><div class="pi"><div class="pv" style="color:var(--p)">2-4m</div><div class="pl">Payback</div></div><div class="pi"><div class="pv" style="color:var(--o)">Medio</div><div class="pl">Riesgo</div></div></div>
+    </div>
+    <div class="ds"><div class="ds-t tpr">&#128101; Posibles Compradores</div>
+      <div class="buyers">
+        <div class="buyer"><div class="bn">Estampadoras automotrices</div><div class="bd">Plantas en Turquía, India, México que necesitan prensas ARISA de 2ª mano</div></div>
+        <div class="buyer"><div class="bn">Empresas pintura/coating</div><div class="bd">EISENMANN KTL a €60K â†’ reventa &gt;€300K (233-567% margen) — compra estrella</div></div>
+        <div class="buyer"><div class="bn">Dealers maquinaria Alemania</div><div class="bd">Surplus Machinery, Machineseeker — reventa de prensas y sistemas</div></div>
+      </div>
+    </div>
+    <div class="ds"><div class="ds-t tg">&#128100; Contacto</div>
+      <div class="cl"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span><span class="name">Dr. Hermann Jauch</span><span class="role">NetBid Director · +49 171 325 40 72</span><a href="mailto:jauch@netbid.com">jauch@netbid.com</a><span class="t t-ok" style="font-size:.45rem">Directo</span></div>
+    </div>
+    <div class="acts"><a href="/allgaier-france.html" class="btn btn-p">&#128196; Dossier</a><a href="https://www.netbid.com/en/auctions/32112641-31604993-plant-closure-production-facilities-of-an-automotive-supplier-allgaier-plants-in-france" target="_blank" class="btn btn-s">&#128279; NetBid</a></div>
+  </div>
+</div>
+
+<div class="opp p1" data-p="p1" data-margin="45" data-invest="200" data-status="cerrada" id="skoda">
+  <div class="opp-h" onclick="toggle('skoda')">
+    <div class="opp-ico">&#129302;</div>
+    <div class="opp-inf">
+      <div class="opp-t">Å koda Auto — 19 Robots KUKA KRC4-270 (2020)</div>
+      <div class="opp-d">19 KUKA KR270 R2700 Ultra (año 2020) + Linde + soldadura + IT · <strong>Subasta cerrada 15 Mayo — verificar lotes sin vender</strong> · Chequia</div>
+      <div class="opp-tags"><span class="t t-p1">&#9889; P1</span><span class="t" style="background:rgba(255,68,68,.12);color:#ff4444;border:1px solid rgba(255,68,68,.25)">&#9888; Cerrada 15 Mayo</span><span class="t t-m">50-120%</span><span class="t t-loc">&#127464;&#127479; Chequia</span></div>
+    </div>
+  </div>
+  <div class="opp-toggle" onclick="toggle('skoda')"><span>Estudio completo y compradores</span><span class="arr">&#9660;</span></div>
+  <div class="opp-det">
+    <div class="ds"><div class="ds-t tp1">&#128200; Rentabilidad</div>
+      <div class="pg"><div class="pi"><div class="pv" style="color:var(--o)">€200K-500K</div><div class="pl">Inversión</div></div><div class="pi"><div class="pv" style="color:var(--g)">€300K-775K</div><div class="pl">Reventa</div></div><div class="pi"><div class="pv" style="color:var(--y)">35-55%</div><div class="pl">Margen</div></div><div class="pi"><div class="pv" style="color:var(--c)">50-120%</div><div class="pl">ROI</div></div><div class="pi"><div class="pv" style="color:var(--p)">2-4m</div><div class="pl">Payback</div></div><div class="pi"><div class="pv" style="color:var(--o)">Medio</div><div class="pl">Riesgo</div></div></div>
+    </div>
+    <div class="ds"><div class="ds-t tpr">&#128101; Posibles Compradores</div>
+      <div class="buyers">
+        <div class="buyer"><div class="bn">Fabricantes EV en expansión</div><div class="bd">BYD, Tesla, VinFast — necesitan robots soldadura KRC4-270 (modelo 2020, el más joven del mercado usado)</div></div>
+        <div class="buyer"><div class="bn">Dealers de robots KUKA</div><div class="bd">KUKA robots de 2020 son los más jóvenes disponibles — demanda alta en reventa individual</div></div>
+      </div>
+    </div>
+    <div class="ds"><div class="ds-t tg">&#128100; Contacto</div>
+      <div class="cl"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9734;</span><span class="name">Antonin (NetBid)</span><a href="mailto:antonin@netbid.com">antonin@netbid.com</a><span class="t t-p1" style="font-size:.45rem">Depósito IVA</span></div>
+    </div>
+    <div class="acts"><a href="https://www.netbid.com/en/auctions/32319293-31892538-industrial-robots-forklift-trucks-and-welding-equipment-becoming-available" target="_blank" class="btn btn-p">&#128279; NetBid</a></div>
+  </div>
+</div>
+
+<div class="opp p1" data-p="p1" data-margin="25" data-invest="500" data-status="activa" id="nynas">
+  <div class="opp-h" onclick="toggle('nynas')">
+    <div class="opp-ico">&#127984;</div>
+    <div class="opp-inf">
+      <div class="opp-t">Nynas Refinería Hamburgo — Fase 3</div>
+      <div class="opp-d">~10.000 items + 50.000 tn chatarra · Bombas, contenedores, equipos · <strong>28 Mayo 2026</strong></div>
+      <div class="opp-tags"><span class="t t-p1">&#9889; P1</span><span class="t t-ok">&#10003;</span><span class="t t-m">25-40%</span><span class="t t-loc">&#127465;&#127466; Hamburgo</span></div>
+    </div>
+  </div>
+  <div class="opp-toggle" onclick="toggle('nynas')"><span>Estudio completo y compradores</span><span class="arr">&#9660;</span></div>
+  <div class="opp-det">
+    <div class="ds"><div class="ds-t tp1">&#128200; Rentabilidad</div>
+      <div class="pg"><div class="pi"><div class="pv" style="color:var(--o)">€500K-3M</div><div class="pl">Inversión Selectiva</div></div><div class="pi"><div class="pv" style="color:var(--g)">€625K-4.2M</div><div class="pl">Reventa</div></div><div class="pi"><div class="pv" style="color:var(--y)">25-40%</div><div class="pl">Margen Neto</div></div><div class="pi"><div class="pv" style="color:var(--c)">25-60%</div><div class="pl">ROI</div></div><div class="pi"><div class="pv" style="color:var(--p)">4-8m</div><div class="pl">Payback</div></div><div class="pi"><div class="pv" style="color:var(--r)">Alto</div><div class="pl">Riesgo</div></div></div>
+      <div style="background:rgba(255,68,68,.06);border:1px solid rgba(255,68,68,.15);border-radius:8px;padding:.5rem;margin-top:.5rem;font-size:.7rem;color:#ff4444"><strong>&#9888; Riesgo ambiental:</strong> Nynas tiene historial de contaminación por PAH (hidrocarburos aromáticos policíclicos). Verificar certificados de descontaminación antes de pujar por equipos que hayan estado en contacto con aceite mineral.</div>
+    </div>
+    <div class="ds"><div class="ds-t tpr">&#128101; Posibles Compradores</div>
+      <div class="buyers">
+        <div class="buyer"><div class="bn">Refinerías en transición</div><div class="bd">Plantas en Medio Oriente, Ãfrica, Sudeste Asiático que necesitan equipos de refino de 2ª mano</div></div>
+        <div class="buyer"><div class="bn">Dealers de equipos petroquímicos</div><div class="bd">Empresas especializadas en reventa de bombas, contenedores y equipos de proceso</div></div>
+        <div class="buyer"><div class="bn">Chatarra industrial</div><div class="bd">50.000 tn de chatarra como valor mínimo garantizado si no se vende por lotes</div></div>
+      </div>
+    </div>
+    <div class="ds"><div class="ds-t tg">&#128100; Contacto</div>
+      <div class="cl"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span><span class="name">Karl-Heinz Brinkmann</span><span class="role">NetBid PM · +49 171 318 18 81</span><a href="mailto:khbrinkmann@netbid.com">khbrinkmann@netbid.com</a><span class="t t-ok" style="font-size:.45rem">Directo</span></div>
+    </div>
+    <div class="acts"><a href="/nynas-refineria.html" class="btn btn-p">&#128196; Dossier</a><a href="https://www.netbid.com/en/auctions/28321891-26223104-plants-for-the-production-and-storage-of-mineral-oil-products-as-well-as-input-and-finished-products-for-the-production-of-lubricants" target="_blank" class="btn btn-s">&#128279; NetBid</a></div>
+  </div>
+</div>
+
+<div class="opp p1" data-p="p1" data-margin="35" data-invest="50" data-status="activa" id="foodfr">
+  <div class="opp-h" onclick="toggle('foodfr')">
+    <div class="opp-ico">&#127860;</div>
+    <div class="opp-inf">
+      <div class="opp-t">Líneas Envasado Alimentos — Troostwijk Francia <span style="color:#ffd740;font-size:.65rem;font-weight:600">Verificar enlace</span></div>
+      <div class="opp-d">20 lotos · REX AKS 65 (2024), POLARIS B5L (2019), LORAPACK CRIMA 700 · Signes & Baugé</div>
+      <div class="opp-tags"><span class="t t-p1">&#9889; P1</span><span class="t" style="background:rgba(255,215,64,.1);color:#ffd740;border:1px solid rgba(255,215,64,.25)">&#9888; Verificar disponibilidad</span><span class="t t-m">35-50%</span><span class="t t-loc">&#127465;&#127467; Francia</span></div>
+    </div>
+  </div>
+  <div class="opp-toggle" onclick="toggle('foodfr')"><span>Estudio completo y compradores</span><span class="arr">&#9660;</span></div>
+  <div class="opp-det">
+    <div class="ds"><div class="ds-t tp1">&#128200; Rentabilidad</div>
+      <div class="pg"><div class="pi"><div class="pv" style="color:var(--o)">€50K-200K</div><div class="pl">Inversión</div></div><div class="pi"><div class="pv" style="color:var(--g)">€75K-300K</div><div class="pl">Reventa</div></div><div class="pi"><div class="pv" style="color:var(--y)">35-50%</div><div class="pl">Margen</div></div><div class="pi"><div class="pv" style="color:var(--c)">50-100%</div><div class="pl">ROI</div></div><div class="pi"><div class="pv" style="color:var(--p)">1-3m</div><div class="pl">Payback</div></div><div class="pi"><div class="pv" style="color:var(--o)">Medio</div><div class="pl">Riesgo</div></div></div>
+      <div style="background:rgba(255,215,64,.06);border:1px solid rgba(255,215,64,.15);border-radius:8px;padding:.5rem;margin-top:.5rem;font-size:.7rem;color:#ffd740">&#9888; El enlace original de Troostwijk no está disponible. Buscar la subasta en troostwijkauctions.com por "food packaging France" o contactar directamente.</div>
+    </div>
+    <div class="ds"><div class="ds-t tpr">&#128101; Posibles Compradores</div>
+      <div class="buyers">
+        <div class="buyer"><div class="bn">Fabricantes alimentos LATAM</div><div class="bd">Empresas en México, Colombia, Perú que necesitan líneas de envasado a bajo coste</div></div>
+        <div class="buyer"><div class="bn">Startups food-tech</div><div class="bd">Nuevas marcas de alimentos que necesitan capacidad de producción inmediata</div></div>
+        <div class="buyer"><div class="bn">Dealers maquinaria alimentaria</div><div class="bd">Used-food-machinery.com, EquipNet — compran y revenden con 30-50% margen</div></div>
+      </div>
+    </div>
+    <div class="acts"><a href="/alimentacion-envasado.html" class="btn btn-p">&#128196; Dossier</a><a href="https://www.troostwijkauctions.com/en/auctions/?q=food+packaging+france" target="_blank" class="btn btn-s">&#128279; Buscar en Troostwijk</a></div>
+  </div>
+</div>
+
+<div class="opp p1" data-p="p1" data-margin="30" data-invest="100" data-status="activa" id="fooduk">
+  <div class="opp-h" onclick="toggle('fooduk')">
+    <div class="opp-ico">&#127860;</div>
+    <div class="opp-inf">
+      <div class="opp-t">Producción Alimentaria — Troostwijk UK <span style="color:#ffd740;font-size:.65rem;font-weight:600">Verificar enlace</span></div>
+      <div class="opp-d">84 lotos · CWM Automation, Miele Olympia, ULMA, Ishida, Redpack · Downham Market</div>
+      <div class="opp-tags"><span class="t t-p1">&#9889; P1</span><span class="t" style="background:rgba(255,215,64,.1);color:#ffd740;border:1px solid rgba(255,215,64,.25)">&#9888; Verificar disponibilidad</span><span class="t t-m">30-45%</span><span class="t t-loc">&#127468;&#127463; Reino Unido</span></div>
+    </div>
+  </div>
+  <div class="opp-toggle" onclick="toggle('fooduk')"><span>Estudio completo y compradores</span><span class="arr">&#9660;</span></div>
+  <div class="opp-det">
+    <div class="ds"><div class="ds-t tp1">&#128200; Rentabilidad</div>
+      <div class="pg"><div class="pi"><div class="pv" style="color:var(--o)">€100K-400K</div><div class="pl">Inversión</div></div><div class="pi"><div class="pv" style="color:var(--g)">€130K-580K</div><div class="pl">Reventa</div></div><div class="pi"><div class="pv" style="color:var(--y)">30-45%</div><div class="pl">Margen</div></div><div class="pi"><div class="pv" style="color:var(--c)">30-85%</div><div class="pl">ROI</div></div><div class="pi"><div class="pv" style="color:var(--p)">2-4m</div><div class="pl">Payback</div></div><div class="pi"><div class="pv" style="color:var(--o)">Medio</div><div class="pl">Riesgo</div></div></div>
+      <div style="background:rgba(255,215,64,.06);border:1px solid rgba(255,215,64,.15);border-radius:8px;padding:.5rem;margin-top:.5rem;font-size:.7rem;color:#ffd740">&#9888; El enlace original de Troostwijk no está disponible (403 Forbidden). Contactar a Troostwijk directamente para acceso.</div>
+    </div>
+    <div class="ds"><div class="ds-t tpr">&#128101; Posibles Compradores</div>
+      <div class="buyers"><div class="buyer"><div class="bn">Industria alimentaria Ãfrica</div><div class="bd">Nigeria, Kenia, Sudáfrica — crecimiento masivo en procesado de alimentos</div></div><div class="buyer"><div class="bn">Dealers UK maquinaria</div><div class="bd">Biddle & Brown, IMA — revenden equipos de envasado en UK y export</div></div></div>
+    </div>
+    <div class="acts"><a href="/alimentacion-envasado.html" class="btn btn-p">&#128196; Dossier</a><a href="https://www.troostwijkauctions.com/en/auctions/?q=food+packaging+UK" target="_blank" class="btn btn-s">&#128279; Buscar en Troostwijk</a></div>
+  </div>
+</div>
+
+<div class="opp p1" data-p="p1" data-margin="40" data-invest="50" data-status="activa" id="endesa">
+  <div class="opp-h" onclick="toggle('endesa')">
+    <div class="opp-ico">&#9889;</div>
+    <div class="opp-inf">
+      <div class="opp-t">ENDESA As Pontes — Central Térmica (IBEX 35)</div>
+      <div class="opp-d">Atlas Copco 250KW (2019, sin usar), Robuschi, ABB motores · €112M desmantelamiento · <strong>IBEX 35</strong></div>
+      <div class="opp-tags"><span class="t t-p1">&#9889; P1</span><span class="t t-ok">&#10003;</span><span class="t t-m">30-50%</span><span class="t t-loc">&#127470;&#127485; Galicia</span></div>
+    </div>
+  </div>
+  <div class="opp-toggle" onclick="toggle('endesa')"><span>Estudio completo y compradores</span><span class="arr">&#9660;</span></div>
+  <div class="opp-det">
+    <div class="ds"><div class="ds-t tp1">&#128200; Rentabilidad</div>
+      <div class="pg"><div class="pi"><div class="pv" style="color:var(--o)">€50K-500K</div><div class="pl">Inversión Selectiva</div></div><div class="pi"><div class="pv" style="color:var(--g)">€65K-750K</div><div class="pl">Reventa</div></div><div class="pi"><div class="pv" style="color:var(--y)">30-50%</div><div class="pl">Margen</div></div><div class="pi"><div class="pv" style="color:var(--c)">30-100%</div><div class="pl">ROI</div></div><div class="pi"><div class="pv" style="color:var(--p)">3-6m</div><div class="pl">Payback</div></div><div class="pi"><div class="pv" style="color:var(--o)">Medio</div><div class="pl">Riesgo</div></div></div>
+    </div>
+    <div class="ds"><div class="ds-t tpr">&#128101; Posibles Compradores</div>
+      <div class="buyers"><div class="buyer"><div class="bn">Plantas generadoras Ãfrica/Oriente Medio</div><div class="bd">Atlas Copco 250KW sin usar (2019) — demanda inmediata en mercados emergentes</div></div><div class="buyer"><div class="bn">Dealers generadores industriales</div><div class="bd">Compran motores ABB, bombas, compresores Robuschi para reventa</div></div></div>
+    </div>
+    <div class="ds"><div class="ds-t tg">&#128100; Contacto</div>
+      <div class="cl"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span><span class="name">Guillaume de Bode</span><span class="role">IAG · +34 671 341 384</span><a href="mailto:guillaume.debode@iagauction.com">guillaume.debode@iagauction.com</a><span class="t t-ok" style="font-size:.45rem">ES/FR/EN</span></div>
+    </div>
+    <div class="acts"><a href="/endesa-as-pontes.html" class="btn btn-p">&#128196; Dossier</a><a href="https://iagauction.com/" target="_blank" class="btn btn-s">&#128279; IAG Auction</a></div>
+  </div>
+</div>
+
+<!-- P2 -->
+<div class="sh" style="margin-top:1.5rem"><span class="icon" style="background:rgba(255,215,64,.1);color:var(--y)">&#128065;</span> P2 — Monitoreo</div>
+
+<div class="opp p2" data-p="p2" data-margin="30" data-invest="1000" data-status="activa" id="repsol">
+  <div class="opp-h" onclick="toggle('repsol')">
+    <div class="opp-ico">&#127984;</div>
+    <div class="opp-inf">
+      <div class="opp-t">Repsol — Esfera GLP 5.215 m³ (Negociación Directa)</div>
+      <div class="opp-d">Esfera NUEVA · ASME VIII Div.2 · 833 tn · 22.7m diámetro · <strong>IBEX 35</strong></div>
+      <div class="opp-tags"><span class="t t-p2">&#128065; P2</span><span class="t t-ok">&#10003;</span><span class="t t-neg">Negociación</span><span class="t t-loc">&#127477;&#127481; Portugal</span></div>
+    </div>
+  </div>
+  <div class="opp-toggle" onclick="toggle('repsol')"><span>Estudio completo y compradores</span><span class="arr">&#9660;</span></div>
+  <div class="opp-det">
+    <div class="ds"><div class="ds-t tp2">&#128200; Rentabilidad</div>
+      <div class="pg"><div class="pi"><div class="pv" style="color:var(--o)">€1M-5M</div><div class="pl">Inversión</div></div><div class="pi"><div class="pv" style="color:var(--g)">€1.5M-8M</div><div class="pl">Reventa</div></div><div class="pi"><div class="pv" style="color:var(--y)">Variable</div><div class="pl">Margen</div></div><div class="pi"><div class="pv" style="color:var(--dm)">TBD</div><div class="pl">ROI</div></div><div class="pi"><div class="pv" style="color:var(--p)">6-12m</div><div class="pl">Payback</div></div><div class="pi"><div class="pv" style="color:var(--g)">Bajo</div><div class="pl">Riesgo</div></div></div>
+    </div>
+    <div class="ds"><div class="ds-t tpr">&#128101; Posibles Compradores</div>
+      <div class="buyers"><div class="buyer"><div class="bn">Plantas GLP en construcción</div><div class="bd">Proyectos en Ãfrica, Medio Oriente, Sudeste Asiático que necesitan esferas de almacenamiento</div></div><div class="buyer"><div class="bn">Empresas petroquímicas</div><div class="bd">Refinerías y terminales GLP — esfera nueva con certificación CE/ASME es rara en el mercado</div></div></div>
+    </div>
+    <div class="ds"><div class="ds-t tg">&#128100; Contacto</div>
+      <div class="cl"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span><span class="name">Javier Ramos</span><span class="role">SURUS Inversa · +34 913 52 45 07</span><a href="mailto:jramos@surusin.com">jramos@surusin.com</a><span class="t t-ok" style="font-size:.45rem">Directo · NDA</span></div>
+    </div>
+    <div class="acts"><a href="/repsol-gl.html" class="btn btn-p">&#128196; Dossier</a><a href="https://glp.escrapalia.com/" target="_blank" class="btn btn-s">&#128279; Escrapalia</a></div>
+  </div>
+</div>
+
+<div class="opp p2" data-p="p2" data-margin="25" data-invest="500" data-status="activa" id="zeewolde">
+  <div class="opp-h" onclick="toggle('zeewolde')">
+    <div class="opp-ico">&#127744;</div>
+    <div class="opp-inf">
+      <div class="opp-t">Zeewolde — 93 Aerogeneradores en Desmantelamiento</div>
+      <div class="opp-d">Repowering 322MW · Vestas V47/V52/V66 + NegMicon · V66 1.65MW ~£98K</div>
+      <div class="opp-tags"><span class="t t-p2">&#128065; P2</span><span class="t t-ok">&#10003;</span><span class="t t-m">25-40%</span><span class="t t-loc">&#127475;&#127473; Países Bajos</span></div>
+    </div>
+  </div>
+  <div class="opp-toggle" onclick="toggle('zeewolde')"><span>Estudio completo y compradores</span><span class="arr">&#9660;</span></div>
+  <div class="opp-det">
+    <div class="ds"><div class="ds-t tp2">&#128200; Rentabilidad</div>
+      <div class="pg"><div class="pi"><div class="pv" style="color:var(--o)">€500K-2M</div><div class="pl">Inversión Bulk</div></div><div class="pi"><div class="pv" style="color:var(--g)">€625K-2.8M</div><div class="pl">Reventa</div></div><div class="pi"><div class="pv" style="color:var(--y)">25-40%</div><div class="pl">Margen Neto</div></div><div class="pi"><div class="pv" style="color:var(--c)">25-60%</div><div class="pl">ROI</div></div><div class="pi"><div class="pv" style="color:var(--p)">6-12m</div><div class="pl">Payback</div></div><div class="pi"><div class="pv" style="color:var(--o)">Medio-Alto</div><div class="pl">Riesgo</div></div></div>
+      <div style="background:rgba(255,215,64,.06);border:1px solid rgba(255,215,64,.15);border-radius:8px;padding:.5rem;margin-top:.5rem;font-size:.7rem;color:#ffd740">&#9888; <strong>Riesgo precios negativos:</strong> El director del proyecto Zeewolde ha advertido sobre posible sobreoferta de turbinas usadas, lo que podría reducir márgenes. Vestas V47/V52 son modelos antiguos (1999-2004) con demanda limitada.</div>
+    </div>
+    <div class="ds"><div class="ds-t tpr">&#128101; Posibles Compradores</div>
+      <div class="buyers"><div class="buyer"><div class="bn">Proyectos eólicos LATAM/Ãfrica</div><div class="bd">Vestas V66 1.65MW son ideales para proyectos en mercados emergentes</div></div><div class="buyer"><div class="bn">Brokers de turbinas</div><div class="bd">Dutchwind (1.000+ vendidas), Business in Wind — compran por lote y revenden</div></div><div class="buyer"><div class="bn">Piezas de repuesto</div><div class="bd">Mercado de piezas de recambio para parques eólicos existentes</div></div></div>
+    </div>
+    <div class="ds"><div class="ds-t tg">&#128100; Contacto</div>
+      <div class="cl"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span><span class="name">Dutchwind BV</span><span class="role">Broker · +1.000 turbinas vendidas</span><a href="https://dutchwind.com/" target="_blank">dutchwind.com</a><span class="t t-ok" style="font-size:.45rem">Directo</span></div>
+      <div class="cl" style="margin-top:.2rem"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9734;</span><span class="name">Business in Wind</span><a href="mailto:info@businessinwind.com">info@businessinwind.com</a><span class="role">+31 85 071 82 00</span></div>
+    </div>
+    <div class="acts"><a href="/zeewolde-eolica.html" class="btn btn-p">&#128196; Dossier</a><a href="https://dutchwind.com/" target="_blank" class="btn btn-s">&#128279; Dutchwind</a></div>
+  </div>
+</div>
+
+<div class="opp p2" data-p="p2" data-margin="67" data-invest="5000" data-status="activa" id="alpha">
+  <div class="opp-h" onclick="toggle('alpha')">
+    <div class="opp-ico">&#127754;</div>
+    <div class="opp-inf">
+      <div class="opp-t">Alpha Ventus — Decomisionamiento Offshore (€66M)</div>
+      <div class="opp-d">12 turbinas · 6Ã— Adwen AD 5-116 + 6Ã— Senvion 5M · €16M WTG + ~€50M BOP · Vattenfall/EWE/RWE</div>
+      <div class="opp-tags"><span class="t t-p2">&#128065; P2</span><span class="t t-ok">&#10003;</span><span class="t t-neg">Licitación</span><span class="t t-loc">&#127465;&#127466; Mar del Norte</span></div>
+    </div>
+  </div>
+  <div class="opp-toggle" onclick="toggle('alpha')"><span>Estudio completo y compradores</span><span class="arr">&#9660;</span></div>
+  <div class="opp-det">
+    <div class="ds"><div class="ds-t tp2">&#128200; Rentabilidad</div>
+      <div class="pg"><div class="pi"><div class="pv" style="color:var(--o)">€5M-20M</div><div class="pl">Inversión WTG</div></div><div class="pi"><div class="pv" style="color:var(--g)">€8M-35M</div><div class="pl">Reventa</div></div><div class="pi"><div class="pv" style="color:var(--y)">60-75%</div><div class="pl">Margen</div></div><div class="pi"><div class="pv" style="color:var(--c)">60-75%</div><div class="pl">ROI</div></div><div class="pi"><div class="pv" style="color:var(--p)">12-24m</div><div class="pl">Payback</div></div><div class="pi"><div class="pv" style="color:var(--r)">Alto</div><div class="pl">Riesgo</div></div></div>
+    </div>
+    <div class="ds"><div class="ds-t tpr">&#128101; Posibles Compradores</div>
+      <div class="buyers"><div class="buyer"><div class="bn">Operadores eólicos offshore</div><div class="bd">Empresas que buscan turbinas Adwen/Senvion para repowering o nuevos proyectos</div></div><div class="buyer"><div class="bn">Dealers de turbinas offshore</div><div class="bd">Especialistas en reventa de equipos offshore — mercado muy específico</div></div></div>
+    </div>
+    <div class="ds"><div class="ds-t tg">&#128100; Contacto</div>
+      <div class="cl"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span><span class="name">Jon Arruza</span><span class="role">Vattenfall PM · +49 1511 8474894</span><a href="mailto:jon.arruza@vattenfall.de">jon.arruza@vattenfall.de</a><span class="t t-p1" style="font-size:.45rem">Licitación</span></div>
+    </div>
+    <div class="acts"><a href="https://www.evergabe.com/en/tenders/alpha-ventus-decommissioning-wtg-scope-1840206/" target="_blank" class="btn btn-p">&#128279; Licitación</a></div>
+  </div>
+</div>
+
+<div class="opp p2" data-p="p2" data-margin="37" data-invest="0" data-status="pendiente" id="neapco">
+  <div class="opp-h" onclick="toggle('neapco')">
+    <div class="opp-ico">&#9881;&#65039;</div>
+    <div class="opp-inf">
+      <div class="opp-t">Neapco Europe — Insolvencia Automotriz (TBD)</div>
+      <div class="opp-d">Planta cardanes en Düren · 500 puestos · CNC Mazak, líneas forja · <strong>Subasta pendiente Q3 2026</strong></div>
+      <div class="opp-tags"><span class="t t-p2">&#128065; P2</span><span class="t t-ok">&#10003;</span><span class="t t-m">30-45%</span><span class="t t-loc">&#127465;&#127466; Alemania</span></div>
+    </div>
+  </div>
+  <div class="opp-toggle" onclick="toggle('neapco')"><span>Estudio completo y compradores</span><span class="arr">&#9660;</span></div>
+  <div class="opp-det">
+    <div class="ds"><div class="ds-t tp2">&#128200; Rentabilidad</div>
+      <div class="pg"><div class="pi"><div class="pv" style="color:var(--dm)">TBD</div><div class="pl">Inversión</div></div><div class="pi"><div class="pv" style="color:var(--dm)">TBD</div><div class="pl">Reventa</div></div><div class="pi"><div class="pv" style="color:var(--y)">30-45%</div><div class="pl">Margen Est.</div></div><div class="pi"><div class="pv" style="color:var(--dm)">TBD</div><div class="pl">ROI</div></div><div class="pi"><div class="pv" style="color:var(--dm)">TBD</div><div class="pl">Payback</div></div><div class="pi"><div class="pv" style="color:var(--o)">Medio</div><div class="pl">Riesgo</div></div></div>
+    </div>
+    <div class="ds"><div class="ds-t tp2">&#127919; Monitoreo</div>
+      <div class="sts"><span class="st"><b>1.</b> Monitorizar Surplex.com</span><span class="st"><b>2.</b> Monitorizar insolvenz-portal.de</span><span class="st"><b>3.</b> Monitorizar indat.info</span><span class="st"><b>4.</b> Subasta pendiente Q3 2026</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- CONCURSOS DE ACREEDORES -->
+<div class="sh" style="margin-top:1.5rem"><span class="icon" style="background:rgba(179,136,255,.1);color:var(--p)">&#9878;</span> Concursos de Acreedores — Insolvencias Activas</div>
+
+<div class="opp p1" data-p="p1" data-margin="45" data-invest="50" data-type="concurso" data-status="activa" id="torell">
+  <div class="opp-h" onclick="toggle('torell')">
+    <div class="opp-ico">&#128270;</div>
+    <div class="opp-inf">
+      <div class="opp-t">Insolvencia — Maquinaria Madera Torell, Barcelona</div>
+      <div class="opp-d">Holzher Dynestic 7507 CNC, Vitap BC 91 EVO, Martin T60C/T73, Casadei F215/C · <strong>29 Mayo 2026</strong></div>
+      <div class="opp-tags"><span class="t t-p1">&#9889; P1</span><span class="t t-ok">&#10003;</span><span class="t t-m">35-55%</span><span class="t t-loc">&#127466;&#127480; España</span><span class="t" style="background:rgba(179,136,255,.08);color:#b388ff;border:1px solid rgba(179,136,255,.2)">Concurso</span></div>
+    </div>
+  </div>
+  <div class="opp-toggle" onclick="toggle('torell')"><span>Estudio completo y compradores</span><span class="arr">&#9660;</span></div>
+  <div class="opp-det">
+    <div class="ds"><div class="ds-t tp1">&#128200; Rentabilidad</div>
+      <div class="pg"><div class="pi"><div class="pv" style="color:var(--o)">€50K-200K</div><div class="pl">Inversión</div></div><div class="pi"><div class="pv" style="color:var(--g)">€80K-310K</div><div class="pl">Reventa</div></div><div class="pi"><div class="pv" style="color:var(--y)">35-55%</div><div class="pl">Margen</div></div><div class="pi"><div class="pv" style="color:var(--c)">60-155%</div><div class="pl">ROI</div></div><div class="pi"><div class="pv" style="color:var(--p)">1-3m</div><div class="pl">Payback</div></div><div class="pi"><div class="pv" style="color:var(--g)">Bajo</div><div class="pl">Riesgo</div></div></div>
+    </div>
+    <div class="ds"><div class="ds-t tpr">&#128101; Posibles Compradores</div>
+      <div class="buyers">
+        <div class="buyer"><div class="bn">Fabricantes muebles Europa</div><div class="bd">Holzher y Martin son marcas premium en mecanizado CNC de madera — demanda constante</div></div>
+        <div class="buyer"><div class="bn">Dealers maquinaria madera</div><div class="bd">Machineseeker, Surplex — reventa directa de CNC nesting centers</div></div>
+        <div class="buyer"><div class="bn">Industria mueble Norte Ãfrica</div><div class="bd">Marruecos, Túnez, Egipto — expansión del sector mueblero</div></div>
+      </div>
+    </div>
+    <div class="ds"><div class="ds-t tg">&#128100; Contacto</div>
+      <div class="cl"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span><span class="name">NetBid Industry Auctions</span><span class="role">Subasta #19137</span><a href="https://www.netbid.com/en/auctions/32085747-31440381-insolvency-liquidation-woodworking-machinery-for-furniture-manufacturing-in-spain" target="_blank">Ver subasta</a></div>
+    </div>
+    <div class="acts"><a href="https://www.netbid.com/en/auctions/32085747-31440381-insolvency-liquidation-woodworking-machinery-for-furniture-manufacturing-in-spain" target="_blank" class="btn btn-p">&#128279; NetBid Subasta</a></div>
+  </div>
+</div>
+
+<div class="opp p1" data-p="p1" data-margin="42" data-invest="80" data-type="concurso" data-status="activa" id="pianezze">
+  <div class="opp-h" onclick="toggle('pianezze')">
+    <div class="opp-ico">&#128270;</div>
+    <div class="opp-inf">
+      <div class="opp-t">Pianezze Madera — Insolvencia Italia</div>
+      <div class="opp-d">Biesse Rover C 9.50 CNC, SCM Olimpic K 999, Cefla lacado · <strong>26 Mayo 2026</strong> · Pordenone</div>
+      <div class="opp-tags"><span class="t t-p1">&#9889; P1</span><span class="t t-ok">&#10003;</span><span class="t t-m">35-50%</span><span class="t t-loc">&#127470;&#127484; Italia</span><span class="t" style="background:rgba(179,136,255,.08);color:#b388ff;border:1px solid rgba(179,136,255,.2)">Concurso</span></div>
+    </div>
+  </div>
+  <div class="opp-toggle" onclick="toggle('pianezze')"><span>Estudio completo y compradores</span><span class="arr">&#9660;</span></div>
+  <div class="opp-det">
+    <div class="ds"><div class="ds-t tp1">&#128200; Rentabilidad</div>
+      <div class="pg"><div class="pi"><div class="pv" style="color:var(--o)">€80K-250K</div><div class="pl">Inversión</div></div><div class="pi"><div class="pv" style="color:var(--g)">€120K-375K</div><div class="pl">Reventa</div></div><div class="pi"><div class="pv" style="color:var(--y)">35-50%</div><div class="pl">Margen</div></div><div class="pi"><div class="pv" style="color:var(--c)">50-125%</div><div class="pl">ROI</div></div><div class="pi"><div class="pv" style="color:var(--p)">1-3m</div><div class="pl">Payback</div></div><div class="pi"><div class="pv" style="color:var(--g)">Bajo</div><div class="pl">Riesgo</div></div></div>
+    </div>
+    <div class="ds"><div class="ds-t tpr">&#128101; Posibles Compradores</div>
+      <div class="buyers">
+        <div class="buyer"><div class="bn">Fabricantes muebles Italia</div><div class="bd">Biesse y SCM son marcas italianas premium — red de dealers existente en toda Italia</div></div>
+        <div class="buyer"><div class="bn">Industria madera Norte Ãfrica</div><div class="bd">Marruecos, Egipto — CNC nesting centers Biesse Rover en alta demanda</div></div>
+        <div class="buyer"><div class="bn">Dealers maquinaria madera</div><div class="bd">Machineseeker, IndustrialDiscount — reventa de centros CNC Biesse con 40-60% margen</div></div>
+      </div>
+    </div>
+    <div class="ds"><div class="ds-t tg">&#128100; Contacto</div>
+      <div class="cl"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9734;</span><span class="name">IndustrialDiscount</span><span class="role">Subasta #9685 · Italia</span><a href="https://www.industrialdiscount.com/en/" target="_blank">industrialdiscount.com</a></div>
+    </div>
+    <div class="acts"><a href="https://www.industrialdiscount.com/en/" target="_blank" class="btn btn-p">&#128279; IndustrialDiscount</a></div>
+  </div>
+</div>
+
+<div class="opp p0" data-p="p0" data-margin="40" data-invest="200" data-type="concurso" data-status="activa" id="allgaier-insolv">
+  <div class="opp-h" onclick="toggle('allgaier-insolv')">
+    <div class="opp-ico">&#9881;&#65039;</div>
+    <div class="opp-inf">
+      <div class="opp-t">Allgaier Automotive — Insolvencia (Venta Privada + Subasta)</div>
+      <div class="opp-d">ARISA 1600tn, SCHULER SMG 630-1000tn, DANLY 800tn, CNC Trimill, KUKA, línea pintura · <strong>Venta privada Lünders hasta 29 Mayo — precios reducidos ~50%</strong></div>
+      <div class="opp-tags"><span class="t t-p0">&#128293; P0</span><span class="t t-ok">&#10003;</span><span class="t t-m">40-65%</span><span class="t t-loc">&#127465;&#127466; Alemania</span><span class="t" style="background:rgba(179,136,255,.08);color:#b388ff;border:1px solid rgba(179,136,255,.2)">Concurso</span></div>
+    </div>
+  </div>
+  <div class="opp-toggle" onclick="toggle('allgaier-insolv')"><span>Estudio completo y compradores</span><span class="arr">&#9660;</span></div>
+  <div class="opp-det">
+    <div class="ds"><div class="ds-t tp1">&#128200; Rentabilidad</div>
+      <div class="pg"><div class="pi"><div class="pv" style="color:var(--o)">€200K-1M</div><div class="pl">Inversión</div></div><div class="pi"><div class="pv" style="color:var(--g)">€350K-2.5M</div><div class="pl">Reventa</div></div><div class="pi"><div class="pv" style="color:var(--y)">40-65%</div><div class="pl">Margen</div></div><div class="pi"><div class="pv" style="color:var(--c)">75-250%</div><div class="pl">ROI</div></div><div class="pi"><div class="pv" style="color:var(--p)">2-4m</div><div class="pl">Payback</div></div><div class="pi"><div class="pv" style="color:var(--o)">Medio</div><div class="pl">Riesgo</div></div></div>
+      <div style="background:rgba(0,230,118,.06);border:1px solid rgba(0,230,118,.15);border-radius:8px;padding:.5rem;margin-top:.5rem;font-size:.7rem;color:#00e676"><strong>&#128293; ACTUALIZACIÓN:</strong> Venta privada Lünders sigue ABIERTA hasta <strong>29 Mayo</strong> con precios reducidos ~50%. Contactar Fabian Illison: illison@luders-partner.com. Oportunidad de comprar ARISA 1600tn desde €250K.</div>
+    </div>
+    <div class="ds"><div class="ds-t tpr">&#128101; Posibles Compradores</div>
+      <div class="buyers">
+        <div class="buyer"><div class="bn">Estampadoras automotrices</div><div class="bd">Prensas ARISA 1600tn y DANLY 800tn son escasas en mercado secundario — demanda alta</div></div>
+        <div class="buyer"><div class="bn">Empresas pintura/coating</div><div class="bd">Línea EISENMANN KTL con 4 robots pintura — margen 233-567%</div></div>
+        <div class="buyer"><div class="bn">Dealers maquinaria pesada</div><div class="bd">SCHULER, Trimill y WALDRICH COBURG — reventa inmediata en mercado alemán</div></div>
+      </div>
+    </div>
+    <div class="ds"><div class="ds-t tg">&#128100; Contacto</div>
+      <div class="cl"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span><span class="name">Dr. Hermann Jauch</span><span class="role">NetBid · +49 171 325 40 72</span><a href="mailto:jauch@netbid.com">jauch@netbid.com</a></div>
+      <div class="cl"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9734;</span><span class="name">Fabian Illison</span><span class="role">Lünders &amp; Partner · +49 40 469 666-70</span><a href="mailto:illison@luders-partner.com">illison@luders-partner.com</a><span class="t" style="background:rgba(255,110,64,.08);color:#ff6e40;border:1px solid rgba(255,110,64,.25);font-size:.45rem;padding:.12rem .45rem;border-radius:20px">Venta privada</span></div>
+    </div>
+    <div class="acts"><a href="https://www.netbid.com/en/auctions/31444212-31444210-machines-and-systems-from-the-automotive-supply-industry" target="_blank" class="btn btn-p">&#128279; NetBid</a><a href="https://lueders-partner.com/en/auctions/allgaier-automotive-gmbh-transfer-presses-drawing-presses-hydraulic-presses-crank-presses-blank-loading-station-continuous-paint-line-tryout-presses-digital-measuring-system-robots-e/" target="_blank" class="btn btn-s">&#128279; Venta Privada Lünders</a></div>
+  </div>
+</div>
+
+<div class="opp p2" data-p="p2" data-margin="35" data-invest="100" data-type="concurso" data-status="cerrada" id="exthaiberica">
+  <div class="opp-h" onclick="toggle('exthaiberica')">
+    <div class="opp-ico">&#9881;&#65039;</div>
+    <div class="opp-inf">
+      <div class="opp-t">Exthaiberica — Insolvencia Maquinaria Navarra</div>
+      <div class="opp-d">Líneas extracción placas, horno vermiculita, compactadora, Nissan carretilla · <strong>Subasta cerrada — verificar lotes sin vender</strong></div>
+      <div class="opp-tags"><span class="t t-p2">&#128065; P2</span><span class="t t-ok">&#10003;</span><span class="t t-m">25-40%</span><span class="t t-loc">&#127466;&#127480; Navarra</span><span class="t" style="background:rgba(179,136,255,.08);color:#b388ff;border:1px solid rgba(179,136,255,.2)">Concurso</span></div>
+    </div>
+  </div>
+  <div class="opp-toggle" onclick="toggle('exthaiberica')"><span>Estudio completo y compradores</span><span class="arr">&#9660;</span></div>
+  <div class="opp-det">
+    <div class="ds"><div class="ds-t tp2">&#128200; Rentabilidad</div>
+      <div class="pg"><div class="pi"><div class="pv" style="color:var(--o)">€50K-150K</div><div class="pl">Inversión Selectiva</div></div><div class="pi"><div class="pv" style="color:var(--g)">€70K-210K</div><div class="pl">Reventa</div></div><div class="pi"><div class="pv" style="color:var(--y)">25-40%</div><div class="pl">Margen</div></div><div class="pi"><div class="pv" style="color:var(--c)">30-80%</div><div class="pl">ROI</div></div><div class="pi"><div class="pv" style="color:var(--p)">3-6m</div><div class="pl">Payback</div></div><div class="pi"><div class="pv" style="color:var(--o)">Medio</div><div class="pl">Riesgo</div></div></div>
+    </div>
+    <div class="ds"><div class="ds-t tp2">&#127919; Acción</div>
+      <div class="sts"><span class="st"><b>1.</b> Contactar administrador: exthaiberica@elizaldeconcursal.com</span><span class="st"><b>2.</b> Consultar lotes sin vender de subasta del 10 Marzo</span><span class="st"><b>3.</b> Verificar estado de compactadora (averiada)</span><span class="st"><b>4.</b> BOE: SUB-JC-2025-255488</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="opp p2" data-p="p2" data-margin="30" data-invest="50" data-type="concurso" data-status="activa" id="graf-automation">
+  <div class="opp-h" onclick="toggle('graf-automation')">
+    <div class="opp-ico">&#128270;</div>
+    <div class="opp-inf">
+      <div class="opp-t">Graf Automation — Insolvencia Metalúrgica, Alemania</div>
+      <div class="opp-d">Mikron HPM 600 HD, Deckel Maho DMU 50M, Gildemeister NEF 320 CNC · <strong>28 Mayo 2026</strong></div>
+      <div class="opp-tags"><span class="t t-p2">&#128065; P2</span><span class="t t-ok">&#10003;</span><span class="t t-m">30-45%</span><span class="t t-loc">&#127465;&#127466; Alemania</span><span class="t" style="background:rgba(179,136,255,.08);color:#b388ff;border:1px solid rgba(179,136,255,.2)">Insolvencia</span></div>
+    </div>
+  </div>
+  <div class="opp-toggle" onclick="toggle('graf-automation')"><span>Estudio completo y compradores</span><span class="arr">&#9660;</span></div>
+  <div class="opp-det">
+    <div class="ds"><div class="ds-t tp2">&#128200; Rentabilidad</div>
+      <div class="pg"><div class="pi"><div class="pv" style="color:var(--o)">€50K-200K</div><div class="pl">Inversión</div></div><div class="pi"><div class="pv" style="color:var(--g)">€80K-290K</div><div class="pl">Reventa</div></div><div class="pi"><div class="pv" style="color:var(--y)">30-45%</div><div class="pl">Margen</div></div><div class="pi"><div class="pv" style="color:var(--c)">40-90%</div><div class="pl">ROI</div></div><div class="pi"><div class="pv" style="color:var(--p)">2-4m</div><div class="pl">Payback</div></div><div class="pi"><div class="pv" style="color:var(--g)">Bajo</div><div class="pl">Riesgo</div></div></div>
+    </div>
+    <div class="ds"><div class="ds-t tpr">&#128101; Posibles Compradores</div>
+      <div class="buyers">
+        <div class="buyer"><div class="bn">Dealers CNC usados</div><div class="bd">Mikron HPM 600 HD y Deckel Maho DMU 50M — alta demanda en mercado secundario europeo</div></div>
+        <div class="buyer"><div class="bn">PYME mecanizado</div><div class="bd">Empresas de mecanizado de precisión que necesitan tornos y centros CNC de 2ª mano</div></div>
+      </div>
+    </div>
+    <div class="acts"><a href="https://www.zehbra.de/versteigerung-verkaeufe/73-versteigerung-verkaeufe/573-insolvenzversteigerung-eines-metallverarbeitendes-betriebes-am-26-02-2026-ab-11-oo-uhr" target="_blank" class="btn btn-p">&#128279; ZehBra Subasta</a></div>
+  </div>
+</div>
+
+<div class="opp p2" data-p="p2" data-margin="40" data-invest="200" data-type="concurso" data-status="activa" id="gmw-pramab">
+  <div class="opp-h" onclick="toggle('gmw-pramab')">
+    <div class="opp-ico">&#9881;&#65039;</div>
+    <div class="opp-inf">
+      <div class="opp-t">GMW Pramab — Maquinaria Pesada (Venta Privada)</div>
+      <div class="opp-d">Waldrich Coburg, Waldrich Siegen, Union, Schiess, Ingersoll — fresado y torneado pesado · <strong>Aceptando ofertas</strong></div>
+      <div class="opp-tags"><span class="t t-p2">&#128065; P2</span><span class="t t-ok">&#10003;</span><span class="t t-neg">Venta privada</span><span class="t t-loc">&#127465;&#127466; Alemania</span></div>
+    </div>
+  </div>
+  <div class="opp-toggle" onclick="toggle('gmw-pramab')"><span>Estudio completo y compradores</span><span class="arr">&#9660;</span></div>
+  <div class="opp-det">
+    <div class="ds"><div class="ds-t tp2">&#128200; Rentabilidad</div>
+      <div class="pg"><div class="pi"><div class="pv" style="color:var(--o)">€200K-2M</div><div class="pl">Inversión</div></div><div class="pi"><div class="pv" style="color:var(--g)">€350K-4M</div><div class="pl">Reventa</div></div><div class="pi"><div class="pv" style="color:var(--y)">40-60%</div><div class="pl">Margen</div></div><div class="pi"><div class="pv" style="color:var(--c)">75-200%</div><div class="pl">ROI</div></div><div class="pi"><div class="pv" style="color:var(--p)">4-8m</div><div class="pl">Payback</div></div><div class="pi"><div class="pv" style="color:var(--o)">Medio</div><div class="pl">Riesgo</div></div></div>
+    </div>
+    <div class="ds"><div class="ds-t tpr">&#128101; Posibles Compradores</div>
+      <div class="buyers">
+        <div class="buyer"><div class="bn">Industria energética/aeroespacial</div><div class="bd">Waldrich Coburg y Siegen son máquinas de precisión pesada — escasas en mercado secundario</div></div>
+        <div class="buyer"><div class="bn">Dealers maquinaria pesada</div><div class="bd">Máquinas raramente disponibles — alta demanda en reventa global</div></div>
+      </div>
+    </div>
+    <div class="ds"><div class="ds-t tg">&#128100; Contacto</div>
+      <div class="cl"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9734;</span><span class="name">Thomas Schlieker</span><span class="role">NetBid · +49 172 647 32 50</span><a href="mailto:schlieker@netbid.com">schlieker@netbid.com</a></div>
+    </div>
+    <div class="acts"><a href="https://www.netbid.com/en/magazine/private-treaty-sale-bei-gmw-praemab-gmbh-maschinen-zur-schwerbearbeitung-im-bieterverfahren" target="_blank" class="btn btn-p">&#128279; Venta Privada</a></div>
+  </div>
+</div>
+
+</div><!-- opps-list -->
+</div><!-- wrap -->
+
+<!-- PROFIT TABLE -->
+<div class="wrap" style="margin-top:2rem">
+<div class="sh"><span class="icon" style="background:rgba(0,230,118,.1);color:var(--g)">&#128200;</span> Comparativa de Rentabilidad</div>
+<div style="overflow-x:auto;background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:.5rem">
+<table class="pt">
+<thead><tr><th>Oportunidad</th><th>P</th><th>Inversión</th><th>Reventa</th><th>Margen</th><th>ROI</th><th>Payback</th><th>Riesgo</th><th>Acción</th></tr></thead>
+<tbody>
+<tr><td style="font-weight:800">BSH Esquiroz</td><td><span class="t t-p0" style="font-size:.45rem">P0</span></td><td class="mono" style="color:var(--o)">€940K-3M</td><td class="mono" style="color:var(--g)">€1.2M-4.5M</td><td class="mono" style="color:var(--y)">35-50%</td><td class="mono" style="color:var(--c)">40-70%</td><td>3-6m</td><td style="color:var(--o)">Medio</td><td><a href="/bsh-esquiroz.html" style="color:var(--g)">Dossier</a></td></tr>
+<tr><td style="font-weight:800">471 KUKA</td><td><span class="t t-p0" style="font-size:.45rem">P0</span></td><td class="mono" style="color:var(--o)">€2.1M-3.8M</td><td class="mono" style="color:var(--g)">€4.5M-7.5M</td><td class="mono" style="color:var(--y)">40-55%</td><td class="mono" style="color:var(--c)">50-100%</td><td>3-6m</td><td style="color:var(--o)">Medio</td><td><a href="/kuka-robots-471.html" style="color:var(--g)">Dossier</a></td></tr>
+<tr><td style="font-weight:800">134 KUKA/ABB &#9888;</td><td><span class="t" style="background:rgba(255,68,68,.12);color:#ff4444;border:1px solid rgba(255,68,68,.25);font-size:.45rem;padding:.12rem .45rem;border-radius:20px">CERRADA</span></td><td class="mono" style="color:var(--o)">€500K-1.5M</td><td class="mono" style="color:var(--g)">€750K-2.2M</td><td class="mono" style="color:var(--y)">35-50%</td><td class="mono" style="color:var(--c)">50-85%</td><td>2-4m</td><td style="color:var(--o)">Medio</td><td><a href="https://www.tbauctions.com/en/auctions/?q=industrial+robots" target="_blank" style="color:var(--c)">TBAuctions</a></td></tr>
+<tr><td style="font-weight:800">Allgaier France &#9888;</td><td><span class="t" style="background:rgba(255,110,64,.12);color:#ff6e40;border:1px solid rgba(255,110,64,.25);font-size:.45rem;padding:.12rem .45rem;border-radius:20px">After Sale</span></td><td class="mono" style="color:var(--o)">€300K-800K</td><td class="mono" style="color:var(--g)">€500K-1.3M</td><td class="mono" style="color:var(--y)">40-65%</td><td class="mono" style="color:var(--c)">50-120%</td><td>2-4m</td><td style="color:var(--o)">Medio</td><td><a href="/allgaier-france.html" style="color:var(--g)">Dossier</a></td></tr>
+<tr><td style="font-weight:800">Skoda Auto &#9888;</td><td><span class="t" style="background:rgba(255,68,68,.12);color:#ff4444;border:1px solid rgba(255,68,68,.25);font-size:.45rem;padding:.12rem .45rem;border-radius:20px">CERRADA</span></td><td class="mono" style="color:var(--o)">€200K-500K</td><td class="mono" style="color:var(--g)">€300K-775K</td><td class="mono" style="color:var(--y)">35-55%</td><td class="mono" style="color:var(--c)">50-120%</td><td>2-4m</td><td style="color:var(--o)">Medio</td><td><a href="https://www.netbid.com/en/auctions/32319293-31892538-industrial-robots-forklift-trucks-and-welding-equipment-becoming-available" target="_blank" style="color:var(--c)">NetBid</a></td></tr>
+<tr><td style="font-weight:800">Nynas Refinería &#9888;</td><td><span class="t t-p1" style="font-size:.45rem">P1</span></td><td class="mono" style="color:var(--o)">€500K-3M</td><td class="mono" style="color:var(--g)">€625K-4.2M</td><td class="mono" style="color:var(--y)">25-40%</td><td class="mono" style="color:var(--c)">25-60%</td><td>4-8m</td><td style="color:var(--r)">Alto</td><td><a href="/nynas-refineria.html" style="color:var(--g)">Dossier</a></td></tr>
+<tr><td style="font-weight:800">Alimentación FR</td><td><span class="t t-p1" style="font-size:.45rem">P1</span></td><td class="mono" style="color:var(--o)">€50K-200K</td><td class="mono" style="color:var(--g)">€75K-300K</td><td class="mono" style="color:var(--y)">35-50%</td><td class="mono" style="color:var(--c)">50-100%</td><td>1-3m</td><td style="color:var(--o)">Medio</td><td><a href="/alimentacion-envasado.html" style="color:var(--g)">Dossier</a></td></tr>
+<tr><td style="font-weight:800">Alimentación UK</td><td><span class="t t-p1" style="font-size:.45rem">P1</span></td><td class="mono" style="color:var(--o)">€100K-400K</td><td class="mono" style="color:var(--g)">€130K-580K</td><td class="mono" style="color:var(--y)">30-45%</td><td class="mono" style="color:var(--c)">30-85%</td><td>2-4m</td><td style="color:var(--o)">Medio</td><td><a href="/alimentacion-envasado.html" style="color:var(--g)">Dossier</a></td></tr>
+<tr><td style="font-weight:800">ENDESA As Pontes</td><td><span class="t t-p1" style="font-size:.45rem">P1</span></td><td class="mono" style="color:var(--o)">€50K-500K</td><td class="mono" style="color:var(--g)">€65K-750K</td><td class="mono" style="color:var(--y)">30-50%</td><td class="mono" style="color:var(--c)">30-100%</td><td>3-6m</td><td style="color:var(--o)">Medio</td><td><a href="/endesa-as-pontes.html" style="color:var(--g)">Dossier</a></td></tr>
+<tr><td style="font-weight:800">Repsol GLP</td><td><span class="t t-p2" style="font-size:.45rem">P2</span></td><td class="mono" style="color:var(--o)">€1M-5M</td><td class="mono" style="color:var(--g)">€1.5M-8M</td><td class="mono" style="color:var(--y)">Variable</td><td class="mono" style="color:var(--dm)">TBD</td><td>6-12m</td><td style="color:var(--g)">Bajo</td><td><a href="/repsol-gl.html" style="color:var(--g)">Dossier</a></td></tr>
+<tr><td style="font-weight:800">Zeewolde Eólica</td><td><span class="t t-p2" style="font-size:.45rem">P2</span></td><td class="mono" style="color:var(--o)">€500K-2M</td><td class="mono" style="color:var(--g)">€625K-2.8M</td><td class="mono" style="color:var(--y)">25-40%</td><td class="mono" style="color:var(--c)">25-60%</td><td>6-12m</td><td style="color:var(--o)">Medio-Alto</td><td><a href="/zeewolde-eolica.html" style="color:var(--g)">Dossier</a></td></tr>
+<tr><td style="font-weight:800">Alpha Ventus</td><td><span class="t t-p2" style="font-size:.45rem">P2</span></td><td class="mono" style="color:var(--o)">€5M-20M</td><td class="mono" style="color:var(--g)">€8M-35M</td><td class="mono" style="color:var(--y)">60-75%</td><td class="mono" style="color:var(--c)">60-75%</td><td>12-24m</td><td style="color:var(--r)">Alto</td><td><a href="https://www.evergabe.com/en/tenders/alpha-ventus-decommissioning-wtg-scope-1840206/" target="_blank" style="color:var(--c)">Licitación</a></td></tr>
+<tr><td style="font-weight:800">Neapco Europe</td><td><span class="t t-p2" style="font-size:.45rem">P2</span></td><td class="mono" style="color:var(--dm)">TBD</td><td class="mono" style="color:var(--dm)">TBD</td><td class="mono" style="color:var(--y)">30-45%</td><td class="mono" style="color:var(--dm)">TBD</td><td>TBD</td><td style="color:var(--o)">Medio</td><td style="color:var(--dm)">Monitorizar</td></tr>
+<tr style="background:rgba(179,136,255,.04)"><td style="font-weight:800;color:var(--p)">Torell Madera &#9878;</td><td><span class="t t-p1" style="font-size:.45rem">P1</span></td><td class="mono" style="color:var(--o)">€50K-200K</td><td class="mono" style="color:var(--g)">€80K-310K</td><td class="mono" style="color:var(--y)">35-55%</td><td class="mono" style="color:var(--c)">60-155%</td><td>1-3m</td><td style="color:var(--g)">Bajo</td><td><a href="https://www.netbid.com/en/auctions/32085747-31440381-insolvency-liquidation-woodworking-machinery-for-furniture-manufacturing-in-spain" target="_blank" style="color:var(--c)">NetBid</a></td></tr>
+<tr style="background:rgba(255,110,64,.08)"><td style="font-weight:800;color:var(--o)">Allgaier Automotive &#128293;&#9878;</td><td><span class="t t-p0" style="font-size:.45rem">P0</span></td><td class="mono" style="color:var(--o)">€200K-1M</td><td class="mono" style="color:var(--g)">€350K-2.5M</td><td class="mono" style="color:var(--y)">40-65%</td><td class="mono" style="color:var(--c)">75-250%</td><td>2-4m</td><td style="color:var(--o)">Medio</td><td><a href="https://lueders-partner.com/en/auctions/allgaier-automotive-gmbh-transfer-presses-drawing-presses-hydraulic-presses-crank-presses-blank-loading-station-continuous-paint-line-tryout-presses-digital-measuring-system-robots-e/" target="_blank" style="color:var(--c)">Lünders</a></td></tr>
+<tr style="background:rgba(179,136,255,.04)"><td style="font-weight:800;color:var(--p)">Graf Automation &#9878;</td><td><span class="t t-p2" style="font-size:.45rem">P2</span></td><td class="mono" style="color:var(--o)">€50K-200K</td><td class="mono" style="color:var(--g)">€80K-290K</td><td class="mono" style="color:var(--y)">30-45%</td><td class="mono" style="color:var(--c)">40-90%</td><td>2-4m</td><td style="color:var(--g)">Bajo</td><td><a href="https://www.zehbra.de/" target="_blank" style="color:var(--c)">ZehBra</a></td></tr>
+<tr style="background:rgba(179,136,255,.04)"><td style="font-weight:800;color:var(--p)">GMW Pramab &#9878;</td><td><span class="t t-p2" style="font-size:.45rem">P2</span></td><td class="mono" style="color:var(--o)">€200K-2M</td><td class="mono" style="color:var(--g)">€350K-4M</td><td class="mono" style="color:var(--y)">40-60%</td><td class="mono" style="color:var(--c)">75-200%</td><td>4-8m</td><td style="color:var(--o)">Medio</td><td><a href="https://www.netbid.com/en/magazine/private-treaty-sale-bei-gmw-praemab-gmbh-maschinen-zur-schwerbearbeitung-im-bieterverfahren" target="_blank" style="color:var(--c)">NetBid</a></td></tr>
+<tr style="background:rgba(179,136,255,.04)"><td style="font-weight:800;color:var(--p)">Pianezze Madera &#9878;</td><td><span class="t t-p1" style="font-size:.45rem">P1</span></td><td class="mono" style="color:var(--o)">€80K-250K</td><td class="mono" style="color:var(--g)">€120K-375K</td><td class="mono" style="color:var(--y)">35-50%</td><td class="mono" style="color:var(--c)">50-125%</td><td>1-3m</td><td style="color:var(--g)">Bajo</td><td><a href="https://www.industrialdiscount.com/en/" target="_blank" style="color:var(--c)">IndustrialDiscount</a></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<!-- TIMELINE -->
+<div class="wrap" style="margin-top:2rem">
+<div class="sh"><span class="icon" style="background:rgba(255,110,64,.1);color:var(--o)">&#128197;</span> Timeline</div>
+<div class="tl">
+  <div class="tli p1"><div class="tli-d">&#9889; 12 Mayo</div><div class="tli-t">Allgaier France — After Sale</div><div class="tli-ds">NetBid #19190 · Subasta cerró · Verificar lotes sin vender</div></div>
+  <div class="tli p1"><div class="tli-d">&#9889; 15 Mayo</div><div class="tli-t">Å koda Auto — 19 KUKA KRC4-270</div><div class="tli-ds">NetBid #19325 · Verificar lotes sin vender</div></div>
+  <div class="tli p0"><div class="tli-d">&#128293; 27 Mayo</div><div class="tli-t">BSH Esquiroz — 225 lotos</div><div class="tli-ds">NetBid #19429 · Navarra, España</div></div>
+  <div class="tli p0"><div class="tli-d">&#128293; 28 Mayo</div><div class="tli-t">Nynas Refinería — Fase 3</div><div class="tli-ds">NetBid #17300 · ~10.000 items · Hamburgo</div></div>
+  <div class="tli p1"><div class="tli-d">&#9889; Q2 2026</div><div class="tli-t">471 Robots KUKA</div><div class="tli-ds">NetBid #18844 · 143 KRC2 + 328 KRC4</div></div>
+  <div class="tli p2"><div class="tli-d">&#128065; Q3 2026</div><div class="tli-t">Neapco Europe — Insolvencia</div><div class="tli-ds">Düren, Alemania · Subasta pendiente</div></div>
+  <div class="tli p2"><div class="tli-d">&#128065; 2027-28</div><div class="tli-t">Alpha Ventus — Offshore €66M</div><div class="tli-ds">Mar del Norte · 12 turbinas · ITT Marzo 2026</div></div>
+</div>
+
+<div class="sh" style="margin-top:2rem"><span class="icon" style="background:rgba(179,136,255,.1);color:var(--p)">&#9878;</span> Timeline Concursos de Acreedores</div>
+<div class="tl">
+  <div class="tli p0"><div class="tli-d">&#128293; Hasta 29 Mayo</div><div class="tli-t">Allgaier Automotive — Venta Privada ACTIVA</div><div class="tli-ds">Lünders &amp; Partner · ARISA 1600tn desde €250K · Precios reducidos 50%</div></div>
+  <div class="tli p1"><div class="tli-d">&#9889; 19 Mayo</div><div class="tli-t">Torell Madera — Insolvencia NetBid</div><div class="tli-ds">Holzher Dynestic 7507 CNC, Vitap BC 91 · Barcelona</div></div>
+  <div class="tli p1"><div class="tli-d">&#9889; 26 Mayo</div><div class="tli-t">Pianezze Madera — Insolvencia Italia</div><div class="tli-ds">Biesse Rover C 9.50 CNC · IndustrialDiscount #9685</div></div>
+  <div class="tli p1"><div class="tli-d">&#9889; 28 Mayo</div><div class="tli-t">Graf Automation — Insolvencia Alemania</div><div class="tli-ds">Mikron HPM 600 HD, Deckel Maho DMU 50M · ZehBra</div></div>
+  <div class="tli p2"><div class="tli-d">&#128065; Abierto</div><div class="tli-t">GMW Pramab — Venta Privada</div><div class="tli-ds">Waldrich Coburg, Siegen, Union · Maquinaria pesada · Aceptando ofertas</div></div>
+  <div class="tli p2"><div class="tli-d">&#128065; Post-subasta</div><div class="tli-t">Exthaiberica — Verificar Lotes</div><div class="tli-ds">Juzgado Mercantil Pamplona · Contactar: exthaiberica@elizaldeconcursal.com</div></div>
+</div>
+</div>
+
+<footer>
+<p><strong>SURUS Inversa S.L.</strong> — Inteligencia Estratégica · Mayo 2026 · Confidencial</p>
+<p>Actualizado: 16 mayo 2026 · 18 oportunidades · 5 concursos de acreedores · <a href="https://surusin.com" target="_blank">surusin.com</a> · <a href="https://escrapalia.com" target="_blank">escrapalia.com</a></p>
+<p style="margin-top:.3rem;font-size:.5rem;opacity:.35">Estudios de rentabilidad basados en análisis de mercado y precios comparables. Márgenes netos estimados tras comisión (18% NetBid) + IVA (21%). Links y contactos verificados mayo 2026. Subasta Surplex A7-44558 CERRADA — estrategia: negociación post-subasta.</p>
+</footer>
+
+<script src="/js/tracker.js"></script>
+<script>
+function toggle(id){document.getElementById(id).classList.toggle('exp')}
+
+// Filter + Sort + Search
+let activeFilter='all';
+let activeStatus='all';
+const searchBox=document.getElementById('searchBox');
+const statusFilter=document.getElementById('statusFilter');
+
+function applyFilters(){
+  const q=(searchBox.value||'').toLowerCase().trim();
+  document.querySelectorAll('.opp').forEach(opp=>{
+    const matchFilter=activeFilter==='all'||
+      (activeFilter==='concurso'?opp.dataset.type==='concurso':opp.dataset.p===activeFilter);
+    const matchStatus=activeStatus==='all'||opp.dataset.status===activeStatus;
+    const matchSearch=!q||opp.textContent.toLowerCase().includes(q);
+    if(matchFilter&&matchStatus&&matchSearch){opp.style.display='';opp.style.animation='fadeUp .3s ease forwards'}
+    else{opp.style.display='none'}
+  });
+  document.querySelectorAll('.sh').forEach(sh=>{
+    const nxt=[];let el=sh.nextElementSibling;
+    while(el&&!el.classList.contains('sh')&&!el.classList.contains('section')){if(el.classList.contains('opp'))nxt.push(el);el=el.nextElementSibling}
+    const anyVisible=nxt.some(o=>o.style.display!=='none');
+    sh.style.display=anyVisible?'':'none';
+  });
+}
+
+document.querySelectorAll('.nav-controls button[data-filter]').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.nav-controls button[data-filter]').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    activeFilter=btn.dataset.filter;
+    applyFilters();
+  });
+});
+
+searchBox.addEventListener('input',applyFilters);
+statusFilter.addEventListener('change',function(){activeStatus=this.value;applyFilters()});
+
+document.getElementById('sortSelect').addEventListener('change',function(){
+  const v=this.value;
+  const list=document.getElementById('opps-list');
+  const opps=Array.from(list.querySelectorAll('.opp'));
+  opps.sort((a,b)=>{
+    if(v==='margin')return(parseFloat(b.dataset.margin)||0)-(parseFloat(a.dataset.margin)||0);
+    if(v==='investment')return(parseFloat(a.dataset.invest)||0)-(parseFloat(b.dataset.invest)||0);
+    // priority
+    const order={p0:0,p1:1,p2:2};
+    return(order[a.dataset.p]||2)-(order[b.dataset.p]||2);
+  });
+  opps.forEach(o=>list.appendChild(o));
+});
+
+// Map
+const map=L.map('map',{zoomControl:true,scrollWheelZoom:true}).setView([48,4],4);
+L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{attribution:'&copy; OpenStreetMap &copy; CARTO',maxZoom:18}).addTo(map);
+const locs=[
+  {name:'BSH Esquiroz',lat:42.77,lng:-1.65,margin:42,desc:'225 lotos · 27 Mayo · Margen 35-50%',type:'Subasta',url:'/bsh-esquiroz.html'},
+  {name:'471 KUKA Robots',lat:48.8,lng:9.2,margin:47,desc:'471 robots · Q2 2026 · Margen 40-55%',type:'Subasta',url:'/kuka-robots-471.html'},
+  {name:'134 KUKA/ABB Surplex',lat:51.6,lng:7.2,margin:42,desc:'CERRADA · Negociar post-subasta',type:'Cerrada',url:'https://www.tbauctions.com/en/auctions/?q=industrial+robots'},
+  {name:'Allgaier France',lat:49.05,lng:6.55,margin:52,desc:'Cerrada 18 Mayo · Verificar lotes · Margen 40-65%',type:'Cerrada',url:'/allgaier-france.html'},
+  {name:'Skoda Auto',lat:50.33,lng:14.93,margin:45,desc:'Cerrada 15 Mayo · Verificar lotes · Margen 35-55%',type:'Cerrada',url:'https://www.netbid.com/en/auctions/32319293-31892538-industrial-robots-forklift-trucks-and-welding-equipment-becoming-available'},
+  {name:'Nynas Refinería',lat:53.55,lng:10.0,margin:32,desc:'RIESGO ambiental · Margen 25-40%',type:'Subasta',url:'/nynas-refineria.html'},
+  {name:'Alimentación FR',lat:43.18,lng:2.95,margin:42,desc:'20 lotos · Margen 35-50%',type:'Subasta',url:'/alimentacion-envasado.html'},
+  {name:'Alimentación UK',lat:52.60,lng:0.35,margin:37,desc:'84 lotos · Margen 30-45%',type:'Subasta',url:'/alimentacion-envasado.html'},
+  {name:'ENDESA As Pontes',lat:43.44,lng:-7.89,margin:40,desc:'Central térmica · Margen 30-50%',type:'Subasta',url:'/endesa-as-pontes.html'},
+  {name:'Repsol GLP',lat:37.95,lng:-8.78,margin:30,desc:'Negociación · Margen variable',type:'Venta privada',url:'/repsol-gl.html'},
+  {name:'Zeewolde Eólica',lat:52.33,lng:5.42,margin:32,desc:'93 turbinas · Margen 25-40%',type:'Subasta',url:'/zeewolde-eolica.html'},
+  {name:'Alpha Ventus',lat:54.0,lng:6.35,margin:67,desc:'Offshore €66M · Margen 60-75%',type:'Licitación',url:'https://www.evergabe.com/en/tenders/alpha-ventus-decommissioning-wtg-scope-1840206/'},
+  {name:'Neapco Europe',lat:50.68,lng:6.48,margin:37,desc:'Insolvencia · Margen est. 30-45%',type:'Pendiente',url:'#neapco'},
+  {name:'Torell Madera',lat:41.09,lng:1.62,margin:45,desc:'Insolvencia CNC · Margen 35-55%',type:'Concurso',url:'https://www.netbid.com/en/auctions/32085747-31440381-insolvency-liquidation-woodworking-machinery-for-furniture-manufacturing-in-spain'},
+  {name:'Allgaier Automotive Insolv.',lat:48.71,lng:9.61,margin:52,desc:'VENTA ACTIVA hasta 29 Mayo · Precios -50% · Margen 40-65%',type:'Concurso',url:'https://lueders-partner.com/en/auctions/allgaier-automotive-gmbh-transfer-presses-drawing-presses-hydraulic-presses-crank-presses-blank-loading-station-continuous-paint-line-tryout-presses-digital-measuring-system-robots-e/'},
+  {name:'Exthaiberica',lat:42.66,lng:-1.70,margin:32,desc:'Concurso · Margen 25-40%',type:'Concurso',url:'#exthaiberica'},
+  {name:'Graf Automation',lat:50.62,lng:10.70,margin:37,desc:'Insolvencia CNC · Margen 30-45%',type:'Concurso',url:'https://www.zehbra.de/'},
+  {name:'GMW Pramab',lat:50.98,lng:11.30,margin:50,desc:'Venta privada · Margen 40-60%',type:'Concurso',url:'https://www.netbid.com/en/magazine/private-treaty-sale-bei-gmw-praemab-gmbh-maschinen-zur-schwerbearbeitung-im-bieterverfahren'},
+  {name:'Pianezze Madera',lat:45.95,lng:12.68,margin:42,desc:'Insolvencia CNC · Margen 35-50%',type:'Concurso',url:'https://www.industrialdiscount.com/en/'}
+];
+function marginColor(m){
+  if(m>=50)return'#00e676'; // verde alto margen
+  if(m>=40)return '#ffd740'; // amarillo medio-alto
+  if(m>=35)return'#ff6e40'; // naranja medio
+  return'#ff4444'; // rojo bajo margen
+}
+locs.forEach(l=>{
+  const c=marginColor(l.margin);
+  const marker=L.circleMarker([l.lat,l.lng],{radius:10,fillColor:c,color:c,weight:3,opacity:1,fillOpacity:.75}).addTo(map);
+  const typeColors={Subasta:'#18ffff',Cerrada:'#ff4444','Venta privada':'#ffd740',Concurso:'#b388ff',Licitación:'#ff6e40',Pendiente:'#5a5a7a'};
+  const tc=typeColors[l.type]||'#5a5a7a';
+  marker.bindPopup(`<div class="popup-title">${l.name}</div><div class="popup-desc">${l.desc}</div><span class="popup-tag" style="background:${tc}20;color:${tc};border:1px solid ${tc}40;font-size:.55rem;padding:.15rem .5rem;border-radius:12px;margin-right:.2rem">${l.type}</span><span class="popup-tag" style="background:${c}20;color:${c};border:1px solid ${c}40;font-size:.55rem;padding:.15rem .5rem;border-radius:12px;margin-right:.2rem">${l.margin}% margen</span><br><a class="popup-link" href="${l.url}" target="_blank">Ver detalles â†’</a>`);
+  marker.on('click',function(e){window.open(l.url,l.url.startsWith('#')?'_self':'_blank');});
+  marker.on('mouseover',function(){this.setStyle({radius:14,weight:4,fillOpacity:1})});
+  marker.on('mouseout',function(){this.setStyle({radius:10,weight:3,fillOpacity:.75})});
+});
+
+// Back to top
+const btt=document.createElement('div');
+btt.className='back-top';
+btt.innerHTML='&#8593;';
+btt.onclick=()=>window.scrollTo({top:0,behavior:'smooth'});
+document.body.appendChild(btt);
+window.addEventListener('scroll',()=>btt.classList.toggle('show',window.scrollY>400));
+
+// Animate KPI numbers on scroll
+const kpiObserver=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.style.animation='countUp .6s ease forwards';
+      kpiObserver.unobserve(e.target);
+    }
+  });
+},{threshold:.5});
+document.querySelectorAll('.kpi .v').forEach(v=>kpiObserver.observe(v));
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

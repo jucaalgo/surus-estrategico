@@ -1,0 +1,89 @@
+/* Neapco Europe GmbH — Dossier de Inversión P1 — Print Stylesheet for PDF */
+@media print {
+  /* Reset */
+  *, *::before, *::after { box-shadow: none !important; text-shadow: none !important; }
+
+  /* Page setup */
+  @page { size: A4 landscape; margin: 1.5cm 1cm; }
+
+  /* Hide non-printable elements */
+  .neapco-nav, .status-banner, .bg-mesh, .neapco-print-footer, .neapco-lightbox,
+  button, .neapco-pdf-btn, .neapco-gallery-item { display: none !important; }
+
+  /* Show all tab sections */
+  .neapco-section { display: block !important; opacity: 1 !important; position: static !important; }
+
+  /* Page breaks */
+  .neapco-hero { page-break-after: always; }
+  .neapco-card { page-break-inside: avoid; margin-bottom: 1rem; }
+
+  /* Typography for print */
+  body { background: white !important; color: #111 !important; font-size: 10pt; line-height: 1.4; }
+  h1 { font-size: 18pt; }
+  h2 { font-size: 14pt; }
+  h3 { font-size: 12pt; }
+
+  /* Tables */
+  .data-table { font-size: 8pt; }
+  .data-table th { background: #e8e8e8 !important; color: #111 !important; }
+  .data-table td { border-color: #ccc !important; }
+
+  /* Cards become sections */
+  .neapco-card { background: white !important; border: 1px solid #ccc !important; break-inside: avoid; }
+
+  /* Badges */
+  .neapco-badge-p1, .neapco-badge-open, .neapco-badge-critical, .neapco-badge-high,
+  .neapco-badge-medium, .neapco-badge-low, .neapco-badge { border: 1px solid #333 !important; color: #333 !important; background: #eee !important; }
+
+  /* Print header */
+  .neapco-print-header { display: block !important; text-align: center; padding: 0.5cm 0; border-bottom: 2px solid #111; margin-bottom: 1cm; font-size: 8pt; color: #666; }
+
+  /* Print footer */
+  .neapco-print-footer { display: block !important; position: fixed; bottom: 0; left: 0; right: 0; text-align: center; font-size: 7pt; color: #999; padding: 0.3cm 0; border-top: 1px solid #ccc; }
+
+  /* Links */
+  a { color: #0066cc !important; text-decoration: underline; }
+  a.ext { color: #0066cc !important; }
+
+  /* Hide gradient backgrounds */
+  [style*="linear-gradient"] { background: white !important; -webkit-background-clip: unset !important; -webkit-text-fill-color: unset !important; color: #111 !important; }
+  [style*="rgba"] { background: white !important; }
+
+  /* Process flow */
+  .neapco-timeline { display: flex; flex-wrap: wrap; gap: 0.3cm; }
+  .neapco-timeline-item { border: 1px solid #999 !important; background: #f5f5f5 !important; }
+
+  /* Grid layouts */
+  .neapco-grid-2, .neapco-grid-3 { display: grid; gap: 0.5cm; }
+
+  /* Gallery - show as list in print */
+  .neapco-gallery { display: block !important; }
+  .neapco-gallery-item { display: none !important; }
+
+  /* Info and alert blocks */
+  .neapco-info { background: #f0f8ff !important; border-color: #0066cc !important; color: #111 !important; }
+  .neapco-alert { background: #fff5f5 !important; border-color: #cc3333 !important; color: #cc3333 !important; }
+  .neapco-highlight { background: #f5f0ff !important; border-color: #8855cc !important; }
+
+  /* Metrics */
+  .neapco-metric { background: #f9f9f9 !important; border-color: #ccc !important; }
+  .neapco-metric .val { color: #111 !important; }
+
+  /* Strategy cards */
+  .neapco-strategy-p1 { border-left-color: #cc9900 !important; background: #fffef5 !important; }
+  .neapco-strategy-p2 { border-left-color: #0066cc !important; background: #f0f8ff !important; }
+  .neapco-strategy-p3 { border-left-color: #009933 !important; background: #f0fff5 !important; }
+
+  /* Checklist items */
+  .neapco-checklist-item { border-color: #ccc !important; }
+
+  /* Tabs - hide in print */
+  .neapco-tabs { display: none !important; }
+
+  /* Status banner - show as simple text */
+  .status-banner { background: #fff5f5 !important; border-color: #cc3333 !important; color: #cc3333 !important; font-size: 8pt; padding: 0.3cm; }
+
+  /* CTA */
+  .neapco-cta { background: #f5f5f5 !important; border-color: #333 !important; }
+  .neapco-cta a { background: #333 !important; color: white !important; }
+}

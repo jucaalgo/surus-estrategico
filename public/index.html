@@ -1,0 +1,2031 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Investigación estratégica completa de SURUS Inversa SL: empresa líder en economía circular, gestión de activos industriales y reempleo. Datos financieros, equipo, impacto ambiental y oportunidades de negocio.">
+<meta property="og:title" content="SURUS Inversa SL — Investigación Estratégica Completa">
+<meta property="og:description" content="Investigación estratégica completa de SURUS Inversa SL: empresa líder en economía circular, gestión de activos industriales y reempleo.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://surus-estrategico.vercel.app/">
+<title>SURUS Inversa SL — Investigación Estratégica Completa</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap');
+
+:root {
+  --bg-dark: #06060b;
+  --bg-card: #0e0e18;
+  --bg-card-hover: #161628;
+  --accent: #00e676;
+  --accent-dim: #00c853;
+  --accent2: #18ffff;
+  --accent3: #ff6e40;
+  --accent4: #ffd740;
+  --accent5: #b388ff;
+  --accent6: #ff4081;
+  --text: #e8e8f0;
+  --text-dim: #8888a0;
+  --text-bright: #ffffff;
+  --border: #1e1e30;
+  --gradient1: linear-gradient(135deg, #00e676 0%, #18ffff 100%);
+  --gradient2: linear-gradient(135deg, #ff6e40 0%, #ffd740 100%);
+  --gradient3: linear-gradient(135deg, #7c4dff 0%, #18ffff 100%);
+  --gradient4: linear-gradient(135deg, #ff4081 0%, #ff6e40 100%);
+  --gradient5: linear-gradient(135deg, #ffd740 0%, #00e676 100%);
+  --shadow: 0 8px 32px rgba(0,0,0,0.5);
+  --shadow-accent: 0 0 30px rgba(0,230,118,0.2);
+  --glow-green: 0 0 40px rgba(0,230,118,0.15), 0 0 80px rgba(0,230,118,0.05);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg-dark);
+  color: var(--text);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ANIMATED BACKGROUND */
+.bg-mesh {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse at 20% 20%, rgba(0,230,118,0.04) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 80%, rgba(24,255,255,0.03) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(124,77,255,0.02) 0%, transparent 60%);
+}
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(6,6,11,0.9); backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid var(--border); padding: 0 1.5rem;
+  display: flex; align-items: center; justify-content: space-between; height: 56px;
+}
+nav .logo { font-weight: 900; font-size: 1rem; background: var(--gradient1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -0.5px; }
+nav .nav-links { display: flex; gap: 0.25rem; overflow-x: auto; scrollbar-width: none; }
+nav .nav-links::-webkit-scrollbar { display: none; }
+nav .nav-links a {
+  color: var(--text-dim); text-decoration: none; font-size: 0.65rem; font-weight: 600;
+  padding: 0.3rem 0.6rem; border-radius: 20px; white-space: nowrap;
+  transition: all 0.3s; text-transform: uppercase; letter-spacing: 0.5px;
+}
+nav .nav-links a:hover, nav .nav-links a.active {
+  color: var(--text-bright); background: rgba(0,230,118,0.15);
+}
+
+/* HERO */
+.hero {
+  min-height: 100vh; display: flex; align-items: center; justify-content: center;
+  padding: 6rem 2rem 4rem; position: relative; z-index: 1;
+  background: radial-gradient(ellipse at 30% 50%, rgba(0,230,118,0.06) 0%, transparent 60%),
+              radial-gradient(ellipse at 70% 30%, rgba(24,255,255,0.04) 0%, transparent 60%);
+}
+.hero-content { max-width: 1000px; text-align: center; }
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  background: rgba(0,230,118,0.08); border: 1px solid rgba(0,230,118,0.25);
+  padding: 0.4rem 1rem; border-radius: 50px; font-size: 0.75rem; color: var(--accent);
+  margin-bottom: 1.5rem; font-weight: 600;
+}
+.hero-badge .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; }
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+.hero h1 { font-size: clamp(2.2rem, 5.5vw, 4rem); font-weight: 900; line-height: 1.05; margin-bottom: 1.5rem; letter-spacing: -1px; }
+.hero h1 .highlight { background: var(--gradient1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.hero p { font-size: 1.1rem; color: var(--text-dim); max-width: 700px; margin: 0 auto 2.5rem; line-height: 1.7; }
+.hero-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 0.75rem; margin-top: 2.5rem; }
+.hero-stat {
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px;
+  padding: 1.1rem 0.5rem; text-align: center; transition: all 0.4s; cursor: default;
+}
+.hero-stat:hover { border-color: var(--accent); box-shadow: var(--shadow-accent); transform: translateY(-4px); }
+.hero-stat .number { font-size: 1.6rem; font-weight: 900; background: var(--gradient1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.hero-stat .label { font-size: 0.6rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 0.2rem; }
+
+/* CTA BUTTON */
+.hero-cta {
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  background: var(--gradient1); color: #000; font-weight: 800;
+  padding: 0.9rem 2rem; border-radius: 50px; text-decoration: none;
+  font-size: 0.95rem; letter-spacing: -0.3px;
+  box-shadow: 0 4px 24px rgba(0,230,118,0.35), 0 0 60px rgba(0,230,118,0.15);
+  transition: all 0.3s; margin-top: 0.5rem;
+}
+.hero-cta:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 8px 32px rgba(0,230,118,0.5), 0 0 80px rgba(0,230,118,0.25);
+}
+.hero-cta svg { width: 18px; height: 18px; }
+
+/* SECTIONS */
+section { padding: 5rem 2rem; max-width: 1200px; margin: 0 auto; position: relative; z-index: 1; }
+.section-tag {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px;
+  color: var(--accent); margin-bottom: 0.75rem;
+}
+.section-tag::before { content: ''; width: 24px; height: 2px; background: var(--accent); }
+section h2 { font-size: clamp(1.6rem, 3.5vw, 2.4rem); font-weight: 900; margin-bottom: 0.5rem; line-height: 1.15; letter-spacing: -0.5px; }
+section h2 .grad { background: var(--gradient1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+section .subtitle { color: var(--text-dim); font-size: 0.95rem; margin-bottom: 2.5rem; max-width: 650px; }
+
+/* CARDS */
+.grid { display: grid; gap: 1rem; }
+.grid-2 { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
+.grid-3 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+.grid-4 { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+
+.card {
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px;
+  padding: 1.5rem; transition: all 0.4s; position: relative; overflow: hidden;
+}
+.card:hover { border-color: rgba(0,230,118,0.4); box-shadow: var(--shadow-accent); transform: translateY(-3px); }
+.card-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+.card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; }
+.card p { color: var(--text-dim); font-size: 0.82rem; }
+.card .metric { font-size: 1.8rem; font-weight: 900; background: var(--gradient1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 0.3rem 0 0.15rem; }
+.card .metric-label { font-size: 0.65rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.5px; }
+
+/* ORG CHART VISUAL */
+.org-chart-container {
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px;
+  padding: 2rem; position: relative; overflow: hidden;
+}
+.org-chart-container::before {
+  content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+  background: radial-gradient(circle, rgba(0,230,118,0.03) 0%, transparent 60%);
+  pointer-events: none;
+}
+.org-level { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; margin-bottom: 0.5rem; }
+.org-level-label {
+  text-align: center; font-size: 0.6rem; font-weight: 700; color: var(--accent);
+  text-transform: uppercase; letter-spacing: 2px; margin-bottom: 0.5rem;
+}
+.org-person {
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px;
+  padding: 1rem; text-align: center; min-width: 155px; max-width: 180px;
+  transition: all 0.4s; position: relative; overflow: hidden; cursor: default;
+}
+.org-person:hover { border-color: var(--accent); box-shadow: var(--shadow-accent); transform: translateY(-3px) scale(1.02); }
+.org-person.founder { border: 2px solid var(--accent); background: rgba(0,230,118,0.06); }
+.org-person.founder::after { content: '★'; position: absolute; top: 6px; right: 8px; color: var(--accent4); font-size: 0.7rem; }
+.org-person.decision-maker { border: 2px solid var(--accent6); background: rgba(255,64,129,0.06); }
+.org-person.decision-maker::after { content: '🔑'; position: absolute; top: 6px; right: 8px; font-size: 0.6rem; }
+.org-person.cmo { border: 2px solid var(--accent5); background: rgba(179,136,255,0.06); }
+.org-person .avatar {
+  width: 44px; height: 44px; border-radius: 50%; margin: 0 auto 0.5rem;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: 0.85rem; color: var(--bg-dark);
+}
+.org-person.founder .avatar { background: var(--gradient1); }
+.org-person.decision-maker .avatar { background: var(--gradient4); }
+.org-person.cmo .avatar { background: var(--gradient3); }
+.org-person:not(.founder):not(.decision-maker):not(.cmo) .avatar { background: var(--gradient5); opacity: 0.7; }
+.org-person .name { font-weight: 600; font-size: 0.78rem; line-height: 1.3; }
+.org-person .role { font-size: 0.62rem; color: var(--text-dim); margin-top: 0.2rem; line-height: 1.3; }
+.org-person .tag { display: inline-block; font-size: 0.55rem; font-weight: 700; padding: 0.1rem 0.4rem; border-radius: 4px; margin-top: 0.3rem; }
+.org-connector { text-align: center; color: var(--border); font-size: 1.2rem; margin: 0.25rem 0; }
+
+/* DECISION MAKER CARDS */
+.dm-card {
+  background: linear-gradient(135deg, rgba(0,230,118,0.06) 0%, rgba(24,255,255,0.03) 100%);
+  border: 2px solid var(--accent); border-radius: 20px; padding: 1.5rem;
+  position: relative; overflow: hidden; transition: all 0.4s;
+}
+.dm-card:hover { box-shadow: var(--glow-green); transform: translateY(-2px); }
+.dm-card .dm-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+.dm-card .dm-avatar {
+  width: 60px; height: 60px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 900; font-size: 1.1rem; color: var(--bg-dark); flex-shrink: 0;
+}
+.dm-card .dm-name { font-size: 1.1rem; font-weight: 800; }
+.dm-card .dm-title { font-size: 0.75rem; color: var(--accent); font-weight: 600; }
+.dm-card .dm-body { font-size: 0.82rem; color: var(--text-dim); line-height: 1.7; }
+.dm-card .dm-body strong { color: var(--text); }
+.dm-card .dm-body .link { color: var(--accent2); text-decoration: none; }
+.dm-card .dm-body .link:hover { text-decoration: underline; }
+.dm-tag {
+  display: inline-flex; align-items: center; gap: 0.3rem;
+  font-size: 0.65rem; font-weight: 700; padding: 0.2rem 0.6rem; border-radius: 6px;
+  margin: 0.15rem;
+}
+.dm-tag.green { background: rgba(0,230,118,0.15); color: var(--accent); }
+.dm-tag.blue { background: rgba(24,255,255,0.15); color: var(--accent2); }
+.dm-tag.purple { background: rgba(179,136,255,0.15); color: var(--accent5); }
+.dm-tag.red { background: rgba(255,64,129,0.15); color: var(--accent6); }
+.dm-tag.gold { background: rgba(255,215,64,0.15); color: var(--accent4); }
+
+/* DECISION MAP */
+.decision-map {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; margin-top: 1.5rem;
+}
+.decision-box {
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px;
+  padding: 1.25rem; transition: all 0.3s;
+}
+.decision-box:hover { border-color: var(--accent); }
+.decision-box .area { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; }
+.decision-box .person { font-weight: 700; font-size: 0.9rem; color: var(--text-bright); }
+.decision-box .reason { font-size: 0.75rem; color: var(--text-dim); margin-top: 0.3rem; line-height: 1.5; }
+
+/* PRESS */
+.press-card {
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px;
+  padding: 1.1rem; transition: all 0.3s; display: flex; flex-direction: column;
+}
+.press-card:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: var(--shadow-accent); }
+.press-source { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--accent); margin-bottom: 0.35rem; }
+.press-title { font-size: 0.85rem; font-weight: 600; margin-bottom: 0.35rem; line-height: 1.4; }
+.press-title a { color: var(--text-bright); text-decoration: none; }
+.press-title a:hover { color: var(--accent); text-decoration: underline; }
+.press-excerpt { font-size: 0.75rem; color: var(--text-dim); flex: 1; line-height: 1.5; }
+.press-date { font-size: 0.65rem; color: var(--text-dim); margin-top: 0.5rem; }
+
+/* TABLE */
+.data-table { width: 100%; border-collapse: collapse; margin: 0.75rem 0; }
+.data-table th { background: rgba(0,230,118,0.08); color: var(--accent); font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; padding: 0.6rem 0.75rem; text-align: left; border-bottom: 1px solid var(--border); }
+.data-table td { padding: 0.55rem 0.75rem; font-size: 0.8rem; border-bottom: 1px solid rgba(30,30,48,0.5); }
+.data-table tr:hover td { background: rgba(0,230,118,0.03); }
+.data-table .tag { display: inline-block; background: rgba(0,230,118,0.15); color: var(--accent); font-size: 0.6rem; font-weight: 700; padding: 0.1rem 0.45rem; border-radius: 4px; }
+
+/* TIMELINE */
+.timeline { position: relative; padding-left: 1.75rem; }
+.timeline::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom, var(--accent), var(--accent5)); }
+.timeline-item { position: relative; padding-bottom: 1.25rem; }
+.timeline-item::before { content: ''; position: absolute; left: -1.75rem; top: 0.35rem; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); border: 2px solid var(--bg-dark); }
+.timeline-item .year { font-size: 0.7rem; font-weight: 700; color: var(--accent); }
+.timeline-item .event { font-size: 0.82rem; margin-top: 0.1rem; line-height: 1.5; }
+
+/* SOCIAL */
+.social-card {
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px;
+  padding: 1.25rem; transition: all 0.3s; text-align: center;
+}
+.social-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+.social-card .social-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+.social-card .social-num { font-size: 1.5rem; font-weight: 900; background: var(--gradient1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.social-card .social-label { font-size: 0.7rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.5px; }
+
+/* BADGE */
+.badge { display: inline-flex; align-items: center; gap: 0.3rem; background: rgba(0,230,118,0.1); border: 1px solid rgba(0,230,118,0.25); color: var(--accent); font-size: 0.65rem; font-weight: 700; padding: 0.2rem 0.55rem; border-radius: 20px; }
+.badge.orange { background: rgba(255,110,64,0.1); border-color: rgba(255,110,64,0.25); color: var(--accent3); }
+.badge.blue { background: rgba(24,255,255,0.1); border-color: rgba(24,255,255,0.25); color: var(--accent2); }
+.badge.gold { background: rgba(255,215,64,0.1); border-color: rgba(255,215,64,0.25); color: var(--accent4); }
+.badge.purple { background: rgba(179,136,255,0.1); border-color: rgba(179,136,255,0.25); color: var(--accent5); }
+.badge.red { background: rgba(255,64,129,0.1); border-color: rgba(255,64,129,0.25); color: var(--accent6); }
+
+.verified { display: inline-flex; align-items: center; gap: 0.3rem; color: var(--accent); font-size: 0.65rem; font-weight: 700; }
+.verified::before { content: '✓'; background: var(--accent); color: var(--bg-dark); width: 14px; height: 14px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.55rem; }
+
+.divider { height: 1px; background: var(--border); margin: 2rem 0; }
+
+.anchor { scroll-margin-top: 65px; }
+
+/* PROGRESS */
+.progress-bar { height: 5px; background: rgba(0,230,118,0.1); border-radius: 3px; overflow: hidden; margin-top: 0.4rem; }
+.progress-fill { height: 100%; border-radius: 3px; background: var(--gradient1); transition: width 1.5s ease; }
+
+/* CONTACT */
+.contact-card {
+  background: linear-gradient(135deg, rgba(0,230,118,0.08) 0%, rgba(24,255,255,0.03) 100%);
+  border: 2px solid var(--accent); border-radius: 20px; padding: 2rem; position: relative;
+}
+.contact-card::before {
+  content: 'CONTACTO ESTRATÉGICO'; position: absolute; top: -0.7rem; left: 1.5rem;
+  background: var(--bg-dark); padding: 0 0.75rem; font-size: 0.65rem; font-weight: 800;
+  color: var(--accent); letter-spacing: 1.5px;
+}
+
+/* RESPONSIVE */
+/* Mobile menu button */
+.nav-toggle { display: none; background: none; border: none; color: var(--text); font-size: 1.5rem; cursor: pointer; padding: 0.25rem; line-height: 1; }
+
+/* Large tablets and small desktops */
+@media (max-width: 1024px) {
+  .grid-2 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+  .grid-3 { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+  .grid-4 { grid-template-columns: repeat(2, 1fr); }
+  .hero-stats { grid-template-columns: repeat(3, 1fr); }
+  .org-person { min-width: 140px; max-width: 165px; }
+  section { padding: 4rem 1.5rem; }
+}
+
+/* Tablets */
+@media (max-width: 768px) {
+  .nav-toggle { display: block; }
+  nav .nav-links {
+    display: none; position: fixed; top: 56px; left: 0; right: 0; bottom: 0;
+    background: rgba(6,6,11,0.98); backdrop-filter: blur(20px);
+    flex-direction: column; padding: 1.5rem; gap: 0.5rem;
+    overflow-y: auto; z-index: 99;
+  }
+  nav .nav-links.open { display: flex; }
+  nav .nav-links a { font-size: 0.85rem; padding: 0.7rem 1rem; }
+
+  .hero { min-height: auto; padding: 5rem 1rem 3rem; }
+  .hero h1 { font-size: 1.8rem; letter-spacing: -0.5px; }
+  .hero p { font-size: 0.95rem; }
+  .hero-stats { grid-template-columns: repeat(2, 1fr); gap: 0.5rem; }
+  .hero-stat { padding: 0.8rem 0.4rem; }
+  .hero-stat .number { font-size: 1.3rem; }
+  .hero-stat .label { font-size: 0.55rem; }
+  .hero-badge { font-size: 0.65rem; padding: 0.3rem 0.7rem; }
+
+  section { padding: 3rem 1rem; }
+  section h2 { font-size: 1.5rem; }
+  section .subtitle { font-size: 0.85rem; }
+
+  .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+
+  .card { padding: 1.2rem; }
+  .card h3 { font-size: 0.95rem; }
+  .card .metric { font-size: 1.5rem; }
+
+  .data-table { font-size: 0.7rem; display: block; overflow-x: auto; white-space: nowrap; }
+  .data-table th, .data-table td { padding: 0.4rem 0.5rem; }
+
+  .dm-card { padding: 1.2rem; }
+  .dm-card .dm-header { flex-direction: column; text-align: center; gap: 0.5rem; }
+  .dm-card .dm-avatar { width: 50px; height: 50px; font-size: 0.95rem; }
+  .dm-card .dm-name { font-size: 1rem; }
+  .dm-card .dm-body { font-size: 0.78rem; }
+
+  .decision-map { grid-template-columns: 1fr; }
+
+  .org-chart-container { padding: 1.2rem; }
+  .org-person { min-width: 130px; max-width: 155px; padding: 0.8rem; }
+  .org-person .name { font-size: 0.72rem; }
+  .org-person .role { font-size: 0.58rem; }
+  .org-person .tag { font-size: 0.5rem; }
+
+  .org-level { gap: 0.5rem; }
+  .org-connector { font-size: 1rem; }
+
+  /* New operational section mobile */
+  section .grid-3 > div { padding: 0.8rem !important; }
+
+  footer { padding: 2rem 1rem; }
+  footer .grid-3, footer [style*="grid-template-columns:repeat(auto-fit"] { grid-template-columns: 1fr !important; }
+}
+
+/* Phones */
+@media (max-width: 480px) {
+  nav { padding: 0 0.75rem; height: 50px; }
+  nav .logo { font-size: 0.85rem; }
+
+  .hero { padding: 4.5rem 0.75rem 2rem; }
+  .hero h1 { font-size: 1.5rem; }
+  .hero p { font-size: 0.85rem; }
+  .hero-stats { grid-template-columns: repeat(2, 1fr); gap: 0.4rem; }
+  .hero-stat { padding: 0.7rem 0.3rem; border-radius: 10px; }
+  .hero-stat .number { font-size: 1.1rem; }
+  .hero-stat .label { font-size: 0.5rem; }
+
+  section { padding: 2.5rem 0.75rem; }
+  section h2 { font-size: 1.3rem; }
+  section .subtitle { font-size: 0.8rem; }
+  .section-tag { font-size: 0.55rem; }
+
+  .card { padding: 1rem; border-radius: 12px; }
+  .card .metric { font-size: 1.3rem; }
+  .card .metric-label { font-size: 0.6rem; }
+
+  .org-person { min-width: 120px; max-width: 145px; padding: 0.7rem; }
+  .org-person .avatar { width: 36px; height: 36px; font-size: 0.75rem; }
+  .org-person .name { font-size: 0.68rem; }
+  .org-person .role { font-size: 0.54rem; }
+
+  .dm-card { padding: 1rem; border-radius: 14px; }
+  .dm-card .dm-avatar { width: 44px; height: 44px; font-size: 0.85rem; }
+  .dm-card .dm-name { font-size: 0.9rem; }
+  .dm-card .dm-title { font-size: 0.68rem; }
+  .dm-card .dm-body { font-size: 0.75rem; }
+
+  .decision-box { padding: 1rem; }
+  .decision-box .area { font-size: 0.6rem; }
+  .decision-box .person { font-size: 0.82rem; }
+  .decision-box .reason { font-size: 0.7rem; }
+
+  .badge { font-size: 0.58rem; padding: 0.15rem 0.45rem; }
+
+  /* Force all inline grids to single column */
+  [style*="grid-template-columns:repeat(auto-fit"],
+  [style*="grid-template-columns: repeat(auto-fit"],
+  [style*="display:grid"][style*="grid-template-columns"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Make tables horizontally scrollable */
+  .data-table { min-width: 0; }
+  .data-table th, .data-table td { font-size: 0.65rem; padding: 0.3rem 0.35rem; }
+
+  /* Timeline adjustments */
+  .timeline-item .year { font-size: 0.65rem; }
+  .timeline-item .event { font-size: 0.78rem; }
+
+  /* Press cards */
+  .press-title { font-size: 0.8rem; }
+  .press-excerpt { font-size: 0.7rem; }
+
+  /* Section specific: financial metrics */
+  .grid-4 { grid-template-columns: repeat(2, 1fr) !important; }
+
+  /* Footer */
+  footer { padding: 1.5rem 0.75rem; }
+  footer a { word-break: break-all; }
+}
+
+/* Very small phones */
+@media (max-width: 360px) {
+  .hero h1 { font-size: 1.3rem; }
+  .hero-stat .number { font-size: 1rem; }
+  section h2 { font-size: 1.15rem; }
+  .grid-4 { grid-template-columns: 1fr !important; }
+}
+
+/* Touch improvements for mobile */
+@media (hover: none) and (pointer: coarse) {
+  .card:hover { transform: none; }
+  .org-person:hover { transform: none; }
+  .press-card:hover { transform: none; }
+  .social-card:hover { transform: none; }
+  nav .nav-links a:hover { background: transparent; color: var(--text-dim); }
+  nav .nav-links a:active { background: rgba(0,230,118,0.15); color: var(--text-bright); }
+  .hero-stat:hover { transform: none; }
+}
+
+/* Landscape phones */
+@media (max-width: 768px) and (orientation: landscape) {
+  .hero { min-height: auto; padding: 3rem 1rem 2rem; }
+  .hero-stats { grid-template-columns: repeat(4, 1fr); }
+}
+
+/* Print styles */
+@media print {
+  .bg-mesh { display: none; }
+  nav { position: static; background: white; border-bottom: 2px solid #000; }
+  body { background: white; color: #000; }
+  .hero { min-height: auto; padding: 1rem; background: none; }
+  .card { border: 1px solid #ccc; break-inside: avoid; }
+  section { padding: 1rem 0; }
+}
+
+/* COLLAPSIBLE */
+.collapsible { cursor: pointer; }
+.collapsible-content { max-height: 0; overflow: hidden; transition: max-height 0.5s ease; }
+.collapsible.open .collapsible-content { max-height: 5000px; }
+.collapsible-toggle { display: flex; align-items: center; gap: 0.5rem; }
+.collapsible-toggle::after { content: '▸'; transition: transform 0.3s; font-size: 0.7rem; }
+.collapsible.open .collapsible-toggle::after { transform: rotate(90deg); }
+
+/* ANIMATIONS */
+@keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+.fade-in { animation: fadeInUp 0.6s ease forwards; }
+
+footer { text-align: center; padding: 3rem 2rem; color: var(--text-dim); font-size: 0.7rem; border-top: 1px solid var(--border); position: relative; z-index: 1; }
+</style>
+</head>
+<body>
+
+<div class="bg-mesh"></div>
+
+<nav>
+  <div class="logo">SURUS INVESTIGATION</div>
+  <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu">&#9776;</button>
+  <div class="nav-links">
+    <a href="#identidad">Identidad</a>
+    <a href="#equipo">Equipo</a>
+    <a href="#decisiones">Decisiones</a>
+    <a href="#estructura">Estructura</a>
+    <a href="#finanzas">Finanzas</a> <a href="#operativo">Operativo</a>
+    <a href="#negocio">Negocio</a>
+    <a href="#proyectos">Proyectos</a>
+    <a href="#prensa">Prensa</a>
+    <a href="#social">Social</a>
+    <a href="#competencia">Competencia</a>
+    <a href="#oportunidad">Oportunidad</a>
+    <a href="#contacto">Contacto</a>
+  </div>
+</nav>
+
+<!-- ==================== HERO ==================== -->
+<div class="hero" id="top">
+  <div class="hero-content">
+    <div class="hero-badge"><span class="dot"></span> Investigación Estratégica Completa · Mayo 2026</div>
+    <h1>Investigación Estratégica<br><span class="highlight">SURUS Inversa SL</span></h1>
+    <p>Empresa española líder en economía circular y gestión de activos industriales. ~7M€ facturación. 30 empleados (VSME 2024). +50 países. 1.000+ clientes. Desde 2010 transformando costes en ingresos.</p>
+    <a href="/dashboard/" class="hero-cta">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"></circle><path d="M15.477 12C15.2 13.5 14.2 14.86 12.93 15.93c-1.27 1.07-2.86 1.71-4.5 1.78"></path><path d="M12 18v4"></path><path d="M8 22h8"></path></svg>
+      Posibles Oportunidades de Negocio
+    </a>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="number">~7M€</div><div class="label">Facturación anual</div></div>
+      <div class="hero-stat"><div class="number">200M€</div><div class="label">Activos gestionados/año</div></div>
+      <div class="hero-stat"><div class="number">42</div><div class="label">Empleados</div></div>
+      <div class="hero-stat"><div class="number">50+</div><div class="label">Países</div></div>
+      <div class="hero-stat"><div class="number">79%</div><div class="label">Reempleo + 19% Reutilización</div></div>
+      <div class="hero-stat"><div class="number">400K+</div><div class="label">Usuarios Escrapalia</div></div>
+      <div class="hero-stat"><div class="number">~240K</div><div class="label">Subastas realizadas</div></div>
+      <div class="hero-stat"><div class="number">1.000+</div><div class="label">Clientes</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== IDENTIDAD ==================== -->
+<section id="identidad" class="anchor">
+  <div class="section-tag">Identidad Corporativa</div>
+  <h2>Quién es <span class="grad">SURUS</span></h2>
+  <p class="subtitle">Datos registrales verificados del Registro Mercantil de Madrid (BORME), Axesor, DatosCif, InfoEmpresa.</p>
+
+  <div class="grid grid-2" style="margin-bottom:1.5rem">
+    <div class="card">
+      <h3>Datos Legales <span class="verified">Verificado BORME</span></h3>
+      <table class="data-table">
+        <tr><td style="color:var(--text-dim)">Razón Social</td><td style="font-weight:700">SURUS INVERSA SL</td></tr>
+        <tr><td style="color:var(--text-dim)">CIF</td><td style="font-family:monospace;color:var(--accent)">B86058567</td></tr>
+        <tr><td style="color:var(--text-dim)">Constitución</td><td>1 de diciembre de 2010</td></tr>
+        <tr><td style="color:var(--text-dim)">Capital Social</td><td>13.006 € (ampliado de 3.006 € en 2012)</td></tr>
+        <tr><td style="color:var(--text-dim)">CNAE</td><td>4619 — Intermediarios del comercio</td></tr>
+        <tr><td style="color:var(--text-dim)">Objeto Social</td><td style="font-size:0.78rem">Compra-venta de toda clase de inmuebles; intermediación mediante subastas</td></tr>
+        <tr><td style="color:var(--text-dim)">Registro Mercantil</td><td>Madrid, Tomo 28465, Folio 1, Sec. 8, Hoja 512492</td></tr>
+        <tr><td style="color:var(--text-dim)">Administración</td><td>Administradores Solidarios</td></tr>
+        <tr><td style="color:var(--text-dim)">Forma Jurídica</td><td>Sociedad Limitada Unipersonal (desde 08/01/2025)</td></tr>
+        <tr><td style="color:var(--text-dim)">Cierre de Ejercicio</td><td>30 de septiembre</td></tr>
+        <tr><td style="color:var(--text-dim)">Cuentas Depositadas</td><td>2011–2024 (disponibles en Axesor)</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <h3>Contacto y Sede <span class="verified">Verificado</span></h3>
+      <table class="data-table">
+        <tr><td style="color:var(--text-dim)">Sede Social</td><td>Cmno. Huertas, 18, 2ª Planta<br>28223 Pozuelo de Alarcón, Madrid</td></tr>
+        <tr><td style="color:var(--text-dim)">Teléfono</td><td style="font-family:monospace;color:var(--accent)">+34 913 52 45 07</td></tr>
+        <tr><td style="color:var(--text-dim)">Email</td><td style="font-family:monospace;color:var(--accent)">info@surusin.com</td></tr>
+        <tr><td style="color:var(--text-dim)">Web</td><td><a href="https://www.surusin.com" target="_blank" style="color:var(--accent2)">surusin.com</a></td></tr>
+        <tr><td style="color:var(--text-dim)">Escrapalia</td><td><a href="https://escrapalia.com" target="_blank" style="color:var(--accent2)">escrapalia.com</a></td></tr>
+        <tr><td style="color:var(--text-dim)">LinkedIn</td><td><a href="https://www.linkedin.com/company/surusin" target="_blank" style="color:var(--accent2)">/company/surusin</a> · 12.303 seguidores</td></tr>
+        <tr><td style="color:var(--text-dim)">Twitter/X</td><td style="color:var(--accent2)">@SurusInversa</td></tr>
+        <tr><td style="color:var(--text-dim)">Instagram</td><td style="color:var(--accent2)">@surus_inversa</td></tr>
+        <tr><td style="color:var(--text-dim)">Facebook</td><td><a href="https://www.facebook.com/Surusinversa/" target="_blank" style="color:var(--accent2)">/Surusinversa</a> <span style="color:var(--accent3);font-size:0.6rem">⚠️ Página no verificable</span></td></tr>
+        <tr><td style="color:var(--text-dim)">Podcast</td><td style="color:var(--accent2)">Capital Radio — "SURUS, Liderando la Sostenibilidad"</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:1.5rem">
+    <h3>Certificaciones y Reconocimientos <span class="verified">Verificado Web Oficial + EcoVadis</span></h3>
+    <div style="display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:0.5rem">
+      <span class="badge">ISO 14001</span>
+      <span class="badge">ISO 9001</span>
+      <span class="badge">ISO 27001</span>
+      <span class="badge">ISO 30000</span>
+      <span class="badge">UNE 19601</span>
+      <span class="badge">ISO 37001</span>
+      <span class="badge">OHSAS 18001 ⚠️</span>
+      <span class="badge gold">EcoVadis Plata Top 15%</span>
+      <span class="badge blue">ENS</span>
+      <span class="badge blue">Cyber Essentials</span>
+      <span class="badge orange">Pacto Mundial ONU</span>
+      <span class="badge">EFFAS 83% [Pendiente de verificación]</span>
+      <span class="badge">VSME</span>
+      <span class="badge purple">Premio BASF Economía Circular</span>
+      <span class="badge purple">Premios Comprendedor 2015</span>
+    </div>
+    <div style="margin-top:1rem;padding:1rem;background:rgba(0,230,118,0.05);border-radius:10px;border:1px solid rgba(0,230,118,0.2)">
+      <div style="font-size:0.72rem;color:var(--text-dim)">EcoVadis · Válida hasta abril 2027</div>
+      <div style="font-size:1.5rem;font-weight:900;background:var(--gradient1);-webkit-background-clip:text;-webkit-text-fill-color:transparent">Plata · Top 15% mundial</div>
+      <div style="font-size:0.78rem;color:var(--text-dim);margin-top:0.3rem">Puntuación inicial: 66/100 (Bronze, percentil 82) → Actualizada a Plata: 78/100 (Top 15%, válida hasta abril 2027) · Medio Ambiente: <strong style="color:var(--accent)">Top 4%</strong> · Ética: <strong style="color:var(--accent)">Top 8%</strong> · Auto-declaración: primera empresa fuera de EEUU autorizada para material defensa estadounidense (sin verificación independiente)</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Marcas Registradas y Slogans</h3>
+    <div style="display:flex;flex-wrap:wrap;gap:0.75rem;margin-top:0.5rem">
+      <div style="padding:0.6rem 1rem;background:rgba(0,230,118,0.08);border-radius:8px;font-weight:700;font-size:0.9rem">"Value Beyond Business"</div>
+      <div style="padding:0.6rem 1rem;background:rgba(24,255,255,0.08);border-radius:8px;font-weight:700;font-size:0.9rem">"Value Beyond Management"</div>
+      <div style="padding:0.6rem 1rem;background:rgba(255,215,64,0.08);border-radius:8px;font-weight:700;font-size:0.9rem">"Value Beyond Normal"</div>
+      <div style="padding:0.6rem 1rem;background:rgba(255,110,64,0.08);border-radius:8px;font-weight:700;font-size:0.9rem">"Desimplantación Circular" ®</div>
+    </div>
+    <div style="font-size:0.75rem;color:var(--text-dim);margin-top:0.5rem">7 marcas nacionales + 7 marcas comunitarias registradas en la OEPM</div>
+    <div style="font-size:0.75rem;color:var(--accent3);margin-top:0.5rem">⚠️ Nota: UNE 19601 es una norma española (no ISO internacional). OHSAS 18001 fue retirada en 2021 (reemplazada por ISO 45001). La claim "primera empresa fuera de EEUU" es auto-declarada sin verificación independiente.</div></div>
+  </div>
+</section>
+
+<!-- ==================== EQUIPO ==================== -->
+<section id="equipo" class="anchor">
+  <div class="section-tag">Organigrama Completo</div>
+  <h2>Equipo Directivo y <span class="grad">Organización</span></h2>
+  <p class="subtitle">30 personas identificadas de 42 declaradas (VSME 2024: 42, 24H/18M, 100% indefinidos). Fuentes: web oficial + BORME + LinkedIn + DatosCif + VSME.</p>
+
+  <div class="org-chart-container">
+    <!-- LEVEL 1: FUNDADORES -->
+    <div class="org-level-label">★ Socios Fundadores / Co-CEOs — Decision Makers Primarios</div>
+    <div class="org-level">
+      <div class="org-person founder">
+        <div class="avatar">AC</div>
+        <div class="name">Adolfo Cancelo<br>González</div>
+        <div class="role">Socio Director · Co-CEO<br>Administrador Solidario</div>
+        <div class="tag" style="background:rgba(0,230,118,0.2);color:var(--accent)">Desde 31/01/2011</div>
+      </div>
+      <div class="org-person founder">
+        <div class="avatar">GH</div>
+        <div class="name">Gonzalo Herranz<br>Garrido</div>
+        <div class="role">Socio Director · Co-CEO<br>Administrador Solidario</div>
+        <div class="tag" style="background:rgba(0,230,118,0.2);color:var(--accent)">Desde 31/01/2011</div>
+      </div>
+      <div class="org-person founder">
+        <div class="avatar">MD</div>
+        <div class="name">María Díaz</div>
+        <div class="role">Socia Directora<br>Desarrollo de Negocio</div>
+        <div class="tag" style="background:rgba(24,255,255,0.2);color:var(--accent2)">17 años directora ventas multinacional</div>
+        <div style="font-size:0.65rem;color:var(--accent3);margin-top:0.4rem;line-height:1.4">⚠️ Vigencia dudosa — no aparece en equipo oficial actual. Último artículo: enero 2023. Verificar antes de contactar.</div>
+      </div>
+    </div>
+    <div class="org-connector">▼</div>
+
+    <!-- LEVEL 2: C-LEVEL -->
+    <div class="org-level-label">Director de Área — Decision Makers Secundarios</div>
+    <div class="org-level">
+      <div class="org-person cmo">
+        <div class="avatar">PA</div>
+        <div class="name">Paco Azores<br><small>(Francisco Javier)</small></div>
+        <div class="role">CMO · Comunicación<br>Corporativa</div>
+        <div class="tag" style="background:rgba(179,136,255,0.2);color:var(--accent5)">Ex-Vodafone 21 años + Ex-CSO/CBMO Finetwork</div>
+      </div>
+      <div class="org-person decision-maker">
+        <div class="avatar">BA</div>
+        <div class="name">Beatriz Alonso<br>Hidalgo</div>
+        <div class="role">Directora de<br>Sostenibilidad</div>
+        <div class="tag" style="background:rgba(255,64,129,0.2);color:var(--accent6)">Ingeniera Automática y Electrónica 24+ años</div>
+      </div>
+    </div>
+    <div class="org-connector">▼</div>
+
+    <!-- LEVEL 3: DEPARTMENTS -->
+    <div style="text-align:center;margin-bottom:0.5rem;font-size:0.6rem;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:1.5px">Por Departamento</div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0.75rem;width:100%">
+      <div class="card" style="border-left:3px solid var(--accent);padding:1rem">
+        <div style="font-size:0.65rem;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:0.4rem">Operaciones (11)</div>
+        <div style="font-size:0.75rem;line-height:1.7;color:var(--text-dim)">
+          Alvaro Carreño · Floren Berzosa · Gonzalo Rivilla · <strong style="color:var(--text)">Javier Ruiz</strong> (Dir. Gral. Negocio Grandes Cuentas) · José Miguel García · Juan Pablo Suárez · Lara Díaz · Mario Giménez · <strong style="color:var(--text)">Michele Leuci</strong> · Miguel Vázquez · Maxi Iscaro
+        </div>
+      </div>
+      <div class="card" style="border-left:3px solid var(--accent5);padding:1rem">
+        <div style="font-size:0.65rem;font-weight:700;color:var(--accent5);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:0.4rem">Comunicación / Marketing (5)</div>
+        <div style="font-size:0.75rem;line-height:1.7;color:var(--text-dim)">
+          <strong style="color:var(--text)">Paco Azores</strong> (CMO) · Javier Ramos · Mirella Román · Patricia Vela · Sabrina Pastor
+        </div>
+      </div>
+      <div class="card" style="border-left:3px solid var(--accent3);padding:1rem">
+        <div style="font-size:0.65rem;font-weight:700;color:var(--accent3);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:0.4rem">Bienes Raíces (3)</div>
+        <div style="font-size:0.75rem;line-height:1.7;color:var(--text-dim)">
+          <strong style="color:var(--text)">Daniel Barrientos</strong> (Dir. Dpto. Inmuebles) · <strong style="color:var(--text)">Marta Casado</strong> · Pilar Oñate
+        </div>
+      </div>
+      <div class="card" style="border-left:3px solid var(--accent4);padding:1rem">
+        <div style="font-size:0.65rem;font-weight:700;color:var(--accent4);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:0.4rem">Sostenibilidad (2)</div>
+        <div style="font-size:0.75rem;line-height:1.7;color:var(--text-dim)">
+          <strong style="color:var(--text)">Beatriz Alonso</strong> (Directora) · Raúl Poblador
+        </div>
+      </div>
+      <div class="card" style="border-left:3px solid var(--accent);padding:1rem">
+        <div style="font-size:0.65rem;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:0.4rem">Ventas / Grandes Clientes (2)</div>
+        <div style="font-size:0.75rem;line-height:1.7;color:var(--text-dim)">
+          <strong style="color:var(--text)">Luis Miguel Basilio</strong> (Resp. Área Grandes Clientes) · Sergio Berzosa
+        </div>
+      </div>
+      <div class="card" style="border-left:3px solid var(--text-dim);padding:1rem">
+        <div style="font-size:0.65rem;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:0.4rem">Tecnología y Soporte (4)</div>
+        <div style="font-size:0.75rem;line-height:1.7;color:var(--text-dim)">
+          <strong style="color:var(--text)">Rubén Hernández</strong> (Tecnología) · <strong style="color:var(--text)">Emilio Ramos</strong> (Sistemas) · Mauricio Banegas (Contabilidad) · Mayte González (Atención al cliente) · <strong style="color:var(--text)">Daniela Álvarez</strong> (Tecnología)
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== DECISION MAKERS ==================== -->
+<section id="decisiones" class="anchor">
+  <div class="section-tag">Tomadores de Decisiones</div>
+  <h2>Quién decide sobre <span class="grad">proveedores</span></h2>
+  <p class="subtitle">Perfiles completos de las personas con poder de decisión sobre compras y proveedores. Fuente: BORME + LinkedIn + entrevistas.</p>
+
+  <!-- PRIMARY DECISION MAKERS -->
+  <div style="margin-bottom:1.5rem">
+    <div style="font-size:0.65rem;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:2px;margin-bottom:1rem">🔑 NIVEL 1 — DECISIÓN FINAL (Administradores Solidarios)</div>
+    <div class="grid grid-2">
+      <div class="dm-card">
+        <div class="dm-header">
+          <div class="dm-avatar" style="background:var(--gradient1)">AC</div>
+          <div>
+            <div class="dm-name">Adolfo Cancelo González</div>
+            <div class="dm-title">Socio Director · Co-CEO · Administrador Solidario</div>
+          </div>
+        </div>
+        <div class="dm-body">
+          <div style="margin-bottom:0.75rem">
+            <span class="dm-tag green">🔑 Decisión final</span>
+            <span class="dm-tag blue">LinkedIn: 3.782 seg</span>
+            <span class="dm-tag gold">BORME verificado</span>
+          </div>
+          <div><strong>Poder legal:</strong> Administrador Solidario desde 31/01/2011. Poder conjunto con Gonzalo Herranz para obligar a la sociedad. También administrador de CLOSING THE LOOP SL.</div>
+          <div><strong>Background:</strong> Ex-directivo logística internacional (UTi). Ex-logistica internacional (UTi). Ponente en SYMDEX 2017 sobre ciclo de vida en defensa. Autor en blog SURUS sobre concursal y subastas.</div>
+          <div><strong>Decide sobre:</strong> Estrategia corporativa, fusiones/adquisiciones, contratos >50K€, partnerships IBEX 35, contratos con AAPP.</div>
+          <div><strong>Poder de contratacion:</strong> Como Administrador Solidario, puede firmar contratos laborales y tomar decisiones de personal de forma individual, sin firma conjunta.</div>
+          <div><strong>Email probable:</strong> <a href="mailto:acancelo@surusin.com" class="link">acancelo@surusin.com</a></div>
+          <div><strong>LinkedIn:</strong> <a href="https://linkedin.com/in/adolfocancelo" target="_blank" class="link">linkedin.com/in/adolfocancelo</a></div>
+        </div>
+      </div>
+      <div class="dm-card">
+        <div class="dm-header">
+          <div class="dm-avatar" style="background:var(--gradient1)">GH</div>
+          <div>
+            <div class="dm-name">Gonzalo Herranz Garrido</div>
+            <div class="dm-title">Socio Director · Co-CEO · Administrador Solidario</div>
+          </div>
+        </div>
+        <div class="dm-body">
+          <div style="margin-bottom:0.75rem">
+            <span class="dm-tag green">🔑 Decisión final</span>
+            <span class="dm-tag blue">LinkedIn: 853 seg</span>
+            <span class="dm-tag gold">BORME verificado</span>
+          </div>
+          <div><strong>Poder legal:</strong> Administrador Solidario desde 31/01/2011. También administrador de CLOSING THE LOOP SL (holding). 10 cargos inactivos previos en logística y comercio (revocados 2012).</div>
+          <div><strong>Background:</strong> Ex-TACISA, SLI, ET Logistics (todos revocados en 2012 cuando fundó SURUS). Firmó convenio con Fundación para la Economía Circular en junio 2025.</div>
+          <div><strong>Decide sobre:</strong> Estrategia corporativa, holding (Closing The Loop), inversiones, contratos >50K€, expansión internacional.</div>
+          <div><strong>Poder de contratacion:</strong> Como Administrador Solidario, tiene plena capacidad legal para contratar, despedir y fijar condiciones laborales del personal de forma individual, sin necesidad de firma conjunta con Adolfo Cancelo.</div>
+          <div><strong>Email probable:</strong> <a href="mailto:gherranz@surusin.com" class="link">gherranz@surusin.com</a></div>
+          <div><strong>LinkedIn:</strong> <a href="https://linkedin.com/in/gonzaloherranz" target="_blank" class="link">linkedin.com/in/gonzaloherranz</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-bottom:1.5rem">
+    <div style="font-size:0.65rem;font-weight:700;color:var(--accent2);text-transform:uppercase;letter-spacing:2px;margin-bottom:1rem">🎯 NIVEL 2 — DECISIÓN EN SU ÁREA</div>
+    <div class="grid grid-3">
+      <div class="dm-card" style="border-color:var(--accent5)">
+        <div class="dm-header">
+          <div class="dm-avatar" style="background:var(--gradient3)">PA</div>
+          <div>
+            <div class="dm-name" style="font-size:0.95rem">Paco Azores</div>
+            <div class="dm-title" style="color:var(--accent5)">CMO · Marketing y Comunicación</div>
+          </div>
+        </div>
+        <div class="dm-body" style="font-size:0.78rem">
+          <div style="margin-bottom:0.5rem">
+            <span class="dm-tag purple">Marketing/Tech</span>
+            <span class="dm-tag blue">7.268 conexiones</span>
+          </div>
+          <div><strong>Experiencia:</strong> 30+ años. Vodafone (21 años: BI Manager → Head of Competitive Intelligence → Head of Loyalty → Head of Online Sales → Head of Wholesale → CSO Finetwork → CBMO Finetwork). Accenture (4 años). Universitat Politècnica de Madrid. Google/AVADO Digital Marketing Programme.</div>
+          <div><strong>Decide sobre:</strong> CRM (Zoho), herramientas de marketing (LeadForensis, Demandbase), agencias de contenido, SEO/SEM, branding, tecnología de comunicación.</div>
+          <div><strong>Ángulo de contacto:</strong> Ex-Vodafone con visión data-driven. Entendimiento profundo de CRM y automatización. Implementó Zoho CRM Plus con Conpas/Cuatroochenta.</div>
+          <div><strong>Email probable:</strong> <a href="mailto:pazores@surusin.com" class="link">pazores@surusin.com</a></div>
+          <div><strong>LinkedIn:</strong> <a href="https://linkedin.com/in/francisco-javier-azores-bustarviejo" target="_blank" class="link">francisco-javier-azores-bustarviejo</a></div>
+        </div>
+      </div>
+      <div class="dm-card" style="border-color:var(--accent6)">
+        <div class="dm-header">
+          <div class="dm-avatar" style="background:var(--gradient4)">MD</div>
+          <div>
+            <div class="dm-name" style="font-size:0.95rem">María Díaz <span style="color:var(--accent3);font-size:0.7rem">⚠️ Vigencia dudosa — no aparece en equipo oficial actual. Último artículo: enero 2023. Verificar antes de contactar.</span></div>
+            <div class="dm-title" style="color:var(--accent6)">Socia Directora · Desarrollo de Negocio</div>
+          </div>
+        </div>
+        <div class="dm-body" style="font-size:0.78rem">
+          <div style="margin-bottom:0.5rem">
+            <span class="dm-tag red">Desarrollo Negocio</span>
+            <span class="dm-tag gold">Premios Comprendedor 2015</span>
+          </div>
+          <div><strong>Formación:</strong> TS en Comercio Exterior · Máster en Operaciones Financieras en Comercio Internacional (IFE) · PDD de IESE Business School · Perito Judicial (Subastas e Insolvencias) · Certificada APICS-CPIM · Profesora universitaria (UCJC).</div>
+          <div><strong>Experiencia:</strong> 17 años como Directora de Ventas en multinacional antes de fundar SURUS. Premio Comprendedor 2015.</div>
+          <div><strong>Decide sobre:</strong> Nuevos clientes, partnerships estratégicos, contratos de desimplantación, propuestas a IBEX 35, expansión internacional.</div>
+          <div><strong>Ángulo de contacto:</strong> Perito judicial en subastas e insolvencias. Enfoque comercial directo.</div>
+          <div><strong>Email probable:</strong> <a href="mailto:mdiaz@surusin.com" class="link">mdiaz@surusin.com</a></div>
+          <div><strong>Blog:</strong> <a href="https://www.surusin.com/author/maria/" target="_blank" class="link">surusin.com/author/maria/</a></div>
+        </div>
+      </div>
+      <div class="dm-card" style="border-color:var(--accent6)">
+        <div class="dm-header">
+          <div class="dm-avatar" style="background:var(--gradient4)">BA</div>
+          <div>
+            <div class="dm-name" style="font-size:0.95rem">Beatriz Alonso Hidalgo</div>
+            <div class="dm-title" style="color:var(--accent6)">Directora de Sostenibilidad</div>
+          </div>
+        </div>
+        <div class="dm-body" style="font-size:0.78rem">
+          <div style="margin-bottom:0.5rem">
+            <span class="dm-tag red">Sostenibilidad</span>
+            <span class="dm-tag blue">LinkedIn: 951 seg</span>
+          </div>
+          <div><strong>Experiencia:</strong> Ingeniera en Automática y Electrónica (UC3M) con 24+ años. Ingeniería de Control en plantas de energía. En SURUS desde sep 2021 (primero Jefe Proyecto, luego Directora desde sep 2023). Certificada en economía circular por AENOR.</div>
+          <div><strong>Decide sobre:</strong> Informes de sostenibilidad, certificaciones (EcoVadis, ISO), ELEPATH, métricas ESG, partnerships con fundaciones.</div>
+          <div><strong>Presencia:</strong> Participante habitual en podcast Capital Radio. Presentó el primer Informe de Sostenibilidad VSME en seminario del Pacto Mundial ONU.</div>
+          <div><strong>LinkedIn:</strong> <a href="https://linkedin.com/in/beatriz-alonso-hidalgo-6b849a5a" target="_blank" class="link">beatriz-alonso-hidalgo-6b849a5a</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DECISION MAP -->
+  <div style="margin-bottom:1.5rem">
+    <div style="font-size:0.65rem;font-weight:700;color:var(--accent4);text-transform:uppercase;letter-spacing:2px;margin-bottom:1rem">📋 MAPA DE DECISIÓN POR ÁREA</div>
+    <div class="decision-map">
+      <div class="decision-box" style="border-left:4px solid var(--accent)">
+        <div class="area" style="color:var(--accent)">Marketing / Comunicación / Tech Marketing</div>
+        <div class="person">Paco Azores (CMO)</div>
+        <div class="reason">30+ años en marketing (Vodafone, Finetwork). Implementó Zoho CRM Plus. Decide sobre agencias, herramientas de marketing, contenido y branding.</div>
+      </div>
+      <div class="decision-box" style="border-left:4px solid var(--accent6)">
+        <div class="area" style="color:var(--accent6)">Nuevo Negocio / Partnerships / Contratos Grandes</div>
+        <div class="person">María Díaz (Socia Directora) <span style="color:var(--accent3);font-size:0.7rem">⚠️ Vigencia dudosa — no aparece en equipo oficial actual. Último artículo: enero 2023. Verificar antes de contactar.</span></div>
+        <div class="reason">17 años como directora de ventas en multinacional. Perito judicial. Decide sobre propuestas a clientes IBEX 35, AAPP y procesos concursales.</div>
+      </div>
+      <div class="decision-box" style="border-left:4px solid var(--accent4)">
+        <div class="area" style="color:var(--accent4)">Sostenibilidad / ESG / Certificaciones</div>
+        <div class="person">Beatriz Alonso (Directora Sostenibilidad)</div>
+        <div class="reason">Ingeniera Industrial con 24+ años. Certificada AENOR en economía circular. Decide sobre herramientas de impacto ambiental (ELEPATH), informes VSME, EcoVadis.</div>
+      </div>
+      <div class="decision-box" style="border-left:4px solid var(--accent5)">
+        <div class="area" style="color:var(--accent5)">Tecnología / Sistemas / Plataforma</div>
+        <div class="person">Rubén Hernández (Tecnología) + Emilio Ramos (Sistemas)</div>
+        <div class="reason">Gestión de la infraestructura tech: Escrapalia (ASP.NET/Kestrel), web corporativa (WordPress/Enfold), Azure hosting. Deciden sobre herramientas internas y plataforma.</div>
+      </div>
+      <div class="decision-box" style="border-left:4px solid var(--accent2)">
+        <div class="area" style="color:var(--accent2)">Estrategia / Holding / Inversiones / Contratación</div>
+        <div class="person">Adolfo Cancelo + Gonzalo Herranz (Co-CEOs)</div>
+        <div class="reason">Administradores Solidarios. Decisión final sobre cualquier contrato >50K€, partnerships estratégicos, expansión internacional, reestructuración holding (Closing The Loop). <strong style="color:var(--accent2)">Poder individual para contratar/despedir personal</strong> — no requieren firma conjunta.</div>
+      </div>
+      <div class="decision-box" style="border-left:4px solid var(--accent3)">
+        <div class="area" style="color:var(--accent3)">Bienes Raíces / Subastas Inmobiliarias</div>
+        <div class="person">Daniel Barrientos (Dir. Dpto. Inmuebles)</div>
+        <div class="reason">Director del departamento de inmuebles. Decide sobre Escrapalia Inmuebles, subastas de propiedades, y partnerships inmobiliarios.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- KEY INSIGHT -->
+  <div class="card" style="border-left:4px solid var(--accent3);margin-bottom:1.5rem">
+    <h3>⚠️ Punto de Entrada Estratégico: Paco Azores</h3>
+    <div style="font-size:0.85rem;line-height:1.7;color:var(--text-dim)">
+      <strong style="color:var(--text)">Por qué Paco Azores es la puerta de entrada ideal:</strong><br>
+      1. <strong style="color:var(--accent5)">Ex-Vodafone 21 años</strong> — Entiende el valor de las herramientas de marketing y CRM. Ha comprado servicios como los que ofrecemos.<br>
+      2. <strong style="color:var(--accent5)">CMO desde nov 2022</strong> — Relativamente nuevo en el rol. Probablemente evaluando qué mejorar.<br>
+      3. <strong style="color:var(--accent5)">7.268 conexiones en LinkedIn</strong> — Perfil activo y accesible. Responde a mensajes de profesionales de marketing.<br>
+      4. <strong style="color:var(--accent5)">Visibilidad mediática</strong> — Entrevistado por IndustriAmbiente, RETEMA, Ethic, Capital Radio. Acostumbra a hablar con prensa.<br>
+      5. <strong style="color:var(--accent5)">Implementó Zoho CRM Plus</strong> — Ya ha tomado decisiones de tecnología de marketing. Sabe evaluar soluciones.
+    </div>
+  </div>
+</section>
+
+<!-- ==================== ESTRUCTURA ==================== -->
+<section id="estructura" class="anchor">
+  <div class="section-tag">Estructura Societaria</div>
+  <h2>Mapa <span class="grad">Corporativo</span></h2>
+  <p class="subtitle">Verificado en BORME y DatosCif. Estructura holding desde enero 2025.</p>
+
+  <div class="card" style="margin-bottom:1.5rem">
+    <div style="background:rgba(0,230,118,0.04);border:1px solid rgba(0,230,118,0.15);border-radius:14px;padding:1.5rem;margin-bottom:1rem">
+      <div style="text-align:center;font-size:0.65rem;color:var(--accent);font-weight:700;text-transform:uppercase;letter-spacing:2px;margin-bottom:1.25rem">Estructura Holding Completa</div>
+      <div style="display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:0.75rem;font-size:0.82rem">
+        <div style="background:var(--bg-card);border:2px solid var(--accent);border-radius:12px;padding:1rem;text-align:center;min-width:180px">
+          <div style="font-weight:800;font-size:0.85rem">Adolfo Cancelo</div>
+          <div style="font-weight:800;font-size:0.85rem">Gonzalo Herranz</div>
+          <div style="font-size:0.65rem;color:var(--text-dim);margin-top:0.2rem">Administradores Solidarios</div>
+          <div style="font-size:0.55rem;color:var(--accent4);margin-top:0.15rem">+ María Díaz (Socia Directora) <span style="color:var(--accent3)">⚠️ Vigencia dudosa</span></div>
+        </div>
+        <div style="color:var(--accent);font-size:1.5rem">→</div>
+        <div style="background:rgba(0,230,118,0.08);border:2px solid var(--accent);border-radius:12px;padding:1rem;text-align:center;min-width:200px">
+          <div style="font-weight:900;font-size:1rem;color:var(--accent)">CLOSING THE LOOP SL</div>
+          <div style="font-size:0.65rem;color:var(--text-dim)">CIF: B86793189</div>
+          <div style="font-size:0.65rem;color:var(--text-dim)">Capital: 3.006 €</div>
+          <div style="font-size:0.65rem;color:var(--text-dim)">Constituida: 26/07/2013</div>
+          <div style="font-size:0.6rem;color:var(--accent);margin-top:0.2rem">HOLDING · Objeto: Toma de participaciones e inversiones</div>
+        </div>
+        <div style="color:var(--accent);font-size:1.5rem">→ 100%</div>
+        <div style="background:rgba(24,255,255,0.08);border:2px solid var(--accent2);border-radius:12px;padding:1rem;text-align:center;min-width:200px">
+          <div style="font-weight:900;font-size:1rem;color:var(--accent2)">SURUS INVERSA SL</div>
+          <div style="font-size:0.65rem;color:var(--text-dim)">CIF: B86058567</div>
+          <div style="font-size:0.65rem;color:var(--text-dim)">Capital: 13.006 €</div>
+          <div style="font-size:0.65rem;color:var(--text-dim)">Constituida: 01/12/2010</div>
+          <div style="font-size:0.6rem;color:var(--accent2);margin-top:0.2rem">SOCIA ÚNICA DESDE 08/01/2025</div>
+        </div>
+      </div>
+      <div style="text-align:center;margin-top:1rem">
+        <div style="color:var(--text-dim);font-size:0.75rem">↓</div>
+        <div style="display:inline-flex;gap:0.75rem;flex-wrap:wrap;justify-content:center;margin-top:0.5rem">
+          <div style="background:rgba(255,110,64,0.08);border:1px solid rgba(255,110,64,0.25);border-radius:10px;padding:0.65rem;text-align:center">
+            <div style="font-weight:700;font-size:0.82rem;color:var(--accent3)">Escrapalia</div>
+            <div style="font-size:0.65rem;color:var(--text-dim)">Plataforma B2B subastas</div>
+            <div style="font-size:0.6rem;color:var(--accent3)">400K+ usuarios · ~240K subastas (total)</div>
+          </div>
+          <div style="background:rgba(255,215,64,0.08);border:1px solid rgba(255,215,64,0.25);border-radius:10px;padding:0.65rem;text-align:center">
+            <div style="font-weight:700;font-size:0.82rem;color:var(--accent4)">Escrapalia Inmuebles</div>
+            <div style="font-size:0.65rem;color:var(--text-dim)">Subastas inmobiliarias</div>
+            <div style="font-size:0.6rem;color:var(--accent4)">Dir: Daniel Barrientos</div>
+          </div>
+          <div style="background:rgba(179,136,255,0.08);border:1px solid rgba(179,136,255,0.25);border-radius:10px;padding:0.65rem;text-align:center">
+            <div style="font-weight:700;font-size:0.82rem;color:var(--accent5)">ELEPATH</div>
+            <div style="font-size:0.65rem;color:var(--text-dim)">Calculadora impacto ambiental</div>
+            <div style="font-size:0.6rem;color:var(--accent5)">Certificada por Applus+</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h3 style="margin-bottom:0.75rem">Historial BORME <span class="verified">Registro Mercantil de Madrid</span></h3>
+  <div class="card">
+    <div class="timeline">
+      <div class="timeline-item"><div class="year">Feb 2011</div><div class="event">Constitución · C/ María Benítez 33, Pozuelo de Alarcón · Capital: 3.006 €</div></div>
+      <div class="timeline-item"><div class="year">Feb 2011</div><div class="event">Nombramientos · Cancelo y Herranz como Administradores Solidarios</div></div>
+      <div class="timeline-item"><div class="year">Dic 2011</div><div class="event">Modificación estatutaria · Cierre de ejercicio: 30/9</div></div>
+      <div class="timeline-item"><div class="year">Sep 2012</div><div class="event">Ampliación de capital · 3.006 € → 13.006 € (+332,67%)</div></div>
+      <div class="timeline-item"><div class="year">Oct 2012</div><div class="event">Cambio domicilio · Cmno Huertas 2, Edificio Señorío</div></div>
+      <div class="timeline-item"><div class="year">Nov 2015</div><div class="event">Cambio domicilio · Cmno Huertas 18, 2ª Planta (sede actual)</div></div>
+      <div class="timeline-item"><div class="year" style="color:var(--accent3)">Ene 2025</div><div class="event" style="font-weight:700">Declaración de unipersonalidad · CLOSING THE LOOP SL = socio único (100%)</div></div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:1rem;border-left:4px solid var(--accent3)">
+    <h3>⚠️ Datos Financieros Clave</h3>
+    <table class="data-table">
+      <tr><td style="color:var(--text-dim)">Facturación 2022</td><td style="font-weight:700;color:var(--accent)">>10M€ (confirmado por CMO)</td></tr>
+      <tr><td style="color:var(--text-dim)">Crecimiento 2022→2023</td><td style="font-weight:700;color:var(--accent)">+9,96% (+8,5% según CMO)</td></tr>
+      <tr><td style="color:var(--text-dim)">Variación 2023→2024</td><td style="font-weight:700;color:var(--accent3)">-30,53% (caída significativa)</td></tr>
+      <tr><td style="color:var(--text-dim)">Resultado neto 2024</td><td style="font-weight:700;color:var(--accent)">Positivo (confirmado)</td></tr>
+      <tr><td style="color:var(--text-dim)">Empleados</td><td>42 (24H / 18M) según VSME 2024</td></tr>
+      <tr><td style="color:var(--text-dim)">Subvención pública</td><td>Ministerio de Industria via CERSA (aval/garantía)</td></tr>
+      <tr><td style="color:var(--text-dim)">Impacto COVID</td><td style="color:var(--accent3)">Reducción 50% actividad durante 2020</td></tr>
+    </table>
+    <div style="font-size:0.7rem;color:var(--text-dim);margin-top:0.5rem">Fuentes: Axesor, DatosCif, InfoEmpresa, El Economista, Emprendedores, entrevista CMO 2023</div>
+  </div>
+</section>
+
+<!-- ==================== FINANZAS ==================== -->
+<section id="finanzas" class="anchor">
+  <div class="section-tag">Datos Financieros</div>
+  <h2>Cifras de <span class="grad">Negocio</span></h2>
+  <p class="subtitle">Fuentes: InfoEmpresa, Emprendedores, Axesor, Gobierto Contratación, BOE, web oficial.</p>
+
+  <div class="grid grid-4" style="margin-bottom:1.5rem">
+    <div class="card"><div class="metric">~7M€</div><div class="metric-label">Facturación Anual</div></div>
+    <div class="card"><div class="metric">~200M€</div><div class="metric-label">Valor Activos Gestionados/Año</div></div>
+    <div class="card"><div class="metric">400K+</div><div class="metric-label">Usuarios Escrapalia</div></div>
+    <div class="card"><div class="metric">~240K</div><div class="metric-label">Subastas Realizadas</div></div>
+  </div>
+
+  <!-- EVOLUCIÓN DE FACTURACIÓN -->
+  <div class="card" style="margin-bottom:1.5rem;border-left:4px solid var(--accent3)">
+    <h3>Evolución de Facturación <span class="verified">Axesor + El Economista + Emprendedores</span></h3>
+    <div style="margin-top:0.75rem">
+      <div style="display:flex;align-items:flex-end;gap:2rem;flex-wrap:wrap;margin-bottom:1rem">
+        <div style="text-align:center;padding:0.75rem 1rem;background:rgba(0,230,118,0.06);border-radius:10px;min-width:120px">
+          <div style="font-size:0.65rem;color:var(--text-dim)">2015</div>
+          <div style="font-size:1.3rem;font-weight:800;color:var(--accent)">>7,5M€</div>
+          <div style="font-size:0.6rem;color:var(--accent)">Premio Comprendedor</div>
+        </div>
+        <div style="text-align:center;padding:0.75rem 1rem;background:rgba(0,230,118,0.06);border-radius:10px;min-width:120px">
+          <div style="font-size:0.65rem;color:var(--text-dim)">2022</div>
+          <div style="font-size:1.3rem;font-weight:800;color:var(--accent)">>10M€</div>
+          <div style="font-size:0.6rem;color:var(--accent)">+8,5% YoY</div>
+        </div>
+        <div style="text-align:center;padding:0.75rem 1rem;background:rgba(0,230,118,0.06);border-radius:10px;min-width:120px">
+          <div style="font-size:0.65rem;color:var(--text-dim)">2023</div>
+          <div style="font-size:1.3rem;font-weight:800;color:var(--accent)">~10,08M€</div>
+          <div style="font-size:0.6rem;color:var(--accent)">+9,96% YoY</div>
+        </div>
+        <div style="text-align:center;padding:0.75rem 1rem;background:rgba(255,110,64,0.08);border-radius:10px;min-width:120px;border:1px solid rgba(255,110,64,0.3)">
+          <div style="font-size:0.65rem;color:var(--text-dim)">2024</div>
+          <div style="font-size:1.3rem;font-weight:800;color:var(--accent3)">~7M€</div>
+          <div style="font-size:0.6rem;color:var(--accent3)">-30,53% ⚠️</div>
+        </div>
+      </div>
+      <div style="font-size:0.75rem;color:var(--text-dim);line-height:1.6">
+        <strong style="color:var(--accent3)">⚠️ Caída significativa en 2024</strong> — La facturación cayó un 30,53% respecto a 2023. Posibles causas: normalización post-pico de concursos (Reyal Urbis, FBD narcotráfico), ciclo económico, y efecto base elevada por contratos puntuales de gran valor (Ocaña 7,56M€, FBD 2,5M€). La empresa sigue rentable (resultado positivo confirmado por Axesor).
+      </div>
+    </div>
+  </div>
+
+  <!-- DESGLOSE POR LÍNEAS -->
+  <div class="card" style="margin-bottom:1.5rem">
+    <h3>Desglose de Ingresos por Línea de Negocio <span class="verified">Emprendedores + IndustriAmbiente</span></h3>
+    <div style="font-size:0.75rem;color:var(--text-dim);margin-bottom:0.75rem">SURUS no publica un desglose auditado por segmento. Los siguientes datos provienen de entrevistas a directivos y fuentes públicas.</div>
+    <div class="grid grid-3" style="margin-top:0.75rem">
+      <div style="padding:1rem;background:rgba(0,230,118,0.05);border-radius:10px;border:1px solid rgba(0,230,118,0.15)">
+        <div style="font-weight:700;font-size:0.9rem;margin-bottom:0.5rem">🔍 Asesoramiento</div>
+        <div style="font-size:0.78rem;color:var(--text-dim);line-height:1.6">
+          <div><strong style="color:var(--text)">Modelo:</strong> Fees de consultoría + informes ELEPATH</div>
+          <div><strong style="color:var(--text)">Clientes:</strong> Empresas IBEX 35, AAPP</div>
+          <div><strong style="color:var(--text)">Incluye:</strong> Diagnóstico de activos, planes de desimplantación, informes de compromiso ambiental certificados por Applus+</div>
+          <div><strong style="color:var(--text)">Impacto:</strong> 29,6M kg CO₂ evitados, 9,6M m³ agua ahorrada, 388,5M MJ energía evitada</div>
+        </div>
+      </div>
+      <div style="padding:1rem;background:rgba(24,255,255,0.05);border-radius:10px;border:1px solid rgba(24,255,255,0.15)">
+        <div style="font-weight:700;font-size:0.9rem;margin-bottom:0.5rem">🏗️ Desimplantación Circular ®</div>
+        <div style="font-size:0.78rem;color:var(--text-dim);line-height:1.6">
+          <div><strong style="color:var(--text)">Modelo:</strong> Proyecto llave en mano (de coste a ingreso)</div>
+          <div><strong style="color:var(--text)">Proyectos:</strong> 1.000+ proyectos circulares desde 2010</div>
+          <div><strong style="color:var(--text)">Tasa reempleo:</strong> 79% reempleo + 19% reutilización</div>
+          <div><strong style="color:var(--text)">Incluye:</strong> Logística, tasación, segregación, seguridad, desmontaje completo</div>
+        </div>
+      </div>
+      <div style="padding:1rem;background:rgba(255,215,64,0.05);border-radius:10px;border:1px solid rgba(255,215,64,0.15)">
+        <div style="font-weight:700;font-size:0.9rem;margin-bottom:0.5rem">♻️ Escrapalia (Reempleo)</div>
+        <div style="font-size:0.78rem;color:var(--text-dim);line-height:1.6">
+          <div><strong style="color:var(--text)">Modelo:</strong> Comisión sobre volumen de venta (~15% comprador) + fees vendedor</div>
+          <div><strong style="color:var(--text)">Comisión comprador:</strong> ~15% del precio de adjudicación + ~25€ gestión + 21% IVA</div>
+          <div><strong style="color:var(--text)">Concursal:</strong> 1-5% del valor de adjudicación</div>
+          <div><strong style="color:var(--text)">Ratio ingreso/activos:</strong> ~3,5% (~7M€ ingresos sobre 200M€ activos gestionados)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CANAL DE AUTOGESTIÓN -->
+  <div class="card" style="margin-bottom:1.5rem;border-left:4px solid var(--accent4)">
+    <h3>🚀 Canal de Autogestión — Segmento de Mayor Crecimiento</h3>
+    <div class="grid grid-2" style="margin-top:0.75rem">
+      <div style="font-size:0.82rem;color:var(--text-dim);line-height:1.7">
+        <div style="margin-bottom:0.5rem"><strong style="color:var(--text)">Origen:</strong> Creado durante COVID-19 (2020) cuando la actividad cayó un 50%. Modelo de comisiones reducidas/cercanas a cero para mantener actividad en plataforma.</div>
+        <div style="margin-bottom:0.5rem"><strong style="color:var(--text)">Modelo:</strong> Vendedores organizan sus propias subastas electrónicamente sin intervención operativa de SURUS. SURUS valida y supervisa procedencia y estado de cada activo.</div>
+        <div style="margin-bottom:0.5rem"><strong style="color:var(--text)">Usuarios:</strong> 400K+ pequeñas empresas registradas. Muchos emprendedores creando negocios paralelos (restauración de motos, ordenadores, equipamiento marino).</div>
+        <div><strong style="color:var(--text)">Futuro:</strong> Nueva plataforma potenciada con IA prevista para sep/oct 2026 para automatizar procesos de autogestión.</div>
+      </div>
+      <div>
+        <table class="data-table">
+          <tr><td style="color:var(--text-dim)">Segmento</td><td style="font-weight:700;color:var(--accent4)">Más rápido crecimiento</td></tr>
+          <tr><td style="color:var(--text-dim)">Lotes/año (2022)</td><td style="font-weight:700">18.000</td></tr>
+          <tr><td style="color:var(--text-dim)">Pujas/año (2022)</td><td style="font-weight:700">120.000+</td></tr>
+          <tr><td style="color:var(--text-dim)">Categorías</td><td>80+ categorías de productos</td></tr>
+          <tr><td style="color:var(--text-dim)">Visitantes/año (OJD)</td><td style="font-weight:700">~1.900.000</td></tr>
+          <tr><td style="color:var(--text-dim)">Busquedas de marca/año</td><td style="font-weight:700">500.000+ (Google)</td></tr>
+          <tr><td style="color:var(--text-dim)">Compradores potenciales (red)</td><td style="font-weight:700">2M+</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- COMPOSICIÓN POR TIPO DE ACTIVO -->
+  <div class="card" style="margin-bottom:1.5rem">
+    <h3>Composición por Tipo de Activo (2022) <span class="verified">IndustriAmbiente</span></h3>
+    <div class="grid grid-2" style="margin-top:0.75rem">
+      <div>
+        <div style="margin-bottom:0.75rem">
+          <div style="display:flex;justify-content:space-between;font-size:0.82rem;margin-bottom:0.15rem"><span>Equipamiento industrial/maquinaria</span><span style="font-weight:700;color:var(--accent)">43%</span></div>
+          <div class="progress-bar"><div class="progress-fill" style="width:43%"></div></div>
+        </div>
+        <div style="margin-bottom:0.75rem">
+          <div style="display:flex;justify-content:space-between;font-size:0.82rem;margin-bottom:0.15rem"><span>Metales valorizables</span><span style="font-weight:700;color:var(--accent2)">25%</span></div>
+          <div class="progress-bar"><div class="progress-fill" style="width:25%"></div></div>
+        </div>
+        <div style="margin-bottom:0.75rem">
+          <div style="display:flex;justify-content:space-between;font-size:0.82rem;margin-bottom:0.15rem"><span>Arte y antigüedades</span><span style="font-weight:700;color:var(--accent5)">16%</span></div>
+          <div class="progress-bar"><div class="progress-fill" style="width:16%"></div></div>
+        </div>
+        <div style="margin-bottom:0.75rem">
+          <div style="display:flex;justify-content:space-between;font-size:0.82rem;margin-bottom:0.15rem"><span>Vehículos</span><span style="font-weight:700;color:var(--accent3)">9%</span></div>
+          <div class="progress-bar"><div class="progress-fill" style="width:9%"></div></div>
+        </div>
+        <div>
+          <div style="display:flex;justify-content:space-between;font-size:0.82rem;margin-bottom:0.15rem"><span>Equipos informáticos y mobiliario</span><span>3%</span></div>
+          <div class="progress-bar"><div class="progress-fill" style="width:3%"></div></div>
+        </div>
+      </div>
+      <div>
+        <div style="margin-bottom:0.75rem">
+          <div style="display:flex;justify-content:space-between;font-size:0.82rem;margin-bottom:0.15rem"><span>Empresas privadas</span><span style="font-weight:700;color:var(--accent)">78%</span></div>
+          <div class="progress-bar"><div class="progress-fill" style="width:78%"></div></div>
+        </div>
+        <div style="margin-bottom:0.75rem">
+          <div style="display:flex;justify-content:space-between;font-size:0.82rem;margin-bottom:0.15rem"><span>Administraciones Públicas</span><span style="font-weight:700;color:var(--accent2)">16%</span></div>
+          <div class="progress-bar"><div class="progress-fill" style="width:16%"></div></div>
+        </div>
+        <div>
+          <div style="display:flex;justify-content:space-between;font-size:0.82rem;margin-bottom:0.15rem"><span>Procesos concursales</span><span style="font-weight:700;color:var(--accent3)">6%</span></div>
+          <div class="progress-bar"><div class="progress-fill" style="width:6%"></div></div>
+        </div>
+        <div style="font-size:0.7rem;color:var(--text-dim);margin-top:0.75rem;font-style:italic">Fuente: Origen de lotes por sector (2022)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ESCRAPALIA INMUEBLES -->
+  <div class="card" style="margin-bottom:1.5rem">
+    <h3>Escrapalia Inmuebles — Valor Incremental <span class="verified">Web Oficial</span></h3>
+    <div style="font-size:0.75rem;color:var(--text-dim);margin-bottom:0.75rem">Incremento medio sobre precio de salida por tipo de inmueble en subastas de Escrapalia Inmuebles.</div>
+    <div class="grid grid-2" style="margin-top:0.5rem">
+      <div>
+        <table class="data-table">
+          <tr><td style="color:var(--text-dim)">Garajes, trasteros, pequeños locales</td><td style="font-weight:700;color:var(--accent)">+145%</td></tr>
+          <tr><td style="color:var(--text-dim)">Suelo urbano/terminado</td><td style="font-weight:700;color:var(--accent)">+90%</td></tr>
+          <tr><td style="color:var(--text-dim)">Suelo urbanizable (grandes sectores)</td><td style="font-weight:700;color:var(--accent2)">+55%</td></tr>
+          <tr><td style="color:var(--text-dim)">Suelo rústico/no urbanizable</td><td>+5%</td></tr>
+        </table>
+      </div>
+      <div style="font-size:0.78rem;color:var(--text-dim);line-height:1.7">
+        <strong style="color:var(--text)">Caso destacado:</strong> Local en Valladolid revalorizado de 1.325.000€ a 3.580.000€ (+170%) en 40 días.<br><br>
+        <strong style="color:var(--text)">Reyal Urbis (2023-2025):</strong> 150 lotes inmobiliarios de concurso de acreedores. 69 adjudicados por 48,5M€.<br><br>
+        <strong style="color:var(--text)">AIFOS (quiebra):</strong> 113 inmuebles — 100% adjudicados.
+      </div>
+    </div>
+  </div>
+
+  <!-- EXPANSIÓN INTERNACIONAL -->
+  <div class="card" style="margin-bottom:1.5rem">
+    <h3>Expansión Internacional <span class="verified">Web Oficial + Prensa</span></h3>
+    <div style="font-size:0.78rem;color:var(--text-dim);margin-bottom:0.5rem">Presencia en 50+ países (27+ con actividad de reempleo directo). Actividad intensa en compradores y vendedores internacionales.</div>
+    <div style="display:flex;flex-wrap:wrap;gap:0.35rem">
+      <span class="badge">España</span><span class="badge">Alemania</span><span class="badge">Francia</span><span class="badge">Italia</span><span class="badge">Portugal</span><span class="badge">Reino Unido</span><span class="badge">Países Bajos</span><span class="badge">Bélgica</span><span class="badge">Suiza</span><span class="badge">Polonia</span><span class="badge">Suecia</span><span class="badge">Noruega</span><span class="badge">EEUU</span><span class="badge">Canadá</span><span class="badge">Marruecos</span><span class="badge">Egipto</span><span class="badge">Brasil</span><span class="badge">Colombia</span><span class="badge">México</span><span class="badge">China</span><span class="badge">Singapur</span><span class="badge">Arabia Saudí</span><span class="badge">Iraq</span><span class="badge">Ucrania</span><span class="badge blue">+27 más</span>
+    </div>
+    <div style="font-size:0.75rem;color:var(--text-dim);margin-top:0.75rem;line-height:1.6">
+      <strong style="color:var(--text)">Proyectos internacionales destacados:</strong> Siemens Gamesa Marruecos (73 aerogeneradores), Houston EEUU (equipos perforación), Colombia (reempleo activos), Italia (venta activos), alianza con Gordon Brothers para LATAM (2017). Primera empresa fuera de EEUU autorizada para vender materiales de defensa estadounidenses.
+    </div>
+  </div>
+
+  <div class="grid grid-3" style="margin-bottom:1.5rem">
+    <div class="card">
+      <h3>Impacto Ambiental (desde 2021) <span class="verified">Web Oficial</span></h3>
+      <table class="data-table">
+        <tr><td style="color:var(--text-dim)">CO₂ evitado</td><td style="font-weight:700;color:var(--accent)">29.6M kg</td></tr>
+        <tr><td style="color:var(--text-dim)">Equivalencia árboles</td><td>987.841/año</td></tr>
+        <tr><td style="color:var(--text-dim)">Agua ahorrada</td><td style="font-weight:700;color:var(--accent2)">9.6M m³</td></tr>
+        <tr><td style="color:var(--text-dim)">Energía evitada</td><td>388.5M MJ</td></tr>
+        <tr><td style="color:var(--text-dim)">Reempleo + Reutilización</td><td style="font-weight:700;color:var(--accent4)">79% reempleo + 19% reutilización (98% total)</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <h3>KPIs Sostenibilidad 2024-2025 <span class="verified">Informe VSME</span></h3>
+      <table class="data-table">
+        <tr><td style="color:var(--text-dim)">Lotes gestionados</td><td style="font-weight:700">2.780</td></tr>
+        <tr><td style="color:var(--text-dim)">Reempleo</td><td style="font-weight:700;color:var(--accent)">79% (2.205 lotes)</td></tr>
+        <tr><td style="color:var(--text-dim)">Reutilización</td><td>19% (532 lotes)</td></tr>
+        <tr><td style="color:var(--text-dim)">Empleados</td><td>42 (24H / 18M, 100% indefinidos)</td></tr>
+        <tr><td style="color:var(--text-dim)">Formación/empleado</td><td>43,43 horas</td></tr>
+        <tr><td style="color:var(--text-dim)">Accidentes con baja</td><td style="font-weight:700;color:var(--accent)">0</td></tr>
+        <tr><td style="color:var(--text-dim)">CO₂ evitado</td><td style="font-weight:700">2.662 t CO₂e</td></tr>
+        <tr><td style="color:var(--text-dim)">Agua ahorrada</td><td style="font-weight:700">900.758 m³</td></tr>
+        <tr><td style="color:var(--text-dim)">Energía evitada</td><td style="font-weight:700">40.035.637 MJ</td></tr>
+        <tr><td style="color:var(--text-dim)">Huella propia</td><td style="font-weight:700">17,86 t CO₂e</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <h3>Contratos Públicos <span class="verified">Gobierto + BOE</span></h3>
+      <table class="data-table">
+        <tr><td style="color:var(--text-dim)">Total adjudicaciones</td><td style="font-weight:700">34</td></tr>
+        <tr><td style="color:var(--text-dim)">Importe total</td><td style="font-weight:700">310.882 €</td></tr>
+        <tr><td style="color:var(--text-dim)">Principal cliente</td><td>Diputación Foral de Bizkaia (10)</td></tr>
+        <tr><td style="color:var(--text-dim)">Mayor contrato</td><td style="font-weight:700">Canal de Isabel II (46.065 €)</td></tr>
+        <tr><td style="color:var(--text-dim)">FBD Narcotráfico</td><td style="font-weight:700;color:var(--accent)">2.595.797 € recaudados</td></tr>
+        <tr><td style="color:var(--text-dim)">Aeródromo Ocaña</td><td style="font-weight:700">7,56M€ (récord)</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Clientes Confirmados <span class="verified">Web + Prensa + BOE</span></h3>
+    <div style="display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:0.5rem">
+      <span class="badge">Repsol</span><span class="badge">Red Eléctrica de España</span><span class="badge">AECOM</span><span class="badge">Siemens Gamesa</span><span class="badge">Correos</span><span class="badge">Canal de Isabel II</span><span class="badge">SIGNUS</span><span class="badge">SENASA</span><span class="badge">EnergyLOOP</span><span class="badge">Deloitte</span><span class="badge">Roca Junyent</span><span class="badge">ABENCYS</span><span class="badge">Fondo Bienes Decomisados</span><span class="badge">Ayuntamiento de Madrid</span><span class="badge">Ministerio de Defensa (Armada)</span><span class="badge">Ministerio de Sanidad</span><span class="badge">Ministerio de Justicia (ORGA)</span><span class="badge">Diputación Foral de Bizkaia</span><span class="badge">FNMT</span><span class="badge">Gordon Brothers</span><span class="badge">Saint-Gobain</span><span class="badge">Atlético de Madrid</span><span class="badge">Sunsundegui S.A.</span><span class="badge">PFP Termopolímeros</span><span class="badge">Cepsa (Tarragona)</span><span class="badge">Autoridad Portuaria Ferrol-San Cibrao</span><span class="badge">15+ empresas IBEX 35</span><span class="badge" style="background:var(--accent);color:#fff;font-weight:700">1.000+ clientes</span>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== NEGOCIO ==================== -->
+<section id="negocio" class="anchor">
+  <div class="section-tag">Modelo de Negocio</div>
+  <h2>Cómo hace dinero <span class="grad">SURUS</span></h2>
+  <p class="subtitle">3 líneas de servicio + plataforma Escrapalia + contratos públicos.</p>
+
+  <div class="grid grid-3" style="margin-bottom:1.5rem">
+    <div class="card" style="border-top:3px solid var(--accent)">
+      <div class="card-icon">🔍</div>
+      <h3>Asesoramiento</h3>
+      <p>Consultoría estratégica en economía circular. Diagnóstico de activos, planes de desimplantación, informes de compromiso medioambiental con métricas ELEPATH certificadas por Applus+.</p>
+    </div>
+    <div class="card" style="border-top:3px solid var(--accent2)">
+      <div class="card-icon">🏗️</div>
+      <h3>Desimplantación Circular ®</h3>
+      <p>Marca registrada europea. Desmontaje completo de instalaciones: logística, tasación, segregación, seguridad. De coste a ingreso. Proyecto llave en mano. 79% reempleo + 19% reutilización certificado.</p>
+    </div>
+    <div class="card" style="border-top:3px solid var(--accent4)">
+      <div class="card-icon">♻️</div>
+      <h3>Reempleo</h3>
+      <p>Comercialización vía Escrapalia. Subastas inglesas (precio al alza) + holandesas (precio a la baja). Comisión + fees por servicio. Canal de autogestión en crecimiento.</p>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:1.5rem">
+    <h3>Plataforma Escrapalia — Datos Detallados <span class="verified">Web + Trustpilot + OJD + Emprendedores</span></h3>
+    <div class="grid grid-2" style="margin-top:0.75rem">
+      <div>
+        <table class="data-table">
+          <tr><td style="color:var(--text-dim)">URL</td><td><a href="https://escrapalia.com" target="_blank" style="color:var(--accent)">escrapalia.com</a></td></tr>
+          <tr><td style="color:var(--text-dim)">Usuarios registrados</td><td style="font-weight:700">400.000+</td></tr>
+          <tr><td style="color:var(--text-dim)">Subastas realizadas</td><td style="font-weight:700">~240.000 (total acumulado) · 110.000+ (gestionadas directamente)</td></tr>
+          <tr><td style="color:var(--text-dim)">Lotes semanales</td><td>400-500 (607 lotes activos mayo 2026)</td></tr>
+          <tr><td style="color:var(--text-dim)">Ranking España</td><td style="font-weight:700;color:var(--accent)">2º sitio subastas (nov 2025) · 4º (ene 2026)</td></tr>
+          <tr><td style="color:var(--text-dim)">Visitantes mensuales (OJD)</td><td style="font-weight:700">~120.000</td></tr>
+          <tr><td style="color:var(--text-dim)">Tipo de subastas</td><td>Inglesas (al alza) + Holandesas (a la baja)</td></tr>
+          <tr><td style="color:var(--text-dim)">App móvil</td><td>Android (Xamarin/ASP.NET)</td></tr>
+        </table>
+      </div>
+      <div>
+        <table class="data-table">
+          <tr><td style="color:var(--text-dim)">Trustpilot</td><td style="color:var(--accent3)">2,1/5 (11 reseñas) ⚠️</td></tr>
+          <tr><td style="color:var(--text-dim)">Directorio Gratis</td><td>3,9/5 (5 reseñas)</td></tr>
+          <tr><td style="color:var(--text-dim)">ScamAdviser</td><td style="color:var(--accent)">Alta confianza (sitio establecido)</td></tr>
+          <tr><td style="color:var(--text-dim)">Stack tecnológico</td><td>ASP.NET/Kestrel + WordPress/Enfold</td></tr>
+          <tr><td style="color:var(--text-dim)">Hosting</td><td>Microsoft Azure</td></tr>
+          <tr><td style="color:var(--text-dim)">CRM</td><td>Zoho CRM Plus (Conpas/Cuatroochenta)</td></tr>
+          <tr><td style="color:var(--text-dim)">Visitor tracking</td><td>LeadForensis + Demandbase + CANDDi</td></tr>
+          <tr><td style="color:var(--text-dim)">Predictive analytics</td><td>Piperlab</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <h3 style="margin-bottom:0.75rem">Operaciones Emblemáticas <span class="verified">Prensa + BOE + Web</span></h3>
+  <div class="card" style="margin-bottom:1.5rem">
+    <table class="data-table">
+      <thead><tr><th>Proyecto</th><th>Detalle</th><th>Fuente</th></tr></thead>
+      <tbody>
+        <tr><td style="font-weight:600">⚓ Portaaviones Príncipe de Asturias</td><td>4.200 pujas · 17.600€ donados a Cáritas</td><td>La Vanguardia, Público</td></tr>
+        <tr><td style="font-weight:600">🏟️ Vicente Calderón</td><td>25.000 asientos personalizados · 270 objetos · 5.700 pujas · 50.000€ para Fundación Atlético</td><td>AS.com, Madridiario</td></tr>
+        <tr><td style="font-weight:600">🔋 Siemens Gamesa Marruecos</td><td>73 aerogeneradores V42 · 1ª repotenciación eólica en África · 241 ton palas recicladas</td><td>Europa Press, REVE</td></tr>
+        <tr><td style="font-weight:600">💎 Joyas narcotráfico</td><td>148 lotes · Rolex Daytona, Audemars Piguet · 2.595.797€ recaudados</td><td>BOE, Infobae</td></tr>
+        <tr><td style="font-weight:600">✈️ Aeródromo Ocaña</td><td>7,56M€ (récord) · SENASA</td><td>Web oficial</td></tr>
+        <tr><td style="font-weight:600">🏭 Repsol Puertollano</td><td>90% equipos reempleados · Desimplantación completa</td><td>Web oficial</td></tr>
+        <tr><td style="font-weight:600">📬 Correos</td><td>Parque móvil completo</td><td>Web oficial</td></tr>
+        <tr><td style="font-weight:600">🏢 AIFOS (quiebra)</td><td>113 inmuebles · 100% adjudicados</td><td>Web oficial</td></tr>
+        <tr><td style="font-weight:600">💧 Canal de Isabel II</td><td>20 lotes · 29 viviendas · 11M€+ recuperados</td><td>Gobierto</td></tr>
+        <tr><td style="font-weight:600">🏭 Planta cromados Eboraplast</td><td>Valor original 3M€ · Salida subasta 123K€ (96% descuento)</td><td>IndustriAmbiente</td></tr>
+        <tr><td style="font-weight:600">🔋 EDPR (90 aerogeneradores)</td><td>Subasta pública de aerogeneradores</td><td>Web oficial</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ==================== PROYECTOS ==================== -->
+<section id="proyectos" class="anchor">
+  <div class="section-tag">Caso de Estudio Detallado</div>
+  <h2>Proyectos <span class="grad">Verificados</span></h2>
+  <p class="subtitle">Cada proyecto verificado con fuentes de prensa y web oficial.</p>
+
+  <div class="grid grid-2">
+    <div class="card">
+      <div style="font-size:2rem;margin-bottom:0.5rem">⚓</div>
+      <div class="press-source">La Vanguardia · El Confidencial · Público</div>
+      <div class="press-title"><a href="https://www.lavanguardia.com/vida/20171018/432165171609/surus-inversa-lanza-una-subasta-benefica-de-mas-de-250-equipos-del-portaaviones-principe-de-asturias.html" target="_blank">Portaaviones Príncipe de Asturias</a></div>
+      <div class="press-excerpt">SURUS gestionó la desimplantación completa del portaaviones de la Armada. UTE Surus-Leyal lo adquirió por 2,7M€ para desguace en Aliağa (Turquía). 250+ objetos subastados benéficamente, 4.200 pujas, 17.600€ donados a Cáritas Castrense y Asociación Ntra. Sra. del Carmen.</div>
+      <div class="press-date">Oct 2017</div>
+    </div>
+    <div class="card">
+      <div style="font-size:2rem;margin-bottom:0.5rem">🏟️</div>
+      <div class="press-source">AS.com · Madridiario · IUSPORT</div>
+      <div class="press-title"><a href="https://as.com/futbol/2019/01/25/primera/1548440454_099366.html" target="_blank">Estadio Vicente Calderón</a></div>
+      <div class="press-excerpt">25.000 socios recibieron su asiento personalizado (0,03% incidencias). 270 objetos subastados solidariamente. 50.000€ para Fundación Atlético. 70 toneladas de plástico evitadas del vertedero. SURUS: "Nunca nos encontramos con un proyecto tan complejo."</div>
+      <div class="press-date">2018-2019</div>
+    </div>
+    <div class="card">
+      <div style="font-size:2rem;margin-bottom:0.5rem">🔋</div>
+      <div class="press-source">Europa Press · REVE · Energy Global</div>
+      <div class="press-title"><a href="https://www.europapress.es/economia/noticia-siemens-gamesa-repotenciara-parque-eolico-marruecos-desmantelara-espanola-surus-20220915171557.html" target="_blank">1ª repotenciación eólica en África</a></div>
+      <div class="press-excerpt">Siemens Gamesa + SURUS desmantelaron 73 aerogeneradores V42 en Koudia Al Baida (Marruecos). Primera repotenciación eólica en África. 241 ton palas recicladas para cemento. Capacidad: 50,4MW → ~100MW.</div>
+      <div class="press-date">Sep 2022</div>
+    </div>
+    <div class="card">
+      <div style="font-size:2rem;margin-bottom:0.5rem">💎</div>
+      <div class="press-source">BOE · Infobae · El Comercio</div>
+      <div class="press-title"><a href="https://pnsd.sanidad.gob.es/delegacionGobiernoPNSD/fondoBienesDecomisados/proximas/2025_SubElec7_(joyas)/home.htm" target="_blank">Subasta joyas narcotráfico</a></div>
+      <div class="press-excerpt">148 lotes de joyas y relojes de alta gama (Rolex Daytona, Audemars Piguet Royal Oak) decomisados por Ministerio de Sanidad vía Fondo de Bienes Decomisados. +2,5M€ recaudados. 918 pujadores, 98 adjudicatarios, 40.000+ pujas.</div>
+      <div class="press-date">Nov 2025 · BOE-B-2025-6984</div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== PRENSA ==================== -->
+<section id="prensa" class="anchor">
+  <div class="section-tag">Recortes de Prensa</div>
+  <h2>Cobertura <span class="grad">Mediática Verificada</span> <span style="font-size:0.8rem;color:var(--text-dim)">(70+ medios)</span></h2>
+  <p class="subtitle">Artículos, entrevistas y apariciones en medios nacionales e internacionales.</p>
+
+  <div class="grid grid-2">
+    <div class="press-card">
+      <div class="press-source">Emprendedores</div>
+      <div class="press-title"><a href="https://emprendedores.es/casos-de-exito/surus-subasta-escrapalia" target="_blank">SURUS: las cosas de la economía circular</a></div>
+      <div class="press-excerpt">Perfil completo de los fundadores. Origen en la Armada. Modelo de negocio. Facturación ~7M€. ~240.000 subastas. 400.000 usuarios. Expansión con IA para 2026.</div>
+      <div class="press-date">Entrevista a fundadores</div>
+    </div>
+    <div class="press-card">
+      <div class="press-source">IndustriAmbiente</div>
+      <div class="press-title"><a href="https://www.industriambiente.com/articulos/20230427/entrevista-a-paco-azores-cmo-de-surus-inversa-economia-circular" target="_blank">Entrevista a Paco Azores, CMO de SURUS</a></div>
+      <div class="press-excerpt">"El 98% de los proyectos han encontrado una segunda oportunidad a través de la economía circular." Detalle del modelo de negocio, desimplantación circular y proyectos llave en mano.</div>
+      <div class="press-date">Abril 2023</div>
+    </div>
+    <div class="press-card">
+      <div class="press-source">Ethic</div>
+      <div class="press-title"><a href="https://ethic.es/2024/12/entrevista-paco-azores/" target="_blank">"Efecto Reempleo no es reutilización"</a></div>
+      <div class="press-excerpt">Premio BASF de Economía Circular (VI edición, categoría PYME). Paco Azores explica la diferencia entre reempleo y reutilización. SURUS como líder en economía circular.</div>
+      <div class="press-date">Dic 2024</div>
+    </div>
+    <div class="press-card">
+      <div class="press-source">Capital Radio</div>
+      <div class="press-title">SURUS, Liderando la Sostenibilidad — 25+ episodios</div>
+      <div class="press-excerpt">Programa propio en "Capital, la Bolsa y la Vida". Invitados: Pablo Bascones (PwC), Icíar Fernández-Regatillo (Repsol), Beatriz Alonso, Luis Miguel Basilio. Patrocinio mensual.</div>
+      <div class="press-date">2022-2026 · Programa propio</div>
+    </div>
+    <div class="press-card">
+      <div class="press-source">Empresa&Sociedad</div>
+      <div class="press-title"><a href="https://noticias.empresaysociedad.org/empresa/hay-empresas-que-no-saben-que-tienen-tesoros-ni-en-sus-almacenes-ni-en-sus-instalaciones-obsoletas" target="_blank">"Hay empresas que no saben que tienen tesoros"</a></div>
+      <div class="press-excerpt">Entrevista a María Díaz, Socia Directora. "Que se rodee de gente en la que confíe plenamente. El equipo humano es lo más valioso." 17 años como directora de ventas en multinacional.</div>
+      <div class="press-date">Mayo 2017</div>
+    </div>
+    <div class="press-card">
+      <div class="press-source">RETEMA</div>
+      <div class="press-title"><a href="https://www.retema.es/actualidad/surus-desarrolla-proyectos-llave-en-mano-cubriendo-el-ciclo-completo-de-la-economia" target="_blank">SURUS desarrolla proyectos llave en mano</a></div>
+      <div class="press-excerpt">Artículo técnico sobre la metodología de desimplantación circular, Centros de Recuperación de Valor (CRVs), y ciclo completo asesoramiento → desimplantación → reempleo.</div>
+      <div class="press-date">2023</div>
+    </div>
+    <div class="press-card">
+      <div class="press-source">IndustriAmbiente · Junio 2025</div>
+      <div class="press-title">SURUS firma convenio con Fundación para la Economía Circular</div>
+      <div class="press-excerpt">Gonzalo Herranz firma acuerdo para promover la transición hacia un modelo económico sostenible. "Nuestra misión es contribuir a un cambio real en el modelo económico."</div>
+      <div class="press-date">Junio 2025</div>
+    </div>
+    <div class="press-card">
+      <div class="press-source">El Confidencial Digital</div>
+      <div class="press-title"><a href="https://www.elconfidencialdigital.com/articulo/defensa/Piezas-portaaviones-Principe-Asturias-venta/20171018195250087107.html" target="_blank">Piezas del portaaviones desde 1€</a></div>
+      <div class="press-excerpt">"No pierdas la oportunidad de tener un pedazo de la historia militar naval española." 300 objetos subastados con certificado de autenticidad. Pujas desde 1€.</div>
+      <div class="press-date">Oct 2017</div>
+    </div>
+    <div class="press-card">
+      <div class="press-source">La Vanguardia</div>
+      <div class="press-title"><a href="https://www.lavanguardia.com/vida/20171018/432165171609/surus-inversa-lanza-una-subasta-benefica-de-mas-de-250-equipos-del-portaaviones-principe-de-asturias.html" target="_blank">Subasta benéfica de equipos del portaaviones</a></div>
+      <div class="press-excerpt">Más de 250 equipos del portaaviones Príncipe de Asturias subastados benéficamente por SURUS.</div>
+      <div class="press-date">Oct 2017</div>
+    </div>
+    <div class="press-card">
+      <div class="press-source">Forbes · El País · La Razón · ABC · Cadena Ser · Marca</div>
+      <div class="press-title">60+ medios cubrieron la subasta de joyas del narcotráfico</div>
+      <div class="press-excerpt">Cobertura masiva de la subasta de 148 lotes de joyas y relojes de alta gama decomisados por el Ministerio de Sanidad. "Escrapalia nos ha ayudado a pasar de subastas del S.XIX a subastas del S.XXI" — Delegado del Gobierno.</div>
+      <div class="press-date">2024-2025</div>
+    </div>
+    <div class="press-card">
+      <div class="press-source">Merca2</div>
+      <div class="press-title">SURUS Inversa, partner de empresas del IBEX 35</div>
+      <div class="press-excerpt">Artículo sobre la colaboración de SURUS con más de 15 empresas del IBEX 35, incluyendo Repsol, Red Eléctrica y Siemens Gamesa.</div>
+      <div class="press-date">Jul 2021</div>
+    </div>
+    <div class="press-card">
+      <div class="press-source">Horizonte Factoría</div>
+      <div class="press-title">María Díaz como ponente</div>
+      <div class="press-excerpt">María Díaz listada como ponente en Horizonte Factoría, evento de emprendimiento e innovación.</div>
+      <div class="press-date">2017</div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SOCIAL ==================== -->
+<section id="social" class="anchor">
+  <div class="section-tag">Redes Sociales</div>
+  <h2>Presencia <span class="grad">Digital</span></h2>
+  <p class="subtitle">Métricas verificadas de LinkedIn, podcast y blog corporativo.</p>
+
+  <div class="grid grid-4" style="margin-bottom:1.5rem">
+    <div class="social-card">
+      <div class="social-icon">💼</div>
+      <div class="social-num">12.303</div>
+      <div class="social-label">Seguidores LinkedIn</div>
+      <div style="font-size:0.7rem;color:var(--text-dim);margin-top:0.3rem">3-5 posts/semana · 30 empleados (VSME 2024)</div>
+    </div>
+    <div class="social-card">
+      <div class="social-icon">🎙️</div>
+      <div class="social-num">25+</div>
+      <div class="social-label">Episodios Podcast</div>
+      <div style="font-size:0.7rem;color:var(--text-dim);margin-top:0.3rem">Capital Radio · Programa propio</div>
+    </div>
+    <div class="social-card">
+      <div class="social-icon">📝</div>
+      <div class="social-num">2-4</div>
+      <div class="social-label">Posts/Mes Blog</div>
+      <div style="font-size:0.7rem;color:var(--text-dim);margin-top:0.3rem">5 autores internos</div>
+    </div>
+    <div class="social-card">
+      <div class="social-icon">📰</div>
+      <div class="social-num">70+</div>
+      <div class="social-label">Artículos Prensa</div>
+      <div style="font-size:0.7rem;color:var(--text-dim);margin-top:0.3rem">Nacionales e internacionales</div>
+    </div>
+  </div>
+
+  <div class="grid grid-2" style="margin-bottom:1.5rem">
+    <div class="card">
+      <h3>Perfiles LinkedIn de Directivos</h3>
+      <table class="data-table">
+        <thead><tr><th>Persona</th><th>Conexiones</th><th>LinkedIn</th></tr></thead>
+        <tbody>
+          <tr><td style="font-weight:600">Adolfo Cancelo</td><td>500+ / 3.782 seg</td><td><a href="https://linkedin.com/in/adolfocancelo" target="_blank" style="color:var(--accent2)">Ver perfil</a></td></tr>
+          <tr><td style="font-weight:600">Paco Azores</td><td>7.268 con</td><td><a href="https://linkedin.com/in/francisco-javier-azores-bustarviejo" target="_blank" style="color:var(--accent2)">Ver perfil</a></td></tr>
+          <tr><td style="font-weight:600">Beatriz Alonso</td><td>930 / 951 seg</td><td><a href="https://linkedin.com/in/beatriz-alonso-hidalgo-6b849a5a" target="_blank" style="color:var(--accent2)">Ver perfil</a></td></tr>
+          <tr><td style="font-weight:600">Gonzalo Herranz</td><td>500+ / 853 seg</td><td><a href="https://linkedin.com/in/gonzaloherranz" target="_blank" style="color:var(--accent2)">Ver perfil</a></td></tr>
+          <tr><td style="font-weight:600">Daniel Barrientos</td><td>No disponible</td><td><a href="https://linkedin.com/in/daniel-barrientos-12172642" target="_blank" style="color:var(--accent2)">Ver perfil</a></td></tr>
+          <tr><td style="font-weight:600">Luis Miguel Basilio</td><td>No disponible</td><td><a href="https://linkedin.com/in/luis-miguel-basilio-627118a5" target="_blank" style="color:var(--accent2)">Ver perfil</a></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card">
+      <h3>Blog — Autores Internos</h3>
+      <table class="data-table">
+        <tr><td style="font-weight:600">Raúl Poblador</td><td>Sostenibilidad · VSME · Huella de carbono · Normativa residuos</td></tr>
+        <tr><td style="font-weight:600">Marta Casado</td><td>Marketing Inmuebles · Subastas inmobiliarias · Unidad productiva</td></tr>
+        <tr><td style="font-weight:600">Adolfo Cancelo</td><td>Concursal · Subastas · COVID-19 · Estrategia</td></tr>
+        <tr><td style="font-weight:600">Paco Azores</td><td>Marketing · Economía circular · "El CFO ante la Revolución Circular"</td></tr>
+        <tr><td style="font-weight:600">Beatriz Alonso</td><td>Sostenibilidad · ESG · Informes VSME</td></tr>
+      </table>
+      <div style="margin-top:0.75rem">
+        <h3>Podcast Capital Radio</h3>
+        <div style="font-size:0.78rem;color:var(--text-dim);line-height:1.7">
+          Programa propio "SURUS, Liderando la Sostenibilidad" dentro de "Capital, la Bolsa y la Vida".<br>
+          Invitados: Pablo Bascones (PwC), Icíar Fernández-Regatillo (Repsol), Beatriz Alonso, Luis Miguel Basilio, Alicia Tabanera, Fermín Elizalde, Eugenia Garcias de España (abogada).
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== COMPETENCIA ==================== -->
+<section id="competencia" class="anchor">
+  <div class="section-tag">Análisis Competitivo</div>
+  <h2>Mapa <span class="grad">Competitivo</span></h2>
+  <p class="subtitle">Verificado con fuentes de mercado y análisis comparativo.</p>
+
+  <div class="card" style="margin-bottom:1.5rem">
+    <h3>SURUS vs Competidores Principales</h3>
+    <div style="overflow-x:auto;margin-top:0.75rem">
+      <table class="data-table" style="min-width:750px">
+        <thead><tr><th>Atributo</th><th>SURUS / Escrapalia</th><th>Surplex</th><th>Troostwijk</th><th>Ritchie Bros</th><th>IAG Auction</th></tr></thead>
+        <tbody>
+          <tr><td style="font-weight:600">Usuarios</td><td style="color:var(--accent)">400K+</td><td>125K+</td><td>~180K</td><td>1M+</td><td>N/D</td></tr>
+          <tr><td style="font-weight:600">Desimplantación</td><td style="color:var(--accent)">✔ Ciclo completo ®</td><td>✔ Completo</td><td>✖ Solo subasta</td><td>✖ Solo subasta</td><td>✖ Solo subasta</td></tr>
+          <tr><td style="font-weight:600">Subastas holandesas</td><td style="color:var(--accent)">✔ Escrapalia Valoriza</td><td>✖</td><td>✖</td><td>✖</td><td>✖</td></tr>
+          <tr><td style="font-weight:600">Inmuebles</td><td style="color:var(--accent)">✔ Sección exclusiva</td><td>✖</td><td>Parcial</td><td>✖</td><td>✖</td></tr>
+          <tr><td style="font-weight:600">Países</td><td>50+</td><td>16 UE</td><td>Pan-EU</td><td>Global</td><td>España</td></tr>
+          <tr><td style="font-weight:600">Público AAPP</td><td style="color:var(--accent)">✔ Desde 2010</td><td>✖</td><td>✖</td><td>✖</td><td>✖ Parcial</td></tr>
+          <tr><td style="font-weight:600">ISO antisoborno</td><td style="color:var(--accent)">✔ ISO 37001</td><td>✖</td><td>✖</td><td>✖</td><td>✖</td></tr>
+          <tr><td style="font-weight:600">EcoVadis</td><td style="color:var(--accent)">✔ Plata Top 15%</td><td>N/D</td><td>N/D</td><td>N/D</td><td>N/D</td></tr>
+          <tr><td style="font-weight:600">Trustpilot</td><td style="color:var(--accent3)">2,1/5 ⚠️</td><td>N/D</td><td>N/D</td><td>N/D</td><td>N/D</td></tr>
+          <tr><td style="font-weight:600">Cert. impacto</td><td style="color:var(--accent)">✔ ELEPATH (Applus+)</td><td>✖</td><td>✖</td><td>✖</td><td>✖</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== OPORTUNIDAD ==================== -->
+<section id="oportunidad" class="anchor">
+  <div class="section-tag">Estrategia de Proveedores</div>
+  <h2>Qué venderle a <span class="grad">SURUS</span> y cómo</h2>
+  <p class="subtitle">Análisis de necesidades, gaps identificados y plan de contacto.</p>
+
+  <div class="grid grid-2" style="margin-bottom:1.5rem">
+    <div class="card" style="border-left:4px solid var(--accent3)">
+      <h3>⚠️ Pain Points Identificados</h3>
+      <div style="margin-top:0.5rem;font-size:0.82rem;line-height:1.8">
+        <div style="margin-bottom:0.4rem"><span style="color:var(--accent3);font-weight:700">1.</span> <strong>Caída facturación -30,53%</strong> — En 2024 vs 2023. Presión para optimizar costes y generar ingresos.</div>
+        <div style="margin-bottom:0.4rem"><span style="color:var(--accent3);font-weight:700">2.</span> <strong>Trustpilot 2,1/5</strong> — Reputación online débil. Comisiones poco transparentes, servicio al cliente deficiente.</div>
+        <div style="margin-bottom:0.4rem"><span style="color:var(--accent3);font-weight:700">3.</span> <strong>Marca fragmentada</strong> — SURUS + Escrapalia + Closing the Loop + Escrapalia Inmuebles + ELEPATH. Confusión de naming.</div>
+        <div style="margin-bottom:0.4rem"><span style="color:var(--accent3);font-weight:700">4.</span> <strong>Escala sin estructura</strong> — 41 personas gestionando 200M€ en 50+ países. Sobrecarga operativa.</div>
+        <div style="margin-bottom:0.4rem"><span style="color:var(--accent3);font-weight:700">5.</span> <strong>400K usuarios sin CRM</strong> — Base enorme sin estrategia de nurturing. Zoho implementado pero sin explotar.</div>
+        <div style="margin-bottom:0.4rem"><span style="color:var(--accent3);font-weight:700">6.</span> <strong>Directivos con LinkedIn débil</strong> — Adolfo (3.782 seg), Gonzalo (853 seg). Pierden autoridad de pensamiento.</div>
+        <div><span style="color:var(--accent3);font-weight:700">7.</span> <strong>Escrapalia sin HTTPS</strong> — Lighthouse score 1/100 en móvil. Problema grave de UX y SEO.</div>
+      </div>
+    </div>
+    <div class="card" style="border-left:4px solid var(--accent)">
+      <h3>Servicios Vendibles — Priorizados</h3>
+      <div style="margin-top:0.5rem;font-size:0.82rem;line-height:1.8">
+        <div style="margin-bottom:0.4rem"><span style="color:var(--accent);font-weight:700">1.</span> <strong>Contenido B2B + Video Marketing</strong> — Blog, whitepapers, casos de estudio, video de proyectos emblemáticos. Budget: 3-5K€/mes.</div>
+        <div style="margin-bottom:0.4rem"><span style="color:var(--accent);font-weight:700">2.</span> <strong>SEO & SEM</strong> — Posicionamiento en "subastas industriales", "economía circular España", "desimplantación". Budget: 2-4K€/mes.</div>
+        <div style="margin-bottom:0.4rem"><span style="color:var(--accent);font-weight:700">3.</span> <strong>Email Marketing Automation</strong> — 400K usuarios sin nurturing. Segmentación y automatización. Budget: 1-2K€/mes.</div>
+        <div style="margin-bottom:0.4rem"><span style="color:var(--accent);font-weight:700">4.</span> <strong>LinkedIn Strategy</strong> — Perfiles personales de directivos + página corporativa + thought leadership. Budget: 2-3K€/mes.</div>
+        <div style="margin-bottom:0.4rem"><span style="color:var(--accent);font-weight:700">5.</span> <strong>Branding Unificado</strong> — SURUS + Escrapalia + Closing the Loop bajo umbrella de marca. Proyecto: 15-25K€.</div>
+        <div style="margin-bottom:0.4rem"><span style="color:var(--accent);font-weight:700">6.</span> <strong>Video Marketing</strong> — Contenido visual de proyectos (portaaviones, estadios, aerogeneradores). Budget: 5-10K€/proyecto.</div>
+        <div><span style="color:var(--accent);font-weight:700">7.</span> <strong>Web Performance</strong> — Escrapalia: HTTPS, Lighthouse, velocidad móvil. Budget: 5-8K€ (proyecto).</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:1.5rem">
+    <h3>Budget Estimado por Servicio</h3>
+    <div style="margin-top:0.75rem">
+      <div style="margin-bottom:0.75rem"><div style="display:flex;justify-content:space-between;font-size:0.82rem;margin-bottom:0.2rem"><span>Contenido B2B + Video Marketing</span><span style="font-weight:700;color:var(--accent)">3-5K€/mes</span></div><div class="progress-bar"><div class="progress-fill" style="width:40%"></div></div></div>
+      <div style="margin-bottom:0.75rem"><div style="display:flex;justify-content:space-between;font-size:0.82rem;margin-bottom:0.2rem"><span>SEO & SEM</span><span style="font-weight:700;color:var(--accent)">2-4K€/mes</span></div><div class="progress-bar"><div class="progress-fill" style="width:32%"></div></div></div>
+      <div style="margin-bottom:0.75rem"><div style="display:flex;justify-content:space-between;font-size:0.82rem;margin-bottom:0.2rem"><span>Email Marketing Automation</span><span style="font-weight:700;color:var(--accent)">1-2K€/mes</span></div><div class="progress-bar"><div class="progress-fill" style="width:18%"></div></div></div>
+      <div style="margin-bottom:0.75rem"><div style="display:flex;justify-content:space-between;font-size:0.82rem;margin-bottom:0.2rem"><span>LinkedIn Strategy</span><span style="font-weight:700;color:var(--accent)">2-3K€/mes</span></div><div class="progress-bar"><div class="progress-fill" style="width:26%"></div></div></div>
+      <div style="margin-bottom:0.75rem"><div style="display:flex;justify-content:space-between;font-size:0.82rem;margin-bottom:0.2rem"><span>Web Performance (Escrapalia)</span><span style="font-weight:700;color:var(--accent)">5-8K€ (proyecto)</span></div><div class="progress-bar"><div class="progress-fill" style="width:45%"></div></div></div>
+      <div style="margin-bottom:0.5rem"><div style="display:flex;justify-content:space-between;font-size:0.82rem;margin-bottom:0.2rem"><span>Branding Unificado (proyecto)</span><span style="font-weight:700;color:var(--accent)">15-25K€</span></div><div class="progress-bar"><div class="progress-fill" style="width:55%"></div></div></div>
+    </div>
+    <div style="margin-top:0.75rem;padding:1rem;background:rgba(0,230,118,0.05);border-radius:10px;border:1px solid rgba(0,230,118,0.2)">
+      <div style="font-weight:800;font-size:1.1rem;color:var(--accent)">Budget total estimado: 8-14K€/mes (retainer) + 20-33K€ (proyectos)</div>
+      <div style="font-size:0.75rem;color:var(--text-dim);margin-top:0.2rem">Representa 1-1.7% de facturación anual — dentro del rango típico para marketing B2B (1-3%)</div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== CONTACTO ==================== -->
+<section id="contacto" class="anchor">
+  <div class="section-tag">Estrategia de Contacto</div>
+  <h2>A quién contactar y <span class="grad">cómo</span></h2>
+  <p class="subtitle">Decision makers identificados con información verificada de LinkedIn + BORME.</p>
+
+  <div class="contact-card" style="margin-bottom:1.5rem">
+    <h3 style="margin-bottom:1rem">🎯 PLAN DE CONTACTO — 3 NIVELES</h3>
+
+    <div style="margin-bottom:1.25rem;padding:1rem;background:rgba(255,215,64,0.05);border-radius:10px;border:1px solid rgba(255,215,64,0.2)">
+      <div style="font-weight:700;font-size:0.85rem;color:var(--accent4);margin-bottom:0.5rem">NIVEL 1 — LinkedIn Directo (Inmediato)</div>
+      <div style="font-size:0.82rem;line-height:1.8;color:var(--text-dim)">
+        <strong style="color:var(--text)">Objetivo:</strong> Paco Azores (CMO) — 7.268 conexiones, perfil activo, responde a profesionales de marketing<br>
+        <strong style="color:var(--text)">Acción:</strong> Conexión en LinkedIn + mensaje personalizado referenciando entrevista en IndustriAmbiente/Ethic<br>
+        <strong style="color:var(--text)">Ángulo:</strong> "Vi su entrevista en Ethic sobre Efecto Reempleo. Me impresionó cómo SURUS transforma activos industriales. Tengo una propuesta de auditoría digital gratuita."<br>
+        <strong style="color:var(--text)">CC:</strong> info@surusin.com + acancelo@surusin.com (estimado)
+      </div>
+    </div>
+
+    <div style="margin-bottom:1.25rem;padding:1rem;background:rgba(0,230,118,0.05);border-radius:10px;border:1px solid rgba(0,230,118,0.2)">
+      <div style="font-weight:700;font-size:0.85rem;color:var(--accent);margin-bottom:0.5rem">NIVEL 2 — Email Estratégico (48h después)</div>
+      <div style="font-size:0.82rem;line-height:1.8;color:var(--text-dim)">
+        <strong style="color:var(--text)">Para:</strong> acancelo@surusin.com (estimado) + gherranz@surusin.com (estimado)<br>
+        <strong style="color:var(--text)">CC:</strong> pazores@surusin.com (estimado) + mdiaz@surusin.com (estimado)<br>
+        <strong style="color:var(--text)">Asunto:</strong> "Propuesta de auditoría de presencia digital — SURUS × MVK"<br>
+        <strong style="color:var(--text)">Teléfono directo:</strong> +34 913 52 45 07
+      </div>
+    </div>
+
+    <div style="padding:1rem;background:rgba(24,255,255,0.05);border-radius:10px;border:1px solid rgba(24,255,255,0.2)">
+      <div style="font-weight:700;font-size:0.85rem;color:var(--accent2);margin-bottom:0.5rem">NIVEL 3 — Presencial (1 semana después)</div>
+      <div style="font-size:0.82rem;line-height:1.8;color:var(--text-dim)">
+        <strong style="color:var(--text)">Dirección:</strong> Cmno. Huertas, 18, 2ª Planta, 28223 Pozuelo de Alarcón, Madrid<br>
+        <strong style="color:var(--text)">Acción:</strong> Visita presencial con propuesta impresa<br>
+        <strong style="color:var(--text)">Eventos:</strong> RETEMA, EcoVadis, Pacto Mundial ONU — buscar donde participen<br>
+        <strong style="color:var(--text)">Pacto Mundial ONU:</strong> SURUS es firmante — asistir a eventos del Pacto Mundial en España
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="border-left:4px solid var(--accent)">
+    <h3>💬 Script de Email Sugerido</h3>
+    <div style="margin-top:0.75rem;padding:1.25rem;background:rgba(0,230,118,0.05);border-radius:10px;font-size:0.82rem;line-height:1.8;color:var(--text-dim)">
+      <div style="font-weight:700;color:var(--accent);margin-bottom:0.5rem">ASUNTO: Auditoría digital gratuita — Brecha entre su impacto ambiental y visibilidad online</div>
+      <div style="margin-top:0.5rem">
+        Estimado Adolfo,<br><br>
+        He investigado a fondo el trabajo de SURUS y me ha impresionado profundamente: 79% de reempleo y 19% de reutilización, 30 millones de kg de CO₂ evitados, proyectos como el portaaviones Príncipe de Asturias o la repotenciación eólica en Marruecos con Siemens Gamesa.<br><br>
+        Sin embargo, detecto una brecha significativa: SURUS tiene un impacto medioambiental documentado y verificable (EcoVadis Plata, ISO 37001) que no se refleja en su visibilidad digital. Con 400.000 usuarios en Escrapalia y ~7 millones de euros en facturación, la marca merece mucho más alcance.<br><br>
+        He preparado una auditoría gratuita de su presencia digital con oportunidades concretas de ROI. ¿Podemos hacer una llamada de 15 minutos esta semana?<br><br>
+        Atentamente,<br>
+        [Tu nombre]<br>
+        [Tu empresa]
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== MODELO OPERATIVO ==================== -->
+<section id="operativo" class="anchor">
+  <div class="section-tag">Modelo Operativo</div>
+  <h2>Cómo funciona <span class="grad">SURUS</span></h2>
+  <p class="subtitle">Ciclo completo verificado: desde la valoración hasta el informe de impacto. Fuentes: Emprendedores, IndustriAmbiente, SURUS web oficial.</p>
+
+  <div class="card" style="margin-bottom:1.5rem;border-left:4px solid var(--accent)">
+    <h3>🔄 Ciclo Operativo Completo (7 Fases)</h3>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:0.75rem;margin-top:1rem">
+      <div style="background:rgba(0,230,118,0.06);border-radius:10px;padding:1rem;text-align:center;border:1px solid rgba(0,230,118,0.2)"><div style="font-size:1.5rem;font-weight:800;color:var(--accent)">1</div><div style="font-weight:700;font-size:0.8rem;margin-top:0.3rem">Valoración</div><div style="font-size:0.65rem;color:var(--text-dim);margin-top:0.2rem">Tasación de activos del cliente</div></div>
+      <div style="background:rgba(24,255,255,0.06);border-radius:10px;padding:1rem;text-align:center;border:1px solid rgba(24,255,255,0.2)"><div style="font-size:1.5rem;font-weight:800;color:var(--accent2)">2</div><div style="font-weight:700;font-size:0.8rem;margin-top:0.3rem">Propuesta</div><div style="font-size:0.65rem;color:var(--text-dim);margin-top:0.2rem">Plan + marketing + valoración económica</div></div>
+      <div style="background:rgba(179,136,255,0.06);border-radius:10px;padding:1rem;text-align:center;border:1px solid rgba(179,136,255,0.2)"><div style="font-size:1.5rem;font-weight:800;color:var(--accent5)">3</div><div style="font-weight:700;font-size:0.8rem;margin-top:0.3rem">Ejecución</div><div style="font-size:0.65rem;color:var(--text-dim);margin-top:0.2rem">Segregación, loteo, documentación</div></div>
+      <div style="background:rgba(255,215,64,0.06);border-radius:10px;padding:1rem;text-align:center;border:1px solid rgba(255,215,64,0.2)"><div style="font-size:1.5rem;font-weight:800;color:var(--accent4)">4</div><div style="font-weight:700;font-size:0.8rem;margin-top:0.3rem">Desimplantación</div><div style="font-size:0.65rem;color:var(--text-dim);margin-top:0.2rem">Metodología registrada ® + CRVs</div></div>
+      <div style="background:rgba(255,110,64,0.06);border-radius:10px;padding:1rem;text-align:center;border:1px solid rgba(255,110,64,0.2)"><div style="font-size:1.5rem;font-weight:800;color:var(--accent3)">5</div><div style="font-weight:700;font-size:0.8rem;margin-top:0.3rem">Comercialización</div><div style="font-size:0.65rem;color:var(--text-dim);margin-top:0.2rem">Subasta en Escrapalia</div></div>
+      <div style="background:rgba(0,230,118,0.06);border-radius:10px;padding:1rem;text-align:center;border:1px solid rgba(0,230,118,0.2)"><div style="font-size:1.5rem;font-weight:800;color:var(--accent)">6</div><div style="font-weight:700;font-size:0.8rem;margin-top:0.3rem">Marketing</div><div style="font-size:0.65rem;color:var(--text-dim);margin-top:0.2rem">Notas prensa, SEO, newsletters, landings, streaming, tours 360º</div></div>
+      <div style="background:rgba(24,255,255,0.06);border-radius:10px;padding:1rem;text-align:center;border:1px solid rgba(24,255,255,0.2)"><div style="font-size:1.5rem;font-weight:800;color:var(--accent2)">7</div><div style="font-weight:700;font-size:0.8rem;margin-top:0.3rem">Entrega</div><div style="font-size:0.65rem;color:var(--text-dim);margin-top:0.2rem">Al comprador + Informe de Compromiso</div></div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:1.5rem">
+    <h3>💰 Modelo de Ingresos <span class="verified">Emprendedores + IndustriAmbiente</span></h3>
+    <div class="grid grid-3" style="margin-top:0.75rem">
+      <div style="padding:1rem;background:rgba(0,230,118,0.05);border-radius:10px;border:1px solid rgba(0,230,118,0.15)"><div style="font-weight:700;font-size:0.9rem;margin-bottom:0.5rem">📈 Comisión sobre ventas</div><div style="font-size:0.78rem;color:var(--text-dim);line-height:1.6"><div>Porcentaje variable sobre precio de subasta</div><div style="margin-top:0.3rem"><strong style="color:var(--accent)">Key insight:</strong> "Cuanto más ganan ellos, más ganamos nosotros" — Fundadores</div><div style="margin-top:0.3rem"><strong style="color:var(--accent3)">Nota:</strong> En inmuebles y Fondo de Bienes Decomisados, NO cobran comisión — solo gestión de cobro</div></div></div>
+      <div style="padding:1rem;background:rgba(24,255,255,0.05);border-radius:10px;border:1px solid rgba(24,255,255,0.15)"><div style="font-weight:700;font-size:0.9rem;margin-bottom:0.5rem">📋 Fee por servicios</div><div style="font-size:0.78rem;color:var(--text-dim);line-height:1.6"><div>Desmontaje, logística, tasación, consultoría, marketing, facturación y gestión de cobro</div><div style="margin-top:0.3rem"><strong style="color:var(--accent2)">Variable según:</strong> tipo de activo y complejidad del proyecto</div></div></div>
+      <div style="padding:1rem;background:rgba(255,215,64,0.05);border-radius:10px;border:1px solid rgba(255,215,64,0.15)"><div style="font-weight:700;font-size:0.9rem;margin-bottom:0.5rem">⚖️ Ratio valor/ingresos</div><div style="font-size:0.78rem;color:var(--text-dim);line-height:1.6"><div>Activos gestionados: ~200M€/año</div><div>Facturación propia: ~7M€/año</div><div style="margin-top:0.3rem"><strong style="color:var(--accent4)">Ratio:</strong> ~3,5% del valor gestionado (no lineal)</div></div></div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:1.5rem;border-left:4px solid var(--accent3)">
+    <h3>🏪 Escrapalia: Plataforma de Subastas — Detalle Operativo</h3>
+    <div class="grid grid-2" style="margin-top:0.75rem">
+      <div>
+        <div style="font-size:0.82rem;color:var(--text-dim);line-height:1.7">
+          <div><strong style="color:var(--text)">Naturaleza:</strong> <strong style="color:var(--accent3)">Marca/portal propiedad de SURUS</strong>, no empresa separada. Dominio: escrapalia.com. App ID: escrapalia.surusin.com.</div>
+          <div style="margin-top:0.4rem"><strong style="color:var(--text)">Lanzamiento:</strong> 2012 como canal de venta de activos de SURUS</div>
+          <div style="margin-top:0.4rem"><strong style="color:var(--text)">Funcionamiento:</strong> Subastas online transparentes, precio marcado por el mercado (pujas), no por el vendedor. Duración típica: 1 día.</div>
+          <div style="margin-top:0.4rem"><strong style="color:var(--text)">Canal autogestión:</strong> Creado en pandemia 2020. Vendedores organizan sus propias subastas sin intervención operativa de SURUS. Comisiones reducidas. SURUS valida y supervisa cada activo. Es el canal de mayor crecimiento.</div>
+          <div style="margin-top:0.4rem"><strong style="color:var(--text)">Nueva plataforma IA:</strong> En desarrollo, prevista para septiembre/octubre 2026.</div>
+        </div>
+      </div>
+      <div>
+        <div class="data-table" style="margin-top:0">
+          <tr><td style="color:var(--text-dim)">Usuarios registrados</td><td style="font-weight:700">400K+</td></tr>
+          <tr><td style="color:var(--text-dim)">Subastas totales</td><td style="font-weight:700">~240K (acumulado)</td></tr>
+          <tr><td style="color:var(--text-dim)">Lotes semanales</td><td style="font-weight:700">400-500</td></tr>
+          <tr><td style="color:var(--text-dim)">Pujas desde</td><td style="font-weight:700">27+ países</td></tr>
+          <tr><td style="color:var(--text-dim)">Gamas de producto</td><td style="font-weight:700">80+</td></tr>
+          <tr><td style="color:var(--text-dim)">Subastas gestionadas (2022)</td><td style="font-weight:700">18.000 lotes</td></tr>
+          <tr><td style="color:var(--text-dim)">Pujas (2022)</td><td style="font-weight:700">120.000+</td></tr>
+          <tr><td style="color:var(--text-dim)">Búsquedas anuales marca</td><td style="font-weight:700">500K+ (Google)</td></tr>
+          <tr><td style="color:var(--text-dim)">Visitantes (mayo 2025)</td><td style="font-weight:700">145.142 (OJD auditado)</td></tr>
+        </div>
+        <div style="font-size:0.65rem;color:var(--accent3);margin-top:0.5rem">⚠️ Fuentes: Emprendedores, IndustriAmbiente, Escrapalia. Visitantes: 145.142 (OJD auditado) vs 190.568 (SimilarWeb estimado).</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:1.5rem;border-left:4px solid var(--accent5)">
+    <h3>🛡️ Gobernanza y Compliance <span class="verified">Política Integrada + BORME + LinkedIn</span></h3>
+    <div class="grid grid-2" style="margin-top:0.75rem">
+      <div>
+        <div style="font-size:0.82rem;color:var(--text-dim);line-height:1.7">
+          <div><strong style="color:var(--accent5)">Comité de Compliance:</strong> Existe y opera "de forma independiente a las decisiones relativas al negocio". Supervisa el Modelo de Compliance y Antisoborno.</div>
+          <div style="margin-top:0.4rem"><strong style="color:var(--accent5)">Compliance Officer:</strong> Mauricio Banegas (verificado en LinkedIn, NO aparece como tal en la web oficial — en web figura como "Servicios Internos").</div>
+          <div style="margin-top:0.4rem"><strong style="color:var(--accent5)">Buzón Ético:</strong> 4 canales: (1) online en web, (2) buzoncompliance@surusin.com, (3) comunicación a cualquier miembro del Comité, (4) correo postal.</div>
+          <div style="margin-top:0.4rem"><strong style="color:var(--accent5)">Sin apoderados registrados:</strong> No se han identificado apoderados en BORME. Solo los 2 administradores solidarios tienen poder legal.</div>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:0.82rem;color:var(--text-dim);line-height:1.7">
+          <div><strong style="color:var(--text)">Modelo de Compliance y Antisoborno:</strong> Código ético de obligado cumplimiento para todos los empleados y terceros que actúan en nombre de SURUS.</div>
+          <div style="margin-top:0.4rem"><strong style="color:var(--text)">2 compromisos antisoborno:</strong> (1) Nunca prometer, ofrecer o dar un soborno. (2) Nunca solicitar o aceptar un soborno.</div>
+          <div style="margin-top:0.4rem"><strong style="color:var(--text)">Manual de prevención de delitos penales:</strong> Identifica actividades donde podrían cometerse delitos. Acciones disciplinarias, correctivas o sancionadoras para infracciones.</div>
+          <div style="margin-top:0.4rem"><strong style="color:var(--text)">Política Integrada:</strong> Emitida el 1 de junio de 2024 por "La Dirección", extendida a todos los empleados y terceros. Revisiones periódicas.</div>
+          <div style="margin-top:0.4rem"><strong style="color:var(--text)">Convenio FEC:</strong> Firmado junio 2025 con la Fundación para la Economía Circular. 7 líneas de acción, 2 años prorrogables, Comisión Mixta de Seguimiento con reuniones semestrales.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:1.5rem;border-left:4px solid var(--accent2)">
+    <h3>🔑 Jerarquía de Toma de Decisiones <span class="verified">BORME + Política Integrada + LinkedIn</span></h3>
+    <div style="font-size:0.75rem;color:var(--text-dim);margin-bottom:0.75rem">No existen apoderados registrados en BORME. Solo 2 administradores solidarios con poder individual.</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem">
+      <div style="background:rgba(0,230,118,0.08);border:2px solid var(--accent);border-radius:12px;padding:1rem">
+        <div style="font-weight:800;font-size:0.7rem;color:var(--accent);text-transform:uppercase;letter-spacing:1px;margin-bottom:0.5rem">🔑 NIVEL 1 — Decisión Final</div>
+        <div style="font-weight:700;font-size:0.85rem;color:var(--text)">Adolfo Cancelo + Gonzalo Herranz</div>
+        <div style="font-size:0.72rem;color:var(--text-dim);line-height:1.5;margin-top:0.3rem">Administradores Solidarios desde 31/01/2011. <strong>Poder individual</strong> para obligar a la sociedad, contratar/despedir personal, firmar contratos, sin firma conjunta. También administradores de CLOSING THE LOOP SL (holding).</div>
+      </div>
+      <div style="background:rgba(179,136,255,0.08);border:2px solid var(--accent5);border-radius:12px;padding:1rem">
+        <div style="font-weight:800;font-size:0.7rem;color:var(--accent5);text-transform:uppercase;letter-spacing:1px;margin-bottom:0.5rem">📊 NIVEL 2 — Dirección de Área</div>
+        <div style="font-size:0.72rem;color:var(--text-dim);line-height:1.5">
+          <div><strong style="color:var(--text)">Paco Azores</strong> (CMO) → Marketing, comunicación, branding, agencias</div>
+          <div><strong style="color:var(--text)">Beatriz Alonso</strong> (Dir. Sostenibilidad) → ESG, certificaciones, ELEPATH, VSME</div>
+          <div><strong style="color:var(--text)">Mauricio Banegas</strong> (Dir. Op. Admin/Fin) → Finanzas, contabilidad, RRHH, <strong style="color:var(--accent5)">Compliance Officer</strong></div>
+          <div><strong style="color:var(--text)">Daniel Barrientos</strong> (Dir. Inmuebles) → Escrapalia Inmuebles, subastas inmobiliarias</div>
+          <div><strong style="color:var(--text)">Javier Ruiz</strong> (Dir. Gral. Grandes Cuentas) → Negocio corporativo, cuentas IBEX 35</div>
+        </div>
+      </div>
+      <div style="background:rgba(255,215,64,0.08);border:2px solid var(--accent4);border-radius:12px;padding:1rem">
+        <div style="font-weight:800;font-size:0.7rem;color:var(--accent4);text-transform:uppercase;letter-spacing:1px;margin-bottom:0.5rem">⚖️ NIVEL 3 — Compliance Independiente</div>
+        <div style="font-size:0.72rem;color:var(--text-dim);line-height:1.5">
+          <div><strong style="color:var(--text)">Comité de Compliance:</strong> Opera de forma independiente a las decisiones de negocio.</div>
+          <div style="margin-top:0.3rem"><strong style="color:var(--text)">Compliance Officer:</strong> Mauricio Banegas (LinkedIn). En web: "Servicios Internos".</div>
+          <div style="margin-top:0.3rem"><strong style="color:var(--text)">Canal ético:</strong> buzoncompliance@surusin.com + web + verbal + postal</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:1.5rem">
+    <h3>📊 Clientes por Segmento (2022) <span class="verified">IndustriAmbiente entrevista CMO</span></h3>
+    <div style="display:flex;align-items:center;gap:2rem;flex-wrap:wrap;margin-top:0.75rem">
+      <div style="flex:1;min-width:280px">
+        <div style="margin-bottom:0.75rem"><div style="display:flex;justify-content:space-between;font-size:0.8rem;margin-bottom:0.3rem"><span>Empresas (IBEX 35 + privadas)</span><span style="font-weight:700;color:var(--accent)">78%</span></div><div style="background:var(--border);border-radius:4px;height:8px;overflow:hidden"><div style="width:78%;height:100%;background:var(--accent);border-radius:4px"></div></div></div>
+        <div style="margin-bottom:0.75rem"><div style="display:flex;justify-content:space-between;font-size:0.8rem;margin-bottom:0.3rem"><span>Administraciones Públicas</span><span style="font-weight:700;color:var(--accent2)">16%</span></div><div style="background:var(--border);border-radius:4px;height:8px;overflow:hidden"><div style="width:16%;height:100%;background:var(--accent2);border-radius:4px"></div></div></div>
+        <div style="margin-bottom:0.75rem"><div style="display:flex;justify-content:space-between;font-size:0.8rem;margin-bottom:0.3rem"><span>Procesos concursales</span><span style="font-weight:700;color:var(--accent3)">6%</span></div><div style="background:var(--border);border-radius:4px;height:8px;overflow:hidden"><div style="width:6%;height:100%;background:var(--accent3);border-radius:4px"></div></div></div>
+      </div>
+      <div style="flex:1;min-width:280px;font-size:0.82rem;color:var(--text-dim);line-height:1.7">
+        <div><strong style="color:var(--accent)">15+ compañías del IBEX 35:</strong> Energía, petróleo, refinería, renovables, industria</div>
+        <div style="margin-top:0.3rem"><strong style="color:var(--accent2)">AAPP:</strong> Ministerio de Defensa, Correos, Canal de Isabel II, Ayuntamientos (Madrid, Valencia, Alicante), ORGA</div>
+        <div style="margin-top:0.3rem"><strong style="color:var(--accent3)">Concursales:</strong> Administradores concursales de empresas en concurso de acreedores</div>
+        <div style="margin-top:0.3rem"><strong style="color:var(--text)">1.000+ clientes:</strong> Desde 2024 (VSME), crecimiento desde 600+ (2022)</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:1.5rem">
+    <h3>🌍 Operaciones Internacionales <span class="verified">SURUS web + Emprendedores + IndustriAmbiente</span></h3>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;margin-top:0.75rem">
+      <div style="background:rgba(0,230,118,0.05);border-radius:10px;padding:1rem;border:1px solid rgba(0,230,118,0.15)">
+        <div style="font-weight:700;font-size:0.85rem;margin-bottom:0.5rem">Modelo Internacional</div>
+        <div style="font-size:0.78rem;color:var(--text-dim);line-height:1.6">
+          <div><strong style="color:var(--accent)">Oficina única:</strong> Pozuelo de Alarcón (Madrid). Sin oficinas internacionales propias.</div>
+          <div style="margin-top:0.3rem"><strong style="color:var(--accent)">Modelo:</strong> Operan desde España + red de partners locales en destino (UTEs con Leyal para portaaviones, Gordon Brothers para LATAM).</div>
+          <div style="margin-top:0.3rem"><strong style="color:var(--accent)">50+ países:</strong> Con presencia de reempleo directo (web SURUS). Pujas desde 27+ países en Escrapalia.</div>
+        </div>
+      </div>
+      <div style="background:rgba(24,255,255,0.05);border-radius:10px;padding:1rem;border:1px solid rgba(24,255,255,0.15)">
+        <div style="font-weight:700;font-size:0.85rem;margin-bottom:0.5rem">Alianzas Estratégicas</div>
+        <div style="font-size:0.78rem;color:var(--text-dim);line-height:1.6">
+          <div><strong style="color:var(--accent2)">Gordon Brothers</strong> (EEUU): Proyectos conjuntos en LATAM. Empresa de reestructuración y asesoramiento.</div>
+          <div style="margin-top:0.3rem"><strong style="color:var(--accent2)">SOCIMIs:</strong> Colaboraciones para rentabilizar activos inmobiliarios.</div>
+          <div style="margin-top:0.3rem"><strong style="color:var(--accent2)">Fundación Economía Circular:</strong> Convenio marco (junio 2025). 7 líneas de acción, 2 años prorrogables.</div>
+        </div>
+      </div>
+      <div style="background:rgba(255,110,64,0.05);border-radius:10px;padding:1rem;border:1px solid rgba(255,110,64,0.15)">
+        <div style="font-weight:700;font-size:0.85rem;margin-bottom:0.5rem">Proyectos Internacionales</div>
+        <div style="font-size:0.78rem;color:var(--text-dim);line-height:1.6">
+          <div>🇲🇦 <strong>Marruecos:</strong> Parque eólico Siemens Gamesa (primera repotenciación eólica en África)</div>
+          <div>🇺🇸 <strong>EEUU:</strong> Equipos de perforación en Houston (petróleo)</div>
+          <div>🇨🇴 <strong>Colombia:</strong> Proyecto de economía circular</div>
+          <div>🇮🇹 <strong>Italia:</strong> Reempleo de activos industriales</div>
+          <div>🇧🇷 <strong>Brasil:</strong> Expansión LATAM (2017+)</div>
+          <div>🇹🇷 <strong>Turquía:</strong> Reciclaje del portaaviones Príncipe de Asturias</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ==================== FOOTER ==================== -->
+<footer>
+  <div style="max-width:1200px;margin:0 auto">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:2rem;margin-bottom:2rem;text-align:left">
+      <div>
+        <div style="font-weight:700;font-size:0.85rem;margin-bottom:0.75rem;color:var(--accent)">Fuentes Verificadas</div>
+        <div style="font-size:0.65rem;line-height:1.8;color:var(--text-dim)">
+          Registro Mercantil de Madrid (BORME)<br>
+          Axesor · DatosCif · InfoEmpresa · Empresia<br>
+          DatoCapital · El Economista Ranking<br>
+          Gobierto Contratación · BOE<br>
+          SURUS Web Oficial (surusin.com)<br>
+          EcoVadis · Pacto Mundial ONU<br>
+          LinkedIn (12.303 seguidores, 42 empleados VSME)<br>
+          La Vanguardia · El Confidencial · Público · AS.com<br>
+          Europa Press · IndustriAmbiente · RETEMA · Ethic<br>
+          Capital Radio · Emprendedores · Empresa&Sociedad<br>
+          Merca2 · Forbes · Infobae · ConSalud<br>
+          Trustpilot · ScamAdviser · OJD · Scam Detector
+        </div>
+      </div>
+      <div>
+        <div style="font-weight:700;font-size:0.85rem;margin-bottom:0.75rem;color:var(--accent2)">Datos Legales</div>
+        <div style="font-size:0.65rem;line-height:1.8;color:var(--text-dim)">
+          SURUS INVERSA SL · CIF: B86058567<br>
+          CLOSING THE LOOP SL · CIF: B86793189<br>
+          Cmno. Huertas 18, Pozuelo de Alarcón, Madrid<br>
+          Administradores: Cancelo + Herranz<br>
+          Socio Único: Closing the Loop SL (01/2025)<br>
+          Tomo 28465, Folio 1, Sec. 8, Hoja 512492<br>
+          Cuentas depositadas: 2011-2024
+        </div>
+      </div>
+      <div>
+        <div style="font-weight:700;font-size:0.85rem;margin-bottom:0.75rem;color:var(--accent4)">Nota Importante</div>
+        <div style="font-size:0.65rem;line-height:1.8;color:var(--text-dim)">
+          Emails personales (acancelo@, gherranz@, mdiaz@, pazores@surusin.com) son estimaciones basadas en el patrón de dominio. Verificar antes de enviar.<br>
+          Datos financieros de fuentes públicas. Facturación ~7M€ (dato 2024 verificado).<br>
+          Caída -30,53% en 2024 según Axesor/El Economista.<br>
+          CORRECCIONES DE AUDITORIA (Mayo 2026): UNE 19601 (no ISO). OHSAS 18001 retirada (migrar a ISO 45001). Ex-Armada no verificado. Beatriz Alonso: Ingeniera en Automática y Electrónica. Impacto ambiental corregido: CO₂ 29.6M kg, Agua 9.6M m³, Energía 388.5M MJ. AIFOS: 113 lotes (no 112). Esta investigación fue compilada en mayo 2026. Los datos pueden haber cambiado.
+        </div>
+      </div>
+    </div>
+    <div style="border-top:1px solid var(--border);padding-top:1rem;text-align:center">
+      Investigación Estratégica SURUS Inversa SL · Creado por Juan Carlos Alvarado · Mayo 2026
+    </div>
+  </div>
+
+    <div style="border-top:1px solid var(--border);margin-top:2rem;padding-top:2rem">
+      <div style="font-weight:700;font-size:0.9rem;margin-bottom:0.75rem;color:var(--accent)">ANEXO: Fuentes Verificables con URLs Directas</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem;font-size:0.65rem;line-height:1.8;color:var(--text-dim)">
+        <div>
+          <div style="font-weight:700;color:var(--accent);margin-bottom:0.3rem">Fuentes Primarias (Web Oficial)</div>
+          <div><a href="https://www.surusin.com/" target="_blank" style="color:var(--accent2)">surusin.com</a> — Web oficial SURUS</div>
+          <div><a href="https://www.surusin.com/surus/nuestro-equipo/" target="_blank" style="color:var(--accent2)">surusin.com/surus/nuestro-equipo/</a> — Equipo completo (28 personas)</div>
+          <div><a href="https://www.surusin.com/politica-integrada/" target="_blank" style="color:var(--accent2)">surusin.com/politica-integrada/</a> — Politica Integrada y Compliance</div>
+          <div><a href="https://www.surusin.com/aviso-legal/" target="_blank" style="color:var(--accent2)">surusin.com/aviso-legal/</a> — Aviso legal, CIF, registro mercantil</div>
+          <div><a href="https://www.surusin.com/blog/blogsurus-inversa-historia/" target="_blank" style="color:var(--accent2)">surusin.com/blog/blogsurus-inversa-historia/</a> — Historia de SURUS</div>
+          <div><a href="https://www.surusin.com/blog/expansion-internacional-y-crecimiento-en-logistica-inversa/" target="_blank" style="color:var(--accent2)">surusin.com/blog/expansion-internacional-y-crecimiento-en-logistica-inversa/</a> — Expansion internacional</div>
+          <div><a href="https://www.surusin.com/blog/venta-unidades-productivas-ley-exito/" target="_blank" style="color:var(--accent2)">surusin.com/blog/venta-unidades-productivas-ley-exito/</a> — UPA y subastas</div>
+          <div><a href="https://www.surusin.com/buzon-etico/" target="_blank" style="color:var(--accent2)">surusin.com/buzon-etico/</a> — Buzon etico y compliance</div>
+          <div><a href="https://www.surusin.com/en/surus/our-team/" target="_blank" style="color:var(--accent2)">surusin.com/en/surus/our-team/</a> — Team (version inglesa)</div>
+          <div><a href="https://www.surusin.com/nosotros/" target="_blank" style="color:var(--accent2)">surusin.com/nosotros/</a> — Sobre nosotros</div>
+          <div><a href="https://www.escrapalia.com/" target="_blank" style="color:var(--accent2)">escrapalia.com</a> — Plataforma de subastas</div>
+          <div><a href="https://blog.escrapalia.com/sobre-nosotros/" target="_blank" style="color:var(--accent2)">blog.escrapalia.com/sobre-nosotros/</a> — Sobre Escrapalia</div>
+        </div>
+        <div>
+          <div style="font-weight:700;color:var(--accent);margin-bottom:0.3rem">Registros Mercantiles</div>
+          <div><a href="https://www.datoscif.es/empresa/surus-inversa-sl" target="_blank" style="color:var(--accent2)">datoscif.es/empresa/surus-inversa-sl</a> — BORME, administradores, capital, actos</div>
+          <div><a href="https://www.axesor.es/Informes-Empresas/6603878/SURUS_INVERSA_SL.html" target="_blank" style="color:var(--accent2)">axesor.es/.../SURUS_INVERSA_SL.html</a> — Finanzas, cuentas anuales</div>
+          <div><a href="https://www.infoempresa.com/en-in/es/company/surus-inversa-sl" target="_blank" style="color:var(--accent2)">infoempresa.com/.../surus-inversa-sl</a> — Datos corporativos</div>
+          <div><a href="https://contratos.gobierto.es/adjudicatarios/surus-inversa-sl" target="_blank" style="color:var(--accent2)">contratos.gobierto.es/.../surus-inversa-sl</a> — Contratos publicos</div>
+          <div><a href="https://ranking-empresas.eleconomista.es/SURUS-INVERSA.html" target="_blank" style="color:var(--accent2)">ranking-empresas.eleconomista.es/SURUS-INVERSA.html</a> — Ranking empresarial</div>
+          <div style="margin-top:0.5rem;font-weight:700;color:var(--accent);margin-bottom:0.3rem">Prensa y Entrevistas</div>
+          <div><a href="https://emprendedores.es/casos-de-exito/surus-subasta-escrapalia" target="_blank" style="color:var(--accent2)">emprendedores.es/casos-de-exito/surus-subasta-escrapalia</a> — Perfil completo Emprendedores</div>
+          <div><a href="https://www.industriambiente.com/articulos/20230427/entrevista-a-paco-azores-cmo-de-surus-inversa-economia-circular" target="_blank" style="color:var(--accent2)">industriambiente.com/.../entrevista-a-paco-azores</a> — Entrevista CMO (abril 2023)</div>
+          <div><a href="https://www.industriambiente.com/noticias/20250625/-fundacion-economia-circular-u-surus-inversa-firman-un-convenio-colaboracion-impulsar-transicion-hacia-un-modelo-economico-sostenible" target="_blank" style="color:var(--accent2)">industriambiente.com/.../convenio-colaboracion</a> — Convenio FEC (junio 2025)</div>
+          <div><a href="https://www.murcia.com/empresas/noticias/2024/12/20-surus-impulsando-la-economia-circular-y-sostenible-en-las-administraciones-publicas.asp" target="_blank" style="color:var(--accent2)">murcia.com/...surus-economia-circular.asp</a> — SURUS en AAPP (dic 2024)</div>
+          <div><a href="https://motor.elpais.com/actualidad/escrapalia-subastas-coches/" target="_blank" style="color:var(--accent2)">motor.elpais.com/actualidad/escrapalia-subastas-coches/</a> — El Pais: Escrapalia</div>
+        </div>
+        <div>
+          <div style="font-weight:700;color:var(--accent);margin-bottom:0.3rem">LinkedIn (Perfiles Clave)</div>
+          <div><a href="https://linkedin.com/in/adolfocancelo" target="_blank" style="color:var(--accent2)">linkedin.com/in/adolfocancelo</a> — Adolfo Cancelo (Co-CEO)</div>
+          <div><a href="https://linkedin.com/in/gonzaloherranz" target="_blank" style="color:var(--accent2)">linkedin.com/in/gonzaloherranz</a> — Gonzalo Herranz (Co-CEO)</div>
+          <div><a href="https://linkedin.com/in/mauricio-banegas-rojas-b7190a65" target="_blank" style="color:var(--accent2)">linkedin.com/in/mauricio-banegas-rojas-b7190a65</a> — Mauricio Banegas (Dir. Op. Admin/Fin + Compliance)</div>
+          <div><a href="https://www.linkedin.com/company/surus-inversa" target="_blank" style="color:var(--accent2)">linkedin.com/company/surus-inversa</a> — SURUS LinkedIn (12.303 seguidores)</div>
+          <div><a href="https://es.linkedin.com/company/escrapalia-inmuebles" target="_blank" style="color:var(--accent2)">linkedin.com/company/escrapalia-inmuebles</a> — Escrapalia Inmuebles</div>
+          <div style="margin-top:0.5rem;font-weight:700;color:var(--accent);margin-bottom:0.3rem">Certificaciones</div>
+          <div><a href="https://www.surusin.com/politica-integrada/" target="_blank" style="color:var(--accent2)">Politica Integrada SURUS</a> — ISO 14001, ISO 30000, ISO 27001, ISO 9001, UNE 19601, ISO 37001, OHSAS 18001, ENS, Cyber Essentials, EcoVadis</div>
+          <div style="margin-top:0.5rem;font-weight:700;color:var(--accent);margin-bottom:0.3rem">App y Otros</div>
+          <div><a href="https://play.google.com/store/apps/details?id=escrapalia.surusin.com" target="_blank" style="color:var(--accent2)">Google Play: escrapalia.surusin.com</a> — App Escrapalia</div>
+          <div><a href="https://www.surusin.com/blog/renovacion-de-escrapalia/" target="_blank" style="color:var(--accent2)">surusin.com/blog/renovacion-de-escrapalia/</a> — Renovacion plataforma</div>
+          <div><a href="https://www.surusin.com/blog/subastas-concursales-transparencia-visibilidad-retorno/" target="_blank" style="color:var(--accent2)">surusin.com/blog/subastas-concursales...</a> — Subastas concursales</div>
+          <div style="margin-top:0.5rem;font-weight:700;color:var(--accent);margin-bottom:0.3rem">Registro Mercantil</div>
+          <div>Registro Mercantil de Madrid: Tomo 28465, Folio 1, Seccion 8, Hoja M-512492</div>
+          <div>BORME: Boletin 9 del 15/01/2025 — Declaracion de unipersonalidad</div>
+          <div>BORME: Boletin 28 del 10/02/2011 — Constitucion y nombramientos</div>
+        </div>
+      </div>
+    </div>
+</footer>
+
+<script>
+// Mobile nav: close menu on link click
+document.querySelectorAll('.nav-links a').forEach(a => {
+  a.addEventListener('click', () => {
+    document.querySelector('.nav-links').classList.remove('open');
+  });
+});
+
+// Smooth scroll for nav links
+document.querySelectorAll('nav a').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    document.querySelector(a.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+  });
+});
+
+// Active nav on scroll
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('nav .nav-links a');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => {
+    if (window.scrollY >= s.offsetTop - 100) current = s.getAttribute('id');
+  });
+  navLinks.forEach(a => {
+    a.classList.remove('active');
+    if (a.getAttribute('href') === '#' + current) a.classList.add('active');
+  });
+});
+
+// Animate metrics on scroll
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.querySelectorAll('.progress-fill').forEach(bar => {
+        const width = bar.style.width;
+        bar.style.width = '0%';
+        setTimeout(() => bar.style.width = width, 100);
+      });
+    }
+  });
+}, { threshold: 0.3 });
+document.querySelectorAll('.card').forEach(card => observer.observe(card));
+
+// Animate hero stats
+const heroObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.querySelectorAll('.hero-stat').forEach((stat, i) => {
+        stat.style.opacity = '0';
+        stat.style.transform = 'translateY(20px)';
+        setTimeout(() => {
+          stat.style.transition = 'all 0.5s ease';
+          stat.style.opacity = '1';
+          stat.style.transform = 'translateY(0)';
+        }, i * 100);
+      });
+    }
+  });
+}, { threshold: 0.2 });
+document.querySelectorAll('.hero-stats').forEach(el => heroObserver.observe(el));
+</script>
+<script src="/js/tracker.js"></script>
+
+<!-- SURUS Intel Admin Panel (Ctrl+Shift+S) -->
+<div id="surus-admin-panel" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(6,6,11,0.97);z-index:9999;overflow:auto;font-family:'Inter',sans-serif;color:#e8e8f0;">
+  <div style="max-width:1200px;margin:0 auto;padding:2rem;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2rem;">
+      <h2 style="font-size:1.5rem;font-weight:800;margin:0;background:linear-gradient(135deg,#00e676,#18ffff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">SURUS Intel — Visitor Analytics</h2>
+      <button onclick="document.getElementById('surus-admin-panel').style.display='none'" style="background:#ff4081;color:#fff;border:none;padding:0.5rem 1.2rem;border-radius:8px;font-weight:700;cursor:pointer;">Cerrar [Esc]</button>
+    </div>
+
+    <div id="admin-loading" style="text-align:center;padding:4rem;color:#888;">Cargando datos de Supabase...</div>
+    <div id="admin-content" style="display:none;">
+      <div id="admin-summary" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem;margin-bottom:2rem;"></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:2rem;">
+        <div class="admin-card" style="background:#0e0e18;border:1px solid #1e1e30;border-radius:14px;padding:1.2rem;"><h3 style="font-size:0.75rem;text-transform:uppercase;letter-spacing:1px;color:#00e676;margin:0 0 0.8rem;">Dispositivos</h3><div id="admin-devices"></div></div>
+        <div class="admin-card" style="background:#0e0e18;border:1px solid #1e1e30;border-radius:14px;padding:1.2rem;"><h3 style="font-size:0.75rem;text-transform:uppercase;letter-spacing:1px;color:#00e676;margin:0 0 0.8rem;">Navegadores</h3><div id="admin-browsers"></div></div>
+      </div>
+      <div class="admin-card" style="background:#0e0e18;border:1px solid #1e1e30;border-radius:14px;padding:1.2rem;margin-bottom:2rem;">
+        <h3 style="font-size:0.75rem;text-transform:uppercase;letter-spacing:1px;color:#00e676;margin:0 0 0.8rem;">Últimas Visitas</h3>
+        <div style="overflow-x:auto;"><table style="width:100%;border-collapse:collapse;font-size:0.8rem;"><thead><tr style="border-bottom:1px solid #1e1e30;"><th style="text-align:left;padding:0.5rem;color:#888;">País</th><th style="text-align:left;padding:0.5rem;color:#888;">Ciudad</th><th style="text-align:left;padding:0.5rem;color:#888;">Disp.</th><th style="text-align:left;padding:0.5rem;color:#888;">Browser</th><th style="text-align:left;padding:0.5rem;color:#888;">Tiempo</th><th style="text-align:left;padding:0.5rem;color:#888;">Sesiones</th><th style="text-align:left;padding:0.5rem;color:#888;">Fecha</th></tr></thead><tbody id="admin-visits"></tbody></table></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const panel = document.getElementById('surus-admin-panel');
+  let isOpen = false;
+
+  document.addEventListener('keydown', function(e) {
+    if (e.ctrlKey && e.shiftKey && e.key === 'S') {
+      e.preventDefault();
+      isOpen = !isOpen;
+      panel.style.display = isOpen ? 'block' : 'none';
+      if (isOpen) loadStats();
+    }
+    if (e.key === 'Escape' && isOpen) {
+      isOpen = false;
+      panel.style.display = 'none';
+    }
+  });
+
+  async function loadStats() {
+    document.getElementById('admin-loading').style.display = 'block';
+    document.getElementById('admin-content').style.display = 'none';
+    try {
+      const resp = await fetch('/api/stats?limit=100');
+      const data = await resp.json();
+      renderStats(data);
+    } catch (err) {
+      document.getElementById('admin-loading').innerHTML = '<span style="color:#ff4081">Error cargando datos: ' + err.message + '</span>';
+    }
+  }
+
+  function renderStats(data) {
+    const s = data.summary || {};
+    const tm = s.timeMetrics || {};
+
+    const summaryEl = document.getElementById('admin-summary');
+    summaryEl.innerHTML = `
+      <div class="admin-card" style="background:#0e0e18;border:1px solid #1e1e30;border-radius:14px;padding:1.2rem;text-align:center;"><div style="font-size:1.8rem;font-weight:900;color:#00e676;">${s.total || 0}</div><div style="font-size:0.65rem;color:#888;text-transform:uppercase;">Total Visitas</div></div>
+      <div class="admin-card" style="background:#0e0e18;border:1px solid #1e1e30;border-radius:14px;padding:1.2rem;text-align:center;"><div style="font-size:1.8rem;font-weight:900;color:#18ffff;">${s.uniqueIPs || 0}</div><div style="font-size:0.65rem;color:#888;text-transform:uppercase;">IPs Únicas</div></div>
+      <div class="admin-card" style="background:#0e0e18;border:1px solid #1e1e30;border-radius:14px;padding:1.2rem;text-align:center;"><div style="font-size:1.8rem;font-weight:900;color:#ffd740;">${s.uniqueCountries || 0}</div><div style="font-size:0.65rem;color:#888;text-transform:uppercase;">Países</div></div>
+      <div class="admin-card" style="background:#0e0e18;border:1px solid #1e1e30;border-radius:14px;padding:1.2rem;text-align:center;"><div style="font-size:1.8rem;font-weight:900;color:#ff6e40;">${tm.avgSessionTimeFormatted || '0s'}</div><div style="font-size:0.65rem;color:#888;text-transform:uppercase;">Tiempo Medio/Sesión</div></div>
+      <div class="admin-card" style="background:#0e0e18;border:1px solid #1e1e30;border-radius:14px;padding:1.2rem;text-align:center;"><div style="font-size:1.8rem;font-weight:900;color:#b388ff;">${tm.maxTimeFormatted || '0s'}</div><div style="font-size:0.65rem;color:#888;text-transform:uppercase;">Tiempo Máximo</div></div>
+      <div class="admin-card" style="background:#0e0e18;border:1px solid #1e1e30;border-radius:14px;padding:1.2rem;text-align:center;"><div style="font-size:1.8rem;font-weight:900;color:#ff4081;">${tm.uniqueSessions || 0}</div><div style="font-size:0.65rem;color:#888;text-transform:uppercase;">Sesiones Únicas</div></div>
+    `;
+
+    const devEl = document.getElementById('admin-devices');
+    const devs = s.deviceCounts || {};
+    const devTotal = Object.values(devs).reduce((a,b) => a+b, 0) || 1;
+    devEl.innerHTML = Object.entries(devs).map(([k,v]) => {
+      const pct = Math.round((v/devTotal)*100);
+      return `<div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.4rem;">
+        <span style="width:60px;font-size:0.75rem;">${k}</span>
+        <div style="flex:1;background:#1e1e30;height:8px;border-radius:4px;overflow:hidden;"><div style="width:${pct}%;background:linear-gradient(90deg,#00e676,#18ffff);height:100%;"></div></div>
+        <span style="width:30px;text-align:right;font-size:0.75rem;color:#888;">${v}</span>
+      </div>`;
+    }).join('');
+
+    const brEl = document.getElementById('admin-browsers');
+    const brs = s.browserCounts || {};
+    const brTotal = Object.values(brs).reduce((a,b) => a+b, 0) || 1;
+    brEl.innerHTML = Object.entries(brs).map(([k,v]) => {
+      const pct = Math.round((v/brTotal)*100);
+      return `<div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.4rem;">
+        <span style="width:60px;font-size:0.75rem;">${k}</span>
+        <div style="flex:1;background:#1e1e30;height:8px;border-radius:4px;overflow:hidden;"><div style="width:${pct}%;background:linear-gradient(90deg,#ff6e40,#ffd740);height:100%;"></div></div>
+        <span style="width:30px;text-align:right;font-size:0.75rem;color:#888;">${v}</span>
+      </div>`;
+    }).join('');
+
+    const visitsEl = document.getElementById('admin-visits');
+    const visits = (data.visits || []).slice(0, 50);
+    visitsEl.innerHTML = visits.map(v => `
+      <tr style="border-bottom:1px solid #161628;">
+        <td style="padding:0.5rem;">${v.country || '-'}</td>
+        <td style="padding:0.5rem;">${v.city || '-'}</td>
+        <td style="padding:0.5rem;">${v.device_type || '-'}</td>
+        <td style="padding:0.5rem;">${v.browser || '-'}</td>
+        <td style="padding:0.5rem;color:${(v.time_spent_seconds||0)>60?'#00e676':'#888'};">${v.time_spent_formatted || '-'}</td>
+        <td style="padding:0.5rem;">${v.visit_count || 1}</td>
+        <td style="padding:0.5rem;font-size:0.7rem;color:#888;">${v.created_at ? new Date(v.created_at).toLocaleString('es-ES') : '-'}</td>
+      </tr>
+    `).join('');
+
+    document.getElementById('admin-loading').style.display = 'none';
+    document.getElementById('admin-content').style.display = 'block';
+  }
+})();
+</script>
+</body>
+</html>

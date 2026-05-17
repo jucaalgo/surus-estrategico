@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Alimentacion & Envasado — Dossier de Inversion | SURUS Inversa</title>
+<meta name="description" content="Dossier profesional de inversion: Equipos de alimentacion y envasado en subastas Troostwijk (Francia y UK). Fichas tecnicas, analisis de mercado, paso a paso para ganar y vender.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg-dark:#06060b;--bg-card:#0e0e18;--bg-card-hover:#161628;--accent:#00e676;--accent-dim:#00c853;--accent2:#18ffff;--accent3:#ff6e40;--accent4:#ffd740;--accent5:#b388ff;--accent6:#ff4081;--text:#e8e8f0;--text-dim:#8888a0;--text-bright:#fff;--border:#1e1e30;--gradient1:linear-gradient(135deg,#00e676,#18ffff);--gradient2:linear-gradient(135deg,#ff6e40,#ffd740);--gradient3:linear-gradient(135deg,#7c4dff,#18ffff);--shadow:0 8px 32px rgba(0,0,0,.5)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg-dark);color:var(--text);line-height:1.6;overflow-x:hidden}
+.bg-mesh{position:fixed;inset:0;z-index:0;opacity:.4;background:radial-gradient(ellipse at 20% 50%,rgba(0,230,118,.08) 0%,transparent 50%),radial-gradient(ellipse at 80% 20%,rgba(24,255,255,.06) 0%,transparent 50%),radial-gradient(ellipse at 50% 80%,rgba(255,64,129,.04) 0%,transparent 50%);pointer-events:none}
+.food-nav{position:sticky;top:0;z-index:100;background:rgba(6,6,11,.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:.75rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.food-nav-logo{font-weight:900;font-size:1rem;background:var(--gradient1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:-.5px;text-decoration:none}
+.food-nav-links{display:flex;gap:1rem;align-items:center;flex-wrap:wrap}
+.food-nav-links a{color:var(--text-dim);text-decoration:none;font-size:.75rem;font-weight:600;text-transform:uppercase;letter-spacing:.5px;transition:color .2s}
+.food-nav-links a:hover{color:var(--accent)}
+.food-pdf-btn{background:var(--gradient1);color:var(--bg-dark);border:none;padding:.5rem 1rem;border-radius:8px;font-family:'Inter',sans-serif;font-weight:700;font-size:.75rem;cursor:pointer;display:flex;align-items:center;gap:.4rem;transition:transform .2s,box-shadow .2s}
+.food-pdf-btn:hover{transform:translateY(-2px);box-shadow:0 4px 20px rgba(0,230,118,.3)}
+.food-container{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:0 1.5rem 4rem}
+.food-hero{padding:3rem 0 2rem;text-align:center;border-bottom:1px solid var(--border);margin-bottom:2rem}
+.food-hero h1{font-size:clamp(2rem,5vw,3.5rem);font-weight:900;background:var(--gradient1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1.1;margin-bottom:.5rem}
+.food-hero-sub{font-size:clamp(.85rem,2vw,1.1rem);color:var(--text-dim);max-width:700px;margin:0 auto 1.5rem}
+.food-hero-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:.75rem;max-width:900px;margin:0 auto}
+.food-hero-stat{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:.75rem;text-align:center;transition:all .3s}
+.food-hero-stat:hover{border-color:rgba(0,230,118,.4);box-shadow:0 0 30px rgba(0,230,118,.1)}
+.food-hero-stat .number{font-size:1.5rem;font-weight:800;font-family:'JetBrains Mono',monospace}
+.food-hero-stat .label{font-size:.6rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.5px;margin-top:.15rem}
+.food-tabs{display:flex;gap:.4rem;padding:1rem 0;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;margin-bottom:1.5rem;border-bottom:1px solid var(--border)}
+.food-tabs::-webkit-scrollbar{display:none}
+.food-tab{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:.5rem 1rem;color:var(--text-dim);font-family:'Inter',sans-serif;font-size:.75rem;font-weight:600;cursor:pointer;white-space:nowrap;transition:all .2s}
+.food-tab:hover{border-color:var(--accent2);color:var(--accent2)}
+.food-tab.active{background:rgba(0,230,118,.12);border-color:var(--accent);color:var(--accent)}
+.food-section{display:none;animation:fadeIn .3s ease}
+.food-section.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.food-card{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:1.5rem;margin-bottom:1.5rem;transition:all .4s;position:relative;overflow:hidden}
+.food-card:hover{border-color:rgba(0,230,118,.3);box-shadow:0 0 40px rgba(0,230,118,.08)}
+.food-card-title{font-size:1rem;font-weight:800;margin-bottom:.75rem;display:flex;align-items:center;gap:.5rem}
+.food-info-block{border-radius:10px;padding:.75rem;margin-bottom:1rem}
+.food-badge{display:inline-flex;align-items:center;gap:.3rem;font-size:.6rem;font-weight:700;padding:.15rem .45rem;border-radius:4px;text-transform:uppercase;letter-spacing:.5px}
+.food-badge-critical{background:rgba(255,110,64,.15);color:var(--accent3);border:1px solid rgba(255,110,64,.3)}
+.food-badge-high{background:rgba(255,215,64,.15);color:var(--accent4);border:1px solid rgba(255,215,64,.3)}
+.food-badge-medium{background:rgba(24,255,255,.1);color:var(--accent2);border:1px solid rgba(24,255,255,.2)}
+.food-badge-low{background:rgba(0,230,118,.1);color:var(--accent);border:1px solid rgba(0,230,118,.2)}
+.data-table{width:100%;border-collapse:collapse;margin:.75rem 0;font-size:.78rem}
+.data-table th{background:rgba(0,230,118,.08);color:var(--accent);font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:.6rem .75rem;text-align:left;border-bottom:1px solid var(--border)}
+.data-table td{padding:.55rem .75rem;border-bottom:1px solid rgba(30,30,48,.5)}
+.data-table tr:hover td{background:rgba(0,230,118,.03)}
+.food-step{display:flex;gap:.75rem;align-items:flex-start;padding:.75rem;background:var(--bg-card);border-radius:10px;margin-bottom:.5rem;border:1px solid var(--border);transition:all .2s}
+.food-step:hover{border-color:rgba(0,230,118,.3);transform:translateX(4px)}
+.food-step-num{min-width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.8rem;font-family:'JetBrains Mono',monospace;flex-shrink:0}
+.food-step-content{flex:1}
+.food-step-title{font-weight:700;font-size:.85rem;margin-bottom:.2rem}
+.food-step-desc{font-size:.78rem;color:var(--text-dim);line-height:1.5}
+.food-grid-2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1rem}
+.food-cta{background:linear-gradient(135deg,rgba(0,230,118,.1),rgba(24,255,255,.05));border:2px solid var(--accent);border-radius:16px;padding:1.5rem;text-align:center;margin-top:2rem}
+.food-cta h3{font-size:1.2rem;background:var(--gradient1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:.5rem}
+.food-metric{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:.75rem;text-align:center}
+.food-metric .val{font-size:1.3rem;font-weight:800;font-family:'JetBrains Mono',monospace}
+.food-metric .lbl{font-size:.6rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.5px}
+.food-risk{padding:.5rem .75rem;border-radius:8px;margin-bottom:.4rem;display:flex;align-items:start;gap:.5rem;font-size:.78rem;line-height:1.5}
+.food-contact-card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:1rem;flex:1;min-width:240px}
+.food-contact-card h4{font-size:.8rem;font-weight:700;margin-bottom:.5rem}
+.food-print-header,.food-print-footer{display:none}
+.auction-tag{display:inline-block;padding:.2rem .6rem;border-radius:6px;font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-right:.4rem}
+.auction-tag-france{background:rgba(0,230,118,.15);color:var(--accent);border:1px solid rgba(0,230,118,.3)}
+.auction-tag-uk{background:rgba(24,255,255,.12);color:var(--accent2);border:1px solid rgba(24,255,255,.25)}
+@media(max-width:768px){.food-nav{padding:.5rem .75rem;flex-wrap:wrap}.food-hero-stats{grid-template-columns:repeat(2,1fr)}.food-tabs{gap:.3rem;padding:.5rem 0}.food-tab{padding:.4rem .6rem;font-size:.65rem}.food-container{padding:0 .75rem 3rem}.food-grid-2{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="bg-mesh"></div>
+
+<!-- Navigation -->
+<nav class="food-nav">
+  <a href="/" class="food-nav-logo">← SURUS Inversa</a>
+  <div class="food-nav-links">
+    <a href="/dashboard/" style="color:var(--accent2);font-weight:700">Dashboard</a>
+    <a href="#ficha-tecnica">Ficha Tecnica</a>
+    <a href="#estado">Estado</a>
+    <a href="#precios">Precios</a>
+    <a href="#refurbishment">Refurbishment</a>
+    <a href="#compradores">Compradores</a>
+    <a href="#paso-a-paso">Paso a Paso</a>
+    <a href="#riesgos">Riesgos</a>
+    <button class="food-pdf-btn" onclick="window.print()">PDF</button>
+  </div>
+</nav>
+
+<div class="food-container">
+
+<!-- HERO -->
+<section class="food-hero">
+  <div style="font-size:.65rem;font-weight:700;color:var(--accent3);text-transform:uppercase;letter-spacing:3px;margin-bottom:.5rem">DOSSIER DE INVERSION — CONFIDENCIAL</div>
+  <h1>Alimentacion & Envasado Industrial</h1>
+  <p class="food-hero-sub">Dos subastas Troostwijk: equipos de procesado alimentario y envasado en Francia (A1-35004, 20 lotes) y Reino Unido (A1-44679, 84 lotes). Analisis completo: especificaciones, estado, mercado LATAM, paso a paso.</p>
+  <div class="food-hero-stats">
+    <div class="food-hero-stat"><div class="number" style="background:var(--gradient1);-webkit-background-clip:text;-webkit-text-fill-color:transparent">104</div><div class="label">Lotes totales</div></div>
+    <div class="food-hero-stat"><div class="number" style="background:var(--gradient2);-webkit-background-clip:text;-webkit-text-fill-color:transparent">FR + UK</div><div class="label">2 Paises</div></div>
+    <div class="food-hero-stat"><div class="number" style="background:var(--gradient1);-webkit-background-clip:text;-webkit-text-fill-color:transparent">2016-2024</div><div class="label">Rango de anos</div></div>
+    <div class="food-hero-stat"><div class="number" style="background:var(--gradient3);-webkit-background-clip:text;-webkit-text-fill-color:transparent">40-70%</div><div class="label">Margen LATAM</div></div>
+    <div class="food-hero-stat"><div class="number" style="background:var(--gradient2);-webkit-background-clip:text;-webkit-text-fill-color:transparent">Troostwijk</div><div class="label">Plataforma</div></div>
+  </div>
+</section>
+
+<!-- TABS -->
+<div class="food-tabs" id="food-tabs">
+  <div class="food-tab active" data-tab="ficha-tecnica">Ficha Tecnica</div>
+  <div class="food-tab" data-tab="estado">Estado</div>
+  <div class="food-tab" data-tab="precios">Precios</div>
+  <div class="food-tab" data-tab="refurbishment">Refurbishment</div>
+  <div class="food-tab" data-tab="compradores">Compradores</div>
+  <div class="food-tab" data-tab="paso-a-paso">Paso a Paso</div>
+  <div class="food-tab" data-tab="riesgos">Riesgos</div>
+  <div class="food-tab" data-tab="imagenes">Imagenes</div>
+  <div class="food-tab" data-tab="documentacion">Documentacion</div>
+  <div class="food-tab" data-tab="videos">Videos</div>
+</div>
+
+<!-- TAB: FICHA TECNICA -->
+<section class="food-section active" id="ficha-tecnica">
+
+  <!-- AUCTION A1-35004 FRANCE -->
+  <div class="food-card">
+    <div class="food-card-title" style="color:var(--accent2)"><span class="auction-tag auction-tag-france">Francia A1-35004</span> Subasta Francia — Signes & Bauge-en-Anjou</div>
+    <div style="font-size:.82rem;color:var(--text-dim);margin-bottom:1rem;line-height:1.6">20 lotes de equipos de procesado alimentario y envasado. Destaca la linea de clasificacion de salchichas REX AKS 65 (2024, practicamente nueva) y la linea de embotellado POLARIS B5L (2019).</div>
+    <div style="overflow-x:auto">
+    <table class="data-table">
+      <thead>
+        <tr><th>Equipo</th><th>Modelo</th><th>Ano</th><th>Aplicacion</th><th>Subasta</th></tr>
+      </thead>
+      <tbody>
+        <tr style="background:rgba(0,230,118,.05)"><td style="font-weight:700;color:var(--accent)">REX Technologie</td><td>AKS 65</td><td style="color:var(--accent);font-weight:700">2024</td><td>Clasificacion de salchichas</td><td><span class="auction-tag auction-tag-france">FR</span></td></tr>
+        <tr><td style="font-weight:700;color:var(--accent2)">Capitani</td><td>KTS 160</td><td style="color:var(--accent2)">2018</td><td>Produccion de pasta</td><td><span class="auction-tag auction-tag-france">FR</span></td></tr>
+        <tr style="background:rgba(0,230,118,.05)"><td style="font-weight:700;color:var(--accent)">POLARIS</td><td>B5L</td><td style="color:var(--accent)">2019</td><td>Linea de embotellado</td><td><span class="auction-tag auction-tag-france">FR</span></td></tr>
+        <tr><td style="font-weight:700;color:var(--accent4)">ILPRA</td><td>Foodpack 1400N</td><td style="color:var(--accent4)">2015</td><td>Sellado por calor alimentos</td><td><span class="auction-tag auction-tag-france">FR</span></td></tr>
+        <tr style="background:rgba(255,215,64,.05)"><td style="font-weight:700;color:var(--accent4)">Mettler Toledo</td><td>Garvens C3350</td><td style="color:var(--accent4)">2018</td><td>Control de peso checkweigher</td><td><span class="auction-tag auction-tag-france">FR</span></td></tr>
+        <tr><td style="font-weight:700;color:var(--accent2)">LORAPACK</td><td>CRIMA 700</td><td style="color:var(--accent2)">2016</td><td>Flowpack horizontal</td><td><span class="auction-tag auction-tag-france">FR</span></td></tr>
+        <tr><td style="font-weight:700;color:var(--accent5)">NOVOPAC</td><td>CD1 070</td><td style="color:var(--accent5)">2017</td><td>Envolvedora shrink</td><td><span class="auction-tag auction-tag-france">FR</span></td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div style="font-size:.72rem;color:var(--text-dim);margin-top:.75rem;padding:.5rem;background:rgba(0,0,0,.2);border-radius:6px"><strong style="color:var(--accent)">Destacado:</strong> La REX AKS 65 (2024) es practicamente nueva. La POLARIS B5L (2019) es una linea completa de embotellado con alto valor de reventa en LATAM.</div>
+  </div>
+
+  <!-- AUCTION A1-44679 UK -->
+  <div class="food-card">
+    <div class="food-card-title" style="color:var(--accent)"><span class="auction-tag auction-tag-uk">UK A1-44679</span> Subasta UK — Downham Market</div>
+    <div style="font-size:.82rem;color:var(--text-dim);margin-bottom:1rem;line-height:1.6">84 lotes de maquinaria de produccion alimentaria y envasado. Alta actividad de pujas (13 bids en CWM y Miele). Equipos de llenado, formado, pesado y flow wrapping.</div>
+    <div style="overflow-x:auto">
+    <table class="data-table">
+      <thead>
+        <tr><th>Equipo</th><th>Modelo</th><th>Ano</th><th>Aplicacion</th><th>Bids</th><th>Subasta</th></tr>
+      </thead>
+      <tbody>
+        <tr style="background:rgba(255,110,64,.05)"><td style="font-weight:700;color:var(--accent3)">CWM Automation</td><td>Swirl Filling Machine</td><td style="color:var(--accent3)">2017</td><td>Llenado swirl</td><td style="color:var(--accent3);font-weight:700">13</td><td><span class="auction-tag auction-tag-uk">UK</span></td></tr>
+        <tr style="background:rgba(255,110,64,.05)"><td style="font-weight:700;color:var(--accent3)">Miele</td><td>Olympia 3 BC</td><td>N/D</td><td>Formado/llenado/sellado vasos</td><td style="color:var(--accent3);font-weight:700">13</td><td><span class="auction-tag auction-tag-uk">UK</span></td></tr>
+        <tr><td style="font-weight:700;color:var(--accent2)">ULMA</td><td>TRLX200</td><td>N/D</td><td>Tunel shrink</td><td style="font-weight:700">12</td><td><span class="auction-tag auction-tag-uk">UK</span></td></tr>
+        <tr><td style="font-weight:700;color:var(--accent5)">PFM</td><td>Falcon SI NOX</td><td>N/D</td><td>Flow wrapper</td><td style="font-weight:700">8</td><td><span class="auction-tag auction-tag-uk">UK</span></td></tr>
+        <tr><td style="font-weight:700;color:var(--accent4)">Redpack</td><td>Pacer</td><td>N/D</td><td>Flow wrapper</td><td style="font-weight:700">4</td><td><span class="auction-tag auction-tag-uk">UK</span></td></tr>
+        <tr><td style="font-weight:700;color:var(--accent2)">Ishida</td><td>CCW-Z-214W-T720-PB</td><td>N/D</td><td>Pesador multihead</td><td style="font-weight:700">3</td><td><span class="auction-tag auction-tag-uk">UK</span></td></td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div style="font-size:.72rem;color:var(--text-dim);margin-top:.75rem;padding:.5rem;background:rgba(255,110,64,.06);border:1px solid rgba(255,110,64,.15);border-radius:6px"><strong style="color:var(--accent3)">Alta demanda:</strong> CWM Swirl y Miele Olympia tienen 13 pujas cada una, indicando fuerte interes del mercado. ULMA TRLX200 con 12 pujas confirma alta demanda en shrink tunnels.</div>
+  </div>
+
+  <!-- DETAILED SPECS FRANCE -->
+  <div class="food-card">
+    <div class="food-card-title" style="color:var(--accent)">REX Technologie AKS 65 — Especificaciones Detalladas</div>
+    <div class="food-grid-2" style="margin-bottom:1rem">
+      <div class="food-metric"><div class="val" style="color:var(--accent)">2024</div><div class="lbl">Ano de fabricacion</div></div>
+      <div class="food-metric"><div class="val" style="color:var(--accent2)">AKS 65</div><div class="lbl">Modelo</div></div>
+      <div class="food-metric"><div class="val" style="color:var(--accent4)">Salchichas</div><div class="lbl">Aplicacion</div></div>
+      <div class="food-metric"><div class="val" style="color:var(--accent5)">Clasificacion</div><div class="lbl">Tipo</div></div>
+      <div class="food-metric"><div class="val" style="color:var(--accent)">~300-600</div><div class="lbl">Piezas/min (estimado)</div></div>
+      <div class="food-metric"><div class="val" style="color:var(--accent2)">Calibre</div><div class="lbl">Clasificacion por</div></div>
+    </div>
+    <div style="font-size:.82rem;color:var(--text-dim);line-height:1.6;margin-bottom:1rem">La REX AKS 65 es una linea de clasificacion de salchichas de alta velocidad. Fabricada en 2024, es el equipo mas nuevo de ambas subastas. Permite clasificar por calibre, peso y longitud, con rechazo automatico de piezas fuera de norma. Alto valor de reventa en mercados LATAM donde la industria de embutidos esta en crecimiento.</div>
+    <div style="overflow-x:auto">
+    <table class="data-table">
+      <thead><tr><th>Caracteristica</th><th>Especificacion</th></tr></thead>
+      <tbody>
+        <tr><td style="font-weight:700">Fabricante</td><td>REX Technologie GmbH (Austria)</td></tr>
+        <tr><td style="font-weight:700">Modelo</td><td>AKS 65</td></tr>
+        <tr><td style="font-weight:700">Ano</td><td style="color:var(--accent);font-weight:700">2024</td></tr>
+        <tr><td style="font-weight:700">Funcion</td><td>Clasificacion de salchichas por calibre/peso</td></tr>
+        <tr><td style="font-weight:700">Capacidad estimada</td><td>300-600 piezas/min</td></tr>
+        <tr><td style="font-weight:700">Deteccion</td><td>Sistema optico de medida + pesaje dinamico</td></tr>
+        <tr><td style="font-weight:700">Material contacto</td><td>Acero inoxidable (grado alimentario)</td></tr>
+        <tr><td style="font-weight:700">Normativa</td><td>CE, conformidad alimentaria UE</td></tr>
+        <tr><td style="font-weight:700">Limpieza</td><td>CIP compatible (Clean-in-Place)</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <!-- POLARIS SPECS -->
+  <div class="food-card">
+    <div class="food-card-title" style="color:var(--accent2)">POLARIS B5L — Linea de Embotellado</div>
+    <div class="food-grid-2" style="margin-bottom:1rem">
+      <div class="food-metric"><div class="val" style="color:var(--accent2)">2019</div><div class="lbl">Ano de fabricacion</div></div>
+      <div class="food-metric"><div class="val" style="color:var(--accent)">B5L</div><div class="lbl">Modelo</div></div>
+      <div class="food-metric"><div class="val" style="color:var(--accent4)">Embotellado</div><div class="lbl">Aplicacion</div></div>
+      <div class="food-metric"><div class="val" style="color:var(--accent3)">5.000-12.000</div><div class="lbl">Botellas/hora (estimado)</div></div>
+    </div>
+    <div style="overflow-x:auto">
+    <table class="data-table">
+      <thead><tr><th>Caracteristica</th><th>Especificacion</th></tr></thead>
+      <tbody>
+        <tr><td style="font-weight:700">Fabricante</td><td>POLARIS (Italia)</td></tr>
+        <tr><td style="font-weight:700">Modelo</td><td>B5L</td></tr>
+        <tr><td style="font-weight:700">Ano</td><td style="color:var(--accent2);font-weight:700">2019</td></tr>
+        <tr><td style="font-weight:700">Funcion</td><td>Lavado-llenado-taponado monobloque</td></tr>
+        <tr><td style="font-weight:700">Capacidad</td><td>5.000-12.000 botellas/h (dependiendo formato)</td></tr>
+        <tr><td style="font-weight:700">Formato</td><td>Botellas PET/vidrio, 0,2L-2L</td></tr>
+        <tr><td style="font-weight:700">Valvulas</td><td>5 valvulas de llenado (gravity/iso-barometric)</td></tr>
+        <tr><td style="font-weight:700">Material</td><td>Acero inoxidable AISI 304</td></tr>
+        <tr><td style="font-weight:700">CIP</td><td>Sistema CIP integrado</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <!-- METTLER TOLEDO SPECS -->
+  <div class="food-card">
+    <div class="food-card-title" style="color:var(--accent4)">Mettler Toledo Garvens C3350 — Checkweigher</div>
+    <div class="food-grid-2" style="margin-bottom:1rem">
+      <div class="food-metric"><div class="val" style="color:var(--accent4)">2018</div><div class="lbl">Ano</div></div>
+      <div class="food-metric"><div class="val" style="color:var(--accent)">C3350</div><div class="lbl">Modelo</div></div>
+      <div class="food-metric"><div class="val" style="color:var(--accent2)">Checkweigher</div><div class="lbl">Tipo</div></div>
+      <div class="food-metric"><div class="val" style="color:var(--accent5)">+/- 0,1g</div><div class="lbl">Precision</div></div>
+    </div>
+    <div style="overflow-x:auto">
+    <table class="data-table">
+      <thead><tr><th>Caracteristica</th><th>Especificacion</th></tr></thead>
+      <tbody>
+        <tr><td style="font-weight:700">Fabricante</td><td>Mettler Toledo Garvens (Alemania)</td></tr>
+        <tr><td style="font-weight:700">Modelo</td><td>C3350</td></tr>
+        <tr><td style="font-weight:700">Ano</td><td style="color:var(--accent4);font-weight:700">2018</td></tr>
+        <tr><td style="font-weight:700">Rango de peso</td><td>Hasta 1.500 g</td></tr>
+        <tr><td style="font-weight:700">Precision</td><td>+/- 0,1 g (dependiendo rango)</td></tr>
+        <tr><td style="font-weight:700">Velocidad max.</td><td>Hasta 400 ppm</td></tr>
+        <tr><td style="font-weight:700">Normativa</td><td>OIML R51, MID 2014/32/EU</td></tr>
+        <tr><td style="font-weight:700">Rechazo</td><td>Sistema de rechazo por empujador o soplador</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <!-- UK EQUIPMENT SPECS -->
+  <div class="food-card">
+    <div class="food-card-title" style="color:var(--accent3)">CWM Automation Swirl — Especificaciones</div>
+    <div class="food-grid-2" style="margin-bottom:1rem">
+      <div class="food-metric"><div class="val" style="color:var(--accent3)">2017</div><div class="lbl">Ano</div></div>
+      <div class="food-metric"><div class="val" style="color:var(--accent)">Swirl</div><div class="lbl">Modelo</div></div>
+      <div class="food-metric"><div class="val" style="color:var(--accent4)">Llenado</div><div class="lbl">Aplicacion</div></div>
+      <div class="food-metric"><div class="val" style="color:var(--accent3)">13 bids</div><div class="lbl">Interes actual</div></div>
+    </div>
+    <div style="overflow-x:auto">
+    <table class="data-table">
+      <thead><tr><th>Caracteristica</th><th>Especificacion</th></tr></thead>
+      <tbody>
+        <tr><td style="font-weight:700">Fabricante</td><td>CWM Automation (UK)</td></tr>
+        <tr><td style="font-weight:700">Modelo</td><td>Swirl Filling Machine</td></tr>
+        <tr><td style="font-weight:700">Ano</td><td style="color:var(--accent3);font-weight:700">2017</td></tr>
+        <tr><td style="font-weight:700">Funcion</td><td>Llenado swirl (multiples sabores/capas en un envase)</td></tr>
+        <tr><td style="font-weight:700">Producto</td><td>Yogur, postres, helado, productos lacteos</td></tr>
+        <tr><td style="font-weight:700">Formato</td><td>Vasos de 80-500 ml</td></tr>
+        <tr><td style="font-weight:700">Material</td><td>Acero inoxidable, contacto alimentario</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <!-- ISHIDA MULTIHEAD WEIGHER -->
+  <div class="food-card">
+    <div class="food-card-title" style="color:var(--accent2)">Ishida CCW-Z-214W-T720-PB — Pesador Multihead</div>
+    <div class="food-grid-2" style="margin-bottom:1rem">
+      <div class="food-metric"><div class="val" style="color:var(--accent2)">CCW-Z</div><div class="lbl">Serie</div></div>
+      <div class="food-metric"><div class="val" style="color:var(--accent)">14 cabezas</div><div class="lbl">Numero de cabezas</div></div>
+      <div class="food-metric"><div class="val" style="var(--accent4)">720 mm</div><div class="lbl">Diametro descarga</div></div>
+      <div class="food-metric"><div class="val" style="color:var(--accent3)">3 bids</div><div class="lbl">Pujas actuales</div></div>
+    </div>
+    <div style="overflow-x:auto">
+    <table class="data-table">
+      <thead><tr><th>Caracteristica</th><th>Especificacion</th></tr></thead>
+      <tbody>
+        <tr><td style="font-weight:700">Fabricante</td><td>Ishida Co. Ltd (Japon)</td></tr>
+        <tr><td style="font-weight:700">Modelo</td><td>CCW-Z-214W-T720-PB</td></tr>
+        <tr><td style="font-weight:700">Tipo</td><td>Pesador multihead (multihead weigher)</td></tr>
+        <tr><td style="font-weight:700">Cabezas de pesaje</td><td>14 cabezas</td></tr>
+        <tr><td style="font-weight:700">Rango de peso</td><td>Hasta 3.000 g (dependiendo producto)</td></tr>
+        <tr><td style="font-weight:700">Precision</td><td>+/- 0,5-1,0 g (dependiendo producto)</td></tr>
+        <tr><td style="font-weight:700">Velocidad</td><td>Hasta 140 descargas/min</td></tr>
+        <tr><td style="font-weight:700">Aplicacion</td><td>Alimentos, snack, congelados, frutos secos</td></tr>
+        <tr><td style="font-weight:700">Material</td><td>Acero inoxidable, IP65</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <!-- FLOW WRAPPERS COMPARISON -->
+  <div class="food-card">
+    <div class="food-card-title" style="color:var(--accent5)">Comparativa de Flow Wrappers & Envasado</div>
+    <div style="overflow-x:auto">
+    <table class="data-table">
+      <thead><tr><th>Equipo</th><th>Modelo</th><th>Ano</th><th>Tipo</th><th>Velocidad</th><th>Subasta</th></tr></thead>
+      <tbody>
+        <tr><td style="font-weight:700;color:var(--accent2)">LORAPACK</td><td>CRIMA 700</td><td>2016</td><td>Flowpack horizontal</td><td>Hasta 250 ppm</td><td><span class="auction-tag auction-tag-france">FR</span></td></tr>
+        <tr><td style="font-weight:700;color:var(--accent4)">Redpack</td><td>Pacer</td><td>N/D</td><td>Flow wrapper</td><td>Hasta 200 ppm</td><td><span class="auction-tag auction-tag-uk">UK</span></td></tr>
+        <tr><td style="font-weight:700;color:var(--accent5)">PFM</td><td>Falcon SI NOX</td><td>N/D</td><td>Flow wrapper (MAP)</td><td>Hasta 300 ppm</td><td><span class="auction-tag auction-tag-uk">UK</span></td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div style="font-size:.72rem;color:var(--text-dim);margin-top:.75rem;padding:.5rem;background:rgba(0,0,0,.2);border-radius:6px"><strong style="color:var(--accent5)">Nota PFM Falcon SI NOX:</strong> El modelo Falcon de PFM con tecnologia SI NOX (atmosfera modificada) es especialmente valioso para LATAM donde la vida util de productos alimentarios es critica por distancias logisticas mayores. El envasado MAP puede extender vida util 50-200%.</div>
+  </div>
+
+</section>
+
+<!-- TAB: ESTADO -->
+<section class="food-section" id="estado">
+  <div class="food-card">
+    <div class="food-card-title" style="color:var(--accent2)">Estado del Equipo — Francia (A1-35004)</div>
+    <div style="font-size:.82rem;color:var(--text-dim);margin-bottom:1rem;line-height:1.6"><strong style="color:var(--accent3)">ES IMPERATIVO realizar inspeccion in situ antes de cualquier compra.</strong> Los datos a continuacion provienen de las paginas de Troostwijk. Un tecnico especializado debe verificar cada punto.</div>
+    <div class="food-grid-2" style="margin-bottom:1.5rem">
+      <div style="padding:.75rem;background:rgba(0,230,118,0.06);border:1px solid rgba(0,230,118,0.15);border-radius:10px">
+        <div style="font-size:.72rem;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:1px;margin-bottom:.5rem">Equipos Destacados — Francia</div>
+        <div style="display:grid;gap:.4rem;font-size:.78rem">
+          <div style="display:flex;gap:.5rem;align-items:start"><span style="background:var(--accent);color:#000;font-size:.6rem;padding:.1rem .4rem;border-radius:3px;font-weight:700;flex-shrink:0">2024</span><span><strong style="color:var(--accent)">REX AKS 65</strong> — Practicamente nueva. Menos de 2 anos de uso. Condicion excelente esperada.</span></div>
+          <div style="display:flex;gap:.5rem;align-items:start"><span style="background:var(--accent);color:#000;font-size:.6rem;padding:.1rem .4rem;border-radius:3px;font-weight:700;flex-shrink:0">2019</span><span><strong style="color:var(--accent2)">POLARIS B5L</strong> — 5 anos. Condicion buena esperada. Linea completa de embotellado.</span></div>
+          <div style="display:flex;gap:.5rem;align-items:start"><span style="background:var(--accent4);color:#000;font-size:.6rem;padding:.1rem .4rem;border-radius:3px;font-weight:700;flex-shrink:0">2018</span><span><strong style="color:var(--accent2)">Capitani KTS 160</strong> — 6 anos. Maquinaria de pasta, probable buen estado.</span></div>
+          <div style="display:flex;gap:.5rem;align-items:start"><span style="background:var(--accent4);color:#000;font-size:.6rem;padding:.1rem .4rem;border-radius:3px;font-weight:700;flex-shrink:0">2018</span><span><strong style="color:var(--accent4)">Mettler Toledo C3350</strong> — 6 anos. Checkweigher de precision, mantenimiento critico.</span></div>
+          <div style="display:flex;gap:.5rem;align-items:start"><span style="background:var(--accent2);color:#000;font-size:.6rem;padding:.1rem .4rem;border-radius:3px;font-weight:700;flex-shrink:0">2017</span><span><strong style="color:var(--accent5)">NOVOPAC CD1 070</strong> — 7 anos. Envolvedora shrink.</span></div>
+          <div style="display:flex;gap:.5rem;align-items:start"><span style="background:var(--accent2);color:#000;font-size:.6rem;padding:.1rem .4rem;border-radius:3px;font-weight:700;flex-shrink:0">2016</span><span><strong style="color:var(--accent2)">LORAPACK CRIMA 700</strong> — 8 anos. Flowpack horizontal.</span></div>
+          <div style="display:flex;gap:.5rem;align-items:start"><span style="background:var(--accent3);color:#fff;font-size:.6rem;padding:.1rem .4rem;border-radius:3px;font-weight:700;flex-shrink:0">2015</span><span><strong style="color:var(--accent3)">ILPRA Foodpack 1400N</strong> — 9 anos. Sellador por calor, verificar sellos y resistencias.</span></div>
+        </div>
+      </div>
+      <div style="padding:.75rem;background:rgba(255,110,64,0.08);border:1px solid rgba(255,110,64,0.2);border-radius:10px">
+        <div style="font-size:.72rem;font-weight:700;color:var(--accent3);text-transform:uppercase;letter-spacing:1px;margin-bottom:.5rem">Checklist de Inspeccion</div>
+        <div style="display:grid;gap:.4rem;font-size:.78rem">
+          <div style="display:flex;gap:.4rem;align-items:center"><span style="color:var(--accent3)">☐</span> Verificar estado de superficies de contacto alimentario (acero inox)</div>
+          <div style="display:flex;gap:.4rem;align-items:center"><span style="color:var(--accent3)">☐</span> Comprobar juntas y sellos (reemplazo CIP)</div>
+          <div style="display:flex;gap:.4rem;align-items:center"><span style="color:var(--accent3)">☐</span> Encender y verificar ciclos automaticos</div>
+          <div style="display:flex;gap:.4rem;align-items:center"><span style="color:var(--accent3)">☐</span> Verificar calibration de pesadores/checkweigher</div>
+          <div style="display:flex;gap:.4rem;align-items:center"><span style="color:var(--accent4)">☐</span> Inspeccionar cuchillas de corte (flow wrappers)</div>
+          <div style="display:flex;gap:.4rem;align-items:center"><span style="color:var(--accent4)">☐</span> Verificar sistema de sellado (barra, impulsadora)</div>
+          <div style="display:flex;gap:.4rem;align-items:center"><span style="color:var(--accent4)">☐</span> Comprobar sistema neumatico y valvulas</div>
+          <div style="display:flex;gap:.4rem;align-items:center"><span style="color:var(--text-dim)">☐</span> Solicitar registros de mantenimiento</div>
+          <div style="display:flex;gap:.4rem;align-items:center"><span style="color:var(--text-dim)">☐</span> Verificar documentacion CE y declaraciones de conformidad</div>
+          <div style="display:flex;gap:.4rem;align-items:center"><span style="color:var(--text-dim)">☐</span> Confirmar voltaje y configuracion electrica</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="food-card">
+    <div class="food-card-title" style="color:var(--accent)">Estado del Equipo — UK (A1-44679)</div>
+    <div style="font-size:.82rem;color:var(--text-dim);margin-bottom:1rem;line-height:1.6">84 lotes con alta actividad de pujas. Los equipos con mas pujas (CWM Swirl, Miele Olympia) indican fuerte demanda del mercado y posible competencia en el cierre.</div>
+    <div style="overflow-x:auto">
+    <table class="data-table">
+      <thead><tr><th>Equipo</th><th>Modelo</th><th>Bids</th><th>Nivel de demanda</th><th>Observaciones</th></tr></thead>
+      <tbody>
+        <tr style="background:rgba(255,110,64,.05)"><td style="font-weight:700">CWM Automation</td><td>Swirl Filling</td><td style="color:var(--accent3);font-weight:700">13</td><td><span class="food-badge food-badge-critical">MUY ALTA</span></td><td>Alta competencia esperada</td></tr>
+        <tr style="background:rgba(255,110,64,.05)"><td style="font-weight:700">Miele Olympia 3 BC</td><td>Cup forming/filling</td><td style="color:var(--accent3);font-weight:700">13</td><td><span class="food-badge food-badge-critical">MUY ALTA</span></td><td>Interes multiple, establecer max bid</td></tr>
+        <tr style="background:rgba(255,215,64,.05)"><td style="font-weight:700">ULMA TRLX200</td><td>Shrink tunnel</td><td style="font-weight:700">12</td><td><span class="food-badge food-badge-high">ALTA</span></td><td>Buena demanda, competencia media-alta</td></tr>
+        <tr><td style="font-weight:700">PFM Falcon SI NOX</td><td>Flow wrapper</td><td style="font-weight:700">8</td><td><span class="food-badge food-badge-high">ALTA</span></td><td>Tecnologia MAP, alto valor agregado</td></tr>
+        <tr><td style="font-weight:700">Redpack Pacer</td><td>Flow wrapper</td><td>4</td><td><span class="food-badge food-badge-medium">MEDIA</span></td><td>Demanda moderada</td></tr>
+        <tr><td style="font-weight:700">Ishida CCW-Z</td><td>Multihead weigher</td><td>3</td><td><span class="food-badge food-badge-medium">MEDIA</span></td><td>Pocos bids, posible oportunidad</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div style="margin-top:1rem;font-size:.72rem;color:var(--accent);font-weight:600;padding:.5rem;background:rgba(0,230,118,.08);border-radius:6px">Estrategia: Los lotes con menos pujas (Ishida con 3, Redpack con 4) pueden representar mejor relacion calidad-precio. Los lotes con 13+ bids requieren establecer un limite de puja maximo antes de participar.</div>
+  </div>
+
+  <div class="food-card">
+    <div class="food-card-title" style="color:var(--accent4)">Antiguedad y Vida Util Restante</div>
+    <div style="overflow-x:auto">
+    <table class="data-table">
+      <thead><tr><th>Equipo</th><th>Ano</th><th>Edad (2026)</th><th>Vida util tipica</th><th>Vida restante est.</th><th>Estado esperado</th></tr></thead>
+      <tbody>
+        <tr style="background:rgba(0,230,118,.05)"><td style="font-weight:700;color:var(--accent)">REX AKS 65</td><td style="color:var(--accent)">2024</td><td>2 anos</td><td>15-20 anos</td><td style="color:var(--accent);font-weight:700">13-18 anos</td><td>Excelente</td></tr>
+        <tr><td style="font-weight:700;color:var(--accent2)">POLARIS B5L</td><td style="color:var(--accent2)">2019</td><td>7 anos</td><td>15-20 anos</td><td style="font-weight:700">8-13 anos</td><td>Bueno</td></tr>
+        <tr><td style="font-weight:700">Capitani KTS 160</td><td>2018</td><td>8 anos</td><td>15-20 anos</td><td>7-12 anos</td><td>Bueno</td></tr>
+        <tr><td style="font-weight:700">Mettler Toledo C3350</td><td>2018</td><td>8 anos</td><td>12-15 anos</td><td>4-7 anos</td><td>Bueno (calibracion?)</td></tr>
+        <tr><td style="font-weight:700">NOVOPAC CD1 070</td><td>2017</td><td>9 anos</td><td>15-20 anos</td><td>6-11 anos</td><td>Aceptable</td></tr>
+        <tr><td style="font-weight:700">LORAPACK CRIMA 700</td><td>2016</td><td>10 anos</td><td>15-20 anos</td><td>5-10 anos</td><td>Aceptable</td></tr>
+        <tr><td style="font-weight:700;color:var(--accent3)">ILPRA Foodpack 1400N</td><td style="color:var(--accent3)">2015</td><td>11 anos</td><td>12-15 anos</td><td style="color:var(--accent4)">1-4 anos</td><td>Revisar desgaste</td></tr>
+        <tr><td style="font-weight:700">CWM Swirl</td><td>2017</td><td>9 anos</td><td>12-15 anos</td><td>3-6 anos</td><td>Bueno</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div style="font-size:.72rem;color:var(--text-dim);margin-top:.5rem;padding:.5rem;background:rgba(0,0,0,.2);border-radius:6px"><strong style="color:var(--accent)">Nota:</strong> La vida util tipica de maquinaria de envasado alimentario es de 15-20 anos con mantenimiento adecuado. Equipos de 2016-2024 tienen buena vida restante. La ILPRA (2015) necesita inspeccion cuidadosa de sellos y resistencias.</div>
+  </div>
+</section>
+
+<!-- TAB: PRECIOS -->
+<section class="food-section" id="precios">
+  <div class="food-card">
+    <div class="food-card-title" style="color:var(--accent4)">Precios de Mercado vs. Oportunidad</div>
+    <div style="font-size:.82rem;color:var(--text-dim);margin-bottom:1rem;line-height:1.6">Los precios de salida en Troostwijk varian por lote y no estan publicados hasta el registro. Los precios de mercado secundario a continuacion se basan en transacciones comparables en Exapro, Machineseeker y EquipNet.</div>
+    <div style="overflow-x:auto">
+    <table class="data-table">
+      <thead><tr><th>Equipo</th><th>Ano</th><th>Precio mercado nuevo (EUR)</th><th>Precio mercado usado (EUR)</th><th>Precio subasta est.</th><th>Descuento vs. nuevo</th></tr></thead>
+      <tbody>
+        <tr style="background:rgba(0,230,118,.05)"><td style="font-weight:700;color:var(--accent)">REX AKS 65</td><td>2024</td><td>150.000-250.000</td><td style="font-weight:700;color:var(--accent)">120.000-200.000</td><td style="color:var(--accent);font-weight:700">80.000-130.000*</td><td>45-55%</td></tr>
+        <tr><td style="font-weight:700;color:var(--accent2)">POLARIS B5L</td><td>2019</td><td>120.000-200.000</td><td style="font-weight:700;color:var(--accent2)">60.000-100.000</td><td style="font-weight:700">35.000-65.000*</td><td>50-68%</td></tr>
+        <tr><td style="font-weight:700">Capitani KTS 160</td><td>2018</td><td>80.000-120.000</td><td style="font-weight:700">35.000-60.000</td><td style="font-weight:700">20.000-40.000*</td><td>60-70%</td></tr>
+        <tr><td style="font-weight:700;color:var(--accent4)">Mettler Toledo C3350</td><td>2018</td><td>40.000-60.000</td><td style="font-weight:700;color:var(--accent4)">18.000-30.000</td><td style="font-weight:700">10.000-20.000*</td><td>55-70%</td></tr>
+        <tr><td style="font-weight:700">LORAPACK CRIMA 700</td><td>2016</td><td>60.000-90.000</td><td style="font-weight:700">25.000-45.000</td><td style="font-weight:700">15.000-30.000*</td><td>60-72%</td></tr>
+        <tr><td style="font-weight:700">NOVOPAC CD1 070</td><td>2017</td><td>80.000-130.000</td><td style="font-weight:700">30.000-60.000</td><td style="font-weight:700">18.000-35.000*</td><td>60-73%</td></tr>
+        <tr><td style="font-weight:700;color:var(--accent3)">ILPRA Foodpack 1400N</td><td>2015</td><td>50.000-80.000</td><td style="font-weight:700">15.000-30.000</td><td style="font-weight:700">8.000-18.000*</td><td>64-78%</td></tr>
+        <tr style="border-top:2px solid var(--accent)"><td style="font-weight:700;color:var(--accent)">Ishida CCW-Z-214W</td><td>N/D</td><td>80.000-120.000</td><td style="font-weight:700;color:var(--accent)">25.000-50.000</td><td style="color:var(--accent);font-weight:700">12.000-30.000*</td><td>60-75%</td></tr>
+        <tr><td style="font-weight:700">CWM Swirl</td><td>2017</td><td>100.000-180.000</td><td style="font-weight:700">40.000-80.000</td><td style="font-weight:700">25.000-50.000*</td><td>55-72%</td></tr>
+        <tr><td style="font-weight:700">PFM Falcon SI NOX</td><td>N/D</td><td>90.000-150.000</td><td style="font-weight:700">35.000-70.000</td><td style="font-weight:700">20.000-45.000*</td><td>55-70%</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div style="font-size:.72rem;color:var(--text-dim);margin-top:.75rem;padding:.5rem;background:rgba(255,215,64,.06);border:1px solid rgba(255,215,64,.15);border-radius:6px"><strong style="color:var(--accent4)">* Precios estimados de subasta:</strong> Los precios reales de salida en Troostwijk solo son visibles tras registro. Los precios estimados se basan en descuentos tipicos de subasta (55-78% vs. precio nuevo). Registrar en <a href="https://www.troostwijkauctions.com" target="_blank" style="color:var(--accent2)">troostwijkauctions.com</a> para ver precios reales.</div>
+  </div>
+
+  <div class="food-card">
+    <div class="food-card-title" style="color:var(--accent)">Analisis de Inversion — Lotes Clave Francia</div>
+    <div style="overflow-x:auto">
+    <table class="data-table">
+      <thead><tr><th>Concepto</th><th>Rango (EUR)</th></tr></thead>
+      <tbody>
+        <tr><td>Compra lotes clave Francia (7 equipos principales)</td><td style="font-weight:700;color:var(--accent3)">186.000-338.000</td></tr>
+        <tr><td>Comision Troostwijk (17,5% + IVA)</td><td>38.415-69.735</td></tr>
+        <tr><td>Transporte Francia-Espana</td><td>5.000-12.000</td></tr>
+        <tr><td>Refurbishment y certificacion</td><td>25.000-50.000</td></tr>
+        <tr style="border-top:2px solid var(--accent)"><td style="font-weight:800">Inversion total (Francia)</td><td style="font-weight:800;color:var(--accent)">254.415-469.735 EUR</td></tr>
+        <tr><td style="color:var(--text-dim);font-size:.7rem">Valor de reventa LATAM (estimado)</td><td style="font-weight:700;font-size:.7rem;color:var(--accent)">380.000-700.000 EUR</td></tr>
+        <tr style="border-top:1px solid var(--border)"><td style="font-weight:800;color:var(--accent)">Margen potencial</td><td style="font-weight:800;color:var(--accent)">40-49%</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <div class="food-card">
+    <div class="food-card-title" style="color:var(--accent2)">Analisis de Inversion — Lotes Clave UK</div>
+    <div style="overflow-x:auto">
+    <table class="data-table">
+      <thead><tr><th>Concepto</th><th>Rango (EUR)</th></tr></thead>
+      <tbody>
+        <tr><td>Compra lotes clave UK (6 equipos principales)</td><td style="font-weight:700;color:var(--accent3)">100.000-190.000</td></tr>
+        <tr><td>Comision Troostwijk (17,5% + IVA)</td><td>20.650-39.250</td></tr>
+        <tr><td>Transporte UK-Espana</td><td>8.000-15.000</td></tr>
+        <tr><td>Refurbishment y certificacion</td><td>18.000-35.000</td></tr>
+        <tr style="border-top:2px solid var(--accent2)"><td style="font-weight:800">Inversion total (UK)</td><td style="font-weight:800;color:var(--accent2)">146.650-279.250 EUR</td></tr>
+        <tr><td style="color:var(--text-dim);font-size:.7rem">Valor de reventa LATAM (estimado)</td><td style="font-weight:700;font-size:.7rem;color:var(--accent2)">220.000-420.000 EUR</td></tr>
+        <tr style="border-top:1px solid var(--border)"><td style="font-weight:800;color:var(--accent)">Margen potencial</td><td style="font-weight:800;color:var(--accent)">42-50%</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div style="font-size:.72rem;color:var(--accent);font-weight:600;margin-top:1rem;padding:.5rem;background:rgba(0,230,118,.08);border-radius:6px">Mejor margen en UK: menor precio base pero alto valor de reventa LATAM para flow wrappers y multihead weighers. La Ishida con solo 3 bids es la oportunidad mas clara.</div>
+  </div>
+</section>
+
+<!-- TAB: REFURBISHMENT -->
+<section class="food-section" id="refurbishment">
+  <div class="food-card">
+    <div class="food-card-title" style="color:var(--accent)">Refurbishment — Checklist por Equipo</div>
+    <div style="overflow-x:auto">
+    <table class="data-table">
+      <thead><tr><th>Equipo</th><th>Accion</th><th>Coste est. (EUR)</th><th>Prioridad</th></tr></thead>
+      <tbody>
+        <tr style="background:rgba(0,230,118,.05)"><td rowspan="3" style="font-weight:700;color:var(--accent)">REX AKS 65</td><td>Verificacion calibracion sensores opticos</td><td>1.000-2.000</td><td><span class="food-badge food-badge-critical">CRITICA</span></td></tr>
+        <tr><td>Limpieza CIP completa + sanitizacion</td><td>500-1.000</td><td><span class="food-badge food-badge-high">ALTA</span></td></tr>
+        <tr><td>Certificacion alimentaria + CE</td><td>1.500-3.000</td><td><span class="food-badge food-badge-high">ALTA</span></td></tr>
+        <tr><td rowspan="3" style="font-weight:700;color:var(--accent2)">POLARIS B5L</td><td>Reemplazo juntas y sellos</td><td>2.000-4.000</td><td><span class="food-badge food-badge-critical">CRITICA</span></td></tr>
+        <tr><td>Verificacion valvulas de llenado</td><td>1.500-3.000</td><td><span class="food-badge food-badge-high">ALTA</span></td></tr>
+        <tr><td>Calibracion y test de ciclo completo</td><td>1.000-2.000</td><td><span class="food-badge food-badge-high">ALTA</span></td></tr>
+        <tr><td rowspan="2" style="font-weight:700;color:var(--accent4)">Mettler Toledo C3350</td><td>Calibracion certificado OIML</td><td>800-1.500</td><td><span class="food-badge food-badge-critical">CRITICA</span></td></tr>
+        <tr><td>Verificacion celdas de carga</td><td>500-1.000</td><td><span class="food-badge food-badge-high">ALTA</span></td></tr>
+        <tr><td rowspan="2" style="font-weight:700">LORAPACK CRIMA 700</td><td>Reemplazo cuchillas de corte</td><td>300-600</td><td><span class="food-badge food-badge-high">ALTA</span></td></tr>
+        <tr><td>Verificacion sistema de sellado</td><td>500-1.200</td><td><span class="food-badge food-badge-high">ALTA</span></td></tr>
+        <tr><td rowspan="3" style="font-weight:700">Todos</td><td>Limpieza profunda + desinfeccion</td><td>500-1.500/equipo</td><td><span class="food-badge food-badge-critical">CRITICA</span></td></tr>
+        <tr><td>Adaptacion electrica (si necesario)</td><td>500-2.000/equipo</td><td><span class="food-badge food-badge-medium">MEDIA</span></td></tr>
+        <tr><td>Certificacion alimentaria + documentacion</td><td>1.000-3.000/equipo</td><td><span class="food-badge food-badge-high">ALTA</span></td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div style="font-size:.72rem;color:var(--text-dim);margin-top:.75rem;padding:.5rem;background:rgba(0,0,0,.2);border-radius:6px"><strong style="color:var(--accent)">Timeline refurbishment:</strong> 3-6 semanas por lote. Incluye: limpieza y desinfeccion (2-3 dias) → reemplazo juntas/sellos (3-5 dias) → calibracion (2-3 dias) → certificacion (1-2 semanas) → test de produccion (1-2 dias).</div>
+  </div>
+
+  <div class="food-card">
+    <div class="food-card-title" style="color:var(--accent2)">Requisitos CIP (Clean-in-Place) para Equipos Alimentarios</div>
+    <div style="font-size:.82rem;color:var(--text-dim);margin-bottom:1rem;line-height:1.6">Todo equipo de procesado alimentario debe cumplir normativas de higienes antes de su reventa. A continuacion los requisitos CIP criticos para cada tipo de equipo.</div>
+    <div class="food-grid-2" style="margin-bottom:1rem">
+      <div style="padding:.75rem;background:rgba(255,110,64,0.08);border:1px solid rgba(255,110,64,0.2);border-radius:10px">
+        <div style="font-size:.72rem;font-weight:700;color:var(--accent3);text-transform:uppercase;letter-spacing:1px;margin-bottom:.5rem">Requisitos CIP Criticos</div>
+        <div style="display:grid;gap:.4rem;font-size:.78rem">
+          <div style="display:flex;gap:.5rem;align-items:start"><span style="background:var(--accent3);color:#fff;font-size:.6rem;padding:.1rem .4rem;border-radius:3px;font-weight:700;flex-shrink:0">1</span><span><strong style="color:var(--accent3)">Superficies de contacto alimentario</strong> — Deben ser lisas, no porosas, no reactivas. Acero inoxidable AISI 304/316 o plastico alimentario.</span></div>
+          <div style="display:flex;gap:.5rem;align-items:start"><span style="background:var(--accent3);color:#fff;font-size:.6rem;padding:.1rem .4rem;border-radius:3px;font-weight:700;flex-shrink:0">2</span><span><strong style="color:var(--accent3)">Juntas y sellos</strong> — Reemplazar TODAS las juntas de contacto alimentario. Material: EPDM o FKM (Viton) grado alimentario.</span></div>
+          <div style="display:flex;gap:.5rem;align-items:start"><span style="background:var(--accent3);color:#fff;font-size:.6rem;padding:.1rem .4rem;border-radius:3px;font-weight:700;flex-shrink:0">3</span><span><strong style="color:var(--accent3)">Desinfeccion completa</strong> — Protocolo de limpieza CIP con productos quimicos aprobados (acido peracetico, NaOH).</span></div>
+          <div style="display:flex;gap:.5rem;align-items:start"><span style="background:var(--accent4);color:#000;font-size:.6rem;padding:.1rem .4rem;border-radius:3px;font-weight:700;flex-shrink:0">4</span><span><strong>Zonas muertas</strong> — Eliminar cualquier zona donde pueda acumularse producto. Verificar drenaje completo.</span></div>
+          <div style="display:flex;gap:.5rem;align-items:start"><span style="background:var(--accent4);color:#000;font-size:.6rem;padding:.1rem .4rem;border-radius:3px;font-weight:700;flex-shrink:0">5</span><span><strong>Documentacion de trazabilidad</strong> — Certificados de material, declaracion de conformidad, registros de limpieza.</span></div>
+        </div>
+      </div>
+      <div style="padding:.75rem;background:rgba(0,230,118,0.06);border:1px solid rgba(0,230,118,0.15);border-radius:10px">
+        <div style="font-size:.72rem;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:1px;margin-bottom:.5rem">Certificaciones Requeridas LATAM</div>
+        <div style="display:grid;gap:.4rem;font-size:.78rem">
+          <div style="padding:.4rem .6rem;background:rgba(0,0,0,.2);border-radius:6px;border-left:3px solid var(--accent5)"><strong style="color:var(--accent5)">CE</strong> — Marcado europeo obligatorio para venta en UE y reexportacion</div>
+          <div style="padding:.4rem .6rem;background:rgba(0,0,0,.2);border-radius:6px;border-left:3px solid var(--accent2)"><strong style="color:var(--accent2)">EHEDG</strong> — European Hygienic Engineering Design Group (certificacion de diseno higienico)</div>
+          <div style="padding:.4rem .6rem;background:rgba(0,0,0,.2);border-radius:6px;border-left:3px solid var(--accent)">FDA</strong> — Aprobacion FDA para materiales de contacto alimentario (requerido para Mexico y exportacion USA)</div>
+          <div style="padding:.4rem .6rem;background:rgba(0,0,0,.2);border-radius:6px;border-left:3px solid var(--accent4)"><strong style="color:var(--accent4)">NOM-Mexico</strong> — Normas Oficiales Mexicanas para equipos alimentarios (NOM-251-SSA1)</div>
+          <div style="padding:.4rem .6rem;background:rgba(0,0,0,.2);border-radius:6px;border-left:3px solid var(--accent3)"><strong style="color:var(--accent3)">3-A SSI</strong> — Estándares sanitarios (reconocidos en LATAM como referencia de calidad)</div>
+          <div style="padding:.4rem .6rem;background:rgba(0,0,0,.2);border-radius:6px;border-left:3px solid var(--accent)"><strong style="color:var(--accent)">ISO 22000</strong> — Sistema de gestion de inocuidad alimentaria</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="food-card">
+    <div class="food-card-title" style="color:var(--accent4)">Costes de Certificacion por Mercado</div>
+    <div style="overflow-x:auto">
+    <table class="data-table">
+      <thead><tr><th>Mercado</th><th>Certificacion requerida</th><th>Coste estimado (EUR)</th><th>Tiempo</th></tr></thead>
+      <tbody>
+        <tr style="background:rgba(0,230,118,.05)"><td style="font-weight:700;color:var(--accent)">Mexico</td><td>NOM-251 + FDA + CE</td><td style="font-weight:700">3.000-6.000</td><td>4-8 semanas</td></tr>
+        <tr><td style="font-weight:700">Colombia</td><td>INVIMA + CE + ISO 22000</td><td style="font-weight:700">2.500-5.000</td><td>4-6 semanas</td></tr>
+        <tr><td style="font-weight:700">Brasil</td><td>INMETRO + ANVISA + CE</td><td style="font-weight:700">5.000-10.000</td><td>8-16 semanas</td></tr>
+        <tr><td style="font-weight:700">Chile</td><td>SEC + CE + FDA</td><td style="font-weight:700">2.000-4.000</td><td>4-6 semanas</td></tr>
+        <tr><td style="font-weight:700">Peru</td><td>DIGESA + CE</td><td style="font-weight:700">1.500-3.000</td><td>3-5 semanas</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+</section>
+
+<!-- TAB: COMPRADORES -->
+<section class="food-section" id="compradores">
+  <div class="food-card">
+    <div class="food-card-title" style="color:var(--accent2)">Compradores Potenciales en LATAM — Procesadores de Alimentos</div>
+    <div style="overflow-x:auto">
+    <table class="data-table">
+      <thead><tr><th>Empresa</th><th>Pais</th><th>Sector</th><th>Equipo de interes</th><th>Contacto</th></tr></thead>
+      <tbody>
+        <tr style="background:rgba(0,230,118,.05)"><td style="font-weight:700;color:var(--accent2)">Sigma Alimentos</td><td>MX</td><td>Embutidos / lacteos</td><td>REX AKS 65, LORAPACK</td><td style="font-size:.7rem">Grupo ALFA, Monterrey</td></tr>
+        <tr><td style="font-weight:700;color:var(--accent2)">Bimbo (Grupo)</td><td>MX</td><td>Panificacion / bolleria</td><td>Flow wrappers, checkweigher</td><td style="font-size:.7rem">Division industrial, Mexico City</td></tr>
+        <tr><td style="font-weight:700;color:var(--accent2)">Nestle Mexico</td><td>MX</td><td>Alimentos procesados</td><td>POLARIS B5L, Ishida</td><td style="font-size:.7rem">Procurement, Queretaro</td></tr>
+        <tr><td style="font-weight:700">JBS Brasil</td><td>BR</td><td>Carnicos</td><td>REX AKS 65, CWM Swirl</td><td style="font-size:.7rem">Sao Paulo, division de equipos</td></tr>
+        <tr><td style="font-weight:700">BRF Brasil Foods</td><td>BR</td><td>Carnicos / procesados</td><td>REX, LORAPACK, flow wrappers</td><td style="font-size:.7rem">Itajai, Santa Catarina</td></tr>
+        <tr><td style="font-weight:700">Grupo Votorantim</td><td>BR</td><td>Diversificado</td><td>POLARIS, checkweigher</td><td style="font-size:.7rem">Sao Paulo</td></tr>
+        <tr><td style="font-weight:700;color:var(--accent4)">Grupo Nutresa</td><td>CO</td><td>Alimentos procesados</td><td>Flow wrappers, POLARIS</td><td style="font-size:.7rem">Medellin, procurement</td></tr>
+        <tr><td style="font-weight:700;color:var(--accent4)">Alpina</td><td>CO</td><td>Lacteos</td><td>CWM Swirl, POLARIS B5L</td><td style="font-size:.7rem">Bogota, division industrial</td></tr>
+        <tr><td style="font-weight:700;color:var(--accent4)">Tresmontes Lucchetti</td><td>CL</td><td>Pastas / alimentos</td><td>Capitani KTS 160</td><td style="font-size:.7rem">Santiago de Chile</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <div class="food-card">
+    <div class="food-card-title" style="color:var(--accent)">Aranceles y Costes de Exportacion por Ruta</div>
+    <div style="overflow-x:auto">
+    <table class="data-table">
+      <thead><tr><th>Ruta</th><th>Arancel</th><th>IVA destino</th><th>Flete maritimo estimado</th><th>Coste exportacion total</th><th>Ventaja</th></tr></thead>
+      <tbody>
+        <tr style="background:rgba(0,230,118,.05)"><td style="font-weight:700;color:var(--accent)">Mexico (TLCUEM)</td><td style="font-weight:700;color:var(--accent)">0%</td><td>16%</td><td>3.000-8.000 EUR</td><td style="font-weight:700">+12-20%</td><td style="color:var(--accent);font-weight:700">RUTA PRINCIPAL</td></tr>
+        <tr><td style="font-weight:700">Colombia (Alianza Pacifico)</td><td style="font-weight:700">0%</td><td>19%</td><td>2.500-6.000 EUR</td><td style="font-weight:700">+10-18%</td><td>Grupo Nutresa, Alpina</td></tr>
+        <tr><td style="font-weight:700">Chile (TLC Chile-ES)</td><td style="font-weight:700">0%</td><td>19%</td><td>3.000-7.000 EUR</td><td style="font-weight:700">+12-22%</td><td>Tresmontes Lucchetti</td></tr>
+        <tr><td style="font-weight:700">Peru (TLC Peru-ES)</td><td style="font-weight:700">0%</td><td>18%</td><td>2.800-6.500 EUR</td><td style="font-weight:700">+10-20%</td><td>Crecimiento agroindustrial</td></tr>
+        <tr style="background:rgba(255,110,64,.05)"><td style="color:var(--accent3);font-weight:700">Brasil (sin TLC)</td><td style="color:var(--accent3);font-weight:700">14-20%</td><td>18% (SP)</td><td>4.500-10.000 EUR</td><td style="color:var(--accent3);font-weight:700">+30-45%</td><td style="color:var(--accent3)">INMETRO obligatorio</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div style="font-size:.72rem;color:var(--accent);font-weight:600;margin-top:.75rem;padding:.5rem;background:rgba(0,230,118,.08);border-radius:6px">Mejor ruta: Mexico — 0% arancel (TLCUEM), mercado de nearshoring mas grande de LATAM, alta demanda de equipos de envasado alimentario. Industria procesadora mexicana necesita actualizar equipamiento para exportar a USA (FDA compliance).</div>
+  </div>
+
+  <div class="food-card">
+    <div class="food-card-title" style="color:var(--accent4)">Distribuidores de Maquinaria Alimentaria en LATAM</div>
+    <div style="overflow-x:auto">
+    <table class="data-table">
+      <thead><tr><th>Empresa</th><th>Pais</th><th>Especialidad</th><th>Contacto</th></tr></thead>
+      <tbody>
+        <tr><td style="font-weight:700;color:var(--accent)">Tecnom</td><td>MX</td><td>Maquinaria alimentaria</td><td style="font-size:.7rem"><a href="https://www.tecnom.mx" target="_blank" style="color:var(--accent2)">tecnom.mx</a> — Representantes de REX y LORAPACK en Mexico</td></tr>
+        <tr><td style="font-weight:700;color:var(--accent)">Envasadoras del Centro</td><td>MX</td><td>Equipos de envasado</td><td style="font-size:.7rem">Representantes de PFM y ILPRA en Mexico</td></tr>
+        <tr><td style="font-weight:700">Tetra Pak Mexico</td><td>MX</td><td>Envasado liquidos</td><td style="font-size:.7rem">Interesado en POLARIS B5L (complementario)</td></tr>
+        <tr><td style="font-weight:700">Mecal</td><td>BR</td><td>Procesado carnicos</td><td style="font-size:.7rem">Representantes REX en Brasil</td></tr>
+        <tr><td style="font-weight:700">Ishida America Latina</td><td>Regional</td><td>Pesadores y envasado</td><td style="font-size:.7rem"><a href="https://www.ishida.com" target="_blank" style="color:var(--accent2)">ishida.com</a> — Soporte para CCW-Z</td></tr>
+        <tr><td style="font-weight:700">ULMA Packaging</td><td>ES</td><td>Flowpack y shrink</td><td style="font-size:.7rem"><a href="https://www.ulmapackaging.com" target="_blank" style="color:var(--accent2)">ulmapackaging.com</a> — Soporte TRLX200 y repuestos</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+</section>
+
+<!-- TAB: PASO A PASO -->
+<section class="food-section" id="paso-a-paso">
+  <div class="food-card">
+    <div class="food-card-title" style="color:var(--accent)">Paso a Paso — Como Registrar, Pujar y Transportar</div>
+    <div style="display:grid;gap:.75rem;margin-bottom:1.5rem">
+      <div class="food-step">
+        <div class="food-step-num" style="background:var(--accent3);color:#fff">1</div>
+        <div class="food-step-content">
+          <div class="food-step-title" style="color:var(--accent3)">REGISTRO EN TROOSTWIJK (30 min)</div>
+          <div class="food-step-desc">Crear cuenta en <a href="https://www.troostwijkauctions.com/en/register" target="_blank" style="color:var(--accent2)">troostwijkauctions.com/en/register</a>. Datos requeridos: empresa o particular, CIF/NIE, direccion, telefono. <strong style="color:var(--accent)">Verificacion de identidad obligatoria</strong> (carga de documento). Deposito de garantia: 500-2.000 EUR dependiendo del lote.</div>
+        </div>
+      </div>
+      <div class="food-step">
+        <div class="food-step-num" style="background:var(--accent3);color:#fff">2</div>
+        <div class="food-step-content">
+          <div class="food-step-title" style="color:var(--accent3)">ESTUDIO DE LOTES (1-3 dias)</div>
+          <div class="food-step-desc">Revisar todos los lotes en <a href="https://www.troostwijkauctions.com/en/a/food-processing-equipment-and-packaging-machinery-A1-35004" target="_blank" style="color:var(--accent2)">A1-35004 (Francia)</a> y <a href="https://www.troostwijkauctions.com/a/food-production-packaging-machinery-A1-44679" target="_blank" style="color:var(--accent2)">A1-44679 (UK)</a>. Identificar lotes objetivo. Establecer presupuesto maximo por lote (precio de mercado - 30% margen - costes).</div>
+        </div>
+      </div>
+      <div class="food-step">
+        <div class="food-step-num" style="background:var(--accent4);color:#000">3</div>
+        <div class="food-step-content">
+          <div class="food-step-title" style="color:var(--accent4)">INSPECCION IN SITU (1-2 dias)</div>
+          <div class="food-step-desc"><strong style="color:var(--accent3)">OBLIGATORIO antes de pujar.</strong> Viajar a Signes/Bauge (Francia) y/o Downham Market (UK). Llevar tecnico en maquinaria alimentaria. Verificar: estado superficies inox, juntas, sellos, calibracion, ciclos automaticos, voltaje, registros mantenimiento.</div>
+        </div>
+      </div>
+      <div class="food-step">
+        <div class="food-step-num" style="background:var(--accent4);color:#000">4</div>
+        <div class="food-step-content">
+          <div class="food-step-title" style="color:var(--accent4)">PUJA EN SUBASTA (dia del cierre)</div>
+          <div class="food-step-desc">Pujar online o por telefono. <strong style="color:var(--accent3)">ESTABLECER MAX BID ANTES de empezar.</strong> Troostwijk anade 17,5% + IVA al precio de puja. Para lotes con 13+ bids (CWM, Miele): esperar hasta ultimo minuto. Para lotes con pocos bids (Ishida 3 bids): pujar temprano para disuadir.</div>
+        </div>
+      </div>
+      <div class="food-step">
+        <div class="food-step-num" style="background:var(--accent);color:#000">5</div>
+        <div class="food-step-content">
+          <div class="food-step-title" style="color:var(--accent)">PAGO Y RECOGIDA (3-10 dias)</div>
+          <div class="food-step-desc">Pago por transferencia en 5 dias habiles. Recoger en Signes (Francia) o Downham Market (UK). <strong style="color:var(--accent)">Transporte especializado en alimentos:</strong> camion con temperatura controlada si necesario. Seguro de transporte: 1-2% del valor.</div>
+        </div>
+      </div>
+      <div class="food-step">
+        <div class="food-step-num" style="background:var(--accent);color:#000">6</div>
+        <div class="food-step-content">
+          <div class="food-step-title" style="color:var(--accent)">REFURBISHMENT (3-6 semanas)</div>
+          <div class="food-step-desc">Limpieza CIP profunda → reemplazo juntas/selos → calibracion → adaptacion electrica (si necesario) → certificacion alimentaria → test de produccion. <strong>Coste: 25.000-85.000 EUR</strong> dependiendo del numero de equipos.</div>
+        </div>
+      </div>
+      <div class="food-step">
+        <div class="food-step-num" style="background:var(--accent2);color:#000">7</div>
+        <div class="food-step-content">
+          <div class="food-step-title" style="color:var(--accent2)">VENTA A LATAM (1-6 meses)</div>
+          <div class="food-step-desc">Listar en Exapro, Machineseeker, EquipNet. Contactar directamente: Tecnom (Mexico), Grupo Nutresa (Colombia), JBS/BRF (Brasil). <strong style="color:var(--accent)">Venta directa B2B = mas margen.</strong> Ofrecer garantia de 6 meses para justificar precio premium.</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="padding:.75rem;background:linear-gradient(135deg,rgba(0,230,118,.1),rgba(24,255,255,.05));border:1px solid rgba(0,230,118,.2);border-radius:10px">
+      <div style="font-size:.72rem;font-weight:700;color:var(--accent);margin-bottom:.5rem">Timeline Completo</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:.5rem;font-size:.7rem">
+        <div style="padding:.5rem;background:var(--bg-card);border-radius:8px;text-align:center;border:1px solid var(--border)"><div style="font-weight:700;color:var(--accent3)">30 min</div><div style="color:var(--text-dim)">Registro</div></div>
+        <div style="padding:.5rem;background:var(--bg-card);border-radius:8px;text-align:center;border:1px solid var(--border)"><div style="font-weight:700;color:var(--accent3)">1-3 dias</div><div style="color:var(--text-dim)">Estudio lotes</div></div>
+        <div style="padding:.5rem;background:var(--bg-card);border-radius:8px;text-align:center;border:1px solid var(--border)"><div style="font-weight:700;color:var(--accent4)">1-2 dias</div><div style="color:var(--text-dim)">Inspeccion in situ</div></div>
+        <div style="padding:.5rem;background:var(--bg-card);border-radius:8px;text-align:center;border:1px solid var(--border)"><div style="font-weight:700;color:var(--accent4)">1 dia</div><div style="color:var(--text-dim)">Puja</div></div>
+        <div style="padding:.5rem;background:var(--bg-card);border-radius:8px;text-align:center;border:1px solid var(--border)"><div style="font-weight:700;color:var(--accent)">3-10 dias</div><div style="color:var(--text-dim)">Pago + transporte</div></div>
+        <div style="padding:.5rem;background:var(--bg-card);border-radius:8px;text-align:center;border:1px solid var(--border)"><div style="font-weight:700;color:var(--accent)">3-6 sem</div><div style="color:var(--text-dim)">Refurbishment</div></div>
+        <div style="padding:.5rem;background:var(--bg-card);border-radius:8px;text-align:center;border:1px solid var(--border)"><div style="font-weight:700;color:var(--accent2)">1-6 meses</div><div style="color:var(--text-dim)">Venta LATAM</div></div>
+      </div>
+      <div style="margin-top:.5rem;font-size:.72rem;color:var(--accent);font-weight:600">Tiempo total estimado: 8-16 semanas desde registro hasta primera venta</div>
+    </div>
+  </div>
+</section>
+
+<!-- TAB: RIESGOS -->
+<section class="food-section" id="riesgos">
+  <div class="food-card">
+    <div class="food-card-title" style="color:var(--accent6)">Riesgos y Mitigaciones</div>
+    <div style="display:grid;gap:.5rem;margin-bottom:1rem">
+      <div class="food-risk" style="background:rgba(255,110,64,0.08);border-left:3px solid var(--accent3)">
+        <div><span class="food-badge food-badge-critical" style="margin-right:.3rem">CRITICO</span><strong>Contaminacion cruzada / Alergenos</strong></div>
+        <div style="color:var(--text-dim);font-size:.72rem;margin-top:.2rem"><strong style="color:var(--accent)">→</strong> Los equipos de procesado alimentario pueden tener residuos de alergenos. CIP riguroso obligatorio. Certificar limpieza antes de reventa.</div>
+      </div>
+      <div class="food-risk" style="background:rgba(255,110,64,0.08);border-left:3px solid var(--accent3)">
+        <div><span class="food-badge food-badge-critical" style="margin-right:.3rem">CRITICO</span><strong>Normativas alimentarias diferentes por pais</strong></div>
+        <div style="color:var(--text-dim);font-size:.72rem;margin-top:.2rem"><strong style="color:var(--accent)">→</strong> Mexico requiere NOM-251, Brasil INMETRO+ANVISA. Verificar compatibilidad ANTES de comprar. Adaptaciones pueden costar 3.000-10.000 EUR.</div>
+      </div>
+      <div class="food-risk" style="background:rgba(255,215,64,0.06);border-left:3px solid var(--accent4)">
+        <div><span class="food-badge food-badge-high" style="margin-right:.3rem">ALTO</span><strong>Voltaje diferente (Francia 400V/50Hz vs. Mexico 480V/60Hz)</strong></div>
+        <div style="color:var(--text-dim);font-size:.72rem;margin-top:.2rem"><strong style="color:var(--accent)">→</strong> Los equipos europeos operan a 400V 50Hz. Mexico usa 480V 60Hz. Verificar si los equipos soportan 60Hz. Si no, necesario transformador o cambio de motor. Coste: 500-5.000 EUR/equipo.</div>
+      </div>
+      <div class="food-risk" style="background:rgba(255,215,64,0.06);border-left:3px solid var(--accent4)">
+        <div><span class="food-badge food-badge-high" style="margin-right:.3rem">ALTO</span><strong>Desgaste de piezas de contacto alimentario</strong></div>
+        <div style="color:var(--text-dim);font-size:.72rem;margin-top:.2rem"><strong style="color:var(--accent)">→</strong> Cuchillas, sellos, juntas y superficies de deslizamiento se desgastan con el uso. Inspeccionar y presupuestar reemplazo. Coste: 500-4.000 EUR/equipo.</div>
+      </div>
+      <div class="food-risk" style="background:rgba(24,255,255,0.04);border-left:3px solid var(--accent2)">
+        <div><span class="food-badge food-badge-medium" style="margin-right:.3rem">MEDIO</span><strong>Transporte de equipos alimentarios (contaminacion)</strong></div>
+        <div style="color:var(--text-dim);font-size:.72rem;margin-top:.2rem"><strong style="color:var(--accent)">→</strong> Usar transporte especializado en equipos industriales. Contenedor limpio, sin quimicos. Seguro: 1-2% del valor declarado.</div>
+      </div>
+      <div class="food-risk" style="background:rgba(24,255,255,0.04);border-left:3px solid var(--accent2)">
+        <div><span class="food-badge food-badge-medium" style="margin-right:.3rem">MEDIO</span><strong>Brexit — Importacion desde UK</strong></div>
+        <div style="color:var(--text-dim);font-size:.72rem;margin-top:.2rem"><strong style="color:var(--accent)">→</strong> Desde Brexit (2021), el Reino Unido es tercer pais. Arancel 0% si origen UK certificado. Documentacion aduanera adicional necesaria. Posibles retrasos de 2-5 dias en aduanas.</div>
+      </div>
+      <div class="food-risk" style="background:rgba(0,230,118,0.04);border-left:3px solid var(--accent)">
+        <div><span class="food-badge food-badge-low" style="margin-right:.3rem">BAJO</span><strong>Obsolescencia de repuestos</strong></div>
+        <div style="color:var(--text-dim);font-size:.72rem;margin-top:.2rem"><strong style="color:var(--accent)">→</strong> Equipos de 2016-2024 tienen repuestos disponibles. ILPRA (2015) verificar disponibilidad con fabricante. La mayoria de fabricantes (REX, POLARIS, Mettler Toledo, Ishida) mantienen repuestos 15+ anos.</div>
+      </div>
+    </div>
+
+    <div style="padding:.75rem;background:rgba(255,64,129,0.06);border:1px solid rgba(255,64,129,0.15);border-radius:8px;margin-bottom:1rem">
+      <div style="font-size:.72rem;font-weight:700;color:var(--accent6);text-transform:uppercase;letter-spacing:1px;margin-bottom:.3rem">Seguros Recomendados</div>
+      <div style="font-size:.72rem;line-height:1.5;color:var(--text-dim)">
+        <div style="margin-bottom:.2rem"><strong style="color:var(--text)">Transporte:</strong> 1-2% del valor declarado. Cubre daño durante traslado Francia/UK a almacen.</div>
+        <div style="margin-bottom:.2rem"><strong style="color:var(--text)">Responsabilidad civil:</strong> 200-400 EUR/anual. Cubre daño a terceros durante carga/descarga.</div>
+        <div style="margin-bottom:.2rem"><strong style="color:var(--text)">Mercancia en almacen:</strong> 0,3-0,5% del valor (~300-600 EUR/anual). Cubre robo, incendio, contaminacion.</div>
+        <div><strong style="color:var(--text)">Responsabilidad alimentaria:</strong> 500-1.500 EUR/anual. Cubre reclamaciones por seguridad alimentaria.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="food-card">
+    <div class="food-card-title" style="color:var(--accent5)">Condiciones de Venta Troostwijk</div>
+    <div style="overflow-x:auto">
+    <table class="data-table">
+      <thead><tr><th>Concepto</th><th>Detalle</th></tr></thead>
+      <tbody>
+        <tr><td style="font-weight:700">Plataforma</td><td>Troostwijk Auctions (troostwijkauctions.com)</td></tr>
+        <tr><td style="font-weight:700">Registro</td><td style="color:var(--accent2)">Obligatorio — verificacion de identidad</td></tr>
+        <tr style="background:rgba(255,215,64,.05)"><td style="font-weight:700;color:var(--accent4)">Comision comprador</td><td style="color:var(--accent4);font-weight:700">17,5% + IVA del pais aplicable</td></tr>
+        <tr><td style="font-weight:700">Deposito garantia</td><td>500-2.000 EUR dependiendo del lote</td></tr>
+        <tr style="background:rgba(255,110,64,.08)"><td style="font-weight:700;color:var(--accent3)">Garantia</td><td style="color:var(--accent3);font-weight:700">NINGUNA. Todo se vende "tal cual"</td></tr>
+        <tr><td style="font-weight:700">Pago</td><td>Transferencia bancaria en 5 dias habiles</td></tr>
+        <tr><td style="font-weight:700">Recogida</td><td>En plazo de 7 dias tras pago</td></tr>
+        <tr><td style="font-weight:700">Ubicacion FR</td><td>Signes & Baugy-en-Anjou, Francia</td></tr>
+        <tr><td style="font-weight:700">Ubicacion UK</td><td>Downham Market, Norfolk, United Kingdom</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <div class="food-card">
+    <div style="padding:.75rem;background:rgba(255,64,129,0.08);border:2px solid rgba(255,64,129,0.3);border-radius:10px">
+      <div style="font-size:.85rem;font-weight:800;color:var(--accent6);margin-bottom:.5rem">NOTA IMPORTANTE: Equipos Alimentarios</div>
+      <div style="font-size:.78rem;color:var(--text-dim);line-height:1.6">
+        <div style="margin-bottom:.4rem"><span style="background:var(--accent3);color:#fff;font-size:.6rem;padding:.1rem .4rem;border-radius:3px;font-weight:700;margin-right:.3rem">HIGIENE</span><strong>Todos los equipos de contacto alimentario DEBEN cumplir normativa EHEDG</strong> antes de la reventa. Sin certificado de limpieza y desinfeccion, no se pueden vender para uso alimentario.</div>
+        <div style="margin-bottom:.4rem"><span style="background:var(--accent4);color:#000;font-size:.6rem;padding:.1rem .4rem;border-radius:3px;font-weight:700;margin-right:.3rem">VOLTAGE</span><strong>Equipos de 400V/50Hz necesitan adaptacion para mercados de 480V/60Hz (Mexico, Brasil)</strong>. Verificar compatibilidad con fabricante ANTES de comprar.</div>
+        <div style="margin-bottom:.4rem"><span style="background:var(--accent);color:#000;font-size:.6rem;padding:.1rem .4rem;border-radius:3px;font-weight:700;margin-right:.3rem">TRACEABILIDAD</span><strong>Mantener cadena de trazabilidad completa</strong> desde origen hasta destino final. Requerido por normativas alimentarias en todos los mercados LATAM.</div>
+        <div><span style="background:var(--accent2);color:#000;font-size:.6rem;padding:.1rem .4rem;border-radius:3px;font-weight:700;margin-right:.3rem">BREXIT</span><strong>Los lotes del Reino Unido (A1-44679) requieren documentacion aduanera adicional</strong> tras Brexit. Verificar origen UK para arancel 0% con UE.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TAB: IMAGENES -->
+<section class="food-section" id="imagenes">
+  <div class="food-card">
+    <div class="food-card-title" style="color:var(--accent)">Imagenes — Enlaces a Paginas de Subasta</div>
+    <div style="font-size:.82rem;color:var(--text-dim);margin-bottom:1rem;line-height:1.6">Las fotos reales de los equipos estan disponibles en las paginas oficiales de Troostwijk. Haz clic en los enlaces para ver las galerias completas de cada subasta.</div>
+
+    <div class="food-grid-2" style="margin-bottom:1.5rem">
+      <div style="padding:1rem;background:rgba(0,230,118,.06);border:1px solid rgba(0,230,118,.2);border-radius:12px">
+        <div style="font-size:.8rem;font-weight:700;color:var(--accent);margin-bottom:.5rem"><span class="auction-tag auction-tag-france">FRANCIA A1-35004</span> 20 Lotes</div>
+        <div style="font-size:.75rem;color:var(--text-dim);margin-bottom:.75rem">Signes & Baugy-en-Anjou, Francia. Equipos de procesado alimentario y envasado.</div>
+        <a href="https://www.troostwijkauctions.com/en/a/food-processing-equipment-and-packaging-machinery-A1-35004" target="_blank" style="display:inline-block;background:var(--gradient1);color:var(--bg-dark);padding:.5rem 1rem;border-radius:8px;font-weight:700;font-size:.75rem;text-decoration:none">Ver Subasta Francia →</a>
+        <div style="margin-top:.75rem;font-size:.7rem;color:var(--text-dim)">
+          <div style="margin-bottom:.2rem"><strong style="color:var(--accent)">Equipos destacados con fotos:</strong></div>
+          <div>• REX AKS 65 — Clasificacion de salchichas</div>
+          <div>• POLARIS B5L — Linea de embotellado completa</div>
+          <div>• Capitani KTS 160 — Produccion de pasta</div>
+          <div>• Mettler Toledo C3350 — Checkweigher</div>
+          <div>• LORAPACK CRIMA 700 — Flowpack</div>
+          <div>• ILPRA Foodpack 1400N — Sellador calor</div>
+          <div>• NOVOPAC CD1 070 — Shrink wrapper</div>
+        </div>
+      </div>
+
+      <div style="padding:1rem;background:rgba(24,255,255,.06);border:1px solid rgba(24,255,255,.2);border-radius:12px">
+        <div style="font-size:.8rem;font-weight:700;color:var(--accent2);margin-bottom:.5rem"><span class="auction-tag auction-tag-uk">UK A1-44679</span> 84 Lotes</div>
+        <div style="font-size:.75rem;color:var(--text-dim);margin-bottom:.75rem">Downham Market, United Kingdom. Maquinaria de produccion y envasado alimentario.</div>
+        <a href="https://www.troostwijkauctions.com/a/food-production-packaging-machinery-A1-44679" target="_blank" style="display:inline-block;background:var(--gradient1);color:var(--bg-dark);padding:.5rem 1rem;border-radius:8px;font-weight:700;font-size:.75rem;text-decoration:none">Ver Subasta UK →</a>
+        <div style="margin-top:.75rem;font-size:.7rem;color:var(--text-dim)">
+          <div style="margin-bottom:.2rem"><strong style="color:var(--accent2)">Equipos destacados con fotos:</strong></div>
+          <div>• CWM Automation Swirl — Llenado swirl (13 bids)</div>
+          <div>• Miele Olympia 3 BC — Formado/llenado vasos (13 bids)</div>
+          <div>• ULMA TRLX200 — Tunel shrink (12 bids)</div>
+          <div>• PFM Falcon SI NOX — Flow wrapper MAP (8 bids)</div>
+          <div>• Redpack Pacer — Flow wrapper (4 bids)</div>
+          <div>• Ishida CCW-Z — Pesador multihead (3 bids)</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="font-size:.72rem;color:var(--text-dim);padding:.5rem;background:rgba(24,255,255,.06);border:1px solid rgba(24,255,255,.2);border-radius:8px"><strong style="color:var(--accent2)">Nota:</strong> Troostwijk permite ver fotos de los lotes solo tras registro. Crear cuenta gratuita en troostwijkauctions.com para acceder a las galerias completas, incluyendo fotos de detalle, estado y dimensiones.</div>
+  </div>
+
+  <div class="food-card">
+    <div class="food-card-title" style="color:var(--accent4)">Fotos de Referencia — Fabricantes</div>
+    <div style="font-size:.82rem;color:var(--text-dim);margin-bottom:1rem;line-height:1.6">Galerias de fotos de los fabricantes para referencia de diseno y especificaciones. No son fotos de los lotes reales.</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem;margin-top:.5rem">
+      <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:all .3s">
+        <div style="height:140px;background:linear-gradient(135deg,rgba(0,230,118,.1),rgba(24,255,255,.05));display:flex;align-items:center;justify-content:center;font-size:2.5rem">🏭</div>
+        <div style="padding:.5rem .75rem;font-size:.72rem;color:var(--text-dim);line-height:1.4"><strong style="color:var(--accent)">REX Technologie</strong><br><a href="https://www.rex-technologie.com" target="_blank" style="color:var(--accent2)">rex-technologie.com</a><br>Clasificacion AKS</div>
+      </div>
+      <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:all .3s">
+        <div style="height:140px;background:linear-gradient(135deg,rgba(24,255,255,.1),rgba(0,230,118,.05));display:flex;align-items:center;justify-content:center;font-size:2.5rem">🍶</div>
+        <div style="padding:.5rem .75rem;font-size:.72rem;color:var(--text-dim);line-height:1.4"><strong style="color:var(--accent2)">POLARIS</strong><br><a href="https://www.polarisllc.com" target="_blank" style="color:var(--accent2)">polarisllc.com</a><br>Embotellado B5L</div>
+      </div>
+      <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:all .3s">
+        <div style="height:140px;background:linear-gradient(135deg,rgba(255,215,64,.1),rgba(255,110,64,.05));display:flex;align-items:center;justify-content:center;font-size:2.5rem">⚖️</div>
+        <div style="padding:.5rem .75rem;font-size:.72rem;color:var(--text-dim);line-height:1.4"><strong style="color:var(--accent4)">Mettler Toledo</strong><br><a href="https://www.mt.com" target="_blank" style="color:var(--accent2)">mt.com</a><br>Checkweigher C3350</div>
+      </div>
+      <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:all .3s">
+        <div style="height:140px;background:linear-gradient(135deg,rgba(179,136,255,.1),rgba(24,255,255,.05));display:flex;align-items:center;justify-content:center;font-size:2.5rem">📦</div>
+        <div style="padding:.5rem .75rem;font-size:.72rem;color:var(--text-dim);line-height:1.4"><strong style="color:var(--accent5)">Ishida</strong><br><a href="https://www.ishida.com" target="_blank" style="color:var(--accent2)">ishida.com</a><br>Multihead Weigher</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TAB: DOCUMENTACION -->
+<section class="food-section" id="documentacion">
+  <div class="food-card">
+    <div class="food-card-title" style="color:var(--accent2)">Documentacion Tecnica y Datasheets</div>
+    <div style="font-size:.82rem;color:var(--text-dim);margin-bottom:1rem;line-height:1.6">Enlaces a fichas tecnicas oficiales, manuales y documentacion de los fabricantes de los equipos principales.</div>
+    <div class="food-grid-2" style="margin-bottom:1rem">
+      <div style="padding:.75rem;background:rgba(0,230,118,.06);border:1px solid rgba(0,230,118,.15);border-radius:10px">
+        <div style="font-size:.75rem;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:1px;margin-bottom:.5rem">Fichas Tecnicas — Francia</div>
+        <div style="display:grid;gap:.4rem;font-size:.78rem">
+          <div style="display:flex;gap:.5rem;align-items:center"><span style="color:var(--accent);font-weight:700">1.</span> <a href="https://www.rex-technologie.com/products/aks-65/" target="_blank" style="color:var(--accent2)">REX AKS 65 — Ficha tecnica oficial</a></div>
+          <div style="display:flex;gap:.5rem;align-items:center"><span style="color:var(--accent);font-weight:700">2.</span> <a href="https://www.rex-technologie.com" target="_blank" style="color:var(--accent2)">REX Technologie — Pagina del fabricante</a></div>
+          <div style="display:flex;gap:.5rem;align-items:center"><span style="color:var(--accent);font-weight:700">3.</span> <a href="https://www.polarisllc.com" target="_blank" style="color:var(--accent2)">POLARIS — Lineas de embotellado</a></div>
+          <div style="display:flex;gap:.5rem;align-items:center"><span style="color:var(--accent);font-weight:700">4.</span> <a href="https://www.mt.com/us/en/home/products/Industrial_Weighing_Solutions/checkweighing-solutions/garvens-checkweighers/C-Series.html" target="_blank" style="color:var(--accent2)">Mettler Toledo Garvens C3350 — Ficha tecnica</a></div>
+        </div>
+      </div>
+      <div style="padding:.75rem;background:rgba(255,215,64,.06);border:1px solid rgba(255,215,64,.15);border-radius:10px">
+        <div style="font-size:.75rem;font-weight:700;color:var(--accent4);text-transform:uppercase;letter-spacing:1px;margin-bottom:.5rem">Fichas Tecnicas — Envasado</div>
+        <div style="display:grid;gap:.4rem;font-size:.78rem">
+          <div style="display:flex;gap:.5rem;align-items:center"><span style="color:var(--accent4);font-weight:700">1.</span> <a href="https://www.lorapack.com" target="_blank" style="color:var(--accent2)">LORAPACK CRIMA 700 — Ficha tecnica</a></div>
+          <div style="display:flex;gap:.5rem;align-items:center"><span style="color:var(--accent4);font-weight:700">2.</span> <a href="https://www.novopac.com" target="_blank" style="color:var(--accent2)">NOVOPAC CD1 070 — Pagina del fabricante</a></div>
+          <div style="display:flex;gap:.5rem;align-items:center"><span style="color:var(--accent4);font-weight:700">3.</span> <a href="https://www.ilpra.com" target="_blank" style="color:var(--accent2)">ILPRA Foodpack 1400N — Pagina del fabricante</a></div>
+          <div style="display:flex;gap:.5rem;align-items:center"><span style="color:var(--accent4);font-weight:700">4.</span> <a href="https://www.capitanimacchine.it" target="_blank" style="color:var(--accent2)">Capitani KTS 160 — Pagina del fabricante</a></div>
+        </div>
+      </div>
+      <div style="padding:.75rem;background:rgba(24,255,255,.06);border:1px solid rgba(24,255,255,.15);border-radius:10px">
+        <div style="font-size:.75rem;font-weight:700;color:var(--accent2);text-transform:uppercase;letter-spacing:1px;margin-bottom:.5rem">Fichas Tecnicas — UK</div>
+        <div style="display:grid;gap:.4rem;font-size:.78rem">
+          <div style="display:flex;gap:.5rem;align-items:center"><span style="color:var(--accent2);font-weight:700">1.</span> <a href="https://www.cwmautomation.co.uk" target="_blank" style="color:var(--accent2)">CWM Automation — Pagina del fabricante</a></div>
+          <div style="display:flex;gap:.5rem;align-items:center"><span style="color:var(--accent2);font-weight:700">2.</span> <a href="https://www.ulmapackaging.com" target="_blank" style="color:var(--accent2)">ULMA TRLX200 — Pagina del fabricante</a></div>
+          <div style="display:flex;gap:.5rem;align-items:center"><span style="color:var(--accent2);font-weight:700">3.</span> <a href="https://www.ishida.com/worldwide/en/products/multihead-weigher" target="_blank" style="color:var(--accent2)">Ishida CCW-Z — Ficha tecnica multihead weigher</a></div>
+          <div style="display:flex;gap:.5rem;align-items:center"><span style="color:var(--accent2);font-weight:700">4.</span> <a href="https://www.pfm.it" target="_blank" style="color:var(--accent2)">PFM Falcon SI NOX — Pagina del fabricante</a></div>
+        </div>
+      </div>
+      <div style="padding:.75rem;background:rgba(179,136,255,.06);border:1px solid rgba(179,136,255,.15);border-radius:10px">
+        <div style="font-size:.75rem;font-weight:700;color:var(--accent5);text-transform:uppercase;letter-spacing:1px;margin-bottom:.5rem">Paginas de Subasta</div>
+        <div style="display:grid;gap:.4rem;font-size:.78rem">
+          <div style="display:flex;gap:.5rem;align-items:center"><span style="color:var(--accent5);font-weight:700">FR</span> <a href="https://www.troostwijkauctions.com/en/a/food-processing-equipment-and-packaging-machinery-A1-35004" target="_blank" style="color:var(--accent2)">A1-35004 — Francia (20 lotes)</a></div>
+          <div style="display:flex;gap:.5rem;align-items:center"><span style="color:var(--accent5);font-weight:700">UK</span> <a href="https://www.troostwijkauctions.com/a/food-production-packaging-machinery-A1-44679" target="_blank" style="color:var(--accent2)">A1-44679 — UK (84 lotes)</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="food-card">
+    <div class="food-card-title" style="color:var(--accent4)">Normativas y Certificaciones — Referencia</div>
+    <div style="display:grid;gap:.4rem;font-size:.78rem;margin-bottom:1rem">
+      <div style="padding:.5rem;background:rgba(0,0,0,.2);border-radius:6px;border-left:3px solid var(--accent5)"><strong style="color:var(--accent5)">Reglamento (CE) 852/2004</strong> — Higiene de los productos alimenticios. Aplica a todos los equipos de contacto alimentario.</div>
+      <div style="padding:.5rem;background:rgba(0,0,0,.2);border-radius:6px;border-left:3px solid var(--accent2)"><strong style="color:var(--accent2)">Reglamento (CE) 1935/2004</strong> — Materiales y objetos en contacto con alimentos. Certificacion de conformidad obligatoria.</div>
+      <div style="padding:.5rem;background:rgba(0,0,0,.2);border-radius:6px;border-left:3px solid var(--accent)"><strong style="color:var(--accent)">Directiva Maquinas 2006/42/CE</strong> — Marcado CE para maquinaria. Requerido para venta en UE.</div>
+      <div style="padding:.5rem;background:rgba(0,0,0,.2);border-radius:6px;border-left:3px solid var(--accent4)"><strong style="color:var(--accent4)">EHEDG Doc. 8</strong> — Diseno higienico de equipos de procesado alimentario. Guia para evaluacion de limpieza CIP.</div>
+      <div style="padding:.5rem;background:rgba(0,0,0,.2);border-radius:6px;border-left:3px solid var(--accent3)"><strong style="color:var(--accent3)">OIML R51</strong> — Verificacion de checkweighers. Mettler Toledo C3350 debe cumplir esta norma.</div>
+      <div style="padding:.5rem;background:rgba(0,0,0,.2);border-radius:6px;border-left:3px solid var(--accent5)"><strong style="color:var(--accent5)">3-A SSI Standards</strong> — Normas sanitarias reconocidas en LATAM como referencia de calidad higienica.</div>
+    </div>
+  </div>
+</section>
+
+<!-- TAB: VIDEOS -->
+<section class="food-section" id="videos">
+  <div class="food-card">
+    <div class="food-card-title" style="color:var(--accent3)">Videos de Referencia — Equipos de Envasado Alimentario</div>
+    <div style="font-size:.82rem;color:var(--text-dim);margin-bottom:1rem;line-height:1.6">Videos de YouTube que muestran los tipos de equipos en operacion, mantenimiento y aplicaciones en la industria alimentaria.</div>
+
+    <div style="font-size:.85rem;font-weight:700;color:var(--accent2);margin-bottom:.75rem"><span class="auction-tag auction-tag-france">FRANCIA</span> Equipos A1-35004</div>
+    <div class="food-grid-2" style="margin-bottom:1.5rem">
+      <div style="padding:.75rem;background:rgba(255,110,64,.06);border:1px solid rgba(255,110,64,.15);border-radius:10px">
+        <div style="font-size:.78rem;font-weight:700;color:var(--accent3);margin-bottom:.5rem">REX AKS 65 — Clasificacion de Salchichas</div>
+        <a href="https://www.youtube.com/results?search_query=REX+AKS+65+sausage+grading" target="_blank" style="display:block;color:var(--accent2);font-size:.78rem;text-decoration:underline;margin-bottom:.3rem">▶ Buscar en YouTube: REX AKS 65 sausage grading</a>
+        <div style="font-size:.72rem;color:var(--text-dim)">Demostracion de la linea de clasificacion REX AKS en operacion. Alta velocidad, rechazo automatico.</div>
+      </div>
+      <div style="padding:.75rem;background:rgba(255,110,64,.06);border:1px solid rgba(255,110,64,.15);border-radius:10px">
+        <div style="font-size:.78rem;font-weight:700;color:var(--accent3);">POLARIS B5L — Linea de Embotellado</div>
+        <a href="https://www.youtube.com/results?search_query=POLARIS+B5L+bottling+line" target="_blank" style="display:block;color:var(--accent2);font-size:.78rem;text-decoration:underline;margin-bottom:.3rem">▶ Buscar en YouTube: POLARIS B5L bottling line</a>
+        <div style="font-size:.72rem;color:var(--text-dim)">Linea completa de lavado, llenado y taponado monobloque.</div>
+      </div>
+      <div style="padding:.75rem;background:rgba(255,215,64,.06);border:1px solid rgba(255,215,64,.15);border-radius:10px">
+        <div style="font-size:.78rem;font-weight:700;color:var(--accent4);">Mettler Toledo Garvens C3350 — Checkweigher</div>
+        <a href="https://www.youtube.com/results?search_query=Mettler+Toledo+Garvens+C3350+checkweigher" target="_blank" style="display:block;color:var(--accent2);font-size:.78rem;text-decoration:underline;margin-bottom:.3rem">▶ Buscar en YouTube: Mettler Toledo Garvens C3350</a>
+        <div style="font-size:.72rem;color:var(--text-dim)">Control de peso dinamico de alta precision para la industria alimentaria.</div>
+      </div>
+      <div style="padding:.75rem;background:rgba(24,255,255,.06);border:1px solid rgba(24,255,255,.15);border-radius:10px">
+        <div style="font-size:.78rem;font-weight:700;color:var(--accent2);">LORAPACK CRIMA 700 — Flowpack</div>
+        <a href="https://www.youtube.com/results?search_query=LORAPACK+CRIMA+700+flowpack" target="_blank" style="display:block;color:var(--accent2);font-size:.78rem;text-decoration:underline;margin-bottom:.3rem">▶ Buscar en YouTube: LORAPACK CRIMA 700 flowpack</a>
+        <div style="font-size:.72rem;color:var(--text-dim)">Envasadora flowpack horizontal en operacion con productos alimentarios.</div>
+      </div>
+    </div>
+
+    <div style="font-size:.85rem;font-weight:700;color:var(--accent);margin-bottom:.75rem"><span class="auction-tag auction-tag-uk">UK</span> Equipos A1-44679</div>
+    <div class="food-grid-2" style="margin-bottom:1.5rem">
+      <div style="padding:.75rem;background:rgba(0,230,118,.06);border:1px solid rgba(0,230,118,.15);border-radius:10px">
+        <div style="font-size:.78rem;font-weight:700;color:var(--accent);">CWM Automation Swirl — Llenado</div>
+        <a href="https://www.youtube.com/results?search_query=CWM+automation+swirl+filling+machine" target="_blank" style="display:block;color:var(--accent2);font-size:.78rem;text-decoration:underline;margin-bottom:.3rem">▶ Buscar en YouTube: CWM swirl filling machine</a>
+        <div style="font-size:.72rem;color:var(--text-dim)">Maquina de llenado swirl para yogur y postres con multiples sabores.</div>
+      </div>
+      <div style="padding:.75rem;background:rgba(0,230,118,.06);border:1px solid rgba(0,230,118,.15);border-radius:10px">
+        <div style="font-size:.78rem;font-weight:700;color:var(--accent);">Ishida CCW-Z Multihead Weigher</div>
+        <a href="https://www.youtube.com/results?search_query=Ishida+CCW-Z+multihead+weigher" target="_blank" style="display:block;color:var(--accent2);font-size:.78rem;text-decoration:underline;margin-bottom:.3rem">▶ Buscar en YouTube: Ishida CCW-Z multihead</a>
+        <div style="font-size:.72rem;color:var(--text-dim)">Pesador multihead de 14 cabezas en operacion. Alta velocidad y precision.</div>
+      </div>
+      <div style="padding:.75rem;background:rgba(179,136,255,.06);border:1px solid rgba(179,136,255,.15);border-radius:10px">
+        <div style="font-size:.78rem;font-weight:700;color:var(--accent5);">ULMA TRLX200 — Tunel Shrink</div>
+        <a href="https://www.youtube.com/results?search_query=ULMA+TRLX200+shrink+tunnel" target="_blank" style="display:block;color:var(--accent2);font-size:.78rem;text-decoration:underline;margin-bottom:.3rem">▶ Buscar en YouTube: ULMA TRLX200 shrink tunnel</a>
+        <div style="font-size:.72rem;color:var(--text-dim)">Tunel de shrink para envases alimentarios. Alta demanda en LATAM.</div>
+      </div>
+      <div style="padding:.75rem;background:rgba(179,136,255,.06);border:1px solid rgba(179,136,255,.15);border-radius:10px">
+        <div style="font-size:.78rem;font-weight:700;color:var(--accent5);">PFM Falcon SI NOX — Flow Wrapper MAP</div>
+        <a href="https://www.youtube.com/results?search_query=PFM+Falcon+SI+NOX+flow+wrapper+MAP" target="_blank" style="display:block;color:var(--accent2);font-size:.78rem;text-decoration:underline;margin-bottom:.3rem">▶ Buscar en YouTube: PFM Falcon SI NOX</a>
+        <div style="font-size:.72rem;color:var(--text-dim)">Envasadora flow wrapper con atmosfera modificada (MAP). Extiende vida util 50-200%.</div>
+      </div>
+    </div>
+
+    <div style="font-size:.85rem;font-weight:700;color:var(--accent4);margin-bottom:.75rem">Videos Generales — Envasado Alimentario</div>
+    <div class="food-grid-2">
+      <div style="padding:.75rem;background:rgba(255,215,64,.06);border:1px solid rgba(255,215,64,.15);border-radius:10px">
+        <div style="font-size:.78rem;font-weight:700;color:var(--accent4);">Proceso CIP (Clean-in-Place)</div>
+        <a href="https://www.youtube.com/results?search_query=CIP+clean+in+place+food+processing" target="_blank" style="display:block;color:var(--accent2);font-size:.78rem;text-decoration:underline;margin-bottom:.3rem">▶ Buscar en YouTube: CIP clean in place food processing</a>
+        <div style="font-size:.72rem;color:var(--text-dim)">Protocolo de limpieza esencial para equipos alimentarios de segunda mano.</div>
+      </div>
+      <div style="padding:.75rem;background:rgba(255,215,64,.06);border:1px solid rgba(255,215,64,.15);border-radius:10px">
+        <div style="font-size:.78rem;font-weight:700;color:var(--accent4);">Inspeccion de equipos alimentarios usados</div>
+        <a href="https://www.youtube.com/results?search_query=used+food+processing+equipment+inspection" target="_blank" style="display:block;color:var(--accent2);font-size:.78rem;text-decoration:underline;margin-bottom:.3rem">▶ Buscar en YouTube: used food equipment inspection</a>
+        <div style="font-size:.72rem;color:var(--text-dim)">Guia de que verificar al comprar maquinaria alimentaria de segunda mano.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="food-cta">
+  <h3>Siguiente Paso: Registrar en Troostwijk e Inspeccionar Equipos</h3>
+  <p style="font-size:.85rem;color:var(--text-dim);margin-bottom:1rem">La oportunidad es real. Equipos de 2016-2024 con alto valor de reventa en LATAM. Registrar en Troostwijk HOY y planificar inspeccion in situ antes de pujar.</p>
+  <div class="food-grid-2">
+    <div class="food-contact-card">
+      <h4 style="color:var(--accent)">Subastas Troostwijk</h4>
+      <div style="font-size:.8rem;line-height:1.6">
+        <div style="margin-bottom:.3rem"><strong style="color:var(--accent2)">Francia A1-35004</strong> — Signes & Baugy-en-Anjou</div>
+        <div style="margin-bottom:.2rem"><a href="https://www.troostwijkauctions.com/en/a/food-processing-equipment-and-packaging-machinery-A1-35004" target="_blank" style="color:var(--accent2);font-size:.72rem">Ver subasta Francia →</a></div>
+        <div style="margin-top:.5rem;margin-bottom:.3rem"><strong style="color:var(--accent2)">UK A1-44679</strong> — Downham Market, Norfolk</div>
+        <div><a href="https://www.troostwijkauctions.com/a/food-production-packaging-machinery-A1-44679" target="_blank" style="color:var(--accent2);font-size:.72rem">Ver subasta UK →</a></div>
+      </div>
+    </div>
+    <div class="food-contact-card">
+      <h4 style="color:var(--accent4)">Accion Inmediata</h4>
+      <div style="font-size:.8rem;line-height:1.6">
+        <div style="margin-bottom:.2rem"><span class="food-badge food-badge-critical">P0</span> Registrar en Troostwijk HOY</div>
+        <div style="margin-bottom:.2rem"><span class="food-badge food-badge-critical">P0</span> Estudiar lotes y establecer max bid</div>
+        <div style="margin-bottom:.2rem"><span class="food-badge food-badge-critical">P0</span> Contratar tecnico alimentario para inspeccion</div>
+        <div style="margin-bottom:.2rem"><span class="food-badge food-badge-high">P1</span> Inspeccionar equipos in situ</div>
+        <div><span class="food-badge food-badge-medium">P2</span> Contactar compradores LATAM</div>
+      </div>
+    </div>
+  </div>
+  <div style="margin-top:1rem">
+    <a href="/" style="display:inline-block;background:var(--gradient1);color:var(--bg-dark);padding:.75rem 1.5rem;border-radius:10px;font-weight:700;font-size:.85rem;text-decoration:none;transition:transform .2s,box-shadow .2s">← Volver a Investigacion Estrategica</a>
+    <button onclick="window.print()" style="display:inline-block;background:transparent;border:2px solid var(--accent);color:var(--accent);padding:.75rem 1.5rem;border-radius:10px;font-family:'Inter',sans-serif;font-weight:700;font-size:.85rem;cursor:pointer;margin-left:.5rem;transition:all .2s">Descargar PDF</button>
+  </div>
+</div>
+
+</div><!-- food-container -->
+
+<script>
+// Tab navigation
+document.querySelectorAll('.food-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.food-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.food-section').forEach(s => s.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById(tab.dataset.tab).classList.add('active');
+  });
+});
+</script>
+
+</body>
+</html>

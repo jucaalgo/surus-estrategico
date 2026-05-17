@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>SURUS Intel — Terminal de Inteligencia Estratégica</title>
+<meta name="description" content="Terminal de alta fidelidad para el análisis de activos industriales P0. Inteligencia de mercado en tiempo real.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<style>
+:root {
+  --bg: #03040b;
+  --panel: rgba(13, 14, 30, 0.7);
+  --panel-h: rgba(20, 22, 45, 0.8);
+  --accent: #00e676;
+  --secondary: #18ffff;
+  --danger: #ff4081;
+  --warning: #ffd740;
+  --orange: #ff6e40;
+  --purple: #b388ff;
+  --text: #e8e8f0;
+  --text-dim: #9494b8;
+  --border: rgba(255, 255, 255, 0.08);
+  --glass: blur(25px) saturate(180%);
+  --glass-bg: rgba(13, 14, 30, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --grad: linear-gradient(135deg, #00e676, #18ffff);
+  --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.1); opacity: 0.8; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes pulse-ring {
+  0% { transform: scale(0.33); }
+  80%, 100% { opacity: 0; }
+}
+
+.pulse-p0 {
+  animation: pulse 2s infinite ease-in-out;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+body { 
+  font-family: 'Inter', system-ui, sans-serif; 
+  background: var(--bg); 
+  color: var(--text); 
+  line-height: 1.5;
+  overflow-x: hidden;
+  background-image: radial-gradient(circle at 50% 0%, rgba(24, 255, 255, 0.05) 0%, transparent 50%);
+}
+
+.mono { font-family: 'JetBrains Mono', monospace; }
+
+/* LAYOUT */
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.stats-header {
+  height: 60px;
+  background: rgba(0,0,0,0.5);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+  backdrop-filter: blur(10px);
+}
+
+.stat-item { display: flex; flex-direction: column; }
+.stat-label { font-size: 0.6rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px; }
+.stat-value { font-size: 1rem; font-weight: 800; color: var(--accent); font-family: 'JetBrains Mono', monospace; }
+
+.main-container {
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* SIDEBAR */
+.sidebar {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass);
+  border-right: 1px solid var(--glass-border);
+  display: flex;
+  flex-direction: column;
+  z-index: 10;
+  box-shadow: var(--shadow);
+}
+
+/* TABS */
+.tab-container {
+  display: flex;
+  background: rgba(0,0,0,0.2);
+  padding: 0.5rem;
+  gap: 0.5rem;
+  margin: 1rem 1.5rem;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+}
+
+.tab-btn {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--text-dim);
+  padding: 0.5rem;
+  border-radius: 8px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+.tab-btn.active { background: var(--panel-h); color: var(--secondary); box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+
+/* GRID VIEW */
+#gridView {
+  padding: 2rem;
+  overflow-y: auto;
+  display: none;
+  animation: fadeIn 0.5s ease;
+}
+.intel-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 0.5rem;
+}
+.intel-table th {
+  text-align: left;
+  padding: 1rem;
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+}
+.intel-table th:hover { color: var(--accent); }
+.intel-table td {
+  padding: 1rem;
+  background: rgba(255,255,255,0.02);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  font-size: 0.85rem;
+}
+.intel-table tr td:first-child { border-left: 1px solid var(--border); border-radius: 12px 0 0 12px; }
+.intel-table tr td:last-child { border-right: 1px solid var(--border); border-radius: 0 12px 12px 0; }
+.intel-table tr:hover td { background: var(--panel-h); border-color: var(--secondary); }
+
+/* SIMULATOR */
+#simView {
+  padding: 2rem;
+  display: none;
+  grid-template-columns: 350px 1fr;
+  gap: 2rem;
+  animation: fadeIn 0.5s ease;
+}
+.sim-controls { background: var(--panel); border: 1px solid var(--border); border-radius: 16px; padding: 1.5rem; }
+.sim-visual { background: rgba(0,0,0,0.3); border: 1px solid var(--border); border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem; position: relative; }
+
+.input-group { margin-bottom: 1.5rem; }
+.input-group label { display: block; font-size: 0.7rem; color: var(--text-dim); margin-bottom: 0.5rem; text-transform: uppercase; }
+.input-group input { width: 100%; background: rgba(0,0,0,0.5); border: 1px solid var(--border); padding: 0.8rem; border-radius: 8px; color: white; outline: none; }
+.input-group input:focus { border-color: var(--secondary); }
+
+.roi-gauge {
+  width: 250px; height: 250px;
+  border-radius: 50%;
+  border: 10px solid rgba(255,255,255,0.05);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  position: relative;
+  transition: 0.5s;
+  background: radial-gradient(circle, rgba(24, 255, 255, 0.05) 0%, transparent 70%);
+}
+.roi-gauge-value { font-size: 3rem; font-weight: 900; font-family: 'JetBrains Mono'; color: var(--accent); }
+.roi-gauge-label { font-size: 0.8rem; color: var(--text-dim); }
+
+.saved-scenarios-container {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: rgba(0,0,0,0.2);
+  border-radius: 16px;
+
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+</style>
+</head>
+<body>
+
+<div class="dashboard">
+  <!-- HEADER STATS -->
+    <header class="stats-header" style="background-image: url('surus_dashboard_header_1778971842753.png'); background-size: cover; background-position: center; position: relative;">
+    <div style="position: absolute; top:0; left:0; right:0; bottom:0; background: rgba(3, 4, 11, 0.7); backdrop-filter: blur(2px);"></div>
+    <div class="logo" style="margin:0; position:relative; z-index:1">
+      <div class="dot"></div>
+      SURUS <span style="font-weight:300; opacity:0.7">STRATEGIC INTEL</span>
+    </div>
+    <div style="display:flex; gap:3rem; position:relative; z-index:1">
+      <div class="stat-item">
+        <span class="stat-label">Total Activos</span>
+        <span class="stat-value" id="headerTotalAssets">0</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-label">Valor Portafolio</span>
+        <span class="stat-value" id="headerTotalValue">€0</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-label">Estado</span>
+        <span class="stat-value" id="dataStatusIndicator">PROCESANDO...</span>
+      </div>
+    </div>
+    <div style="font-size:0.7rem; color:var(--text-dim); position:relative; z-index:1" class="mono">
+      TERMINAL READY — SECURE CONNECTION
+    </div>
+  </header>
+
+  <div class="main-container">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="search-container">
+          <input type="text" id="searchInput" class="search-input" placeholder="Buscar activos, plantas, marcas...">
+        </div>
+      </div>
+      
+      <div class="tab-container">
+        <button class="tab-btn" data-view="dashboard">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+          DASHBOARD
+        </button>
+        <button class="tab-btn active" data-view="map">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 6v16l7-4 8 4 7-4V2l-7 4-8-4-7 4z"></path></svg>
+          MAPA
+        </button>
+        <button class="tab-btn" data-view="grid">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+          GRID
+        </button>
+        <button class="tab-btn" data-view="sim">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20v-6M6 20V10M18 20V4"></path></svg>
+          SIM
+        </button>
+      </div>
+
+      <div class="filter-bar">
+        <button class="filter-btn active" data-filter="all">TODOS</button>
+        <button class="filter-btn" data-filter="P0">PRIORIDAD P0</button>
+        <button class="filter-btn" data-filter="Concurso">CONCURSOS</button>
+      </div>
+      
+      <div id="oppList" class="opp-list">
+        <!-- Cards injected by JS -->
+      </div>
+    </aside>
+
+.opp-card {
+  background: rgba(255,255,255,0.02);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1rem;
+  margin-bottom: 0.75rem;
+  cursor: pointer;
+  transition: 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+.opp-card:hover { background: var(--panel-h); border-color: rgba(24, 255, 255, 0.3); transform: translateY(-2px); }
+.opp-card.active { border-color: var(--accent); background: rgba(0,230,118,0.05); }
+
+.opp-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; bottom: 0; width: 4px;
+}
+.opp-card.p0::before { background: var(--orange); }
+.opp-card.p1::before { background: var(--secondary); }
+.opp-card.p2::before { background: var(--warning); }
+
+.opp-card-title { font-weight: 800; font-size: 0.85rem; margin-bottom: 0.25rem; }
+.opp-card-loc { font-size: 0.7rem; color: var(--text-dim); display: flex; align-items: center; gap: 0.3rem; }
+.opp-card-tags { display: flex; gap: 0.3rem; margin-top: 0.5rem; }
+.tag { font-size: 0.55rem; font-weight: 700; padding: 0.1rem 0.4rem; border-radius: 4px; text-transform: uppercase; }
+.tag-p0 { background: rgba(255, 110, 64, 0.1); color: var(--orange); border: 1px solid rgba(255, 110, 64, 0.2); }
+.tag-sub { background: rgba(24, 255, 255, 0.1); color: var(--secondary); border: 1px solid rgba(24, 255, 255, 0.2); }
+
+/* MAIN CONTENT */
+.main {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+#map { flex: 1; z-index: 1; }
+
+/* DOSSIER PANEL */
+.dossier-overlay {
+  position: absolute;
+  top: 0; right: -100%;
+  width: 600px;
+  height: 100%;
+  background: var(--panel);
+  backdrop-filter: var(--glass);
+  border-left: 1px solid var(--border);
+  z-index: 20;
+  transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 2rem;
+  overflow-y: auto;
+}
+.dossier-overlay.show { right: 0; }
+
+.dossier-close {
+  position: absolute;
+  top: 1rem; left: 1rem;
+  background: rgba(255,255,255,0.05);
+  border: none;
+  color: white;
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+}
+
+.dossier-header { margin-top: 1rem; }
+.dossier-title { font-size: 1.8rem; font-weight: 900; line-height: 1.1; margin-bottom: 0.5rem; }
+.dossier-meta { display: flex; gap: 1rem; margin-bottom: 1.5rem; font-size: 0.8rem; color: var(--text-dim); }
+
+.dossier-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem; }
+.dossier-section { background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 12px; padding: 1rem; }
+.section-title { font-size: 0.65rem; font-weight: 800; text-transform: uppercase; color: var(--accent); margin-bottom: 0.75rem; letter-spacing: 1px; display: flex; align-items: center; gap: 0.5rem; }
+
+.kpi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+.kpi-item .label { font-size: 0.55rem; color: var(--text-dim); text-transform: uppercase; }
+.kpi-item .value { font-size: 1rem; font-weight: 800; font-family: 'JetBrains Mono', monospace; }
+
+.dossier-image { width: 100%; height: 240px; border-radius: 12px; object-fit: cover; margin-bottom: 1.5rem; border: 1px solid var(--border); }
+
+.dossier-footer { margin-top: 2rem; display: flex; gap: 1rem; }
+.btn {
+  flex: 1;
+  padding: 0.8rem;
+  border-radius: 8px;
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  cursor: pointer;
+  text-align: center;
+  transition: 0.3s;
+}
+.btn-primary { background: var(--grad); color: var(--bg); border: none; }
+.btn-secondary { background: rgba(255,255,255,0.05); border: 1px solid var(--border); color: white; }
+
+/* LEAFLET OVERRIDES */
+.leaflet-popup-content-wrapper { background: var(--panel)!important; color: white!important; border: 1px solid var(--border)!important; backdrop-filter: var(--glass); }
+.leaflet-popup-tip { background: var(--panel)!important; }
+
+/* ANIMATIONS */
+@keyframes slideIn { from { opacity: 0; transform: translateX(30px); } to { opacity: 1; transform: none; } }
+@keyframes fadeInScale { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+@keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+
+.opp-card { 
+  animation: slideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards; 
+  animation-delay: calc(var(--i, 0) * 0.05s);
+  opacity: 0;
+}
+
+.shimmer {
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite linear;
+}
+
+/* SEARCH & FILTERS */
+.search-container { position: relative; }
+.search-input {
+  width: 100%;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid var(--border);
+  padding: 1rem 1rem 1rem 2.5rem;
+  border-radius: 12px;
+  color: white;
+  font-size: 0.8rem;
+  outline: none;
+  transition: 0.3s;
+}
+.search-input:focus { border-color: var(--secondary); box-shadow: 0 0 15px rgba(24, 255, 255, 0.1); }
+.search-icon { position: absolute; left: 0.8rem; top: 50%; transform: translateY(-50%); opacity: 0.5; pointer-events: none; }
+
+.filter-bar {
+  padding: 0 1.5rem;
+  margin-bottom: 1rem;
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.filter-btn {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--border);
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: var(--text-dim);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: 0.3s;
+}
+.filter-btn.active { background: var(--secondary); color: var(--bg); border-color: var(--secondary); }
+.filter-btn.p0-special { background: rgba(255, 110, 64, 0.1); color: var(--orange); border-color: var(--orange); }
+.filter-btn.p0-special.active { background: var(--orange); color: var(--bg); }
+
+</style>
+</head>
+<body>
+
+<div class="dashboard">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="logo">
+        <div class="dot"></div>
+        SURUS INTEL
+      </div>
+      <div class="search-container">
+        <input type="text" id="searchInput" class="search-input" placeholder="Buscar activos, plantas, marcas...">
+      </div>
+    </div>
+    
+    <div class="filter-bar">
+      <button class="filter-btn active" data-filter="all">TODOS</button>
+      <button class="filter-btn p0-special" data-filter="P0">SOLO P0</button>
+      <button class="filter-btn" data-filter="Concurso">CONCURSOS</button>
+      <button class="filter-btn" data-filter="Subasta">SUBASTAS</button>
+    </div>
+    
+    <div id="oppList" class="opp-list">
+      <!-- Cards injected by JS -->
+    </div>
+  </aside>
+
+  <!-- MAIN AREA -->
+  <main class="main">
+    <!-- MAP VIEW -->
+    <div id="map" style="display:block"></div>
+    
+    <!-- GRID VIEW -->
+    <div id="gridView">
+      <div class="section-title" style="margin-bottom:1.5rem">Intelligence Market Grid</div>
+      <table class="intel-table">
+        <thead>
+          <tr>
+            <th onclick="sortGrid('name')">Activo</th>
+            <th onclick="sortGrid('financials.roi_num')">ROI</th>
+            <th onclick="sortGrid('financials.investment_num')">Inversión</th>
+            <th>Ubicación</th>
+            <th>Estado</th>
+            <th>Acción</th>
+          </tr>
+        </thead>
+        <tbody id="gridBody">
+          <!-- Injected by JS -->
+        </tbody>
+      </table>
+    </div>
+
+    <div id="simView">
+      <div class="sim-controls">
+        <div class="section-title">Parámetros de Simulación</div>
+        <div class="input-group">
+          <label>Activo Seleccionado</label>
+          <select id="simAssetSelect" class="search-input" onchange="updateSimAsset()"></select>
+        </div>
+        <div class="input-group">
+          <label>Inversión Base (€)</label>
+          <input type="number" id="simInvestment" oninput="runSimulation()">
+        </div>
+        <div class="input-group">
+          <label>Coste Logística/Extracción (€)</label>
+          <input type="number" id="simLogistics" oninput="runSimulation()">
+        </div>
+        <div class="input-group">
+          <label>Precio de Reventa Estimado (€)</label>
+          <input type="number" id="simResale" oninput="runSimulation()">
+        </div>
+        <div style="display:flex; gap:1rem; margin-top:1rem">
+          <button class="btn btn-primary" style="flex:2" onclick="saveScenario()">Guardar Escenario</button>
+          <button class="btn btn-secondary" style="flex:1" onclick="exportSimulationToPDF()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+          </button>
+        </div>
+      </div>
+      <div class="sim-visual">
+        <div class="roi-gauge" id="roiGauge">
+          <div class="roi-gauge-value" id="simRoiValue">0%</div>
+          <div class="roi-gauge-label">ROI ESTIMADO</div>
+        </div>
+        <div style="margin-top:2rem; width:100%">
+          <div class="section-title">Breakdown Financiero</div>
+          <div class="kpi-grid" style="margin-top:1rem">
+            <div class="kpi-item"><div class="label">Beneficio Neto</div><div class="value" id="simProfit" style="color:var(--accent)">€0</div></div>
+            <div class="kpi-item"><div class="label">Margen Bruto</div><div class="value" id="simMargin" style="color:var(--warning)">0%</div></div>
+          </div>
+        </div>
+        
+        <div class="saved-scenarios-container" style="width:100%">
+          <div class="section-title">Escenarios Guardados</div>
+          <div id="savedScenariosList" class="saved-list">
+            <!-- Injected by JS -->
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- FINANCIAL OVERVIEW VIEW -->
+    <div id="dashboardView" style="display:none; padding:2rem; overflow-y:auto; animation: fadeIn 0.5s ease;">
+      <div class="section-title" style="margin-bottom:2rem; font-size:1.5rem">Executive Financial Overview</div>
+      
+      <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:1.5rem; margin-bottom:3rem">
+        <div class="dossier-section" style="text-align:center">
+          <div class="stat-label">Valor Total Portafolio</div>
+          <div class="stat-value" id="totalValueStat" style="font-size:1.8rem; margin-top:0.5rem">€0M</div>
+        </div>
+        <div class="dossier-section" style="text-align:center">
+          <div class="stat-label">Inversión Media P0</div>
+          <div class="stat-value" id="avgInvStat" style="font-size:1.8rem; margin-top:0.5rem; color:var(--warning)">€0M</div>
+        </div>
+        <div class="dossier-section" style="text-align:center">
+          <div class="stat-label">ROI Promedio</div>
+          <div class="stat-value" id="avgRoiStat" style="font-size:1.8rem; margin-top:0.5rem; color:var(--accent)">0%</div>
+        </div>
+        <div class="dossier-section" style="text-align:center">
+          <div class="stat-label">Oportunidades P0</div>
+          <div class="stat-value" id="p0CountStat" style="font-size:1.8rem; margin-top:0.5rem; color:var(--orange)">0</div>
+        </div>
+      </div>
+
+      <div style="display:grid; grid-template-columns: 2fr 1fr; gap:2rem">
+        <div class="dossier-section">
+          <div class="section-title">ROI vs Inversión (Distribución Estratégica)</div>
+          <div id="roiChart" style="height:400px; display:flex; align-items:flex-end; gap:0.5rem; padding-bottom:2rem; position:relative">
+            <!-- Bars injected by JS -->
+          </div>
+        </div>
+        <div class="dossier-section">
+          <div class="section-title">Alertas Críticas</div>
+          <div id="criticalAlerts" style="display:flex; flex-direction:column; gap:1rem">
+            <!-- Alerts injected by JS -->
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- DOSSIER OVERLAY -->
+    <div id="dossierOverlay" class="dossier-overlay">
+      <button class="dossier-close" onclick="closeDossier()">✕</button>
+      <div id="dossierContent">
+        <!-- Content injected by JS -->
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="intel-data.js"></script>
+<script>
+    list.innerHTML = '';
+    
+    // Fuzzy search scoring
+    const scored = INTEL_DATA.opportunities.map(opp => {
+      let score = 0;
+      const text = `${opp.name} ${opp.technical.assets} ${opp.location.city} ${opp.type}`.toLowerCase();
+      if (text.includes(query)) score += 10;
+      if (opp.name.toLowerCase().startsWith(query)) score += 20;
+      if (opp.priority === 'P0') score += 5; // P0 items naturally rank higher
+      
+      const matchFilter = currentFilter === 'all' || opp.priority === currentFilter || opp.type === currentFilter;
+      return { opp, score, matchFilter };
+    }).filter(item => item.matchFilter && (query === '' || item.score > 0))
+      .sort((a, b) => b.score - a.score);
+
+    scored.forEach((item, index) => {
+      const opp = item.opp;
+      const card = document.createElement('div');
+      card.className = `opp-card ${opp.priority.toLowerCase()}`;
+      card.style.setProperty('--i', index);
+      if (activeDossier && activeDossier.id === opp.id) card.classList.add('active');
+      
+      card.onclick = () => openDossier(opp);
+      
+      card.innerHTML = `
+        <div class="opp-card-title">${opp.name}</div>
+        <div class="opp-card-loc">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+          ${opp.location.city}, ${opp.location.country}
+        </div>
+        <div class="opp-card-tags">
+          <span class="tag tag-${opp.priority.toLowerCase()}">${opp.priority}</span>
+          <span class="tag tag-sub" style="font-size:0.5rem; opacity:0.7">ROI: ${opp.financials.roi}</span>
+          <span class="tag" style="background:rgba(0,230,118,0.1); color:var(--accent)">${opp.financials.margin} MARGEN</span>
+        </div>
+      `;
+      list.appendChild(card);
+    });
+  }
+
+  function renderGrid() {
+    const body = document.getElementById('gridBody');
+    body.innerHTML = '';
+    
+    const sorted = [...INTEL_DATA.opportunities].sort((a, b) => {
+      const valA = getNestedValue(a, sortKey);
+      const valB = getNestedValue(b, sortKey);
+      
+      if (typeof valA === 'string') {
+        return sortOrder === 1 ? valA.localeCompare(valB) : valB.localeCompare(valA);
+      }
+      return valA < valB ? -sortOrder : valA > valB ? sortOrder : 0;
+    });
+
+    sorted.forEach(opp => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>
+          <div style="font-weight:700">${opp.name}</div>
+          <div style="font-size:0.7rem; color:var(--text-dim)">${opp.type}</div>
+        </td>
+        <td style="color:var(--accent); font-weight:800">${opp.financials.roi}</td>
+        <td class="mono">${opp.financials.investment}</td>
+        <td>${opp.location.city}, ${opp.location.country}</td>
+        <td><span class="tag tag-sub">${opp.status}</span></td>
+        <td><button class="filter-btn" onclick="openDossierById('${opp.id}')">VER INTEL</button></td>
+      `;
+      body.appendChild(tr);
+    });
+  }
+
+  function getNestedValue(obj, path) {
+    return path.split('.').reduce((o, i) => o[i], obj);
+  }
+
+  function sortGrid(key) {
+    if (sortKey === key) sortOrder *= -1;
+    else {
+      sortKey = key;
+      sortOrder = -1;
+    }
+    renderGrid();
+  }
+
+  function openDossierById(id) {
+    const opp = INTEL_DATA.opportunities.find(o => o.id === id);
+    if (opp) openDossier(opp);
+  }
+
+  function openDossier(opp) {
+    activeDossier = opp;
+    const overlay = document.getElementById('dossierOverlay');
+    const content = document.getElementById('dossierContent');
+    
+    content.innerHTML = `
+      <div class="dossier-header">
+        <div class="tag tag-${opp.priority.toLowerCase()}" style="margin-bottom:0.5rem">${opp.priority} Opportunity</div>
+        <h1 class="dossier-title">${opp.name}</h1>
+        <div class="dossier-meta">
+          <span>${opp.type} · ${opp.status}</span>
+          <span>${opp.location.city}, ${opp.location.country}</span>
+        </div>
+      </div>
+
+      <img src="${opp.images[0].url}" alt="${opp.name}" class="dossier-image">
+
+      <div class="dossier-grid">
+        <div class="dossier-section">
+          <div class="section-title">📊 Proyección Financiera</div>
+          <div class="kpi-grid">
+            <div class="kpi-item"><div class="label">Inversión</div><div class="value" style="color:var(--orange)">${opp.financials.investment}</div></div>
+            <div class="kpi-item"><div class="label">Reventa</div><div class="value" style="color:var(--accent)">${opp.financials.resale}</div></div>
+            <div class="kpi-item"><div class="label">Margen</div><div class="value" style="color:var(--warning)">${opp.financials.margin}</div></div>
+            <div class="kpi-item"><div class="label">Payback</div><div class="value" style="color:var(--secondary)">${opp.financials.payback}</div></div>
+          </div>
+        </div>
+        <div class="dossier-section">
+          <div class="section-title">🏗️ Intel Operativo</div>
+          <div class="kpi-item" style="margin-bottom:0.5rem"><div class="label">Activos Clave</div><div class="value" style="font-size:0.75rem">${opp.technical.assets}</div></div>
+          <div class="kpi-item"><div class="label">Estado</div><div class="value" style="font-size:0.75rem">${opp.technical.condition}</div></div>
+        </div>
+      </div>
+
+      <div class="dossier-section" style="margin-bottom:1.5rem">
+        <div class="section-title">🚛 Logística y Aduanas</div>
+        <div class="kpi-grid">
+          <div class="kpi-item"><div class="label">Coste Extracción</div><div class="value" style="font-size:0.8rem">${opp.logistics.extraction_cost}</div></div>
+          <div class="kpi-item"><div class="label">Tiempo Est.</div><div class="value" style="font-size:0.8rem">${opp.logistics.time_estimate}</div></div>
+        </div>
+        <div style="font-size:0.7rem; color:var(--text-dim); margin-top:0.5rem">
+          <strong>Info Aduanas:</strong> ${opp.logistics.customs_info}
+        </div>
+      </div>
+
+      <div class="dossier-footer">
+        <a href="${opp.links[0].url}" target="_blank" class="btn btn-primary">Acceder a Subasta</a>
+        <button class="btn btn-secondary" onclick="openSimulator('${opp.id}')">Simulador ROI</button>
+      </div>
+    `;
+    
+    overlay.classList.add('show');
+    renderList();
+    if (currentView === 'map') map.flyTo([opp.location.lat, opp.location.lng], 8);
+  }
+
+  function closeDossier() {
+    activeDossier = null;
+    document.getElementById('dossierOverlay').classList.remove('show');
+    renderList();
+  }
+
+  // TABS LOGIC
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.onclick = () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      switchView(btn.dataset.view);
+    };
+  });
+
+  function switchView(view) {
+    currentView = view;
+    document.getElementById('map').style.display = view === 'map' ? 'block' : 'none';
+    document.getElementById('gridView').style.display = view === 'grid' ? 'block' : 'none';
+    document.getElementById('simView').style.display = view === 'sim' ? 'grid' : 'none';
+    document.getElementById('dashboardView').style.display = view === 'dashboard' ? 'block' : 'none';
+    
+    if (view === 'grid') renderGrid();
+    if (view === 'sim') initSimulator();
+    if (view === 'dashboard') renderDashboard();
+    if (view === 'map') setTimeout(() => map.invalidateSize(), 100);
+  }
+
+  function renderDashboard() {
+    const opportunities = INTEL_DATA.opportunities;
+    const totalValue = opportunities.reduce((acc, o) => acc + o.financials.resale_num, 0);
+    const avgInv = opportunities.reduce((acc, o) => acc + o.financials.investment_num, 0) / opportunities.length;
+    const avgRoi = opportunities.reduce((acc, o) => acc + o.financials.roi_num, 0) / opportunities.length;
+    const p0Count = opportunities.filter(o => o.priority === 'P0').length;
+
+    document.getElementById('totalValueStat').innerText = '€' + (totalValue / 1e6).toFixed(1) + 'M';
+    document.getElementById('avgInvStat').innerText = '€' + (avgInv / 1e6).toFixed(2) + 'M';
+    document.getElementById('avgRoiStat').innerText = avgRoi.toFixed(1) + '%';
+    document.getElementById('p0CountStat').innerText = p0Count;
+
+    // Header stats update
+    document.getElementById('headerTotalAssets').innerText = opportunities.length;
+    document.getElementById('headerTotalValue').innerText = '€' + (totalValue / 1e6).toFixed(0) + 'M';
+
+    // ROI Chart (Simplified Bar Chart)
+    const chart = document.getElementById('roiChart');
+    chart.innerHTML = '';
+    const maxRoi = Math.max(...opportunities.map(o => o.financials.roi_num));
+    
+    opportunities.sort((a,b) => b.financials.roi_num - a.financials.roi_num).slice(0, 15).forEach(o => {
+      const barWrapper = document.createElement('div');
+      barWrapper.style.flex = '1';
+      barWrapper.style.display = 'flex';
+      barWrapper.style.flexDirection = 'column';
+      barWrapper.style.justifyContent = 'flex-end';
+      barWrapper.style.height = '100%';
+      barWrapper.style.position = 'relative';
+
+      const bar = document.createElement('div');
+      const height = (o.financials.roi_num / maxRoi) * 100;
+      bar.style.height = height + '%';
+      bar.style.background = o.priority === 'P0' ? 'linear-gradient(to top, var(--orange), #ffab91)' : 'linear-gradient(to top, var(--secondary), #80deea)';
+      bar.style.borderRadius = '4px 4px 0 0';
+      bar.style.cursor = 'pointer';
+      bar.style.transition = '0.5s cubic-bezier(0.4, 0, 0.2, 1)';
+      bar.title = `${o.name}: ${o.financials.roi}`;
+      bar.onclick = () => openDossier(o);
+      
+      const roiLabel = document.createElement('div');
+      roiLabel.style.position = 'absolute';
+      roiLabel.style.top = '-20px';
+      roiLabel.style.width = '100%';
+      roiLabel.style.textAlign = 'center';
+      roiLabel.style.fontSize = '0.5rem';
+      roiLabel.style.fontWeight = '700';
+      roiLabel.style.color = o.priority === 'P0' ? 'var(--orange)' : 'var(--secondary)';
+      roiLabel.innerText = Math.round(o.financials.roi_num) + '%';
+      
+      const label = document.createElement('div');
+      label.style.fontSize = '0.5rem';
+      label.style.marginTop = '0.5rem';
+      label.style.textAlign = 'center';
+      label.style.whiteSpace = 'nowrap';
+      label.style.overflow = 'hidden';
+      label.style.textOverflow = 'ellipsis';
+      label.style.color = 'var(--text-dim)';
+      label.innerText = o.name.split('—')[0].substring(0, 8);
+      
+      bar.appendChild(roiLabel);
+      barWrapper.appendChild(bar);
+      barWrapper.appendChild(label);
+      chart.appendChild(barWrapper);
+    });
+
+    // Critical Alerts
+    const alerts = document.getElementById('criticalAlerts');
+    alerts.innerHTML = opportunities.filter(o => o.financials.roi_num > 100 || o.priority === 'P0').slice(0, 5).map(o => `
+      <div style="background:rgba(255,110,64,0.1); border-left:4px solid var(--orange); padding:1rem; border-radius:8px">
+        <div style="font-weight:800; font-size:0.8rem; color:var(--orange)">ALERTA P0: ${o.name}</div>
+        <div style="font-size:0.7rem; opacity:0.8; margin-top:0.3rem">ROI proyectado de ${o.financials.roi}. Requiere atención inmediata.</div>
+      </div>
+    `).join('');
+  }
+
+  // DATA AUDIT LOGIC
+  function performDataAudit() {
+    const indicator = document.getElementById('dataStatusIndicator');
+    let errors = 0;
+
+    INTEL_DATA.opportunities.forEach(opp => {
+      const inv = opp.financials.investment_num;
+      const res = opp.financials.resale_num;
+      const logMatch = opp.logistics.extraction_cost.match(/[0-9.]+/);
+      const log = logMatch ? parseInt(logMatch[0].replace(/\./g, '')) : 0;
+      
+      const totalCost = inv + log;
+      const calculatedROI = totalCost > 0 ? ((res - totalCost) / totalCost) * 100 : 0;
+      const storedROI = opp.financials.roi_num;
+
+      if (Math.abs(calculatedROI - storedROI) > 0.5) {
+        errors++;
+        console.warn(`Audit mismatch in ${opp.name}: Calc ${calculatedROI.toFixed(2)} vs Stored ${storedROI}`);
+      }
+    });
+
+    if (errors === 0) {
+      indicator.innerText = 'VERIFICADOS ✅';
+      indicator.style.color = 'var(--accent)';
+    } else {
+      indicator.innerText = 'ERROR EN DATOS ⚠️';
+      indicator.style.color = 'var(--danger)';
+    }
+  }
+
+  // SIMULATOR LOGIC
+  function initSimulator() {
+    const select = document.getElementById('simAssetSelect');
+    select.innerHTML = INTEL_DATA.opportunities.map(o => `<option value="${o.id}">${o.name}</option>`).join('');
+    if (activeDossier) select.value = activeDossier.id;
+    updateSimAsset();
+    renderSavedScenarios();
+  }
+
+  function updateSimAsset() {
+    const id = document.getElementById('simAssetSelect').value;
+    const opp = INTEL_DATA.opportunities.find(o => o.id === id);
+    document.getElementById('simInvestment').value = opp.financials.investment_num;
+    
+    // Improved parsing for extraction_cost: matches first number (including dots/commas)
+    const costMatch = opp.logistics.extraction_cost.match(/[0-9.]+/);
+    const costValue = costMatch ? parseInt(costMatch[0].replace(/\./g, '')) : 0;
+    
+    document.getElementById('simLogistics').value = costValue;
+    document.getElementById('simResale').value = opp.financials.resale_num;
+    runSimulation();
+  }
+
+  function runSimulation() {
+    const inv = parseFloat(document.getElementById('simInvestment').value) || 0;
+    const log = parseFloat(document.getElementById('simLogistics').value) || 0;
+    const res = parseFloat(document.getElementById('simResale').value) || 0;
+    
+    const totalCost = inv + log;
+    const profit = res - totalCost;
+    const roi = totalCost > 0 ? (profit / totalCost) * 100 : 0;
+    const margin = res > 0 ? (profit / res) * 100 : 0;
+    
+    document.getElementById('simRoiValue').innerText = roi.toFixed(1) + '%';
+    document.getElementById('simProfit').innerText = '€' + profit.toLocaleString();
+    document.getElementById('simMargin').innerText = margin.toFixed(1) + '%';
+    
+    // Visual feedback
+    const color = roi > 100 ? 'var(--accent)' : roi > 50 ? 'var(--secondary)' : roi > 20 ? 'var(--warning)' : 'var(--danger)';
+    document.getElementById('simRoiValue').style.color = color;
+    document.getElementById('roiGauge').style.borderColor = color;
+  }
+
+  function saveScenario() {
+    const id = document.getElementById('simAssetSelect').value;
+    const name = document.getElementById('simAssetSelect').options[document.getElementById('simAssetSelect').selectedIndex].text;
+    const inv = document.getElementById('simInvestment').value;
+    const log = document.getElementById('simLogistics').value;
+    const res = document.getElementById('simResale').value;
+    const roi = document.getElementById('simRoiValue').innerText;
+
+    const scenario = { id, name, inv, log, res, roi, date: new Date().toLocaleString() };
+    let saved = JSON.parse(localStorage.getItem('surus_scenarios') || '[]');
+    saved.push(scenario);
+    localStorage.setItem('surus_scenarios', JSON.stringify(saved));
+    renderSavedScenarios();
+  }
+
+  function renderSavedScenarios() {
+    const list = document.getElementById('savedScenariosList');
+    const saved = JSON.parse(localStorage.getItem('surus_scenarios') || '[]');
+    list.innerHTML = saved.map((s, i) => `
+      <div class="saved-card" onclick="loadScenario(${i})">
+        <button class="saved-card-delete" onclick="event.stopPropagation(); deleteScenario(${i})">✕</button>
+        <div class="saved-card-title">${s.name}</div>
+        <div class="saved-card-stats">
+          ROI: <span style="color:var(--accent)">${s.roi}</span><br>
+          Inv: €${parseInt(s.inv).toLocaleString()}<br>
+          <small style="opacity:0.5">${s.date}</small>
+        </div>
+        <button class="btn btn-secondary" style="font-size:0.5rem; padding:0.2rem; margin-top:0.5rem; width:100%" onclick="event.stopPropagation(); exportSavedScenarioToPDF(${i})">EXPORTAR PDF</button>
+      </div>
+    `).join('');
+  }
+
+  // PDF EXPORT LOGIC
+  async function exportSimulationToPDF() {
+    const id = document.getElementById('simAssetSelect').value;
+    const opp = INTEL_DATA.opportunities.find(o => o.id === id);
+    const inv = document.getElementById('simInvestment').value;
+    const log = document.getElementById('simLogistics').value;
+    const res = document.getElementById('simResale').value;
+    const roi = document.getElementById('simRoiValue').innerText;
+    const profit = document.getElementById('simProfit').innerText;
+
+    generatePDFReport(opp.name, inv, log, res, roi, profit);
+  }
+
+  function exportSavedScenarioToPDF(index) {
+    const saved = JSON.parse(localStorage.getItem('surus_scenarios') || '[]');
+    const s = saved[index];
+    if (!s) return;
+    
+    // Calculate profit string for consistency
+    const totalCost = parseFloat(s.inv) + parseFloat(s.log);
+    const profitVal = parseFloat(s.res) - totalCost;
+    const profitStr = '€' + profitVal.toLocaleString();
+
+    generatePDFReport(s.name, s.inv, s.log, s.res, s.roi, profitStr);
+  }
+
+   function generatePDFReport(name, inv, log, res, roi, profit) {
+    const opp = INTEL_DATA.opportunities.find(o => o.name === name) || {};
+    const element = document.createElement('div');
+    element.style.padding = '40px';
+    element.style.background = '#03040b';
+    element.style.color = '#e8e8f0';
+    element.style.fontFamily = 'Inter, sans-serif';
+    element.style.width = '800px';
+    element.style.position = 'relative';
+
+    element.innerHTML = `
+      <!-- WATERMARK -->
+      <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-45deg); font-size: 80px; opacity: 0.03; font-weight: 900; pointer-events: none; width: 100%; text-align: center; white-space: nowrap;">
+        CONFIDENTIAL — SURUS INTERNAL
+      </div>
+
+      <div style="border-bottom: 2px solid #00e676; padding-bottom: 20px; margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center; position: relative; z-index: 1;">
+        <div>
+          <h1 style="color: #00e676; margin: 0; font-size: 28px; font-weight: 900; letter-spacing: -1px;">SURUS STRATEGIC INTELLIGENCE</h1>
+          <p style="margin: 5px 0 0; font-size: 10px; opacity: 0.7; letter-spacing: 2px; text-transform: uppercase;">P0 Asset Intelligence Dossier</p>
+        </div>
+        <div style="text-align: right; font-size: 10px; opacity: 0.5;">
+          Report ID: ${Math.random().toString(36).substr(2, 9).toUpperCase()}<br>
+          Generado: ${new Date().toLocaleString()}
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 30px; margin-bottom: 30px; position: relative; z-index: 1;">
+        <div style="flex: 1.5;">
+          <h2 style="font-size: 24px; font-weight: 800; margin-bottom: 10px;">${name}</h2>
+          <div style="display: flex; gap: 15px; margin-bottom: 20px; font-size: 12px; color: #9494b8;">
+            <span style="background: rgba(255,255,255,0.05); padding: 4px 10px; border-radius: 4px;">${opp.type || 'N/A'}</span>
+            <span style="background: rgba(255,255,255,0.05); padding: 4px 10px; border-radius: 4px;">${opp.location?.city || 'Global'}, ${opp.location?.country || ''}</span>
+          </div>
+          <p style="font-size: 14px; line-height: 1.6; opacity: 0.8;">
+            Este activo ha sido identificado como una oportunidad de prioridad crítica (P0). 
+            La infraestructura industrial asociada presenta un estado de conservación excelente con ciclos de mantenimiento verificados.
+          </p>
+        </div>
+        <div style="flex: 1;">
+          <img src="${opp.images ? opp.images[0].url : ''}" style="width: 100%; height: 180px; object-fit: cover; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);">
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 30px; position: relative; z-index: 1;">
+        <div style="background: linear-gradient(135deg, rgba(0,230,118,0.1), rgba(24,255,255,0.05)); padding: 25px; border-radius: 16px; border: 1px solid rgba(0,230,118,0.2);">
+          <h3 style="font-size: 10px; color: #00e676; margin: 0 0 10px; letter-spacing: 1px; text-transform: uppercase;">Métrica de Éxito (ROI)</h3>
+          <div style="font-size: 56px; font-weight: 900; color: #00e676; line-height: 1;">${roi}</div>
+          <div style="margin-top: 15px; height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; overflow: hidden;">
+            <div style="width: ${Math.min(parseFloat(roi), 100)}%; height: 100%; background: #00e676;"></div>
+          </div>
+        </div>
+        <div style="background: rgba(255,255,255,0.03); padding: 25px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.1);">
+          <h3 style="font-size: 10px; color: #ffd740; margin: 0 0 10px; letter-spacing: 1px; text-transform: uppercase;">Beneficio Proyectado</h3>
+          <div style="font-size: 38px; font-weight: 900; color: #ffd740; line-height: 1;">${profit}</div>
+          <p style="font-size: 11px; margin-top: 10px; opacity: 0.6;">Estimación neta tras costes operativos.</p>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 40px; position: relative; z-index: 1;">
+        <div>
+          <h4 style="font-size: 12px; color: #18ffff; margin-bottom: 15px; border-bottom: 1px solid rgba(24,255,255,0.2); padding-bottom: 5px;">ESTRUCTURA DE COSTES (EXECUTIVE)</h4>
+          <div style="display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 13px;">
+            <span style="opacity: 0.7;">Inversión Activo:</span>
+            <span style="font-weight: 700;">€${parseInt(inv).toLocaleString()}</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 13px;">
+            <span style="opacity: 0.7;">Logística y Extracción:</span>
+            <span style="font-weight: 700;">€${parseInt(log).toLocaleString()}</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 14px; color: #00e676;">
+            <span style="font-weight: 800;">TOTAL CAPEX:</span>
+            <span style="font-weight: 900;">€${(parseInt(inv) + parseInt(log)).toLocaleString()}</span>
+          </div>
+        </div>
+        <div>
+          <h4 style="font-size: 12px; color: #b388ff; margin-bottom: 15px; border-bottom: 1px solid rgba(179,136,255,0.2); padding-bottom: 5px;">ESTRATEGIA DE REVENTA (MARKET)</h4>
+          <div style="display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 13px;">
+            <span style="opacity: 0.7;">Target Market Price:</span>
+            <span style="font-weight: 700;">€${parseInt(res).toLocaleString()}</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 13px;">
+            <span style="opacity: 0.7;">Market Demand:</span>
+            <span style="color: #00e676; font-weight: 700;">ALTA (P0)</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 13px;">
+            <span style="opacity: 0.7;">Payback Est:</span>
+            <span style="font-weight: 700;">${opp.financials?.payback || '6 meses'}</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 40px; position: relative; z-index: 1;">
+        <div>
+          <h4 style="font-size: 12px; color: #ff6e40; margin-bottom: 15px; border-bottom: 1px solid rgba(255,110,64,0.2); padding-bottom: 5px;">DETALLES TÉCNICOS</h4>
+          <div style="font-size: 12px; line-height: 1.4; opacity: 0.8;">
+            <strong>Activos:</strong> ${opp.technical?.assets || 'N/A'}<br>
+            <strong>Estado:</strong> ${opp.technical?.condition || 'N/A'}<br>
+            <strong>Mantenimiento:</strong> Verificado por SURUS Tech.
+          </div>
+        </div>
+        <div>
+          <h4 style="font-size: 12px; color: #ffd740; margin-bottom: 15px; border-bottom: 1px solid rgba(255,215,64,0.2); padding-bottom: 5px;">LOGÍSTICA Y ADUANAS</h4>
+          <div style="font-size: 12px; line-height: 1.4; opacity: 0.8;">
+            <strong>Extracción:</strong> ${opp.logistics?.extraction_cost || 'N/A'}<br>
+            <strong>Aduanas:</strong> ${opp.logistics?.customs_info || 'Comunitario'}<br>
+            <strong>Lead Time:</strong> ${opp.logistics?.time_estimate || '4 semanas'}.
+          </div>
+        </div>
+      </div>
+
+      <div style="font-size: 10px; opacity: 0.3; line-height: 1.4; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; position: relative; z-index: 1;">
+        CONFIDENTIAL DOCUMENT: Este informe contiene inteligencia competitiva propietaria de SURUS. Queda prohibida su distribución externa sin autorización previa del departamento de Estrategia. Los datos son proyecciones basadas en modelos de RAG/IA y deben ser validados mediante inspección física presencial.
+      </div>
+    `;
+
+    const opt = {
+      margin: 0,
+      filename: `SURUS_P0_Dossier_${name.replace(/\s+/g, '_')}.pdf`,
+      image: { type: 'jpeg', quality: 1.0 },
+      html2canvas: { scale: 3, backgroundColor: '#03040b', useCORS: true },
+      jsPDF: { unit: 'pt', format: 'a4', orientation: 'portrait' }
+    };
+
+    html2pdf().set(opt).from(element).save();
+  }
+
+  function loadScenario(index) {
+    const saved = JSON.parse(localStorage.getItem('surus_scenarios') || '[]');
+    const s = saved[index];
+    if (!s) return;
+    
+    document.getElementById('simAssetSelect').value = s.id;
+    document.getElementById('simInvestment').value = s.inv;
+    document.getElementById('simLogistics').value = s.log;
+    document.getElementById('simResale').value = s.res;
+    runSimulation();
+  }
+
+  function deleteScenario(index) {
+    let saved = JSON.parse(localStorage.getItem('surus_scenarios') || '[]');
+    saved.splice(index, 1);
+    localStorage.setItem('surus_scenarios', JSON.stringify(saved));
+    renderSavedScenarios();
+  }
+
+  function openSimulator(id) {
+    closeDossier();
+    document.querySelector('[data-view="sim"]').click();
+  }
+
+  // Initialize Map Markers
+  INTEL_DATA.opportunities.forEach(opp => {
+    const marker = L.circleMarker([opp.location.lat, opp.location.lng], {
+      radius: opp.priority === 'P0' ? 14 : 10,
+      fillColor: opp.priority === 'P0' ? '#ff6e40' : '#18ffff',
+      color: '#fff',
+      weight: 2,
+      opacity: 1,
+      fillOpacity: 0.8,
+      className: opp.priority === 'P0' ? 'pulse-p0' : ''
+    }).addTo(map);
+
+    marker.on('click', () => openDossier(opp));
+    marker.bindTooltip(opp.name, { permanent: false, direction: 'top' });
+  });
+
+  // FILTER LOGIC
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.onclick = () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderList(btn.dataset.filter);
+    };
+  });
+
+  document.getElementById('searchInput').oninput = () => renderList();
+
+  performDataAudit();
+  renderDashboard();
+  renderList();
+</script>
+</body>
+</html>

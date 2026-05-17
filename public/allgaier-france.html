@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Allgaier France S.à.r.L — Cierre de Planta | Dossier Estratégico | SURUS Inversa</title>
+<meta name="description" content="Dossier estratégico de inversión: Cierre de planta Allgaier France S.à.r.L en Faulquemont. Subasta NetBid #19190. Prensas Arisa, robots ABB, línea Eisenmann, grúas Konecranes.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="allgaier-france-print.css" media="print">
+<style>
+:root{--bg-dark:#06060b;--bg-card:#0e0e18;--bg-card-hover:#161628;--accent:#00e676;--accent-dim:#00c853;--accent2:#18ffff;--accent3:#ff6e40;--accent4:#ffd740;--accent5:#b388ff;--accent6:#ff4081;--text:#e8e8f0;--text-dim:#8888a0;--text-bright:#fff;--border:#1e1e30;--gradient1:linear-gradient(135deg,#00e676,#18ffff);--gradient2:linear-gradient(135deg,#ff6e40,#ffd740);--gradient3:linear-gradient(135deg,#7c4dff,#18ffff);--shadow:0 8px 32px rgba(0,0,0,.5)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg-dark);color:var(--text);line-height:1.6;overflow-x:hidden}
+.bg-mesh{position:fixed;inset:0;z-index:0;opacity:.4;background:radial-gradient(ellipse at 20% 50%,rgba(0,230,118,.08) 0%,transparent 50%),radial-gradient(ellipse at 80% 20%,rgba(24,255,255,.06) 0%,transparent 50%),radial-gradient(ellipse at 50% 80%,rgba(255,64,129,.04) 0%,transparent 50%);pointer-events:none}
+.kuka-nav{position:sticky;top:0;z-index:100;background:rgba(6,6,11,.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:.75rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.kuka-nav-logo{font-weight:900;font-size:1rem;background:var(--gradient1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:-.5px;text-decoration:none}
+.kuka-nav-links{display:flex;gap:1rem;align-items:center;flex-wrap:wrap}
+.kuka-nav-links a{color:var(--text-dim);text-decoration:none;font-size:.75rem;font-weight:600;text-transform:uppercase;letter-spacing:.5px;transition:color .2s}
+.kuka-nav-links a:hover{color:var(--accent)}
+.kuka-pdf-btn{background:var(--gradient1);color:var(--bg-dark);border:none;padding:.5rem 1rem;border-radius:8px;font-family:'Inter',sans-serif;font-weight:700;font-size:.75rem;cursor:pointer;display:flex;align-items:center;gap:.4rem;transition:transform .2s,box-shadow .2s}
+.kuka-pdf-btn:hover{transform:translateY(-2px);box-shadow:0 4px 20px rgba(0,230,118,.3)}
+.kuka-container{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:0 1.5rem 4rem}
+.kuka-hero{padding:3rem 0 2rem;text-align:center;border-bottom:1px solid var(--border);margin-bottom:2rem}
+.kuka-hero h1{font-size:clamp(2rem,5vw,3.5rem);font-weight:900;background:var(--gradient1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1.1;margin-bottom:.5rem}
+.kuka-hero-sub{font-size:clamp(.85rem,2vw,1.1rem);color:var(--text-dim);max-width:700px;margin:0 auto 1.5rem}
+.kuka-hero-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:.75rem;max-width:900px;margin:0 auto}
+.kuka-hero-stat{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:.75rem;text-align:center;transition:all .3s}
+.kuka-hero-stat:hover{border-color:rgba(0,230,118,.4);box-shadow:0 0 30px rgba(0,230,118,.1)}
+.kuka-hero-stat .number{font-size:1.5rem;font-weight:800;font-family:'JetBrains Mono',monospace}
+.kuka-hero-stat .label{font-size:.6rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.5px;margin-top:.15rem}
+.kuka-tabs{display:flex;gap:.4rem;padding:1rem 0;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;margin-bottom:1.5rem;border-bottom:1px solid var(--border)}
+.kuka-tabs::-webkit-scrollbar{display:none}
+.kuka-tab{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:.5rem 1rem;color:var(--text-dim);font-family:'Inter',sans-serif;font-size:.75rem;font-weight:600;cursor:pointer;white-space:nowrap;transition:all .2s}
+.kuka-tab:hover{border-color:var(--accent2);color:var(--accent2)}
+.kuka-tab.active{background:rgba(0,230,118,.12);border-color:var(--accent);color:var(--accent)}
+.kuka-section{display:none;animation:fadeIn .3s ease}
+.kuka-section.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.kuka-card{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:1.5rem;margin-bottom:1.5rem;transition:all .4s;position:relative;overflow:hidden}
+.kuka-card:hover{border-color:rgba(0,230,118,.3);box-shadow:0 0 40px rgba(0,230,118,.08)}
+.kuka-card-title{font-size:1rem;font-weight:800;margin-bottom:.75rem;display:flex;align-items:center;gap:.5rem}
+.kuka-info-block{border-radius:10px;padding:.75rem;margin-bottom:1rem}
+.kuka-badge{display:inline-flex;align-items:center;gap:.3rem;font-size:.6rem;font-weight:700;padding:.15rem .45rem;border-radius:4px;text-transform:uppercase;letter-spacing:.5px}
+.kuka-badge-critical{background:rgba(255,110,64,.15);color:var(--accent3);border:1px solid rgba(255,110,64,.3)}
+.kuka-badge-high{background:rgba(255,215,64,.15);color:var(--accent4);border:1px solid rgba(255,215,64,.3)}
+.kuka-badge-medium{background:rgba(24,255,255,.1);color:var(--accent2);border:1px solid rgba(24,255,255,.2)}
+.kuka-badge-low{background:rgba(0,230,118,.1);color:var(--accent);border:1px solid rgba(0,230,118,.2)}
+.data-table{width:100%;border-collapse:collapse;margin:.75rem 0;font-size:.78rem}
+.data-table th{background:rgba(0,230,118,.08);color:var(--accent);font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:.6rem .75rem;text-align:left;border-bottom:1px solid var(--border)}
+.data-table td{padding:.55rem .75rem;border-bottom:1px solid rgba(30,30,48,.5)}
+.data-table tr:hover td{background:rgba(0,230,118,.03)}
+.kuka-step{display:flex;gap:.75rem;align-items:flex-start;padding:.75rem;background:var(--bg-card);border-radius:10px;margin-bottom:.5rem;border:1px solid var(--border);transition:all .2s}
+.kuka-step:hover{border-color:rgba(0,230,118,.3);transform:translateX(4px)}
+.kuka-step-num{min-width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.8rem;font-family:'JetBrains Mono',monospace;flex-shrink:0}
+.kuka-step-content{flex:1}
+.kuka-step-title{font-weight:700;font-size:.85rem;margin-bottom:.2rem}
+.kuka-step-desc{font-size:.78rem;color:var(--text-dim);line-height:1.5}
+.kuka-grid-2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1rem}
+.kuka-cta{background:linear-gradient(135deg,rgba(0,230,118,.1),rgba(24,255,255,.05));border:2px solid var(--accent);border-radius:16px;padding:1.5rem;text-align:center;margin-top:2rem}
+.kuka-cta h3{font-size:1.2rem;background:var(--gradient1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:.5rem}
+.kuka-print-header,.kuka-print-footer{display:none}
+.kuka-metric{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:.75rem;text-align:center}
+.kuka-metric .val{font-size:1.3rem;font-weight:800;font-family:'JetBrains Mono',monospace}
+.kuka-metric .lbl{font-size:.6rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.5px}
+.kuka-risk{padding:.5rem .75rem;border-radius:8px;margin-bottom:.4rem;display:flex;align-items:start;gap:.5rem;font-size:.78rem;line-height:1.5}
+.kuka-contact-card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:1rem;flex:1;min-width:240px}
+.kuka-contact-card h4{font-size:.8rem;font-weight:700;margin-bottom:.5rem}
+.kuka-gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem;margin-top:.5rem}
+.kuka-gallery-item{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;overflow:hidden;cursor:pointer;transition:all .3s}
+.kuka-gallery-item:hover{border-color:var(--accent);transform:translateY(-4px);box-shadow:0 8px 30px rgba(0,230,118,.15)}
+.kuka-gallery-item img{width:100%;height:180px;object-fit:cover;display:block}
+.kuka-gallery-caption{padding:.5rem .75rem;font-size:.72rem;color:var(--text-dim);line-height:1.4}
+.kuka-lightbox{display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.92);backdrop-filter:blur(10px);justify-content:center;align-items:center;padding:2rem}
+.kuka-lightbox.active{display:flex}
+.kuka-lb-close{position:absolute;top:1rem;right:1.5rem;background:none;border:none;color:#fff;font-size:2rem;cursor:pointer;z-index:10;padding:.5rem;line-height:1;transition:color .2s}
+.kuka-lb-close:hover{color:var(--accent)}
+.kuka-lb-prev,.kuka-lb-next{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,230,118,.15);border:1px solid rgba(0,230,118,.3);color:var(--accent);font-size:1.5rem;width:50px;height:50px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;z-index:10}
+.kuka-lb-prev{left:1.5rem}.kuka-lb-next{right:1.5rem}
+.kuka-lb-prev:hover,.kuka-lb-next:hover{background:rgba(0,230,118,.3);border-color:var(--accent)}
+.kuka-lb-content{max-width:90vw;max-height:85vh;text-align:center}
+.kuka-lb-content img{max-width:100%;max-height:75vh;border-radius:8px;object-fit:contain}
+.kuka-lb-caption{color:var(--text);font-size:.9rem;margin-top:.75rem;font-weight:600}
+.kuka-lb-counter{color:var(--text-dim);font-size:.75rem;margin-top:.25rem}
+@media(max-width:768px){.kuka-gallery{grid-template-columns:repeat(2,1fr);gap:.5rem}.kuka-gallery-item img{height:120px}.kuka-lb-prev{left:.5rem}.kuka-lb-next{right:.5rem}.kuka-lb-prev,.kuka-lb-next{width:40px;height:40px;font-size:1.2rem}.kuka-nav{padding:.5rem .75rem;flex-wrap:wrap}.kuka-hero-stats{grid-template-columns:repeat(2,1fr)}.kuka-tabs{gap:.3rem;padding:.5rem 0}.kuka-tab{padding:.4rem .6rem;font-size:.65rem}.kuka-container{padding:0 .75rem 3rem}.kuka-grid-2{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="bg-mesh"></div>
+
+<!-- Print Header (hidden on screen) -->
+<div class="kuka-print-header">SURUS Inversa S.L. — Dossier Estratégico Allgaier France S.à.r.L — Cierre de Planta NetBid #19190 — Documento Confidencial — Mayo 2026</div>
+
+<!-- Navigation -->
+<nav class="kuka-nav">
+  <a href="/" class="kuka-nav-logo">&larr; SURUS Inversa</a>
+  <div class="kuka-nav-links">
+    <a href="/dashboard/" style="color:var(--accent2);font-weight:700">Dashboard</a>
+    <a href="#ficha-tecnica">Ficha Técnica</a>
+    <a href="#estado">Estado</a>
+    <a href="#precios">Precios</a>
+    <a href="#refurbishment">Refurbishment</a>
+    <a href="#compradores">Compradores</a>
+    <a href="#paso-a-paso">Paso a Paso</a>
+    <a href="#riesgos">Riesgos</a>
+    <button class="kuka-pdf-btn" onclick="window.print()">Descargar PDF</button>
+  </div>
+</nav>
+
+<div class="kuka-container">
+
+<!-- HERO -->
+<section class="kuka-hero">
+  <div style="font-size:.65rem;font-weight:700;color:var(--accent3);text-transform:uppercase;letter-spacing:3px;margin-bottom:.5rem">DOSSIER ESTRATÉGICO DE INVERSIÓN — CONFIDENCIAL</div>
+  <h1>Allgaier France S.à r.L — Cierre de Planta</h1>
+  <p class="kuka-hero-sub">Subasta NetBid #19190. Planta de estampación metálica para automoción en Faulquemont (Mosela, Francia). 56 lotes de subasta + 8 posiciones de venta. 200 puestos de trabajo perdidos. Cliente principal: Daimler/Mercedes-Benz.</p>
+  <div class="kuka-hero-stats">
+    <div class="kuka-hero-stat"><div class="number" style="background:var(--gradient1);-webkit-background-clip:text;-webkit-text-fill-color:transparent">64</div><div class="label">Lotes totales</div></div>
+    <div class="kuka-hero-stat"><div class="number" style="background:var(--gradient2);-webkit-background-clip:text;-webkit-text-fill-color:transparent">2.000+</div><div class="label">Items</div></div>
+    <div class="kuka-hero-stat"><div class="number" style="background:var(--gradient1);-webkit-background-clip:text;-webkit-text-fill-color:transparent">&euro;367K</div><div class="label">Precio salida mayor</div></div>
+    <div class="kuka-hero-stat"><div class="number" style="background:var(--gradient3);-webkit-background-clip:text;-webkit-text-fill-color:transparent">12/18 May</div><div class="label">Fecha subasta</div></div>
+    <div class="kuka-hero-stat"><div class="number" style="background:var(--gradient4);-webkit-background-clip:text;-webkit-text-fill-color:transparent">200</div><div class="label">Empleos perdidos</div></div>
+    <div class="kuka-hero-stat"><div class="number" style="background:var(--gradient6);-webkit-background-clip:text;-webkit-text-fill-color:transparent">41</div><div class="label">Páginas catálogo</div></div>
+  </div>
+</section>
+
+<!-- TABS -->
+<div class="kuka-tabs" id="kuka-tabs">
+  <div class="kuka-tab active" data-tab="ficha-tecnica">Ficha Técnica</div>
+  <div class="kuka-tab" data-tab="estado">Estado</div>
+  <div class="kuka-tab" data-tab="precios">Precios</div>
+  <div class="kuka-tab" data-tab="refurbishment">Refurbishment</div>
+  <div class="kuka-tab" data-tab="compradores">Compradores</div>
+  <div class="kuka-tab" data-tab="paso-a-paso">Paso a Paso</div>
+  <div class="kuka-tab" data-tab="riesgos">Riesgos</div>
+  <div class="kuka-tab" data-tab="imagenes">Imágenes</div>
+  <div class="kuka-tab" data-tab="documentacion">Documentación</div>
+  <div class="kuka-tab" data-tab="videos">Videos</div>
+</div>
+
+<!-- TAB: FICHA TÉCNICA -->
+<section class="kuka-section active" id="ficha-tecnica">
+  <div class="kuka-card">
+    <div class="kuka-card-title" style="color:var(--accent2)">Prensa de Transferencia Mecánica Arisa S-2-1600-620-130-FDE (Lote Principal)</div>
+    <div class="kuka-grid-2" style="margin-bottom:1rem">
+      <div class="kuka-metric"><div class="val" style="color:var(--accent)">1.600 t</div><div class="lbl">Fuerza nominal</div></div>
+      <div class="kuka-metric"><div class="val" style="color:var(--accent2)">620 mm</div><div class="lbl">Carrera</div></div>
+      <div class="kuka-metric"><div class="val" style="color:var(--accent4)">130 spm</div><div class="lbl">Golpes/min</div></div>
+      <div class="kuka-metric"><div class="val" style="color:var(--accent3)">2.500 mm</div><div class="lbl">Ancho bastidor</div></div>
+      <div class="kuka-metric"><div class="val" style="color:var(--accent5)">2005</div><div class="lbl">Año fabricación</div></div>
+      <div class="kuka-metric"><div class="val" style="color:var(--accent2)">&euro;367.000</div><div class="lbl">Precio de salida</div></div>
+    </div>
+    <div style="overflow-x:auto">
+    <table class="data-table">
+      <thead><tr><th>Parámetro</th><th>Especificación</th></tr></thead>
+      <tbody>
+        <tr><td style="font-weight:700">Modelo</td><td>Arisa S-2-1600-620-130-FDE</td></tr>
+        <tr><td style="font-weight:700">Tipo</td><td>Prensa de transferencia mecánica de doble efecto</td></tr>
+        <tr><td style="font-weight:700">Fuerza nominal</td><td>1.600 t (16.000 kN)</td></tr>
+        <tr><td style="font-weight:700">Carrera del pistón</td><td>620 mm</td></tr>
+        <tr><td style="font-weight:700">Velocidad</td><td>130 golpes/min (máx.)</td></tr>
+        <tr><td style="font-weight:700">Ancho del bastidor</td><td>2.500 mm</td></tr>
+        <tr><td style="font-weight:700">Cama de trabajo</td><td>Aprox. 2.500 x 1.600 mm</td></tr>
+        <tr><td style="font-weight:700">Sistema de transferencia</td><td>3-ejes (barra de transferencia integrada)</td></tr>
+        <tr><td style="font-weight:700">Año de fabricación</td><td>2005</td></tr>
+        <tr><td style="font-weight:700">Fabricante</td><td>Arisa S.A. (Zaragoza, España)</td></tr>
+        <tr><td style="font-weight:700">Aplicación</td><td>Estampación de componentes de automoción para Daimler/Mercedes-Benz</td></tr>
+        <tr style="border-top:2px solid var(--border)"><td style="font-weight:700;color:var(--accent3)">Precio de salida</td><td style="font-weight:800;color:var(--accent3)">&euro;367.000</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div style="font-size:.72rem;color:var(--text-dim);margin-top:.5rem;padding:.5rem;background:rgba(0,0,0,.2);border-radius:6px"><strong style="color:var(--accent)">Nota:</strong> La Arisa S-2-1600-620-130-FDE es una prensa de transferencia de alto rendimiento fabricada en España. Su sistema de 3 ejes de transferencia permite operaciones progresivas multi-estación. Es el lote de mayor valor de toda la subasta.</div>
+  </div>
+
+  <div class="kuka-card">
+    <div class="kuka-card-title" style="color:var(--accent2)">Prensas Arisa 8-2-800-32D-130-FDE (2 Unidades)</div>
+    <div style="overflow-x:auto">
+    <table class="data-table">
+      <thead><tr><th>Parámetro</th><th style="color:var(--accent2)">Unidad 1 (2001)</th><th style="color:var(--accent)">Unidad 2 (2002)</th></tr></thead>
+      <tbody>
+        <tr><td style="font-weight:700">Fuerza nominal</td><td>800 t (8.000 kN)</td><td>800 t (8.000 kN)</td></tr>
+        <tr><td style="font-weight:700">Carrera</td><td>32D (cortocircuito)</td><td>32D (cortocircuito)</td></tr>
+        <tr><td style="font-weight:700">Velocidad</td><td>130 spm</td><td>130 spm</td></tr>
+        <tr><td style="font-weight:700">Tipo</td><td>Prensa excéntrica de doble bastidor</td><td>Prensa excéntrica de doble bastidor</td></tr>
+        <tr><td style="font-weight:700">Año</td><td>2001</td><td>2002</td></tr>
+        <tr style="border-top:2px solid var(--border)"><td style="font-weight:700;color:var(--accent3)">Precio de salida</td><td style="font-weight:800;color:var(--accent3)">&euro;61.000</td><td style="font-weight:800;color:var(--accent3)">&euro;63.000</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <div class="kuka-card">
+    <div class="kuka-card-title" style="color:var(--accent5)">Prensas Hidráulicas Hydrap</div>
+    <div style="overflow-x:auto">
+    <table class="data-table">
+      <thead><tr><th>Parámetro</th><th style="color:var(--accent2)">HPD-M8-250 (1996)</th><th style="color:var(--accent)">HPD M5-250 (1992)</th></tr></thead>
+      <tbody>
+        <tr><td style="font-weight:700">Fuerza nominal</td><td>250 t (2.500 kN)</td><td>250 t (2.500 kN)</td></tr>
+        <tr><td style="font-weight:700">Tipo</td><td>Prensa hidráulica de bastidor</td><td>Prensa hidráulica de bastidor</td></tr>
+        <tr><td style="font-weight:700">Año</td><td>1996</td><td>1992</td></tr>
+        <tr><td style="font-weight:700">Aplicación</td><td>Embutición, conformado</td><td>Embutición, conformado</td></tr>
+        <tr style="border-top:2px solid var(--border)"><td style="font-weight:700;color:var(--accent3)">Precio de salida</td><td style="font-weight:800;color:var(--accent3)">&euro;17.500</td><td style="font-weight:800;color:var(--accent3)">&euro;12.500</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <div class="kuka-card">
+    <div class="kuka-card-title" style="color:var(--accent4)">Línea de Recubrimiento/Pintura Eisenmann (1992)</div>
+    <div class="kuka-grid-2" style="margin-bottom:1rem">
+      <div class="kuka-metric"><div class="val" style="color:var(--accent4)">&euro;60.000</div><div class="lbl">Precio de salida</div></div>
+      <div class="kuka-metric"><div class="val" style="color:var(--accent2)">Continua</div><div class="lbl">Tipo de sistema</div></div>
+      <div class="kuka-metric"><div class="val" style="color:var(--accent3)">1992</div><div class="lbl">Año fabricación</div></div>
+      <div class="kuka-metric"><div class="val" style="color:var(--accent5)">Eisenmann</div><div class="lbl">Fabricante</div></div>
+    </div>
+    <div style="overflow-x:auto">
+    <table class="data-table">
+      <thead><tr><th>Parámetro</th><th>Especificación</th></tr></thead>
+      <tbody>
+        <tr><td style="font-weight:700">Tipo</td><td>Sistema continuo de recubrimiento/pintura catofórica</td></tr>
+        <tr><td style="font-weight:700">Fabricante</td><td>Eisenmann GmbH (Alemania)</td></tr>
+        <tr><td style="font-weight:700">Año</td><td>1992</td></tr>
+        <tr><td style="font-weight:700">Aplicación</td><td>Recubrimiento catofórico (e-coating) y pintura de piezas estampadas para automoción</td></tr>
+        <tr><td style="font-weight:700">Componentes incluidos</td><td>Tanques de inmersión, sistema de transporte por cadena, horno de curado, zona de pretratamiento</td></tr>
+        <tr style="border-top:2px solid var(--border)"><td style="font-weight:700;color:var(--accent3)">Precio de salida</td><td style="font-weight:800;color:var(--accent3)">&euro;60.000</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div style="font-size:.72rem;color:var(--text-dim);margin-top:.5rem;padding:.5rem;background:rgba(255,215,64,0.06);border:1px solid rgba(255,215,64,0.15);border-radius:6px"><strong style="color:var(--accent4)">Nota sobre reubicación:</strong> Las líneas Eisenmann de recubrimiento continuo son complejas de desmontar y reubicar. Requieren ingeniería especializada para el desmantelamiento. El valor principal está en los componentes individuales (tanques, transportadores, hornos) más que en la línea completa.</div>
+  </div>
+
+  <div class="kuka-card">
+    <div class="kuka-card-title" style="color:var(--accent2)">Robots ABB (4 Unidades) + Celda de Soldadura igm</div>
+    <div style="overflow-x:auto">
+    <table class="data-table">
+      <thead><tr><th>Equipo</th><th>Modelo</th><th>Cantidad</th><th>Precio salida</th></tr></thead>
+      <tbody>
+        <tr><td style="font-weight:700">Robot industrial ABB</td><td>IRB 2400</td><td>2+</td><td rowspan="2" style="font-weight:800;color:var(--accent3)">&euro;1.500 (lote completo)</td></tr>
+        <tr><td style="font-weight:700">Robot industrial ABB</td><td>IRB 4400</td><td>2+</td></tr>
+        <tr style="border-top:1px solid var(--border)"><td style="font-weight:700;color:var(--accent5)">Celda soldadura robot</td><td>igm (completa)</td><td>1</td><td style="font-weight:800;color:var(--accent3)">&euro;90.000</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div style="font-size:.72rem;color:var(--text-dim);margin-top:.5rem;padding:.5rem;background:rgba(0,230,118,0.06);border:1px solid rgba(0,230,118,0.15);border-radius:6px"><strong style="color:var(--accent)">Oportunidad ABB:</strong> Los 4 robots ABB a &euro;1.500 el lote representan una oportunidad de muy alto margen. Los IRB 2400/4400 son modelos de uso general industrial con demanda en LATAM. Incluso con refurbishment completo (2.000-4.000&euro;/unidad), el margen potencial supera el 200%.</div>
+  </div>
+
+  <div class="kuka-card">
+    <div class="kuka-card-title" style="color:var(--accent)">Equipamiento Adicional — Resumen</div>
+    <div style="overflow-x:auto">
+    <table class="data-table">
+      <thead><tr><th>Equipo</th><th>Modelo/Detalle</th><th>Año</th><th>Precio salida (&euro;)</th></tr></thead>
+      <tbody>
+        <tr style="background:rgba(255,110,64,0.05)"><td style="font-weight:700">Sierra de cinta</td><td>Behringer Eisele HBP510-923G</td><td>—</td><td style="font-weight:800;color:var(--accent3)">71.000</td></tr>
+        <tr><td style="font-weight:700">Grúa puente bicarril</td><td>Konecranes (grande)</td><td>—</td><td style="font-weight:800;color:var(--accent4)">16.500</td></tr>
+        <tr><td style="font-weight:700">Grúa puente bicarril</td><td>Konecranes (pequeña)</td><td>—</td><td style="font-weight:800;color:var(--accent4)">12.000</td></tr>
+        <tr><td style="font-weight:700">Centro mecanizado CNC</td><td>Hermle U 740</td><td>—</td><td style="font-weight:800;color:var(--accent2)">9.400</td></tr>
+        <tr><td style="font-weight:700">4x Robots ABB</td><td>IRB 2400 / IRB 4400</td><td>—</td><td style="font-weight:800;color:var(--accent2)">1.500</td></tr>
+        <tr><td style="font-weight:700">Celda soldadura</td><td>igm Robot</td><td>—</td><td style="font-weight:800;color:var(--accent3)">90.000</td></tr>
+        <tr><td style="font-weight:700">Prensa hidráulica</td><td>Hydrap HPD-M8-250</td><td>1996</td><td style="font-weight:800;color:var(--accent4)">17.500</td></tr>
+        <tr><td style="font-weight:700">Prensa hidráulica</td><td>Hydrap HPD M5-250</td><td>1992</td><td style="font-weight:800;color:var(--accent4)">12.500</td></tr>
+        <tr><td style="font-weight:700">Sistema recubrimiento</td><td>Eisenmann continuo</td><td>1992</td><td style="font-weight:800;color:var(--accent4)">60.000</td></tr>
+        <tr><td style="font-weight:700">Prensa transferencia</td><td>Arisa 8-2-800-32D-130-FDE</td><td>2001</td><td style="font-weight:800;color:var(--accent2)">61.000</td></tr>
+        <tr><td style="font-weight:700">Prensa transferencia</td><td>Arisa 8-2-800-32D-130-FDE</td><td>2002</td><td style="font-weight:800;color:var(--accent2)">63.000</td></tr>
+        <tr style="background:rgba(255,110,64,0.08)"><td style="font-weight:800;color:var(--accent3)">Prensa transferencia</td><td style="font-weight:800;color:var(--accent3)">Arisa S-2-1600-620-130-FDE</td><td style="font-weight:800;color:var(--accent3)">2005</td><td style="font-weight:800;color:var(--accent3)">367.000</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div style="font-size:.72rem;color:var(--text-dim);margin-top:.5rem;padding:.5rem;background:rgba(0,0,0,.2);border-radius:6px"><strong style="color:var(--accent)">Nota:</strong> Los precios mostrados son los precios de salida (starting prices) de la subasta. El precio final puede ser significativamente mayor según la competencia. La subasta incluye 56 lotes + 8 posiciones de venta directa con más de 2.000 items repartidos en 41 páginas de catálogo.</div>
+  </div>
+
+  <div class="kuka-card">
+    <div class="kuka-card-title" style="color:var(--accent5)">Comparativa: Arisa vs. Prensas de Transferencia Competidoras</div>
+    <div style="overflow-x:auto">
+    <table class="data-table">
+      <thead><tr><th>Especificación</th><th style="color:var(--accent)">Arisa S-2-1600</th><th style="color:var(--accent2)">Schuler NKG</th><th style="color:var(--accent4)">Komatsu HTP</th><th style="color:var(--accent5)">Aida NXT</th></tr></thead>
+      <tbody>
+        <tr><td style="font-weight:700">Fuerza nominal</td><td>1.600 t</td><td>1.000-3.000 t</td><td>800-2.000 t</td><td>800-2.000 t</td></tr>
+        <tr><td style="font-weight:700">Carrera</td><td>620 mm</td><td>400-800 mm</td><td>300-600 mm</td><td>400-700 mm</td></tr>
+        <tr><td style="font-weight:700">Velocidad</td><td>130 spm</td><td>30-60 spm</td><td>30-80 spm</td><td>40-100 spm</td></tr>
+        <tr><td style="font-weight:700">Origen</td><td>España</td><td>Alemania</td><td>Japón</td><td>Japón</td></tr>
+        <tr><td style="font-weight:700">Nuevo (aprox.)</td><td>1,5-2,5M&euro;</td><td>2-4M&euro;</td><td>1,5-3M&euro;</td><td>1,5-3M&euro;</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div style="font-size:.72rem;color:var(--text-dim);margin-top:.5rem;padding:.5rem;background:rgba(0,0,0,.2);border-radius:6px"><strong style="color:var(--accent)">Ventaja Arisa:</strong> Las prensas Arisa son muy apreciadas en el mercado de estampación europeo y LATAM por su alta velocidad (130 spm), robustez y relación calidad-precio. El modelo S-2-1600 es ideal para piezas medianas y grandes de automoción. Su fabricante, Arisa (Zaragoza, España), ofrece soporte post-venta activo y repuestos.</div>
+  </div>
+</section>
+
+<!-- TAB: ESTADO -->
+<section class="kuka-section" id="estado">
+  <div class="kuka-card">
+    <div class="kuka-card-title" style="color:var(--accent3)">Estado de la Planta — Información Conocida</div>
+    <div style="font-size:.82rem;color:var(--text-dim);margin-bottom:1rem;line-height:1.6"><strong style="color:var(--accent3)">La planta estaba OPERATIVA antes del cierre.</strong> Allgaier France S.à r.L fue adquirida por el Westron Group, que decidió cerrar la planta de Faulquemont. Los 200 empleados fueron despedidos. El equipamiento se vende en su estado actual ("as-is, where-is") sin garantía.</div>
+
+    <div class="kuka-grid-2" style="margin-bottom:1.5rem">
+      <div style="padding:.75rem;background:rgba(255,110,64,0.08);border:1px solid rgba(255,110,64,0.2);border-radius:10px">
+        <div style="font-size:.72rem;font-weight:700;color:var(--accent3);text-transform:uppercase;letter-spacing:1px;margin-bottom:.5rem">Riesgos Conocidos</div>
+        <div style="display:grid;gap:.5rem;font-size:.78rem">
+          <div style="display:flex;gap:.5rem;align-items:start"><span style="background:var(--accent3);color:#fff;font-size:.6rem;padding:.1rem .4rem;border-radius:3px;font-weight:700;flex-shrink:0">CRÍTICO</span><span><strong style="color:var(--accent3)">Edad del equipamiento</strong> — Las prensas Hydrap tienen 30+ años (1992, 1996). La línea Eisenmann tiene 33+ años (1992). Vida útil esperada de prensas hidráulicas: 25-35 años.</span></div>
+          <div style="display:flex;gap:.5rem;align-items:start"><span style="background:var(--accent3);color:#fff;font-size:.6rem;padding:.1rem .4rem;border-radius:3px;font-weight:700;flex-shrink:0">CRÍTICO</span><span><strong style="color:var(--accent3)">Inspección obligatoria</strong> — No se conocen informes de mantenimiento recientes. Se debe verificar desgaste de guías, estado de cilindros hidráulicos, integridad de bastidores.</span></div>
+          <div style="display:flex;gap:.5rem;align-items:start"><span style="background:var(--accent4);color:#000;font-size:.6rem;padding:.1rem .4rem;border-radius:3px;font-weight:700;flex-shrink:0">ALTA</span><span><strong>Línea Eisenmann</strong> — Sistema de recubrimiento de 1992, tecnología antigua. Requiere ingeniería especializada para desmontaje y reubicación.</span></div>
+          <div style="display:flex;gap:.5rem;align-items:start"><span style="background:var(--accent4);color:#000;font-size:.6rem;padding:.1rem .4rem;border-radius:3px;font-weight:700;flex-shrink:0">ALTA</span><span><strong>Cierre de planta</strong> — Posible falta de mantenimiento preventivo en los últimos meses de operación. Verificar condiciones de almacenamiento post-cierre.</span></div>
+        </div>
+      </div>
+
+      <div style="padding:.75rem;background:rgba(0,230,118,0.06);border:1px solid rgba(0,230,118,0.15);border-radius:10px">
+        <div style="font-size:.72rem;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:1px;margin-bottom:.5rem">Puntos Positivos</div>
+        <div style="display:grid;gap:.5rem;font-size:.78rem">
+          <div style="display:flex;gap:.5rem;align-items:start"><span style="color:var(--accent);font-weight:700;flex-shrink:0">+</span><span>Planta operativa hasta el cierre — equipamiento funcional, no almacenado durante años</span></div>
+          <div style="display:flex;gap:.5rem;align-items:start"><span style="color:var(--accent);font-weight:700;flex-shrink:0">+</span><span>Prensas Arisa (2001, 2002, 2005) relativamente modernas — 21-25 años, dentro del rango de reutilización</span></div>
+          <div style="display:flex;gap:.5rem;align-items:start"><span style="color:var(--accent);font-weight:700;flex-shrink:0">+</span><span>Equipamiento de un solo propietario — mantenimiento probablemente realizado por el personal de Allgaier</span></div>
+          <div style="display:flex;gap:.5rem;align-items:start"><span style="color:var(--accent);font-weight:700;flex-shrink:0">+</span><span>Cliente Daimler/Mercedes-Benz = estándares de calidad y mantenimiento elevados</span></div>
+          <div style="display:flex;gap:.5rem;align-items:start"><span style="color:var(--accent);font-weight:700;flex-shrink:0">+</span><span>Robots ABB y celda igm probablemente en buen estado — uso en producción de automoción</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="kuka-card">
+    <div class="kuka-card-title" style="color:var(--accent2)">Contexto del Cierre</div>
+    <div style="font-size:.82rem;color:var(--text-dim);line-height:1.7">
+      <p style="margin-bottom:.75rem"><strong style="color:var(--text)">Allgaier France S.à r.L</strong> era una filial del Grupo Allgaier (Alemania), especializada en estampación metálica para el sector automotriz. Su cliente principal era <strong style="color:var(--accent2)">Daimler AG / Mercedes-Benz</strong>, fabricando componentes estructurales y de carrocería.</p>
+      <p style="margin-bottom:.75rem">La planta fue adquirida por el <strong style="color:var(--accent4)">Westron Group</strong>, que decidió cerrar las operaciones en Faulquemont, resultando en la pérdida de <strong style="color:var(--accent3)">200 puestos de trabajo</strong>. La subasta NetBid #19190 es el resultado de este cierre de planta completo.</p>
+      <p style="margin-bottom:.75rem"><strong style="color:var(--text)">Ubicación:</strong> Zone Industrielle, Rue Dr. Dieter Hundt, FR-57380 Faulquemont, Francia. Faulquemont se encuentra en el departamento de Mosela, en la región Grand Est, corazón del corredor industrial franco-alemán.</p>
+    </div>
+  </div>
+
+  <div class="kuka-card">
+    <div class="kuka-card-title" style="color:var(--accent4)">Checklist de Inspección In Situ</div>
+    <div class="kuka-grid-2">
+      <div style="padding:.75rem;background:rgba(0,0,0,.2);border-radius:10px;border:1px solid var(--border)">
+        <div style="font-size:.72rem;font-weight:700;color:var(--accent2);text-transform:uppercase;letter-spacing:1px;margin-bottom:.5rem">Prensas Arisa</div>
+        <div style="display:grid;gap:.3rem;font-size:.75rem">
+          <div><span style="color:var(--accent3)">&#9744;</span> Verificar carrera completa sin bloqueos</div>
+          <div><span style="color:var(--accent3)">&#9744;</span> Comprobar holgura de guías y columnas</div>
+          <div><span style="color:var(--accent3)">&#9744;</span> Inspeccionar sistema de transferencia (3 ejes)</div>
+          <div><span style="color:var(--accent3)">&#9744;</span> Verificar presión y temperatura hidráulica</div>
+          <div><span style="color:var(--accent3)">&#9744;</span> Comprobar motor principal y embrague</div>
+          <div><span style="color:var(--accent3)">&#9744;</span> Revisar sistema de lubricación centralizado</div>
+          <div><span style="color:var(--accent3)">&#9744;</span> Verificar sistema de seguridad (light curtains, dos manos)</div>
+          <div><span style="color:var(--accent3)">&#9744;</span> Solicitar registros de mantenimiento</div>
+        </div>
+      </div>
+      <div style="padding:.75rem;background:rgba(0,0,0,.2);border-radius:10px;border:1px solid var(--border)">
+        <div style="font-size:.72rem;font-weight:700;color:var(--accent4);text-transform:uppercase;letter-spacing:1px;margin-bottom:.5rem">Prensas Hydrap + Resto</div>
+        <div style="display:grid;gap:.3rem;font-size:.75rem">
+          <div><span style="color:var(--accent4)">&#9744;</span> Verificar fugas de aceite hidráulico</div>
+          <div><span style="color:var(--accent4)">&#9744;</span> Comprobar estado de sellos y cilindros</div>
+          <div><span style="color:var(--accent4)">&#9744;</span> Inspeccionar bomba hidráulica y acumuladores</div>
+          <div><span style="color:var(--accent4)">&#9744;</span> Verificar grúas Konecranes (carga de prueba)</div>
+          <div><span style="color:var(--accent4)">&#9744;</span> Comprobar sierra Behringer — corte y hoja</div>
+          <div><span style="color:var(--accent4)">&#9744;</span> Verificar Hermle U 740 — ejes, husillo, ATC</div>
+          <div><span style="color:var(--accent4)">&#9744;</span> Encender robots ABB — verificar teach pendant</div>
+          <div><span style="color:var(--accent4)">&#9744;</span> Inspeccionar celda igm — soldadura y posicionador</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TAB: PRECIOS -->
+<section class="kuka-section" id="precios">
+  <div class="kuka-card">
+    <div class="kuka-card-title" style="color:var(--accent4)">Precios de Salida — Subasta NetBid #19190</div>
+    <div style="overflow-x:auto">
+    <table class="data-table">
+      <thead><tr><th>Lote</th><th>Equipo</th><th>Año</th><th>Precio Salida (&euro;)</th><th>Valor Nuevo Est. (&euro;)</th><th>Descuento (%)</th></tr></thead>
+      <tbody>
+        <tr style="background:rgba(255,110,64,0.08)"><td style="font-weight:700;color:var(--accent3)">1</td><td style="font-weight:700;color:var(--accent3)">Arisa S-2-1600-620-130-FDE</td><td>2005</td><td style="font-weight:800;color:var(--accent3)">367.000</td><td style="color:var(--text-dim)">1.500.000-2.500.000</td><td style="color:var(--accent)">75-85%</td></tr>
+        <tr><td style="font-weight:700">2</td><td>Arisa 8-2-800-32D-130-FDE</td><td>2001</td><td style="font-weight:700">61.000</td><td style="color:var(--text-dim)">400.000-600.000</td><td style="color:var(--accent)">85-90%</td></tr>
+        <tr><td style="font-weight:700">3</td><td>Arisa 8-2-800-32D-130-FDE</td><td>2002</td><td style="font-weight:700">63.000</td><td style="color:var(--text-dim)">400.000-600.000</td><td style="color:var(--accent)">85-90%</td></tr>
+        <tr><td style="font-weight:700">4</td><td>Hydrap HPD-M8-250</td><td>1996</td><td style="font-weight:700">17.500</td><td style="color:var(--text-dim)">80.000-120.000</td><td style="color:var(--accent)">78-85%</td></tr>
+        <tr><td style="font-weight:700">5</td><td>Hydrap HPD M5-250</td><td>1992</td><td style="font-weight:700">12.500</td><td style="color:var(--text-dim)">80.000-120.000</td><td style="color:var(--accent)">85-90%</td></tr>
+        <tr><td style="font-weight:700">6</td><td>Eisenmann sistema recubrimiento</td><td>1992</td><td style="font-weight:700">60.000</td><td style="color:var(--text-dim)">500.000-800.000</td><td style="color:var(--accent)">88-93%</td></tr>
+        <tr><td style="font-weight:700">7</td><td>igm Robot celda soldadura</td><td>—</td><td style="font-weight:700">90.000</td><td style="color:var(--text-dim)">200.000-350.000</td><td style="color:var(--accent)">55-71%</td></tr>
+        <tr><td style="font-weight:700">8</td><td>Behringer Eisele HBP510-923G</td><td>—</td><td style="font-weight:700">71.000</td><td style="color:var(--text-dim)">120.000-180.000</td><td style="color:var(--accent)">40-61%</td></tr>
+        <tr><td style="font-weight:700">9</td><td>Konecranes grúa puente (grande)</td><td>—</td><td style="font-weight:700">16.500</td><td style="color:var(--text-dim)">50.000-80.000</td><td style="color:var(--accent)">67-79%</td></tr>
+        <tr><td style="font-weight:700">10</td><td>Konecranes grúa puente (pequeña)</td><td>—</td><td style="font-weight:700">12.000</td><td style="color:var(--text-dim)">35.000-60.000</td><td style="color:var(--accent)">66-80%</td></tr>
+        <tr><td style="font-weight:700">11</td><td>Hermle U 740 CNC</td><td>—</td><td style="font-weight:700">9.400</td><td style="color:var(--text-dim)">60.000-90.000</td><td style="color:var(--accent)">85-89%</td></tr>
+        <tr><td style="font-weight:700">12</td><td>4x Robots ABB (IRB 2400/4400)</td><td>—</td><td style="font-weight:700">1.500</td><td style="color:var(--text-dim)">40.000-80.000</td><td style="color:var(--accent)">96-98%</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div style="font-size:.72rem;color:var(--text-dim);margin-top:.5rem;padding:.5rem;background:rgba(0,0,0,.2);border-radius:6px"><strong style="color:var(--accent)">Nota:</strong> Los precios de salida son el mínimo de la subasta. Los precios de puja final pueden ser 1.5x-3x estos valores dependiendo de la competencia. Los valores nuevos estimados son aproximados y varían según configuración específica.</div>
+  </div>
+
+  <div class="kuka-card">
+    <div class="kuka-card-title" style="color:var(--accent)">Análisis de Inversión — Lotes Estratégicos</div>
+    <div style="overflow-x:auto">
+    <table class="data-table">
+      <thead><tr><th>Concepto</th><th>Lote Arisa 1600t (&euro;)</th><th>Lote Prensas 800t (2 und) (&euro;)</th><th>Lote Robots + Celda (&euro;)</th></tr></thead>
+      <tbody>
+        <tr><td style="font-weight:700">Precio de salida</td><td>367.000</td><td>124.000</td><td>91.500</td></tr>
+        <tr><td>Estimación puja final (1.3-1.8x)</td><td style="color:var(--accent4)">477.000-660.000</td><td style="color:var(--accent4)">161.000-223.000</td><td style="color:var(--accent4)">119.000-164.000</td></tr>
+        <tr><td>Comisión NetBid (15% + IVA)</td><td>66.780-92.400</td><td>22.540-31.220</td><td>16.660-22.960</td></tr>
+        <tr><td>Refurbishment</td><td>30.000-50.000</td><td>15.000-25.000</td><td>8.000-15.000</td></tr>
+        <tr><td>Transporte (Francia-España)</td><td>15.000-25.000</td><td>10.000-18.000</td><td>5.000-8.000</td></tr>
+        <tr style="border-top:2px solid var(--accent)"><td style="font-weight:800">Inversión total estimada</td><td style="font-weight:800;color:var(--accent)">589.000-828.000</td><td style="font-weight:800;color:var(--accent)">209.000-297.000</td><td style="font-weight:800;color:var(--accent)">149.000-210.000</td></tr>
+        <tr><td style="color:var(--text-dim);font-size:.7rem">Valor de reventa (LATAM)</td><td style="font-weight:700;color:var(--accent)">650.000-1.000.000</td><td style="font-weight:700;color:var(--accent)">200.000-350.000</td><td style="font-weight:700;color:var(--accent)">150.000-250.000</td></tr>
+        <tr><td style="color:var(--text-dim);font-size:.7rem">Margen potencial</td><td style="font-weight:700;color:var(--accent)">-3% a +70%</td><td style="font-weight:700;color:var(--accent)">0% a +67%</td><td style="font-weight:700;color:var(--accent)">0% a +68%</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div style="font-size:.72rem;color:var(--accent);font-weight:600;margin-top:.75rem;padding:.5rem;background:rgba(0,230,118,0.06);border:1px solid rgba(0,230,118,0.15);border-radius:6px">Mejor oportunidad por ratio riesgo/beneficio: Lote de 4 robots ABB a &euro;1.500. Con &euro;8.000-15.000 de refurbishment, el valor de reventa en LATAM puede ser &euro;40.000-80.000 (margen 200-500%). Segundo mejor: Sierra Behringer HBP510-923G — mercado secundario activo y demanda constante.</div>
+  </div>
+
+  <div class="kuka-card">
+    <div class="kuka-card-title" style="color:var(--accent2)">Comisión y Costes de Subasta NetBid</div>
+    <div style="overflow-x:auto">
+    <table class="data-table">
+      <thead><tr><th>Concepto</th><th>Porcentaje / Importe</th><th>Notas</th></tr></thead>
+      <tbody>
+        <tr><td style="font-weight:700">Comisión de compra NetBid</td><td style="font-weight:700;color:var(--accent3)">15% sobre precio de adjudicación</td><td>Estándar para subastas industriales</td></tr>
+        <tr><td style="font-weight:700">IVA sobre comisión</td><td>21% sobre la comisión</td><td>IVA francés (TVA)</td></tr>
+        <tr><td style="font-weight:700">Depósito de garantía</td><td>Variable por lote</td><td>Reembolsable si no se adjudica</td></tr>
+        <tr><td style="font-weight:700">Seguro de transporte</td><td>1-2% del valor</td><td>Recomendado para maquinaria pesada</td></tr>
+        <tr><td style="font-weight:700">Desmontaje</td><td>5.000-30.000&euro; según equipo</td><td>La prensa Arisa 1600t requiere grúas especiales</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div style="font-size:.72rem;color:var(--text-dim);margin-top:.5rem;padding:.5rem;background:rgba(255,110,64,0.06);border:1px solid rgba(255,110,64,0.15);border-radius:6px"><strong style="color:var(--accent3)">Atención:</strong> La comisión de NetBid (15% + 21% IVA) se suma al precio de adjudicación. Para un lote adjudicado a &euro;367.000, el coste total sería &euro;367.000 + &euro;55.050 (comisión) + &euro;11.560.50 (IVA) = &euro;433.610.50 solo en compra + comisiones.</div>
+  </div>
+</section>
+
+<!-- TAB: REFURBISHMENT -->
+<section class="kuka-section" id="refurbishment">
+  <div class="kuka-card">
+    <div class="kuka-card-title" style="color:var(--accent4)">Refurbishment — Costes Estimados por Equipo</div>
+    <div style="overflow-x:auto">
+    <table class="data-table">
+      <thead><tr><th>Equipo</th><th>Acción</th><th>Coste (&euro;)</th><th>Prioridad</th></tr></thead>
+      <tbody>
+        <tr><td rowspan="5" style="font-weight:700;color:var(--accent2);vertical-align:top">Arisa S-2-1600<br>(Prensa transferencia)</td><td>Inspección completa y certificación</td><td style="font-weight:700">5.000-8.000</td><td><span class="kuka-badge kuka-badge-critical">CRÍTICA</span></td></tr>
+        <tr><td>Sistema de transferencia (3 ejes)</td><td style="font-weight:700">8.000-15.000</td><td><span class="kuka-badge kuka-badge-critical">CRÍTICA</span></td></tr>
+        <tr><td>Sistema hidráulico + lubricación</td><td style="font-weight:700">5.000-10.000</td><td><span class="kuka-badge kuka-badge-high">ALTA</span></td></tr>
+        <tr><td>Sistema eléctrico + PLC</td><td style="font-weight:700">3.000-6.000</td><td><span class="kuka-badge kuka-badge-high">ALTA</span></td></tr>
+        <tr><td>Pintura y limpieza</td><td style="font-weight:700">2.000-4.000</td><td><span class="kuka-badge kuka-badge-medium">MEDIA</span></td></tr>
+        <tr style="border-top:2px solid var(--accent4)"><td style="font-weight:800;color:var(--accent4)">Total Arisa 1600t</td><td colspan="2" style="font-weight:800;color:var(--accent4)">23.000-43.000 &euro;</td></tr>
+        <tr><td rowspan="3" style="font-weight:700;color:var(--accent2);vertical-align:top;border-top:2px solid var(--border)">Arisa 8-2-800<br>(cada unidad)</td><td>Inspección + calibración</td><td style="font-weight:700">3.000-5.000</td><td><span class="kuka-badge kuka-badge-critical">CRÍTICA</span></td></tr>
+        <tr><td>Sistema eléctrico + embrague</td><td style="font-weight:700">2.000-4.000</td><td><span class="kuka-badge kuka-badge-high">ALTA</span></td></tr>
+        <tr><td>Pintura y limpieza</td><td style="font-weight:700">1.500-3.000</td><td><span class="kuka-badge kuka-badge-medium">MEDIA</span></td></tr>
+        <tr style="border-top:2px solid var(--accent4)"><td style="font-weight:800;color:var(--accent4)">Total Arisa 800t (x2)</td><td colspan="2" style="font-weight:800;color:var(--accent4)">13.000-24.000 &euro; (las 2)</td></tr>
+        <tr><td rowspan="3" style="font-weight:700;color:var(--accent2);vertical-align:top;border-top:2px solid var(--border)">Hydrap<br>(cada prensa)</td><td>Revisión cilindros + sellos</td><td style="font-weight:700">2.000-4.000</td><td><span class="kuka-badge kuka-badge-critical">CRÍTICA</span></td></tr>
+        <tr><td>Bomba hidráulica</td><td style="font-weight:700">1.000-2.500</td><td><span class="kuka-badge kuka-badge-high">ALTA</span></td></tr>
+        <tr><td>Limpieza + pintura</td><td style="font-weight:700">1.000-2.000</td><td><span class="kuka-badge kuka-badge-medium">MEDIA</span></td></tr>
+        <tr style="border-top:2px solid var(--accent4)"><td style="font-weight:800;color:var(--accent4)">Total Hydrap (x2)</td><td colspan="2" style="font-weight:800;color:var(--accent4)">8.000-17.000 &euro; (las 2)</td></tr>
+        <tr><td rowspan="3" style="font-weight:700;color:var(--accent2);vertical-align:top;border-top:2px solid var(--border)">ABB Robots<br>(4 unidades)</td><td>Baterías + mastering</td><td style="font-weight:700">200-400/unidad</td><td><span class="kuka-badge kuka-badge-critical">CRÍTICA</span></td></tr>
+        <tr><td>Engrase + limpieza + test</td><td style="font-weight:700">300-600/unidad</td><td><span class="kuka-badge kuka-badge-high">ALTA</span></td></tr>
+        <tr><td>Controller check + teach pendant</td><td style="font-weight:700">500-1.500/unidad</td><td><span class="kuka-badge kuka-badge-high">ALTA</span></td></tr>
+        <tr style="border-top:2px solid var(--accent4)"><td style="font-weight:800;color:var(--accent4)">Total 4x ABB</td><td colspan="2" style="font-weight:800;color:var(--accent4)">4.000-10.000 &euro;</td></tr>
+        <tr><td style="font-weight:700;color:var(--accent2);border-top:2px solid var(--border)">Behringer sierra</td><td>Hoja + guías + limpieza</td><td style="font-weight:700">1.500-3.000</td><td><span class="kuka-badge kuka-badge-medium">MEDIA</span></td></tr>
+        <tr><td style="font-weight:700;color:var(--accent2)">Hermle U 740</td><td>Husillo + ATC + calibración</td><td style="font-weight:700">2.000-5.000</td><td><span class="kuka-badge kuka-badge-high">ALTA</span></td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div style="font-size:.72rem;color:var(--text-dim);margin-top:.5rem;padding:.5rem;background:rgba(0,0,0,.2);border-radius:6px"><strong style="color:var(--accent)">Timeline estimado:</strong> Prensas Arisa: 4-8 semanas. Hydrap: 2-3 semanas/unidad. Robots ABB: 1-2 semanas/lote. Sierra + Hermle: 1-2 semanas. Total si se hace todo en paralelo: 6-10 semanas.</div>
+  </div>
+
+  <div class="kuka-card">
+    <div class="kuka-card-title" style="color:var(--accent)">Desglose de Refurbishment ABB IRB 2400/4400</div>
+    <div style="overflow-x:auto">
+    <table class="data-table">
+      <thead><tr><th>Acción</th><th>Coste/unidad (&euro;)</th><th>4 unidades (&euro;)</th><th>Prioridad</th></tr></thead>
+      <tbody>
+        <tr><td>Cambio baterías SRAM/encoder</td><td style="font-weight:700">100-200</td><td>400-800</td><td><span class="kuka-badge kuka-badge-critical">CRÍTICA</span></td></tr>
+        <tr><td>Limpieza CO2 dry ice</td><td style="font-weight:700">200-400</td><td>800-1.600</td><td><span class="kuka-badge kuka-badge-high">ALTA</span></td></tr>
+        <tr><td>Engrase ejes 1-6</td><td style="font-weight:700">150-300</td><td>600-1.200</td><td><span class="kuka-badge kuka-badge-critical">CRÍTICA</span></td></tr>
+        <tr><td>Calibración con calibo</td><td style="font-weight:700">200-400</td><td>800-1.600</td><td><span class="kuka-badge kuka-badge-critical">CRÍTICA</span></td></tr>
+        <tr><td>Verificación controlador + teach pendant</td><td style="font-weight:700">200-500</td><td>800-2.000</td><td><span class="kuka-badge kuka-badge-high">ALTA</span></td></tr>
+        <tr><td>Test 30 min a 75% velocidad</td><td style="font-weight:700">50-100</td><td>200-400</td><td><span class="kuka-badge kuka-badge-high">ALTA</span></td></tr>
+        <tr><td>Pintura + acabado</td><td style="font-weight:700">300-500</td><td>1.200-2.000</td><td><span class="kuka-badge kuka-badge-medium">MEDIA</span></td></tr>
+        <tr style="border-top:2px solid var(--accent)"><td style="font-weight:800">TOTAL por unidad</td><td style="font-weight:800;color:var(--accent)">1.200-2.400</td><td style="font-weight:800;color:var(--accent)">4.800-9.600</td><td></td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div style="font-size:.72rem;color:var(--accent);font-weight:600;margin-top:.75rem;padding:.5rem;background:rgba(0,230,118,0.06);border:1px solid rgba(0,230,118,0.15);border-radius:6px">ROI estimado robots ABB: Coste total (compra + refurb) = &euro;6.300-11.100. Valor reventa LATAM = &euro;40.000-80.000. Margen potencial: 260-1.170%. Este es el lote con mejor ratio riesgo/beneficio de toda la subasta.</div>
+  </div>
+</section>
+
+<!-- TAB: COMPRADORES -->
+<section class="kuka-section" id="compradores">
+  <div class="kuka-card">
+    <div class="kuka-card-title" style="color:var(--accent2)">Compradores Potenciales LATAM por Sector</div>
+    <div style="overflow-x:auto">
+    <table class="data-table">
+      <thead><tr><th>Equipo</th><th>Sector</th><th>Compradores LATAM</th><th>Precio reventa (&euro;)</th><th>Demanda</th></tr></thead>
+      <tbody>
+        <tr style="background:rgba(0,230,118,0.05)"><td style="font-weight:700;color:var(--accent3)">Arisa S-2-1600</td><td>Automoción (estampación)</td><td>Nemak (MX), Metalsa (MX), Martinrea (MX), Gestamp (BR+MX)</td><td style="font-weight:700;color:var(--accent)">650.000-1.000.000</td><td><span class="kuka-badge kuka-badge-high">ALTA</span></td></tr>
+        <tr><td style="font-weight:700">Arisa 8-2-800 (x2)</td><td>Automoción + autopartes</td><td>Aptiv (MX), Lear (MX), Brose (MX), Rassini (MX)</td><td style="font-weight:700;color:var(--accent)">100.000-175.000 (cada una)</td><td><span class="kuka-badge kuka-badge-high">ALTA</span></td></tr>
+        <tr><td style="font-weight:700">Hydrap 250t (x2)</td><td>Metal-mecánica general</td><td>Fabricantes LATAM de piezas forjadas, centros de mecanizado</td><td style="font-weight:700;color:var(--accent)">25.000-50.000 (cada una)</td><td><span class="kuka-badge kuka-badge-medium">MEDIA</span></td></tr>
+        <tr style="background:rgba(0,230,118,0.05)"><td style="font-weight:700;color:var(--accent)">4x ABB IRB 2400/4400</td><td>Robótica general</td><td>Integradores de robótica, automoción, soldadura</td><td style="font-weight:700;color:var(--accent)">10.000-20.000 (cada uno)</td><td><span class="kuka-badge kuka-badge-critical">MUY ALTA</span></td></tr>
+        <tr><td style="font-weight:700">igm celda soldadura</td><td>Soldadura automoción</td><td>Fabricantes de estructuras de vehículo, autopartes</td><td style="font-weight:700;color:var(--accent)">150.000-250.000</td><td><span class="kuka-badge kuka-badge-medium">MEDIA</span></td></tr>
+        <tr><td style="font-weight:700">Behringer sierra</td><td>Corte de metales</td><td>Servicios de corte, siderúrgicas, distribuidores de maquinaria</td><td style="font-weight:700;color:var(--accent)">50.000-90.000</td><td><span class="kuka-badge kuka-badge-high">ALTA</span></td></tr>
+        <tr><td style="font-weight:700">Konecranes grúas</td><td>Manejo de cargas</td><td>Almacenes, centros logísticos, fábricas</td><td style="font-weight:700;color:var(--accent)">25.000-50.000 (las 2)</td><td><span class="kuka-badge kuka-badge-medium">MEDIA</span></td></tr>
+        <tr><td style="font-weight:700">Hermle U 740</td><td>Mecanizado CNC</td><td>Talleres de mecanizado de precisión, moldes y matrices</td><td style="font-weight:700;color:var(--accent)">25.000-45.000</td><td><span class="kuka-badge kuka-badge-medium">MEDIA</span></td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <div class="kuka-card">
+    <div class="kuka-card-title" style="color:var(--accent)">Aranceles y Costes de Exportación por Ruta</div>
+    <div style="overflow-x:auto">
+    <table class="data-table">
+      <thead><tr><th>Ruta</th><th>Arancel</th><th>IVA destino</th><th>Flete estimado</th><th>Coste exportación total</th><th>Ventaja</th></tr></thead>
+      <tbody>
+        <tr style="background:rgba(0,230,118,0.05)"><td style="font-weight:700;color:var(--accent)">México (TLCUEM)</td><td style="font-weight:700;color:var(--accent)">0%</td><td>16%</td><td>8.000-20.000&euro;</td><td style="font-weight:700">+18-28%</td><td style="color:var(--accent);font-weight:700">RUTA PRINCIPAL</td></tr>
+        <tr><td>Colombia (Alianza Pacífico)</td><td style="font-weight:700">0%</td><td>19%</td><td>7.000-15.000&euro;</td><td style="font-weight:700">+15-25%</td><td>Buena demanda autopartes</td></tr>
+        <tr><td>Brasil (sin TLC pleno)</td><td style="color:var(--accent3);font-weight:700">14-20%</td><td>18% (SP)</td><td>10.000-25.000&euro;</td><td style="color:var(--accent3);font-weight:700">+35-55%</td><td>Mercado grande pero arancel alto</td></tr>
+        <tr><td>Chile (TLC Chile-ES)</td><td style="font-weight:700">0%</td><td>19%</td><td>8.000-18.000&euro;</td><td style="font-weight:700">+18-30%</td><td>Demanda limitada</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div style="font-size:.72rem;color:var(--text-dim);margin-top:.75rem;padding:.5rem;background:rgba(0,230,118,0.06);border-radius:6px"><strong style="color:var(--accent)">Nota transporte:</strong> La prensa Arisa S-2-1600 pesa entre 80-120 toneladas y requiere transporte especial (convoy con escolta). El coste de transporte de Faulquemont a un puerto francés (Le Havre / Marseille) es de 5.000-15.000&euro;, más el flete marítimo a México de 15.000-40.000&euro;.</div>
+  </div>
+
+  <div class="kuka-card">
+    <div class="kuka-card-title" style="color:var(--accent4)">Integradores y Distribuidores de Prensas en LATAM</div>
+    <div style="overflow-x:auto">
+    <table class="data-table">
+      <thead><tr><th>Empresa</th><th>País</th><th>Rol</th><th>Contacto</th></tr></thead>
+      <tbody>
+        <tr style="background:rgba(0,230,118,0.05)"><td style="font-weight:700;color:var(--accent2)">Nemak</td><td>MX</td><td>Fabricante cabezas de motor (prensas)</td><td style="font-size:.7rem">Monterrey, NL — Principal comprador de prensas de automoción en MX</td></tr>
+        <tr><td style="font-weight:700;color:var(--accent2)">Metalsa</td><td>MX</td><td>Estructuras de vehículo (prensas)</td><td style="font-size:.7rem">Monterrey, NL — Estructuras de chasis y bastidores</td></tr>
+        <tr><td style="font-weight:700;color:var(--accent2)">Martinrea International</td><td>MX</td><td>Piezas estampadas y soldadas</td><td style="font-size:.7rem">Multiple plantas en MX — Estampación y ensamblaje</td></tr>
+        <tr><td style="font-weight:700;color:var(--accent2)">Gestamp</td><td>ES + MX</td><td>Estampación de automoción</td><td style="font-size:.7rem">Operaciones globales — 14 plantas en México</td></tr>
+        <tr><td style="font-weight:700">CAV Robotics Mexico</td><td>MX</td><td>Integrador de robótica (ABB)</td><td style="font-size:.7rem">+52 55 4619 3993 · Guadalajara, JAL</td></tr>
+        <tr><td style="font-weight:700">DEMPRO</td><td>CO</td><td>Distribuidor ABB + prensas</td><td style="font-size:.7rem">dempro.co · Bogotá</td></tr>
+        <tr><td style="font-weight:700">Arisa (fabricante)</td><td>ES</td><td>Fabricante original de prensas</td><td style="font-size:.7rem">Zaragoza, España — Soporte técnico y repuestos</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+</section>
+
+<!-- TAB: PASO A PASO -->
+<section class="kuka-section" id="paso-a-paso">
+  <div class="kuka-card">
+    <div class="kuka-card-title" style="color:var(--accent)">Paso a Paso — Cómo Registrarse, Pujar, Transportar y Exportar</div>
+    <div style="display:grid;gap:.75rem;margin-bottom:1.5rem">
+      <div class="kuka-step">
+        <div class="kuka-step-num" style="background:var(--accent3);color:#fff">1</div>
+        <div class="kuka-step-content">
+          <div class="kuka-step-title" style="color:var(--accent3)">REGISTRO EN NETBID (48h antes de la subasta)</div>
+          <div class="kuka-step-desc">Crear cuenta en <a href="https://www.netbid.com/en/auctions/32112641-31604993-plant-closure-production-facilities-of-an-automotive-supplier-allgaier-plants-in-france" target="_blank" style="color:var(--accent2)">netbid.com</a>. Se requiere: razón social, número de IVA, datos bancarios. <strong style="color:var(--accent3)">Depósito de garantía obligatorio</strong> para poder pujar. Contactar a <strong>Dr. Hermann Jauch</strong> al <strong style="color:var(--accent2)">+49 171 325 40 72</strong> o <strong style="color:var(--accent2)">jauch@netbid.com</strong>.</div>
+        </div>
+      </div>
+      <div class="kuka-step">
+        <div class="kuka-step-num" style="background:var(--accent3);color:#fff">2</div>
+        <div class="kuka-step-content">
+          <div class="kuka-step-title" style="color:var(--accent3)">INSPECCIÓN IN SITU (1-2 días)</div>
+          <div class="kuka-step-desc">Viajar a <strong>Zone Industrielle, Rue Dr. Dieter Hundt, FR-57380 Faulquemont, Francia</strong>. <strong style="color:var(--accent3)">LLEVAR técnico en prensas de transferencia + ingeniero eléctrico.</strong> Verificar: carrera de prensas, guías, sistema de transferencia, cilindros hidráulicos, motor principal, estado de grúas, robots ABB. <strong style="color:var(--text-bright)">NO pujar sin inspección.</strong></div>
+        </div>
+      </div>
+      <div class="kuka-step">
+        <div class="kuka-step-num" style="background:var(--accent4);color:#000">3</div>
+        <div class="kuka-step-content">
+          <div class="kuka-step-title" style="color:var(--accent4)">PUJA — FECHAS 12 Y 18 DE MAYO 2026, 15:00 CEST</div>
+          <div class="kuka-step-desc">La subasta tiene <strong style="color:var(--accent)">dos sesiones</strong>: 12 de mayo y 18 de mayo de 2026, a las 15:00 CEST. Pujar en línea a través de la plataforma NetBid. Establecer límite máximo antes de pujar. <strong style="color:var(--accent3)">Recordar: +15% comisión + 21% IVA francés sobre la comisión.</strong></div>
+        </div>
+      </div>
+      <div class="kuka-step">
+        <div class="kuka-step-num" style="background:var(--accent4);color:#000">4</div>
+        <div class="kuka-step-content">
+          <div class="kuka-step-title" style="color:var(--accent4)">PAGO (3-5 días tras adjudicación)</div>
+          <div class="kuka-step-desc">Transferencia bancaria a NetBid. Comprobante de pago requerido antes de la recogida. El pago incluye: precio de adjudicación + 15% comisión de compra + 21% IVA sobre comisión. <strong style="color:var(--accent3)">Sin pago, no se permite la recogida y se aplica penalización.</strong></div>
+        </div>
+      </div>
+      <div class="kuka-step">
+        <div class="kuka-step-num" style="background:var(--accent);color:#000">5</div>
+        <div class="kuka-step-content">
+          <div class="kuka-step-title" style="color:var(--accent)">DESMONTAJE Y TRANSPORTE (2-4 semanas)</div>
+          <div class="kuka-step-desc">La prensa Arisa S-2-1600 pesa 80-120 toneladas — requiere grúas de 100t+, camión de plataforma especial y escolta. <strong style="color:var(--accent4)">Contratar empresa especializada en transporte de maquinaria pesada.</strong> Las grúas Konecranes pueden ser útiles para el desmontaje in situ. Coste estimado transporte Francia-España: 5.000-15.000&euro; (prensa grande), 2.000-5.000&euro; (equipos menores).</div>
+        </div>
+      </div>
+      <div class="kuka-step">
+        <div class="kuka-step-num" style="background:var(--accent);color:#000">6</div>
+        <div class="kuka-step-content">
+          <div class="kuka-step-title" style="color:var(--accent)">REFURBISHMENT (4-10 semanas)</div>
+          <div class="kuka-step-desc">Realizar refurbishment según tabla de la pestaña "Refurbishment". Prensas: 4-8 semanas. Robots ABB: 1-2 semanas. Sierra + CNC: 1-2 semanas. <strong style="color:var(--accent)">Priorizar los robots ABB</strong> (margen más alto, rotación más rápida).</div>
+        </div>
+      </div>
+      <div class="kuka-step">
+        <div class="kuka-step-num" style="background:var(--accent2);color:#000">7</div>
+        <div class="kuka-step-content">
+          <div class="kuka-step-title" style="color:var(--accent2)">EXPORTACIÓN A LATAM (4-8 semanas)</div>
+          <div class="kuka-step-desc">Preparar documentación: factura comercial, packing list, certificado EUR.1 (para 0% arancel en México/Colombia), certificados de origen. Transporte marítimo desde Le Havre o Marseille. Para México: certificado EUR.1 = 0% arancel bajo TLCUEM. <strong style="color:var(--accent)">Tiempo de tránsito: 4-6 semanas por mar.</strong></div>
+        </div>
+      </div>
+      <div class="kuka-step">
+        <div class="kuka-step-num" style="background:var(--accent2);color:#000">8</div>
+        <div class="kuka-step-content">
+          <div class="kuka-step-title" style="color:var(--accent2)">VENTA (1-6 meses)</div>
+          <div class="kuka-step-desc">Listar en plataformas B2B (Machineseeker, Exapro, Mercado Industrial México). Contactar directamente fabricantes de autopartes (Nemak, Metalsa, Martinrea). <strong style="color:var(--accent)">Venta directa B2B = mejor margen.</strong> Venta a distribuidores = más rápida pero margen menor.</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="padding:.75rem;background:linear-gradient(135deg,rgba(0,230,118,0.1),rgba(24,255,255,0.05));border:1px solid rgba(0,230,118,0.2);border-radius:10px">
+      <div style="font-size:.72rem;font-weight:700;color:var(--accent);margin-bottom:.5rem">Timeline Completo Estimado</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:.5rem;font-size:.7rem">
+        <div style="padding:.5rem;background:var(--bg-card);border-radius:8px;text-align:center;border:1px solid var(--border)"><div style="font-weight:700;color:var(--accent3)">1-2 días</div><div style="color:var(--text-dim)">Registro NetBid</div></div>
+        <div style="padding:.5rem;background:var(--bg-card);border-radius:8px;text-align:center;border:1px solid var(--border)"><div style="font-weight:700;color:var(--accent3)">1-2 días</div><div style="color:var(--text-dim)">Inspección in situ</div></div>
+        <div style="padding:.5rem;background:var(--bg-card);border-radius:8px;text-align:center;border:1px solid var(--border)"><div style="font-weight:700;color:var(--accent4)">12/18 May</div><div style="color:var(--text-dim)">Subasta</div></div>
+        <div style="padding:.5rem;background:var(--bg-card);border-radius:8px;text-align:center;border:1px solid var(--border)"><div style="font-weight:700;color:var(--accent4)">3-5 días</div><div style="color:var(--text-dim)">Pago</div></div>
+        <div style="padding:.5rem;background:var(--bg-card);border-radius:8px;text-align:center;border:1px solid var(--border)"><div style="font-weight:700;color:var(--accent)">2-4 sem</div><div style="color:var(--text-dim)">Desmontaje + transporte</div></div>
+        <div style="padding:.5rem;background:var(--bg-card);border-radius:8px;text-align:center;border:1px solid var(--border)"><div style="font-weight:700;color:var(--accent)">4-10 sem</div><div style="color:var(--text-dim)">Refurbishment</div></div>
+        <div style="padding:.5rem;background:var(--bg-card);border-radius:8px;text-align:center;border:1px solid var(--border)"><div style="font-weight:700;color:var(--accent2)">4-8 sem</div><div style="color:var(--text-dim)">Exportación LATAM</div></div>
+        <div style="padding:.5rem;background:var(--bg-card);border-radius:8px;text-align:center;border:1px solid var(--border)"><div style="font-weight:700;color:var(--accent2)">1-6 meses</div><div style="color:var(--text-dim)">Venta</div></div>
+      </div>
+      <div style="margin-top:.5rem;font-size:.72rem;color:var(--accent);font-weight:600">Tiempo total estimado: 4-8 meses desde registro hasta primera venta completada</div>
+    </div>
+  </div>
+</section>
+
+<!-- TAB: RIESGOS -->
+<section class="kuka-section" id="riesgos">
+  <div class="kuka-card">
+    <div class="kuka-card-title" style="color:var(--accent6)">Riesgos y Mitigaciones</div>
+    <div style="display:grid;gap:.5rem;margin-bottom:1rem">
+      <div class="kuka-risk" style="background:rgba(255,110,64,0.08);border-left:3px solid var(--accent3)">
+        <div><span class="kuka-badge kuka-badge-critical" style="margin-right:.3rem">CRÍTICO</span><strong>Prensas de 20-33 años (Hydrap 1992/1996)</strong></div>
+        <div style="color:var(--text-dim);font-size:.72rem;margin-top:.2rem"><strong style="color:var(--accent)">&#8594;</strong> Vida útil de prensas hidráulicas: 25-35 años. Las Hydrap están al final de su vida útil. Verificar fugas, desgaste de cilindros y estado de la bomba hidráulica. Solo comprar si el precio de salida (&euro;12.500-17.500) se mantiene sin pujas altas.</div>
+      </div>
+      <div class="kuka-risk" style="background:rgba(255,110,64,0.08);border-left:3px solid var(--accent3)">
+        <div><span class="kuka-badge kuka-badge-critical" style="margin-right:.3rem">CRÍTICO</span><strong>Transporte de maquinaria pesada (80-120t)</strong></div>
+        <div style="color:var(--text-dim);font-size:.72rem;margin-top:.2rem"><strong style="color:var(--accent)">&#8594;</strong> La prensa Arisa S-2-1600 requiere transporte especial con escolta. Coste estimado: &euro;15.000-40.000 solo transporte a México. Desmontaje en Faulquemont requiere grúas especiales. <strong style="color:var(--accent3)">Factor de riesgo principal para el lote grande.</strong></div>
+      </div>
+      <div class="kuka-risk" style="background:rgba(255,110,64,0.08);border-left:3px solid var(--accent3)">
+        <div><span class="kuka-badge kuka-badge-critical" style="margin-right:.3rem">CRÍTICO</span><strong>Aduanas francesas y exportación de equipamiento industrial</strong></div>
+        <div style="color:var(--text-dim);font-size:.72rem;margin-top:.2rem"><strong style="color:var(--accent)">&#8594;</strong> Francia tiene regulaciones estrictas para la exportación de maquinaria usada. Requiere: certificado de conformidad CE (o exención), declaración de exportación, y cumplimiento de la Directiva de Máquinas 2006/42/CE. Para la línea Eisenmann de 1992, puede ser complejo obtener la documentación CE.</div>
+      </div>
+      <div class="kuka-risk" style="background:rgba(255,215,64,0.06);border-left:3px solid var(--accent4)">
+        <div><span class="kuka-badge kuka-badge-high" style="margin-right:.3rem">ALTA</span><strong>Competencia en la subasta</strong></div>
+        <div style="color:var(--text-dim);font-size:.72rem;margin-top:.2rem"><strong style="color:var(--accent)">&#8594;</strong> Cierre de planta = subasta de perfil alto. Se espera competencia de compradores europeos, turcos y del este. Los precios de puja pueden duplicar el precio de salida, especialmente en la prensa Arisa S-2-1600 y la celda igm.</div>
+      </div>
+      <div class="kuka-risk" style="background:rgba(255,215,64,0.06);border-left:3px solid var(--accent4)">
+        <div><span class="kuka-badge kuka-badge-high" style="margin-right:.3rem">ALTA</span><strong>Línea Eisenmann de 1992 — reubicación compleja</strong></div>
+        <div style="color:var(--text-dim);font-size:.72rem;margin-top:.2rem"><strong style="color:var(--accent)">&#8594;</strong> Las líneas continuas de recubrimiento son extremadamente complejas de desmontar y reubicar. Necesitan ingeniería especializada para el desmantelamiento. El valor residual real puede ser muy inferior al valor de los componentes individuales. Solo considerar si se tiene un comprador confirmado.</div>
+      </div>
+      <div class="kuka-risk" style="background:rgba(24,255,255,0.04);border-left:3px solid var(--accent2)">
+        <div><span class="kuka-badge kuka-badge-medium" style="margin-right:.3rem">MEDIO</span><strong>Estado desconocido de los robots ABB</strong></div>
+        <div style="color:var(--text-dim);font-size:.72rem;margin-top:.2rem"><strong style="color:var(--accent)">&#8594;</strong> A &euro;1.500 el lote de 4 unidades, el riesgo financiero es mínimo. Verificar que arrancan y mueven ejes. Si 2 de 4 funcionan, el lote ya es rentable. Coste de refurbishment bajo (&euro;1.200-2.400/unidad).</div>
+      </div>
+      <div class="kuka-risk" style="background:rgba(0,230,118,0.04);border-left:3px solid var(--accent)">
+        <div><span class="kuka-badge kuka-badge-low" style="margin-right:.3rem">BAJO</span><strong>Sierra Behringer y Hermle U 740</strong></div>
+        <div style="color:var(--text-dim);font-size:.72rem;margin-top:.2rem"><strong style="color:var(--accent)">&#8594;</strong> Equipos de riesgo bajo. Mercado secundario activo. Sierra Behringer: marca premium, demanda constante. Hermle U 740: CNC de precisión, siempre hay demanda. Fácil de transportar y revender.</div>
+      </div>
+    </div>
+
+    <div style="padding:.75rem;background:rgba(255,64,129,0.06);border:1px solid rgba(255,64,129,0.15);border-radius:8px;margin-bottom:1rem">
+      <div style="font-size:.72rem;font-weight:700;color:var(--accent6);text-transform:uppercase;letter-spacing:1px;margin-bottom:.3rem">Estrategia de Pujas Recomendada</div>
+      <div style="font-size:.78rem;line-height:1.6;color:var(--text-dim)">
+        <div style="margin-bottom:.3rem"><strong style="color:var(--accent)">Lote ABB (4 robots):</strong> Pujar agresivamente hasta &euro;5.000-10.000. Margen potencial muy alto incluso a 10x el precio de salida.</div>
+        <div style="margin-bottom:.3rem"><strong style="color:var(--accent4)">Sierra Behringer + Hermle U 740:</strong> Pujar con confianza hasta &euro;50.000-60.000 combinados. Buena reventa.</div>
+        <div style="margin-bottom:.3rem"><strong style="color:var(--accent2)">Prensas Arisa 800t (x2):</strong> Establecer límite en &euro;100.000 cada una. Si la puja supera 1.8x el precio de salida, retirar.</div>
+        <div style="margin-bottom:.3rem"><strong style="color:var(--accent3)">Prensa Arisa 1600t:</strong> Solo si se tiene comprador confirmado. Límite: &euro;500.000. Sin comprador, el riesgo de capital inmovilizado es alto.</div>
+        <div><strong style="color:var(--accent3)">Línea Eisenmann:</strong> No pujar a menos que se tenga un comprador industrial confirmado y presupuesto de desmantelamiento (&euro;30.000-50.000).</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="kuka-card">
+    <div class="kuka-card-title" style="color:var(--accent5)">Normativas y Certificaciones</div>
+    <div style="display:grid;gap:.4rem;font-size:.78rem;margin-bottom:1rem">
+      <div style="padding:.5rem;background:rgba(0,0,0,.2);border-radius:6px;border-left:3px solid var(--accent5)"><strong style="color:var(--accent5)">Directiva de Máquinas UE 2006/42/CE</strong> — Obligatoria para reventa en la UE. La Declaración de Incorporación la emite el fabricante original. Para reventa fuera de la UE, verificar requisitos del país destino.</div>
+      <div style="padding:.5rem;background:rgba(0,0,0,.2);border-radius:6px;border-left:3px solid var(--accent2)"><strong style="color:var(--accent2)">Directiva de Baja Tensión 2014/35/UE</strong> — Aplica a los sistemas eléctricos de las prensas y robots.</div>
+      <div style="padding:.5rem;background:rgba(0,0,0,.2);border-radius:6px;border-left:3px solid var(--accent2)"><strong style="color:var(--accent2)">Directiva EMC 2014/30/UE</strong> — Compatibilidad electromagnética.</div>
+      <div style="padding:.5rem;background:rgba(0,0,0,.2);border-radius:6px;border-left:3px solid var(--accent)"><strong style="color:var(--accent)">NOM-004-STPS-1999 (México)</strong> — Seguridad de maquinaria en el lugar de trabajo.</div>
+      <div style="padding:.5rem;background:rgba(0,0,0,.2);border-radius:6px;border-left:3px solid var(--accent4)"><strong style="color:var(--accent4)">Certificado EUR.1</strong> — Requerido para 0% arancel bajo TLCUEM en exportación a México y Colombia.</div>
+      <div style="padding:.5rem;background:rgba(0,0,0,.2);border-radius:6px;border-left:3px solid var(--accent3)"><strong style="color:var(--accent3)">Reglamento francés ICPE</strong> — Las prensas hidráulicas de más de 50t pueden estar sujetas a la reglamentación ICPE (Instalaciones Clasificadas para la Protección del Medio Ambiente).</div>
+    </div>
+  </div>
+
+  <div class="kuka-card">
+    <div style="padding:.75rem;background:rgba(255,64,129,0.08);border:2px solid rgba(255,64,129,0.3);border-radius:10px">
+      <div style="font-size:.85rem;font-weight:800;color:var(--accent6);margin-bottom:.5rem">Condiciones de Venta NetBid — Resumen</div>
+      <div style="font-size:.78rem;color:var(--text-dim);line-height:1.6">
+        <div style="margin-bottom:.4rem"><span style="background:var(--accent3);color:#fff;font-size:.6rem;padding:.1rem .4rem;border-radius:3px;font-weight:700;margin-right:.3rem">SIN GARANTÍA</span><strong>Todo se vende "as-is, where-is" (tal cual, en el estado en que se encuentra).</strong> No se aceptan reclamaciones ni devoluciones.</div>
+        <div style="margin-bottom:.4rem"><span style="background:var(--accent4);color:#000;font-size:.6rem;padding:.1rem .4rem;border-radius:3px;font-weight:700;margin-right:.3rem">COMISIÓN</span><strong>15% de comisión de compra + 21% IVA sobre la comisión.</strong> Se suma al precio de adjudicación.</div>
+        <div style="margin-bottom:.4rem"><span style="background:var(--accent);color:#000;font-size:.6rem;padding:.1rem .4rem;border-radius:3px;font-weight:700;margin-right:.3rem">PAGO</span><strong>Transferencia bancaria tras adjudicación.</strong> Plazo: 3-5 días hábiles desde la factura proforma.</div>
+        <div><span style="background:var(--accent2);color:#000;font-size:.6rem;padding:.1rem .4rem;border-radius:3px;font-weight:700;margin-right:.3rem">RECOGIDA</span><strong>El comprador es responsable del desmontaje y transporte.</strong> NetBid puede poner en contacto con empresas de transporte si se solicita. Penalización por retraso en la recogida.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="kuka-cta">
+    <h3>Siguiente Paso: Registrar en NetBid e Inspeccionar en Faulquemont</h3>
+    <p style="font-size:.85rem;color:var(--text-dim);margin-bottom:1rem">La subasta es el 12 y 18 de mayo de 2026. Queda poco tiempo para registrar, depositar e inspeccionar. La oportunidad es real pero requiere acción inmediata.</p>
+    <div class="kuka-grid-2">
+      <div class="kuka-contact-card">
+        <h4 style="color:var(--accent)">Contacto NetBid</h4>
+        <div style="font-size:.8rem;line-height:1.6">
+          <div><strong style="color:var(--accent2)">Dr. Hermann Jauch</strong></div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:.85rem;color:var(--accent)">+49 171 325 40 72</div>
+          <div style="color:var(--text-dim);font-size:.72rem">jauch@netbid.com</div>
+          <div style="color:var(--text-dim);font-size:.72rem">NetBid Industry Auctions GmbH</div>
+        </div>
+      </div>
+      <div class="kuka-contact-card">
+        <h4 style="color:var(--accent4)">Acción Inmediata</h4>
+        <div style="font-size:.8rem;line-height:1.6">
+          <div style="margin-bottom:.2rem"><span class="kuka-badge kuka-badge-critical">P0</span> Registrar en NetBid HOY</div>
+          <div style="margin-bottom:.2rem"><span class="kuka-badge kuka-badge-critical">P0</span> Depositar garantía para pujar</div>
+          <div style="margin-bottom:.2rem"><span class="kuka-badge kuka-badge-critical">P0</span> Contactar Dr. Hermann Jauch</div>
+          <div style="margin-bottom:.2rem"><span class="kuka-badge kuka-badge-high">P1</span> Organizar inspección in situ en Faulquemont</div>
+          <div><span class="kuka-badge kuka-badge-high">P1</span> Contratar transporte especializado</div>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:1rem">
+      <a href="/" style="display:inline-block;background:var(--gradient1);color:var(--bg-dark);padding:.75rem 1.5rem;border-radius:10px;font-weight:700;font-size:.85rem;text-decoration:none;transition:transform .2s,box-shadow .2s">Volver a Investigación Estratégica</a>
+      <button onclick="window.print()" style="display:inline-block;background:transparent;border:2px solid var(--accent);color:var(--accent);padding:.75rem 1.5rem;border-radius:10px;font-family:'Inter',sans-serif;font-weight:700;font-size:.85rem;cursor:pointer;margin-left:.5rem;transition:all .2s">Descargar PDF</button>
+    </div>
+  </div>
+</section>
+
+<!-- TAB: IMÁGENES -->
+<section class="kuka-section" id="imagenes">
+  <div class="kuka-card">
+    <div class="kuka-card-title" style="color:var(--accent)">Imágenes — Subasta NetBid #19190</div>
+    <div style="font-size:.82rem;color:var(--text-dim);margin-bottom:1rem;line-height:1.6">Las fotos reales del equipamiento en subasta están disponibles en el catálogo de NetBid. Haz clic en los enlaces para ver las fotos en alta resolución.</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;margin-top:.5rem">
+      <a href="https://www.netbid.com/en/auctions/32112641-31604993-plant-closure-production-facilities-of-an-automotive-supplier-allgaier-plants-in-france" target="_blank" style="display:block;background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:1rem;text-align:center;text-decoration:none;color:var(--text);transition:all .3s">
+        <div style="font-size:2rem;margin-bottom:.5rem">&#128247;</div>
+        <div style="font-size:.85rem;font-weight:700;color:var(--accent)">Ver fotos en NetBid</div>
+        <div style="font-size:.72rem;color:var(--text-dim);margin-top:.3rem">Catálogo completo con 41 páginas de fotos y descripciones de los 64 lotes</div>
+        <div style="font-size:.65rem;color:var(--accent2);margin-top:.5rem">netbid.com &#8594;</div>
+      </a>
+      <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:1rem;text-align:center">
+        <div style="font-size:1rem;font-weight:700;color:var(--accent4);margin-bottom:.5rem">Equipos Destacados en Fotos</div>
+        <div style="text-align:left;font-size:.78rem;color:var(--text-dim);line-height:1.6">
+          <div style="margin-bottom:.3rem"><span style="color:var(--accent)">&#8226;</span> Prensa de transferencia Arisa S-2-1600-620-130-FDE</div>
+          <div style="margin-bottom:.3rem"><span style="color:var(--accent)">&#8226;</span> Prensas Arisa 8-2-800-32D-130-FDE (2 unidades)</div>
+          <div style="margin-bottom:.3rem"><span style="color:var(--accent)">&#8226;</span> Prensas hidráulicas Hydrap HPD-M8-250 y HPD M5-250</div>
+          <div style="margin-bottom:.3rem"><span style="color:var(--accent)">&#8226;</span> Sistema de recubrimiento Eisenmann</div>
+          <div style="margin-bottom:.3rem"><span style="color:var(--accent)">&#8226;</span> Robots ABB IRB 2400 / IRB 4400</div>
+          <div style="margin-bottom:.3rem"><span style="color:var(--accent)">&#8226;</span> Celda de soldadura robot igm</div>
+          <div style="margin-bottom:.3rem"><span style="color:var(--accent)">&#8226;</span> Sierra Behringer Eisele HBP510-923G</div>
+          <div><span style="color:var(--accent)">&#8226;</span> Grúas Konecranes + Hermle U 740 CNC</div>
+        </div>
+      </div>
+      <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:1rem;text-align:center">
+        <div style="font-size:1rem;font-weight:700;color:var(--accent2);margin-bottom:.5rem">Ubicación de la Subasta</div>
+        <div style="text-align:left;font-size:.78rem;color:var(--text-dim);line-height:1.6">
+          <div style="margin-bottom:.3rem"><strong style="color:var(--text)">Dirección:</strong> Zone Industrielle, Rue Dr. Dieter Hundt</div>
+          <div style="margin-bottom:.3rem"><strong style="color:var(--text)">Ciudad:</strong> FR-57380 Faulquemont</div>
+          <div style="margin-bottom:.3rem"><strong style="color:var(--text)">Departamento:</strong> Mosela, Grand Est</div>
+          <div style="margin-bottom:.3rem"><strong style="color:var(--text)">País:</strong> Francia</div>
+          <div style="margin-bottom:.3rem"><strong style="color:var(--text)">Coordenadas:</strong> 49.0522 N, 6.5978 E</div>
+          <div><strong style="color:var(--text)">Aeropuerto más cercano:</strong> Luxembourg (LUX) — 40 min</div>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:1rem;padding:.75rem;background:rgba(24,255,255,.06);border:1px solid rgba(24,255,255,.2);border-radius:8px;font-size:.78rem;color:var(--text-dim)">
+      <strong style="color:var(--accent2)">Nota:</strong> Para ver las fotos reales de cada lote, visite el catálogo completo en NetBid. Las imágenes son propiedad de NetBid Industry Auctions GmbH y están disponibles gratuitamente tras el registro.
+    </div>
+  </div>
+</section>
+
+<!-- TAB: DOCUMENTACIÓN -->
+<section class="kuka-section" id="documentacion">
+  <div class="kuka-card">
+    <div class="kuka-card-title" style="color:var(--accent2)">Documentación Técnica y Fichas de Fabricante</div>
+    <div style="font-size:.82rem;color:var(--text-dim);margin-bottom:1rem;line-height:1.6">Enlaces a fichas técnicas, manuales y documentación de los fabricantes del equipamiento en subasta.</div>
+    <div class="kuka-grid-2" style="margin-bottom:1rem">
+      <div style="padding:.75rem;background:rgba(0,230,118,.06);border:1px solid rgba(0,230,118,.15);border-radius:10px">
+        <div style="font-size:.75rem;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:1px;margin-bottom:.5rem">Prensas Arisa</div>
+        <div style="display:grid;gap:.4rem;font-size:.78rem">
+          <div style="display:flex;gap:.5rem;align-items:center"><span style="color:var(--accent);font-weight:700">1.</span> <a href="https://www.arisa.es" target="_blank" style="color:var(--accent2)">Arisa S.A. — Sitio oficial (Zaragoza, España)</a></div>
+          <div style="display:flex;gap:.5rem;align-items:center"><span style="color:var(--accent);font-weight:700">2.</span> <a href="https://www.arisa.es/en/products/transfer-presses/" target="_blank" style="color:var(--accent2)">Arisa — Prensas de transferencia (catálogo)</a></div>
+          <div style="display:flex;gap:.5rem;align-items:center"><span style="color:var(--accent);font-weight:700">3.</span> <a href="https://www.netbid.com/en/auctions/32112641-31604993-plant-closure-production-facilities-of-an-automotive-supplier-allgaier-plants-in-france" target="_blank" style="color:var(--accent2)">NetBid #19190 — Catálogo de la subasta</a></div>
+        </div>
+      </div>
+      <div style="padding:.75rem;background:rgba(255,215,64,.06);border:1px solid rgba(255,215,64,.15);border-radius:10px">
+        <div style="font-size:.75rem;font-weight:700;color:var(--accent4);text-transform:uppercase;letter-spacing:1px;margin-bottom:.5rem">Robots ABB + igm</div>
+        <div style="display:grid;gap:.4rem;font-size:.78rem">
+          <div style="display:flex;gap:.5rem;align-items:center"><span style="color:var(--accent4);font-weight:700">1.</span> <a href="https://new.abb.com/products/robotics/industrial-robots/irb-2400" target="_blank" style="color:var(--accent2)">ABB IRB 2400 — Ficha de producto</a></div>
+          <div style="display:flex;gap:.5rem;align-items:center"><span style="color:var(--accent4);font-weight:700">2.</span> <a href="https://new.abb.com/products/robotics/industrial-robots/irb-4400" target="_blank" style="color:var(--accent2)">ABB IRB 4400 — Ficha de producto</a></div>
+          <div style="display:flex;gap:.5rem;align-items:center"><span style="color:var(--accent4);font-weight:700">3.</span> <a href="https://www.igm.at" target="_blank" style="color:var(--accent2)">igm Robot Systems — Sitio oficial</a></div>
+        </div>
+      </div>
+      <div style="padding:.75rem;background:rgba(24,255,255,.06);border:1px solid rgba(24,255,255,.15);border-radius:10px">
+        <div style="font-size:.75rem;font-weight:700;color:var(--accent2);text-transform:uppercase;letter-spacing:1px;margin-bottom:.5rem">Eisenmann + Konecranes + Behringer</div>
+        <div style="display:grid;gap:.4rem;font-size:.78rem">
+          <div style="display:flex;gap:.5rem;align-items:center"><span style="color:var(--accent2);font-weight:700">1.</span> <a href="https://www.eisenmann.com" target="_blank" style="color:var(--accent2)">Eisenmann GmbH — Sitio oficial</a></div>
+          <div style="display:flex;gap:.5rem;align-items:center"><span style="color:var(--accent2);font-weight:700">2.</span> <a href="https://www.konecranes.com" target="_blank" style="color:var(--accent2)">Konecranes — Grúas puente</a></div>
+          <div style="display:flex;gap:.5rem;align-items:center"><span style="color:var(--accent2);font-weight:700">3.</span> <a href="https://www.behringermakes.de" target="_blank" style="color:var(--accent2)">Behringer — Sierras de cinta industriales</a></div>
+        </div>
+      </div>
+      <div style="padding:.75rem;background:rgba(255,64,129,.06);border:1px solid rgba(255,64,129,.15);border-radius:10px">
+        <div style="font-size:.75rem;font-weight:700;color:var(--accent6);text-transform:uppercase;letter-spacing:1px;margin-bottom:.5rem">Hermle CNC + Hydrap</div>
+        <div style="display:grid;gap:.4rem;font-size:.78rem">
+          <div style="display:flex;gap:.5rem;align-items:center"><span style="color:var(--accent6);font-weight:700">1.</span> <a href="https://www.hermle.de" target="_blank" style="color:var(--accent2)">Hermann Maschinenbau — Hermle CNC</a></div>
+          <div style="display:flex;gap:.5rem;align-items:center"><span style="color:var(--accent6);font-weight:700">2.</span> <a href="https://www.hydrap.com" target="_blank" style="color:var(--accent2)">Hydrap — Prensas hidráulicas</a></div>
+          <div style="display:flex;gap:.5rem;align-items:center"><span style="color:var(--accent6);font-weight:700">3.</span> <a href="https://www.allgaier.de" target="_blank" style="color:var(--accent2)">Allgaier Group — Info cierre de planta</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="kuka-card">
+    <div class="kuka-card-title" style="color:var(--accent)">Documentación Legal y Subasta</div>
+    <div style="display:grid;gap:.4rem;font-size:.78rem;margin-bottom:1rem">
+      <div style="padding:.5rem;background:rgba(0,0,0,.2);border-radius:6px;border-left:3px solid var(--accent5)"><strong style="color:var(--accent5)">Condiciones de subasta NetBid</strong> — Disponibles en el sitio de la subasta tras el registro. Incluyen: términos y condiciones, comisiones, garantías (ninguna), métodos de pago, plazos de recogida.</div>
+      <div style="padding:.5rem;background:rgba(0,0,0,.2);border-radius:6px;border-left:3px solid var(--accent2)"><strong style="color:var(--accent2)">Registro de IVA intracomunitario</strong> — Requerido para compra sin IVA francés si se exporta dentro de la UE con número de IVA válido.</div>
+      <div style="padding:.5rem;background:rgba(0,0,0,.2);border-radius:6px;border-left:3px solid var(--accent)"><strong style="color:var(--accent)">Certificado EUR.1</strong> — Para exportación con 0% arancel a México/Colombia. Se obtiene en la aduana de exportación francesa.</div>
+      <div style="padding:.5rem;background:rgba(0,0,0,.2);border-radius:6px;border-left:3px solid var(--accent4)"><strong style="color:var(--accent4)">Directiva de Máquinas 2006/42/CE</strong> — Los equipos deben cumplir con la Directiva de Máquinas para su reventa en la UE. Para exportación fuera de la UE, verificar requisitos del país destino.</div>
+    </div>
+  </div>
+</section>
+
+<!-- TAB: VIDEOS -->
+<section class="kuka-section" id="videos">
+  <div class="kuka-card">
+    <div class="kuka-card-title" style="color:var(--accent3)">Videos de Referencia — Equipamiento en Subasta</div>
+    <div style="font-size:.82rem;color:var(--text-dim);margin-bottom:1rem;line-height:1.6">Videos de YouTube que muestran equipos similares a los de la subasta en operación. Útiles para entender las capacidades técnicas.</div>
+    <div class="kuka-grid-2" style="margin-bottom:1rem">
+      <div style="padding:.75rem;background:rgba(255,110,64,.06);border:1px solid rgba(255,110,64,.15);border-radius:10px">
+        <div style="font-size:.78rem;font-weight:700;color:var(--accent3);margin-bottom:.5rem">Prensa de transferencia Arisa en operación</div>
+        <a href="https://www.youtube.com/results?search_query=Arisa+transfer+press+operation" target="_blank" style="display:block;color:var(--accent2);font-size:.78rem;text-decoration:underline;margin-bottom:.3rem">&#9654; Buscar "Arisa transfer press" en YouTube</a>
+        <div style="font-size:.72rem;color:var(--text-dim)">Videos de prensas de transferencia Arisa similares en operación industrial. Demostración del sistema de transferencia de 3 ejes.</div>
+      </div>
+      <div style="padding:.75rem;background:rgba(255,110,64,.06);border:1px solid rgba(255,110,64,.15);border-radius:10px">
+        <div style="font-size:.78rem;font-weight:700;color:var(--accent3);margin-bottom:.5rem">Prensa hidráulica Hydrap en operación</div>
+        <a href="https://www.youtube.com/results?search_query=Hydrap+hydraulic+press" target="_blank" style="display:block;color:var(--accent2);font-size:.78rem;text-decoration:underline;margin-bottom:.3rem">&#9654; Buscar "Hydrap hydraulic press" en YouTube</a>
+        <div style="font-size:.72rem;color:var(--text-dim)">Videos de prensas hidráulicas Hydrap de 250t en operación de embutición y conformado.</div>
+      </div>
+      <div style="padding:.75rem;background:rgba(0,230,118,.06);border:1px solid rgba(0,230,118,.15);border-radius:10px">
+        <div style="font-size:.78rem;font-weight:700;color:var(--accent);margin-bottom:.5rem">Robot ABB IRB 2400 / 4400</div>
+        <a href="https://www.youtube.com/results?search_query=ABB+IRB+4400+industrial+robot" target="_blank" style="display:block;color:var(--accent2);font-size:.78rem;text-decoration:underline;margin-bottom:.3rem">&#9654; Buscar "ABB IRB 4400" en YouTube</a>
+        <div style="font-size:.72rem;color:var(--text-dim)">Videos del robot ABB IRB 4400 en aplicaciones de manipulación y soldadura industrial.</div>
+      </div>
+      <div style="padding:.75rem;background:rgba(0,230,118,.06);border:1px solid rgba(0,230,118,.15);border-radius:10px">
+        <div style="font-size:.78rem;font-weight:700;color:var(--accent);margin-bottom:.5rem">Línea de recubrimiento Eisenmann</div>
+        <a href="https://www.youtube.com/results?search_query=Eisenmann+coating+system+e-coating" target="_blank" style="display:block;color:var(--accent2);font-size:.78rem;text-decoration:underline;margin-bottom:.3rem">&#9654; Buscar "Eisenmann e-coating" en YouTube</a>
+        <div style="font-size:.72rem;color:var(--text-dim)">Videos de sistemas de recubrimiento catofórico Eisenmann continuos para automoción.</div>
+      </div>
+      <div style="padding:.75rem;background:rgba(255,215,64,.06);border:1px solid rgba(255,215,64,.15);border-radius:10px">
+        <div style="font-size:.78rem;font-weight:700;color:var(--accent4);margin-bottom:.5rem">Sierra de cinta Behringer HBP510</div>
+        <a href="https://www.youtube.com/results?search_query=Behringer+HBP510+band+saw" target="_blank" style="display:block;color:var(--accent2);font-size:.78rem;text-decoration:underline;margin-bottom:.3rem">&#9654; Buscar "Behringer HBP510 bandsaw" en YouTube</a>
+        <div style="font-size:.72rem;color:var(--text-dim)">Videos de la sierra de cinta Behringer Eisele HBP510 en operación de corte de metales.</div>
+      </div>
+      <div style="padding:.75rem;background:rgba(255,215,64,.06);border:1px solid rgba(255,215,64,.15);border-radius:10px">
+        <div style="font-size:.78rem;font-weight:700;color:var(--accent4);margin-bottom:.5rem">Celda de soldadura robot igm</div>
+        <a href="https://www.youtube.com/results?search_query=igm+robot+welding+cell" target="_blank" style="display:block;color:var(--accent2);font-size:.78rem;text-decoration:underline;margin-bottom:.3rem">&#9654; Buscar "igm robot welding cell" en YouTube</a>
+        <div style="font-size:.72rem;color:var(--text-dim)">Videos de celdas de soldadura robotizadas igm en producción automotriz.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</div><!-- kuka-container -->
+
+<!-- LIGHTBOX MODAL (placeholder for image gallery) -->
+<div id="kuka-lightbox" class="kuka-lightbox" onclick="closeLightbox()">
+  <button class="kuka-lb-close" onclick="closeLightbox()" title="Cerrar">&#10005;</button>
+  <button class="kuka-lb-prev" onclick="event.stopPropagation();prevImage()" title="Anterior">&#8592;</button>
+  <button class="kuka-lb-next" onclick="event.stopPropagation();nextImage()" title="Siguiente">&#8594;</button>
+  <div class="kuka-lb-content" onclick="event.stopPropagation()">
+    <img id="kuka-lb-img" src="" alt="">
+    <div id="kuka-lb-caption" class="kuka-lb-caption"></div>
+    <div id="kuka-lb-counter" class="kuka-lb-counter"></div>
+  </div>
+</div>
+
+<!-- Print Footer -->
+<div class="kuka-print-footer">SURUS Inversa S.L. — Dossier Confidencial — Generado: Mayo 2026 — Página <span class="page-num"></span></div>
+
+<script>
+// Tab navigation
+document.querySelectorAll('.kuka-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.kuka-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.kuka-section').forEach(s => s.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById(tab.dataset.tab).classList.add('active');
+  });
+});
+
+// Lightbox (for future image integration)
+const galleryImages = [];
+let currentImage = 0;
+
+function openLightbox(index) {
+  currentImage = index;
+  const lb = document.getElementById('kuka-lightbox');
+  const img = document.getElementById('kuka-lb-img');
+  const cap = document.getElementById('kuka-lb-caption');
+  const cnt = document.getElementById('kuka-lb-counter');
+  if (galleryImages.length === 0) return;
+  img.src = galleryImages[index].src;
+  img.alt = galleryImages[index].caption;
+  cap.textContent = galleryImages[index].caption;
+  cnt.textContent = (index + 1) + ' / ' + galleryImages.length;
+  lb.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+  document.getElementById('kuka-lightbox').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+function nextImage() {
+  if (galleryImages.length === 0) return;
+  currentImage = (currentImage + 1) % galleryImages.length;
+  openLightbox(currentImage);
+}
+
+function prevImage() {
+  if (galleryImages.length === 0) return;
+  currentImage = (currentImage - 1 + galleryImages.length) % galleryImages.length;
+  openLightbox(currentImage);
+}
+
+document.addEventListener('keydown', (e) => {
+  if (!document.getElementById('kuka-lightbox').classList.contains('active')) return;
+  if (e.key === 'Escape') closeLightbox();
+  if (e.key === 'ArrowRight') nextImage();
+  if (e.key === 'ArrowLeft') prevImage();
+});
+</script>
+<script src="/js/tracker.js"></script>
+<script src="/js/intel-data.js"></script>
+<script src="/js/intel-operativo.js"></script>
+</body>
+</html>
