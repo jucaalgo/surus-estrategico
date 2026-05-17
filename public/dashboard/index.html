@@ -2,569 +2,291 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SURUS Inversa SL — Dashboard de Oportunidades B2B</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SURUS · Strategic Asset Recovery Dashboard</title>
+<meta name="description" content="Inteligencia estratégica para recuperación de activos industriales">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700&display=swap');
-:root{--bg:#05050a;--bg2:#0a0a14;--bg3:#0f0f1e;--card:#111128;--card-hover:#1a1a3a;--accent:#00e676;--accent2:#18ffff;--accent3:#ff6e40;--accent4:#ffd740;--accent5:#b388ff;--accent6:#ff4081;--text:#e8e8f0;--text-dim:#6b6b8a;--border:#1e1e38;--g1:linear-gradient(135deg,#00e676,#18ffff);--g2:linear-gradient(135deg,#ff6e40,#ffd740);--g3:linear-gradient(135deg,#7c4dff,#18ffff);--g4:linear-gradient(135deg,#ff4081,#ff6e40);--g5:linear-gradient(135deg,#ffd740,#00e676);--g6:linear-gradient(135deg,#b388ff,#ff4081)}
 *{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.5;overflow-x:hidden}
+:root{--bg:#03040b;--s1:#0a0d1a;--s2:#111528;--bd:rgba(255,255,255,.06);--tx:#e8e8f0;--dm:#5a5a7a;--g:#00e676;--c:#18ffff;--o:#ff6e40;--y:#ffd740;--p:#b388ff;--r:#ff4081;--glass:rgba(10,13,26,.75)}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--tx);overflow:hidden;height:100vh}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--bd);border-radius:2px}
 
-/* ANIMATED BG */
-.bg-mesh{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse at 15% 15%,rgba(0,230,118,.06) 0%,transparent 50%),radial-gradient(ellipse at 85% 85%,rgba(24,255,255,.04) 0%,transparent 50%),radial-gradient(ellipse at 50% 50%,rgba(179,136,255,.03) 0%,transparent 60%)}
-.bg-grid{position:fixed;inset:0;z-index:0;pointer-events:none;background-image:linear-gradient(rgba(0,230,118,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,230,118,.03) 1px,transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse at 50% 30%,rgba(0,0,0,.4),transparent 70%)}
+/* LAYOUT */
+.app{display:grid;grid-template-columns:320px 1fr;grid-template-rows:48px 1fr;height:100vh}
+.topbar{grid-column:1/-1;background:linear-gradient(90deg, rgba(0,230,118,.04) 0%, var(--s1) 30%, var(--s1) 70%, rgba(24,255,255,.04) 100%);border-bottom:1px solid var(--bd);display:flex;align-items:center;padding:0 1rem;gap:1rem;z-index:100}
+.topbar .logo{display:flex;align-items:center;gap:.5rem;font-weight:900;font-size:.85rem;letter-spacing:-.3px}
+.topbar .logo .dot{width:8px;height:8px;border-radius:50%;background:var(--g);box-shadow:0 0 8px var(--g);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.topbar .views{display:flex;gap:2px;margin-left:auto}
+.topbar .vbtn{background:transparent;border:1px solid transparent;color:var(--dm);font-size:.65rem;font-weight:700;padding:.35rem .7rem;border-radius:6px;cursor:pointer;font-family:inherit;transition:.2s;text-transform:uppercase;letter-spacing:.5px}
+.topbar .vbtn:hover{color:var(--tx);background:rgba(255,255,255,.04)}
+.topbar .vbtn.active{color:var(--g);border-color:rgba(0,230,118,.2);background:rgba(0,230,118,.06)}
+.topbar .kpi-mini{display:flex;gap:.8rem;margin-left:1rem}
+.topbar .km{text-align:center}.topbar .km .v{font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:700}.topbar .km .l{font-size:.45rem;color:var(--dm);text-transform:uppercase}
 
-/* NAV */
-nav{position:sticky;top:0;z-index:100;background:rgba(5,5,10,.85);backdrop-filter:blur(20px) saturate(180%);border-bottom:1px solid var(--border);padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;height:56px}
-.nav-logo{font-weight:900;font-size:1.1rem;background:var(--g1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:-.5px;text-decoration:none;display:flex;align-items:center;gap:.5rem}
-.nav-logo .dot{width:8px;height:8px;border-radius:50%;background:var(--accent);animation:pulse 2s infinite}
-@keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(0,230,118,.4)}50%{opacity:.6;box-shadow:0 0 0 6px rgba(0,230,118,0)}}
-.nav-links{display:flex;gap:.4rem;overflow-x:auto;scrollbar-width:none}
-.nav-links::-webkit-scrollbar{display:none}
-.nav-links a{color:var(--text-dim);text-decoration:none;font-size:.65rem;font-weight:600;padding:.35rem .6rem;border-radius:20px;white-space:nowrap;transition:all .3s;text-transform:uppercase;letter-spacing:.5px}
-.nav-links a:hover,.nav-links a.active{color:var(--text);background:rgba(0,230,118,.12);border:1px solid rgba(0,230,118,.3)}
+/* SIDEBAR */
+.sidebar{background:var(--s1);border-right:1px solid var(--bd);display:flex;flex-direction:column;overflow:hidden}
+.sb-search{padding:.6rem;border-bottom:1px solid var(--bd)}
+.sb-search input{width:100%;background:rgba(255,255,255,.04);border:1px solid var(--bd);color:var(--tx);font-size:.7rem;padding:.45rem .6rem;border-radius:8px;font-family:inherit;outline:none;transition:.3s}
+.sb-search input:focus{border-color:rgba(0,230,118,.4)}
+.sb-filters{display:flex;gap:3px;padding:.4rem .6rem;border-bottom:1px solid var(--bd);flex-wrap:wrap}
+.fb{background:transparent;border:1px solid var(--bd);color:var(--dm);font-size:.55rem;font-weight:700;padding:.25rem .5rem;border-radius:5px;cursor:pointer;font-family:inherit;transition:.2s}
+.fb:hover{color:var(--tx)}.fb.active{color:var(--g);border-color:rgba(0,230,118,.25);background:rgba(0,230,118,.06)}
+.sb-advanced-filters{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;padding:.4rem .6rem;border-bottom:1px solid var(--bd)}
+.sb-advanced-filters select{width:100%;background:rgba(255,255,255,.04);border:1px solid var(--bd);color:var(--tx);font-size:.6rem;padding:.3rem;border-radius:4px;outline:none;cursor:pointer}
+.sb-advanced-filters select:hover{border-color:rgba(0,230,118,.3)}
+.sb-advanced-filters select option{background:var(--s1);color:var(--tx)}
+.sb-list{flex:1;overflow-y:auto;padding:.4rem}
+.sb-card{background:rgba(255,255,255,.02);border:1px solid var(--bd);border-radius:8px;padding:.55rem;margin-bottom:.35rem;cursor:pointer;transition:.25s}
+.sb-card:hover{border-color:rgba(0,230,118,.3);background:rgba(0,230,118,.02);box-shadow:0 0 15px rgba(0,230,118,.05), inset 0 0 15px rgba(0,230,118,.02)}
+.sb-card.active{border-color:rgba(0,230,118,.4);background:rgba(0,230,118,.04)}
+.sb-card .sc-name{font-size:.85rem;font-weight:800;line-height:1.3;margin-bottom:.2rem}
+.sb-card .sc-meta{font-size:.65rem;color:var(--dm);line-height:1.4}
+.sb-card .sc-tags{display:flex;gap:3px;margin-top:.3rem;flex-wrap:wrap}
+.tag{font-size:.55rem;font-weight:700;padding:.2rem .4rem;border-radius:4px;line-height:1}
+.tag-p0{background:rgba(255,110,64,.1);color:var(--o);border:1px solid rgba(255,110,64,.2)}
+.tag-p1{background:rgba(24,255,255,.08);color:var(--c);border:1px solid rgba(24,255,255,.15)}
+.tag-margin{background:rgba(0,230,118,.08);color:var(--g);border:1px solid rgba(0,230,118,.15)}
+.tag-type{background:rgba(179,136,255,.08);color:var(--p);border:1px solid rgba(179,136,255,.15)}
+.tag-loc{background:rgba(255,255,255,.04);color:var(--dm);border:1px solid var(--bd)}
 
-/* HERO */
-.hero{min-height:50vh;display:flex;align-items:center;justify-content:center;padding:4rem 2rem 2rem;position:relative;z-index:1;text-align:center}
-.hero-content{max-width:900px}
-.hero-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(0,230,118,.08);border:1px solid rgba(0,230,118,.25);padding:.4rem 1rem;border-radius:50px;font-size:.7rem;color:var(--accent);margin-bottom:1.5rem;font-weight:600;text-transform:uppercase;letter-spacing:1px}
-.hero h1{font-size:clamp(2rem,5vw,3.5rem);font-weight:900;line-height:1.05;margin-bottom:1rem;letter-spacing:-1px}
-.hero h1 .highlight{background:var(--g1);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.hero p{font-size:1rem;color:var(--text-dim);max-width:600px;margin:0 auto 2rem;line-height:1.7}
+/* MAIN CONTENT */
+.main{position:relative;overflow:hidden;background:var(--bg)}
+.view{position:absolute;inset:0;opacity:0;pointer-events:none;transition:opacity .3s}
+.view.active{opacity:1;pointer-events:all}
 
-/* KPI BAR */
-.kpi-bar{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:.6rem;max-width:1000px;margin:0 auto 3rem;padding:0 1.5rem;position:relative;z-index:2;}
-.kpi{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1rem;text-align:center;transition:all .4s;position:relative;overflow:hidden;cursor:default;backdrop-filter:blur(10px);}
-.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:14px 14px 0 0}
-.kpi:hover{border-color:rgba(0,230,118,.3);transform:translateY(-2px);box-shadow:0 8px 30px rgba(0,230,118,.08)}
-.kpi .value{font-size:1.6rem;font-weight:900;font-family:'JetBrains Mono',monospace;line-height:1.2}
-.kpi .label{font-size:.6rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.5px;margin-top:.25rem}
+/* MAP VIEW */
+#mapView #map{width:100%;height:100%}
+.leaflet-container{background:var(--bg)!important}
+.map-legend{position:absolute;bottom:1.5rem;left:1rem;background:var(--glass);backdrop-filter:blur(15px);border:1px solid var(--bd);border-radius:10px;padding:.7rem;z-index:800;font-size:.55rem}
+.map-legend-title{font-weight:800;margin-bottom:.4rem;color:var(--g);text-transform:uppercase;letter-spacing:.5px;font-size:.5rem}
+.ml-item{display:flex;align-items:center;gap:.4rem;margin:.2rem 0}
+.ml-dot{width:8px;height:8px;border-radius:50%}
+@keyframes markerPulse{0%{box-shadow:0 0 0 0 currentColor}70%{box-shadow:0 0 0 12px transparent}100%{box-shadow:0 0 0 0 transparent}}
+@keyframes markerPulseSVG{0%{stroke-width:1;stroke-opacity:1}50%{stroke-width:10;stroke-opacity:.2}100%{stroke-width:1;stroke-opacity:1}}
+.marker-pulse{animation:markerPulseSVG 1.5s infinite}
 
-/* FILTER BAR */
-.filter-container { max-width: 1200px; margin: 0 auto 2rem; padding: 0 1.5rem; position: relative; z-index: 2; display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; justify-content: center; }
-.filter-group { display: flex; align-items: center; gap: 0.5rem; background: rgba(17, 17, 40, 0.6); padding: 0.5rem; border-radius: 12px; border: 1px solid var(--border); backdrop-filter: blur(10px); }
-.filter-label { font-size: 0.65rem; color: var(--text-dim); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; padding-left: 0.5rem; }
-.filter-btn { background: transparent; border: 1px solid transparent; color: var(--text-dim); padding: 0.4rem 0.8rem; border-radius: 8px; font-size: 0.75rem; font-weight: 600; cursor: pointer; transition: all 0.3s; }
-.filter-btn:hover { background: rgba(255,255,255,0.05); color: var(--text); }
-.filter-btn.active { background: rgba(0, 230, 118, 0.15); color: var(--accent); border-color: rgba(0, 230, 118, 0.3); }
+/* DASHBOARD VIEW */
+#dashView{overflow-y:auto;padding:1.5rem}
+.dash-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem}
+.dash-kpi{position:relative;overflow:hidden;transition:transform .3s, border-color .3s;background:var(--glass);backdrop-filter:blur(15px);border:1px solid var(--bd);border-radius:12px;padding:1rem;text-align:center}
+.dash-kpi:hover{transform:translateY(-2px);border-color:rgba(0,230,118,.25)}
+.dash-kpi::after{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle at center, currentColor, transparent 70%);opacity:0.03;pointer-events:none}
+.dash-kpi .dv{font-family:'JetBrains Mono',monospace;font-size:1.6rem;font-weight:900;line-height:1}
+.dash-kpi .dl{font-size:.6rem;color:var(--dm);text-transform:uppercase;letter-spacing:.5px;margin-top:.3rem}
+.chart-row{display:grid;grid-template-columns:2fr 1fr;gap:1rem;margin-bottom:1.5rem}
+.chart-box{background:var(--glass);backdrop-filter:blur(15px);border:1px solid var(--bd);border-radius:12px;padding:1rem}
+.chart-title{font-size:.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.5px;margin-bottom:.8rem;color:var(--g)}
+.bar-chart{display:flex;align-items:flex-end;gap:6px;height:200px;padding-top:1rem}
+.bar-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px}
+.bar{width:100%;border-radius:4px 4px 0 0;min-height:4px;transition:height .6s ease}
+.bar-label{font-size:.45rem;color:var(--dm);text-align:center;word-break:break-all;max-width:100%;overflow:hidden}
+.bar-val{font-size:.5rem;font-weight:700;font-family:'JetBrains Mono',monospace}
+.alert-list{display:flex;flex-direction:column;gap:.6rem}
+.alert-item{background:rgba(255,110,64,.04);border:1px solid rgba(255,110,64,.15);border-radius:8px;padding:.6rem}
+.alert-item .at{font-size:.65rem;font-weight:800;color:var(--o)}.alert-item .ad{font-size:.55rem;color:var(--dm);margin-top:.15rem}
 
-/* SECTION */
-.section{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:0 1.5rem 3rem}
-.section-title{font-size:1.3rem;font-weight:800;margin-bottom:1.5rem;display:flex;align-items:center;gap:.75rem}
-.section-title .icon{width:32px;height:32px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1rem}
+/* GRID VIEW */
+#gridView{overflow:auto;padding:1rem}
+.grid-table{width:100%;border-collapse:collapse;font-size:.65rem}
+.grid-table th{background:rgba(0,230,118,.04);color:var(--g);font-size:.5rem;font-weight:700;text-transform:uppercase;letter-spacing:.3px;padding:.5rem .4rem;text-align:left;border-bottom:1px solid var(--bd);cursor:pointer;white-space:nowrap;user-select:none;position:sticky;top:0;z-index:5}
+.grid-table th:hover{color:var(--tx)}
+.grid-table td{padding:.4rem;border-bottom:1px solid rgba(255,255,255,.02);vertical-align:middle}
+.grid-table tbody tr:nth-child(even) td{background:rgba(255,255,255,.015)}
+.grid-table tbody tr:hover td{background:rgba(0,230,118,.04);transition:background .15s}
+.grid-table a{color:var(--c);text-decoration:none;font-weight:600}.grid-table a:hover{text-decoration:underline}
 
-/* GROUP HEADERS */
-.group-header{grid-column:1/-1;display:flex;align-items:center;gap:.75rem;margin:.5rem 0 .25rem;padding:.5rem 0;border-bottom:1px solid var(--border)}
-.group-header .group-icon{font-size:1.1rem}
-.group-header .group-label{font-size:.8rem;font-weight:800;text-transform:uppercase;letter-spacing:1px}
-.group-header .group-line{flex:1;height:1px;background:var(--border)}
-.group-header .group-count{font-size:.65rem;font-weight:700;color:var(--text-dim);background:rgba(255,255,255,.05);padding:.15rem .5rem;border-radius:10px}
-.group-activo .group-label{color:var(--accent3)}
-.group-monitor .group-label{color:var(--accent5)}
+/* SIMULATOR VIEW */
+#simView{overflow-y:auto;padding:1.5rem}
+.sim-container{max-width:800px;margin:0 auto}
+.sim-header{text-align:center;margin-bottom:1.5rem}
+.sim-header h2{font-size:1.2rem;font-weight:900}
+.sim-header p{font-size:.7rem;color:var(--dm);margin-top:.3rem}
+.sim-form{background:var(--glass);backdrop-filter:blur(15px);border:1px solid var(--bd);border-radius:12px;padding:1.5rem;margin-bottom:1rem}
+.sim-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+.sim-field label{display:block;font-size:.6rem;font-weight:700;color:var(--dm);text-transform:uppercase;letter-spacing:.3px;margin-bottom:.3rem}
+.sim-field select,.sim-field input{width:100%;background:rgba(255,255,255,.04);border:1px solid var(--bd);color:var(--tx);font-size:.75rem;padding:.5rem;border-radius:8px;font-family:'JetBrains Mono',monospace;outline:none}
+.sim-field select option{background:var(--s1);color:var(--tx)}
+.sim-field select:focus,.sim-field input:focus{border-color:rgba(0,230,118,.4)}
+.sim-results{background:var(--glass);backdrop-filter:blur(15px);border:1px solid var(--bd);border-radius:12px;padding:1.5rem}
+.sim-res-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:1rem}
+.sim-metric{text-align:center;padding:.8rem;background:rgba(255,255,255,.02);border:1px solid var(--bd);border-radius:10px}
+.sim-metric .sv{font-family:'JetBrains Mono',monospace;font-size:1.4rem;font-weight:900}
+.sim-metric .sl{font-size:.55rem;color:var(--dm);text-transform:uppercase;margin-top:.2rem}
+.sim-gauge{width:120px;height:120px;border-radius:50%;margin:1rem auto;position:relative;display:flex;align-items:center;justify-content:center}
+.sim-gauge .sg-val{font-family:'JetBrains Mono',monospace;font-size:1.3rem;font-weight:900}
+.sim-gauge .sg-lbl{font-size:.5rem;color:var(--dm);position:absolute;bottom:-5px}
 
-/* OPPORTUNITY CARDS */
-.opp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:1rem}
-.opp{background:rgba(17, 17, 40, 0.7); backdrop-filter:blur(12px); border:1px solid var(--border);border-radius:16px;padding:1.25rem;transition:all .4s;position:relative;overflow:hidden;cursor:pointer;text-decoration:none;color:inherit;display:flex;flex-direction:column}
-.opp:hover{border-color:rgba(0,230,118,.3);transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,230,118,.1)}
-.opp.hidden { display: none; }
-.opp-icon { position: absolute; top: 1.25rem; right: 1.25rem; font-size: 1.5rem; opacity: 0.2; transition: all 0.3s; }
-.opp:hover .opp-icon { opacity: 0.8; transform: scale(1.1); }
-.opp .tag{display:inline-flex;align-items:center;gap:.3rem;font-size:.6rem;font-weight:700;padding:.2rem .5rem;border-radius:4px;text-transform:uppercase;letter-spacing:.5px;margin-bottom:.5rem}
-.opp .tag-p0{background:rgba(255,110,64,.15);color:var(--accent3);border:1px solid rgba(255,110,64,.3)}
-.opp .tag-p1{background:rgba(24,255,255,.1);color:var(--accent2);border:1px solid rgba(24,255,255,.2)}
-.opp .tag-p2{background:rgba(179,136,255,.1);color:var(--accent5);border:1px solid rgba(179,136,255,.2)}
-.opp .name{font-size:1rem;font-weight:800;margin-bottom:.25rem;line-height:1.3; padding-right: 2rem;}
-.opp .desc{font-size:.78rem;color:var(--text-dim);line-height:1.5;margin-bottom:.75rem;flex:1}
-.opp .meta{display:flex;gap:.5rem;flex-wrap:wrap}
-.opp .meta-item{font-size:.65rem;font-weight:600;padding:.2rem .5rem;border-radius:6px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06); display: flex; align-items: center; gap: 0.25rem;}
-.opp .meta-item.margen{background:rgba(0,230,118,.08);color:var(--accent);border-color:rgba(0,230,118,.2)}
-.opp .meta-item.fecha{background:rgba(24,255,255,.06);color:var(--accent2);border-color:rgba(24,255,255,.15)}
-.opp .meta-item.ubicacion{background:rgba(179,136,255,.06);color:var(--accent5);border-color:rgba(179,136,255,.15)}
-.opp .bar-container{margin-top:.75rem;height:4px;background:rgba(255,255,255,.05);border-radius:2px;overflow:hidden}
-.opp .bar-fill{height:100%;border-radius:2px;transition:width 1.5s ease-out}
+/* DOSSIER OVERLAY */
+.dossier-overlay{position:fixed;top:48px;right:-480px;width:480px;height:calc(100vh - 48px);background:rgba(10,13,26,.92);backdrop-filter:blur(20px) saturate(180%);border-left:1px solid var(--bd);z-index:900;transition:right .35s cubic-bezier(.4,0,.2,1);overflow-y:auto;box-shadow:-5px 0 30px rgba(0,0,0,.5)}
+.dossier-overlay.open{right:0}
+.dos-close{position:sticky;top:0;background:var(--s1);border-bottom:1px solid var(--bd);padding:.5rem .8rem;display:flex;justify-content:space-between;align-items:center;z-index:10}
+.dos-close button{background:rgba(255,64,129,.1);border:1px solid rgba(255,64,129,.3);color:var(--r);padding:0.4rem 0.8rem;border-radius:6px;cursor:pointer;font-size:.7rem;font-weight:700;transition:.2s;display:flex;align-items:center;gap:0.3rem}
+.dos-close button:hover{background:rgba(255,64,129,.2);border-color:rgba(255,64,129,.5);color:#fff}
+.dos-body{padding:1rem}
+.dos-title{font-size:1rem;font-weight:900;margin-bottom:.15rem}
+.dos-subtitle{font-size:.65rem;color:var(--dm);margin-bottom:1rem}
+.dos-section{margin-bottom:1rem}
+.dos-section-title{font-size:.6rem;font-weight:800;text-transform:uppercase;letter-spacing:.5px;margin-bottom:.5rem;display:flex;align-items:center;gap:.35rem}
+.dos-section-title.fin{color:var(--o)}.dos-section-title.tech{color:var(--c)}.dos-section-title.log{color:var(--y)}.dos-section-title.mkt{color:var(--p)}.dos-section-title.cnt{color:var(--g)}
+.dos-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.4rem}
+.dos-cell{background:rgba(255,255,255,.02);border:1px solid var(--bd);border-radius:8px;padding:.5rem;text-align:center}
+.dos-cell .dcv{font-family:'JetBrains Mono',monospace;font-size:.8rem;font-weight:900}
+.dos-cell .dcl{font-size:.45rem;color:var(--dm);text-transform:uppercase;margin-top:.1rem}
+.dos-info{font-size:.65rem;color:var(--dm);line-height:1.5;margin-top:.3rem}
+.dos-info strong{color:var(--tx)}
+.dos-clients{display:flex;flex-wrap:wrap;gap:.3rem;margin-top:.3rem}
+.dos-client{font-size:.55rem;background:rgba(179,136,255,.06);border:1px solid rgba(179,136,255,.12);color:var(--p);padding:.2rem .5rem;border-radius:5px}
+.dos-contact{background:rgba(0,230,118,.04);border:1px solid rgba(0,230,118,.12);border-radius:8px;padding:.5rem;margin-bottom:.4rem}
+.dos-contact .cn{font-weight:800;font-size:.72rem}.dos-contact .cr{font-size:.55rem;color:var(--dm)}
+.dos-contact a{color:var(--c);font-size:.6rem;font-weight:600;text-decoration:none}
+.dos-links{display:flex;gap:.4rem;flex-wrap:wrap;margin-top:.5rem}
+.dos-link{display:inline-flex;align-items:center;gap:.25rem;font-size:.6rem;font-weight:700;padding:.4rem .7rem;border-radius:8px;text-decoration:none;transition:.2s;border:none;cursor:pointer;font-family:inherit}
+.dos-link-p{background:rgba(0,230,118,.1);color:var(--g);border:1px solid rgba(0,230,118,.2)}.dos-link-p:hover{background:rgba(0,230,118,.18)}
+.dos-link-s{background:rgba(24,255,255,.06);color:var(--c);border:1px solid rgba(24,255,255,.15)}.dos-link-s:hover{background:rgba(24,255,255,.12)}
+.dos-link-pdf{background:rgba(255,64,129,.1);color:var(--r);border:1px solid rgba(255,64,129,.2);width:100%;text-align:center;justify-content:center;margin-top:.8rem;padding:.6rem;font-size:.65rem;}.dos-link-pdf:hover{background:rgba(255,64,129,.18)}
 
-/* CHARTS */
-.chart-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));gap:1rem;margin-bottom:1.5rem}
-.chart-card{background:rgba(17, 17, 40, 0.7); backdrop-filter:blur(12px); border:1px solid var(--border);border-radius:16px;padding:1.25rem;position:relative;overflow:hidden}
-.chart-card:hover{border-color:rgba(0,230,118,.2)}
-.chart-card .title{font-size:.85rem;font-weight:800;margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}
-
-/* HORIZONTAL BAR CHART */
-.hbar{display:flex;flex-direction:column;gap:.5rem}
-.hbar-row{display:flex;align-items:center;gap:.75rem}
-.hbar-label{font-size:.7rem;font-weight:600;width:100px;text-align:right;color:var(--text-dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.hbar-track{flex:1;height:28px;background:rgba(255,255,255,.04);border-radius:6px;position:relative;overflow:hidden}
-.hbar-fill{height:100%;border-radius:6px;position:relative;display:flex;align-items:center;padding-left:.5rem;font-size:.7rem;font-weight:700;color:var(--bg);transition:width 1.5s ease-out;min-width:0}
-.hbar-value{font-size:.7rem;font-weight:700;min-width:40px;text-align:right}
-
-/* DONUT CHART (CSS) */
-.donut-wrap{display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap;justify-content:center}
-.donut{position:relative;width:160px;height:160px}
-.donut svg{width:100%;height:100%;transform:rotate(-90deg)}
-.donut circle{fill:none;stroke-width:20;stroke-linecap:round;transition:stroke-dashoffset 2s ease-out}
-.donut .center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
-.donut .center .pct{font-size:1.8rem;font-weight:900;font-family:'JetBrains Mono',monospace;background:var(--g1);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.donut .center .pct-label{font-size:.55rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.5px}
-.donut-legend{display:flex;flex-direction:column;gap:.5rem}
-.donut-legend-item{display:flex;align-items:center;gap:.5rem;font-size:.72rem}
-.donut-legend-item .dot{width:10px;height:10px;border-radius:3px;flex-shrink:0}
-
-/* TIMELINE */
-.timeline{position:relative;padding-left:2rem}
-.timeline::before{content:'';position:absolute;left:.6rem;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--accent),var(--accent2),var(--accent5));border-radius:2px}
-.timeline-item{position:relative;margin-bottom:1rem;padding:.75rem 1rem;background:rgba(17, 17, 40, 0.7); backdrop-filter:blur(12px); border:1px solid var(--border);border-radius:12px;transition:all .3s}
-.timeline-item:hover{border-color:rgba(0,230,118,.3);transform:translateX(4px)}
-.timeline-item::before{content:'';position:absolute;left:-1.55rem;top:.9rem;width:12px;height:12px;border-radius:50%;border:2px solid var(--accent);background:var(--bg);z-index:1}
-.timeline-item .tl-date{font-size:.65rem;font-weight:700;color:var(--accent2);text-transform:uppercase;letter-spacing:.5px}
-.timeline-item .tl-title{font-size:.85rem;font-weight:700;margin:.15rem 0}
-.timeline-item .tl-desc{font-size:.72rem;color:var(--text-dim);line-height:1.5}
-
-/* TABLE */
-.table-container { overflow-x: auto; background: rgba(17, 17, 40, 0.5); border-radius: 12px; border: 1px solid var(--border); }
-.data-table{width:100%;border-collapse:collapse;font-size:.75rem}
-.data-table th{background:rgba(0,230,118,.06);color:var(--accent);font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:.8rem .75rem;text-align:left;border-bottom:1px solid var(--border); white-space: nowrap;}
-.data-table td{padding:.75rem;border-bottom:1px solid rgba(30,30,48,.5); vertical-align: middle;}
-.data-table tr:hover td{background:rgba(0,230,118,.04)}
-.data-table tr.hidden { display: none; }
-
-/* CTA */
-.cta{background:linear-gradient(135deg,rgba(0,230,118,.08),rgba(24,255,255,.04));border:2px solid rgba(0,230,118,.3);border-radius:16px;padding:2rem;text-align:center;margin:2rem 0; position:relative; z-index: 1;}
-.cta h3{font-size:1.3rem;font-weight:900;background:var(--g1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:.5rem}
-.cta p{color:var(--text-dim);font-size:.9rem;max-width:600px;margin:0 auto}
-
-/* FOOTER */
-footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:2rem 1.5rem;text-align:center;color:var(--text-dim);font-size:.7rem}
+.dos-gallery { display: flex; gap: 0.5rem; overflow-x: auto; padding-bottom: 0.5rem; margin-top: 1rem; margin-bottom: 1rem; scroll-snap-type: x mandatory; }
+.dos-gallery::-webkit-scrollbar { height: 4px; }
+.dos-img-container { flex: 0 0 85%; scroll-snap-align: center; position: relative; border-radius: 8px; overflow: hidden; border: 1px solid var(--bd); }
+.dos-img { width: 100%; height: 180px; object-fit: cover; display: block; }
+.dos-img-caption { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, rgba(0,0,0,0.8)); padding: 1rem 0.5rem 0.4rem; color: #fff; font-size: 0.55rem; font-weight: 600; text-shadow: 0 1px 2px rgba(0,0,0,0.8); }
 
 /* RESPONSIVE */
-@media(max-width:768px){.hero{min-height:40vh;padding:3rem 1rem 2rem}.kpi-bar{grid-template-columns:repeat(2,1fr)}.opp-grid{grid-template-columns:1fr}.chart-row{grid-template-columns:1fr}.nav-links{gap:.2rem}.nav-links a{font-size:.55rem;padding:.25rem .4rem}.hbar-label{width:70px;font-size:.6rem}.section-title{font-size:1.1rem}.filter-container{flex-direction:column;align-items:stretch}.filter-group{flex-wrap:wrap}}
-
-/* ANIMATIONS */
-@keyframes fadeInUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-.fade-in{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease}.fade-in.visible{opacity:1;transform:translateY(0)}
+@media(max-width:768px){
+.app{grid-template-columns:1fr;grid-template-rows:48px auto 1fr}
+.sidebar{max-height:35vh;border-right:none;border-bottom:1px solid var(--bd)}
+.dossier-overlay{width:100%;right:-100%}
+.dash-grid{grid-template-columns:repeat(2,1fr)}.chart-row{grid-template-columns:1fr}
+.sim-row{grid-template-columns:1fr}.sim-res-grid{grid-template-columns:repeat(2,1fr)}
+.topbar .kpi-mini{display:none}
+}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 </style>
 </head>
 <body>
-<div class="bg-mesh"></div>
-<div class="bg-grid"></div>
+<div class="app">
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <div class="logo"><span class="dot"></span>SURUS Intel</div>
+    <div class="views">
+      <button class="vbtn active" data-view="mapView">🗺️ Mapa</button>
+      <button class="vbtn" data-view="dashView">📊 Dashboard</button>
+      <button class="vbtn" data-view="gridView">📋 Grid</button>
+      <button class="vbtn" data-view="simView">🧮 Simulador</button>
+    </div>
+    <div class="kpi-mini">
+      <div class="km"><div class="v" style="color:var(--o)" id="kTotal">0</div><div class="l">Activos</div></div>
+      <div class="km"><div class="v" style="color:var(--g)" id="kMargin">0%</div><div class="l">Margen Medio</div></div>
+      <div class="km"><div class="v" style="color:var(--c)" id="kRoi">0%</div><div class="l">ROI Medio</div></div>
+      <div class="km"><div class="v" style="color:var(--y)" id="kInvest">€0M</div><div class="l">Inversión Total</div></div>
+    </div>
+  </header>
 
-<nav>
-  <a href="/" class="nav-logo"><span class="dot"></span>SURUS Inversa</a>
-  <div class="nav-links">
-    <a href="#oportunidades" class="active">Oportunidades</a>
-    <a href="#timeline">Timeline</a>
-    <a href="#comparativa">Comparativa</a>
-  </div>
-</nav>
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sb-search"><input type="text" id="searchInput" placeholder="🔍 Buscar activo, ciudad, tipo..."></div>
+    <div class="sb-filters">
+      <button class="fb active" data-filter="all">Todas</button>
+      <button class="fb" data-filter="P0" style="color:var(--o)">🔥 P0</button>
+      <button class="fb" data-filter="Subasta">Subastas</button>
+      <button class="fb" data-filter="Concurso">Concursos</button>
+      <button class="fb" data-filter="Venta Privada">Venta Priv.</button>
+      <button class="fb" data-filter="Liquidación">Liquidación</button>
+      <button class="fb" data-filter="After Sale">After Sale</button>
+      <button class="fb" data-filter="Cese Actividad">Cese Actividad</button>
+    </div>
+    <div class="sb-advanced-filters">
+      <select id="filterLocation"><option value="">País (Todos)</option></select>
+      <select id="filterMargin">
+        <option value="">Margen (Todos)</option>
+        <option value="50">Alto (+50%)</option>
+        <option value="40">Medio (40-50%)</option>
+        <option value="0">Bajo (&lt;40%)</option>
+      </select>
+      <select id="filterInvest">
+        <option value="">Inv. (Todas)</option>
+        <option value="10000000">+10M €</option>
+        <option value="5000000">5M - 10M €</option>
+        <option value="1000000">1M - 5M €</option>
+        <option value="0">&lt; 1M €</option>
+      </select>
+    </div>
+    <div class="sb-list" id="sbList"></div>
+    <div class="sb-footer" id="sbFooter" style="padding:.5rem;border-top:1px solid var(--bd);font-size:.55rem;color:var(--dm);text-align:center;">
+      Mostrando 0 de 0 oportunidades
+    </div>
+  </aside>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-content">
-    <div class="hero-badge"><span class="dot"></span> 10 Expedientes Especiales · Mayo 2026</div>
-    <h1>Radar de <span class="highlight">Oportunidades B2B</span></h1>
-    <p>Investigación estratégica de procesos concursales, cierres de plantas y desmantelamientos industriales. Análisis exclusivo de márgenes y reventa internacional.</p>
-  </div>
-</section>
+  <!-- MAIN CONTENT AREA -->
+  <main class="main">
+    <!-- MAP VIEW -->
+    <div class="view active" id="mapView">
+      <div id="map"></div>
+      <div class="map-legend">
+        <div class="map-legend-title">Margen Neto</div>
+        <div class="ml-item"><div class="ml-dot" style="background:#00e676"></div><span>50%+ Alto</span></div>
+        <div class="ml-item"><div class="ml-dot" style="background:#ffd740"></div><span>40-50% Medio</span></div>
+        <div class="ml-item"><div class="ml-dot" style="background:#ff6e40"></div><span>30-40% Bajo</span></div>
+      </div>
+    </div>
 
-<!-- KPI BAR -->
-<div class="kpi-bar" id="kpis">
-  <div class="kpi" style="--c:var(--accent3)"><div style="position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent3);border-radius:14px 14px 0 0"></div><div class="value" style="color:var(--accent3)" id="kpi-p0" data-count="3">0</div><div class="label">P0 Urgentes</div></div>
-  <div class="kpi" style="--c:var(--accent2)"><div style="position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent2);border-radius:14px 14px 0 0"></div><div class="value" style="color:var(--accent2)" id="kpi-p1" data-count="4">0</div><div class="label">P1 Alta</div></div>
-  <div class="kpi" style="--c:var(--accent5)"><div style="position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent5);border-radius:14px 14px 0 0"></div><div class="value" style="color:var(--accent5)" id="kpi-p2" data-count="3">0</div><div class="label">P2 Monitoreo</div></div>
-  <div class="kpi" style="--c:var(--accent)"><div style="position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent);border-radius:14px 14px 0 0"></div><div class="value" style="color:var(--accent)" data-count="45">0</div><div class="label">Margen Prom. %</div></div>
-  <div class="kpi" style="--c:var(--accent4)"><div style="position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent4);border-radius:14px 14px 0 0"></div><div class="value" style="color:var(--accent4)" data-count="5">0</div><div class="label">Países Clave</div></div>
-  <div class="kpi" style="--c:var(--accent6)"><div style="position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent6);border-radius:14px 14px 0 0"></div><div class="value" style="color:var(--accent6)" data-count="10">0</div><div class="label">Expedientes</div></div>
+    <!-- DASHBOARD VIEW -->
+    <div class="view" id="dashView">
+      <div class="dash-grid" id="dashKpis"></div>
+      <div class="chart-row">
+        <div class="chart-box"><div class="chart-title">ROI por Oportunidad (%)</div><div class="bar-chart" id="roiChart"></div></div>
+        <div class="chart-box"><div class="chart-title">Alertas P0 Críticas</div><div class="alert-list" id="alertList"></div></div>
+      </div>
+    </div>
+
+    <!-- GRID VIEW -->
+    <div class="view" id="gridView">
+      <table class="grid-table" id="gridTable">
+        <thead><tr>
+          <th data-sort="name">Activo ▾</th><th data-sort="type">Tipo</th><th data-sort="location">Ubicación</th>
+          <th data-sort="investment_num">Inversión</th><th data-sort="resale_num">Reventa</th>
+          <th data-sort="margin">Margen</th><th data-sort="roi_num">ROI</th><th data-sort="risk">Riesgo</th><th>Links</th>
+        </tr></thead>
+        <tbody id="gridBody"></tbody>
+      </table>
+    </div>
+
+    <!-- SIMULATOR VIEW -->
+    <div class="view" id="simView">
+      <div class="sim-container">
+        <div class="sim-header"><h2>🧮 Simulador ROI Estratégico</h2><p>Calcula escenarios de inversión personalizados</p></div>
+        <div class="sim-form">
+          <div class="sim-row">
+            <div class="sim-field"><label>Activo</label><select id="simAsset"></select></div>
+            <div class="sim-field"><label>Inversión (€)</label><input type="number" id="simInvest" value="0"></div>
+          </div>
+          <div class="sim-row">
+            <div class="sim-field"><label>Coste Logística (€)</label><input type="number" id="simLogistics" value="0"></div>
+            <div class="sim-field"><label>Precio Reventa (€)</label><input type="number" id="simResale" value="0"></div>
+          </div>
+          <button class="dos-link dos-link-p" onclick="runSimulation()" style="width:100%;justify-content:center;margin-top:.5rem;padding:.6rem">⚡ Calcular ROI</button>
+        </div>
+        <div class="sim-results" id="simResults" style="display:none">
+          <div style="text-align:center"><div class="sim-gauge" id="simGauge"><div class="sg-val" id="simRoiVal">0%</div><div class="sg-lbl">ROI</div></div></div>
+          <div class="sim-res-grid" id="simMetrics"></div>
+        </div>
+      </div>
+    </div>
+  </main>
 </div>
 
-<!-- FILTERS -->
-<div class="filter-container" id="filters">
-  <div class="filter-group">
-    <span class="filter-label">Sector:</span>
-    <button class="filter-btn active" data-filter="sector" data-value="all">Todos</button>
-    <button class="filter-btn" data-filter="sector" data-value="automotriz">Automotriz</button>
-    <button class="filter-btn" data-filter="sector" data-value="energia">Energía</button>
-    <button class="filter-btn" data-filter="sector" data-value="alimentacion">Alimentación</button>
-    <button class="filter-btn" data-filter="sector" data-value="industrial">Industrial</button>
-  </div>
-  <div class="filter-group">
-    <span class="filter-label">Prioridad:</span>
-    <button class="filter-btn active" data-filter="priority" data-value="all">Todas</button>
-    <button class="filter-btn" data-filter="priority" data-value="p0">P0 Urgente</button>
-    <button class="filter-btn" data-filter="priority" data-value="p1">P1 Alta</button>
-    <button class="filter-btn" data-filter="priority" data-value="p2">P2 Monitoreo</button>
-  </div>
-  <div class="filter-group">
-    <span class="filter-label">Margen:</span>
-    <button class="filter-btn active" data-filter="margin" data-value="all">Todos</button>
-    <button class="filter-btn" data-filter="margin" data-value="50">> 50%</button>
-    <button class="filter-btn" data-filter="margin" data-value="40">> 40%</button>
-  </div>
+<!-- DOSSIER OVERLAY -->
+<div class="dossier-overlay" id="dossierOverlay">
+  <div class="dos-close"><span id="dosTag" class="tag tag-p0">P0</span><button onclick="closeDossier()">✕ CERRAR</button></div>
+  <div class="dos-body" id="dosBody"></div>
 </div>
 
-<!-- OPORTUNIDADES -->
-<section class="section" id="oportunidades">
-  <div class="section-title"><span class="icon" style="background:var(--g1)">🎯</span> Expedientes Concursales y Cierres</div>
-  
-  <div class="opp-grid" id="opportunities-grid">
-
-    <!-- 1. Zeewolde -->
-    <a href="zeewolde-eolica.html" class="opp" data-sector="energia" data-priority="p0" data-margin="65">
-      <div class="opp-icon">💨</div>
-      <span class="tag tag-p0">🔥 P0 — URGENTE</span>
-      <div class="name">Parque Eólico Zeewolde</div>
-      <div class="desc">Repowering masivo. Desmantelamiento de turbinas Vestas V80/V90. Gran demanda para reventa en mercado secundario eólico (LATAM/Este Europa).</div>
-      <div class="meta">
-        <span class="meta-item margen"><span style="color:#fff">📈</span> 50-80% margen</span>
-        <span class="meta-item ubicacion">🇳🇱 Países Bajos</span>
-      </div>
-      <div class="bar-container"><div class="bar-fill" style="width:0%;background:var(--g1)" data-width="80"></div></div>
-    </a>
-
-    <!-- 2. Repsol GL -->
-    <a href="repsol-gl.html" class="opp" data-sector="energia" data-priority="p1" data-margin="55">
-      <div class="opp-icon">🛢️</div>
-      <span class="tag tag-p1">⚡ P1 — Alta</span>
-      <div class="name">Repsol GL — Cierre Planta GLP</div>
-      <div class="desc">Desmantelamiento de tanques esféricos, compresores e infraestructura criogénica. Venta privada. Interés altísimo en mercado de gases.</div>
-      <div class="meta">
-        <span class="meta-item margen"><span style="color:#fff">📈</span> 45-65% margen</span>
-        <span class="meta-item ubicacion">🇪🇸 España</span>
-      </div>
-      <div class="bar-container"><div class="bar-fill" style="width:0%;background:var(--g2)" data-width="65"></div></div>
-    </a>
-
-    <!-- 3. Endesa As Pontes -->
-    <a href="endesa-aspontes.html" class="opp" data-sector="energia" data-priority="p1" data-margin="60">
-      <div class="opp-icon">🏭</div>
-      <span class="tag tag-p1">⚡ P1 — Alta</span>
-      <div class="name">Endesa As Pontes — Central Térmica</div>
-      <div class="desc">Proceso de cierre definitivo. Turbinas de vapor gigantes, alternadores y parque de carbón. Venta directa B2B. Operación monumental.</div>
-      <div class="meta">
-        <span class="meta-item margen"><span style="color:#fff">📈</span> 50-70% margen</span>
-        <span class="meta-item ubicacion">🇪🇸 España</span>
-      </div>
-      <div class="bar-container"><div class="bar-fill" style="width:0%;background:var(--g1)" data-width="70"></div></div>
-    </a>
-
-    <!-- 4. Allgaier Automotive -->
-    <a href="allgaier-automotive.html" class="opp" data-sector="automotriz" data-priority="p0" data-margin="55">
-      <div class="opp-icon">🚗</div>
-      <span class="tag tag-p0">🔥 P0 — URGENTE</span>
-      <div class="name">Allgaier Automotive — Insolvencia</div>
-      <div class="desc">Histórico fabricante alemán en concurso. Prensas Schuler de alto tonelaje, robótica de soldadura KUKA. Cierre total en Uhingen.</div>
-      <div class="meta">
-        <span class="meta-item margen"><span style="color:#fff">📈</span> 40-70% margen</span>
-        <span class="meta-item ubicacion">🇩🇪 Alemania</span>
-      </div>
-      <div class="bar-container"><div class="bar-fill" style="width:0%;background:var(--g2)" data-width="70"></div></div>
-    </a>
-
-    <!-- 5. KUKA KR210 -->
-    <a href="kuka-kr210.html" class="opp" data-sector="industrial" data-priority="p1" data-margin="57">
-      <div class="opp-icon">🤖</div>
-      <span class="tag tag-p1">⚡ P1 — Alta</span>
-      <div class="name">KUKA KR 210 — Gutinvest</div>
-      <div class="desc">Lote de 7 robots KUKA Serie 2000. Controladores KRC2. Subasta gestionada por Gutinvest. Liquidación de integrador de sistemas.</div>
-      <div class="meta">
-        <span class="meta-item margen"><span style="color:#fff">📈</span> 40-74% margen</span>
-        <span class="meta-item ubicacion">🇪🇸 Barcelona</span>
-      </div>
-      <div class="bar-container"><div class="bar-fill" style="width:0%;background:var(--g1)" data-width="74"></div></div>
-    </a>
-
-    <!-- 6. BSH Esquiroz -->
-    <a href="bsh-esquiroz.html" class="opp" data-sector="industrial" data-priority="p0" data-margin="45">
-      <div class="opp-icon">🧊</div>
-      <span class="tag tag-p0">🔥 P0 — URGENTE</span>
-      <div class="name">BSH Esquiroz — Electrodomésticos</div>
-      <div class="desc">Cierre planta de frigoríficos. Prensas ARISA 1600tn, líneas ARRASATE. Subastado vía NetBid. Mercado clave: exportación a LATAM.</div>
-      <div class="meta">
-        <span class="meta-item margen"><span style="color:#fff">📈</span> 35-55% margen</span>
-        <span class="meta-item ubicacion">🇪🇸 Navarra</span>
-      </div>
-      <div class="bar-container"><div class="bar-fill" style="width:0%;background:var(--g2)" data-width="55"></div></div>
-    </a>
-
-    <!-- 7. Aleo Solar -->
-    <a href="aleo-solar.html" class="opp" data-sector="energia" data-priority="p2" data-margin="50">
-      <div class="opp-icon">☀️</div>
-      <span class="tag tag-p2">👁 P2 — Monitoreo</span>
-      <div class="name">Aleo Solar — Cierre Fábrica</div>
-      <div class="desc">Líneas de producción de paneles PERC/TOPCon. Insolvencia en Prenzlau. Subasta privada NetBid. Mercado altamente especializado.</div>
-      <div class="meta">
-        <span class="meta-item margen"><span style="color:#fff">📈</span> 40-60% margen</span>
-        <span class="meta-item ubicacion">🇩🇪 Alemania</span>
-      </div>
-      <div class="bar-container"><div class="bar-fill" style="width:0%;background:linear-gradient(135deg,var(--accent5),var(--accent2))" data-width="60"></div></div>
-    </a>
-
-    <!-- 8. TI Group Automotive -->
-    <a href="ti-group.html" class="opp" data-sector="automotriz" data-priority="p1" data-margin="47">
-      <div class="opp-icon">⚙️</div>
-      <span class="tag tag-p1">⚡ P1 — Alta</span>
-      <div class="name">TI Group Automotive</div>
-      <div class="desc">Cierre de planta de cables de freno en Nazelles-Négron. Más de 600 lotes en Troostwijk SIN PRECIO DE RESERVA. Gran oportunidad de arbitraje.</div>
-      <div class="meta">
-        <span class="meta-item margen"><span style="color:#fff">📈</span> 40-55% margen</span>
-        <span class="meta-item ubicacion">🇫🇷 Francia</span>
-      </div>
-      <div class="bar-container"><div class="bar-fill" style="width:0%;background:var(--g1)" data-width="55"></div></div>
-    </a>
-
-    <!-- 9. FrieslandCampina -->
-    <a href="frieslandcampina.html" class="opp" data-sector="alimentacion" data-priority="p2" data-margin="40">
-      <div class="opp-icon">🥛</div>
-      <span class="tag tag-p2">👁 P2 — Monitoreo</span>
-      <div class="name">FrieslandCampina — Lácteos</div>
-      <div class="desc">Cierre de instalaciones en Leeuwarden. Sistemas de evaporación y llenado aséptico. Subasta vía Ind. Auctions BV.</div>
-      <div class="meta">
-        <span class="meta-item margen"><span style="color:#fff">📈</span> 30-50% margen</span>
-        <span class="meta-item ubicacion">🇳🇱 Países Bajos</span>
-      </div>
-      <div class="bar-container"><div class="bar-fill" style="width:0%;background:linear-gradient(135deg,var(--accent5),var(--accent2))" data-width="50"></div></div>
-    </a>
-
-    <!-- 10. Neapco Europe -->
-    <a href="neapco.html" class="opp" data-sector="automotriz" data-priority="p2" data-margin="37">
-      <div class="opp-icon">🚙</div>
-      <span class="tag tag-p2">👁 P2 — Monitoreo</span>
-      <div class="name">Neapco Europe — Mecanizado</div>
-      <div class="desc">Insolvencia de proveedor automotriz. Centros de mecanizado CNC de alta precisión. Subasta NetBid. Demanda estable en automoción secundaria.</div>
-      <div class="meta">
-        <span class="meta-item margen"><span style="color:#fff">📈</span> 30-45% margen</span>
-        <span class="meta-item ubicacion">🇩🇪 Alemania</span>
-      </div>
-      <div class="bar-container"><div class="bar-fill" style="width:0%;background:linear-gradient(135deg,var(--accent5),var(--accent2))" data-width="45"></div></div>
-    </a>
-
-  </div>
-</section>
-
-<!-- COMPARATIVA TABLE -->
-<section class="section" id="comparativa">
-  <div class="section-title"><span class="icon" style="background:var(--g4)">📋</span> Comparativa Analítica</div>
-  <div class="table-container">
-    <table class="data-table" id="data-table">
-      <thead>
-        <tr>
-          <th>Oportunidad</th>
-          <th>Sector</th>
-          <th>Prioridad</th>
-          <th>País</th>
-          <th>Plataforma/Venta</th>
-          <th>Margen Est.</th>
-          <th>Acción</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr data-sector="energia" data-priority="p0" data-margin="65">
-          <td style="font-weight:700; color:#fff;">Zeewolde Eólica</td>
-          <td>Energía</td>
-          <td><span style="color:var(--accent3);font-weight:700">P0 Urgente</span></td>
-          <td>🇳🇱</td>
-          <td>Troostwijk</td>
-          <td style="color:var(--accent);font-weight:700">50-80%</td>
-          <td><a href="zeewolde-eolica.html" style="color:var(--accent2);font-weight:600;text-decoration:none;">Analizar →</a></td>
-        </tr>
-        <tr data-sector="energia" data-priority="p1" data-margin="55">
-          <td style="font-weight:700; color:#fff;">Repsol GL</td>
-          <td>Energía</td>
-          <td><span style="color:var(--accent2);font-weight:700">P1 Alta</span></td>
-          <td>🇪🇸</td>
-          <td>Venta Privada</td>
-          <td style="color:var(--accent);font-weight:700">45-65%</td>
-          <td><a href="repsol-gl.html" style="color:var(--accent2);font-weight:600;text-decoration:none;">Analizar →</a></td>
-        </tr>
-        <tr data-sector="energia" data-priority="p1" data-margin="60">
-          <td style="font-weight:700; color:#fff;">Endesa As Pontes</td>
-          <td>Energía</td>
-          <td><span style="color:var(--accent2);font-weight:700">P1 Alta</span></td>
-          <td>🇪🇸</td>
-          <td>Venta Privada</td>
-          <td style="color:var(--accent);font-weight:700">50-70%</td>
-          <td><a href="endesa-aspontes.html" style="color:var(--accent2);font-weight:600;text-decoration:none;">Analizar →</a></td>
-        </tr>
-        <tr data-sector="automotriz" data-priority="p0" data-margin="55">
-          <td style="font-weight:700; color:#fff;">Allgaier Automotive</td>
-          <td>Automotriz</td>
-          <td><span style="color:var(--accent3);font-weight:700">P0 Urgente</span></td>
-          <td>🇩🇪</td>
-          <td>Troostwijk</td>
-          <td style="color:var(--accent);font-weight:700">40-70%</td>
-          <td><a href="allgaier-automotive.html" style="color:var(--accent2);font-weight:600;text-decoration:none;">Analizar →</a></td>
-        </tr>
-        <tr data-sector="industrial" data-priority="p1" data-margin="57">
-          <td style="font-weight:700; color:#fff;">KUKA KR 210</td>
-          <td>Industrial</td>
-          <td><span style="color:var(--accent2);font-weight:700">P1 Alta</span></td>
-          <td>🇪🇸</td>
-          <td>Gutinvest</td>
-          <td style="color:var(--accent);font-weight:700">40-74%</td>
-          <td><a href="kuka-kr210.html" style="color:var(--accent2);font-weight:600;text-decoration:none;">Analizar →</a></td>
-        </tr>
-        <tr data-sector="industrial" data-priority="p0" data-margin="45">
-          <td style="font-weight:700; color:#fff;">BSH Esquíroz</td>
-          <td>Industrial</td>
-          <td><span style="color:var(--accent3);font-weight:700">P0 Urgente</span></td>
-          <td>🇪🇸</td>
-          <td>NetBid</td>
-          <td style="color:var(--accent);font-weight:700">35-55%</td>
-          <td><a href="bsh-esquiroz.html" style="color:var(--accent2);font-weight:600;text-decoration:none;">Analizar →</a></td>
-        </tr>
-        <tr data-sector="energia" data-priority="p2" data-margin="50">
-          <td style="font-weight:700; color:#fff;">Aleo Solar</td>
-          <td>Energía</td>
-          <td><span style="color:var(--accent5);font-weight:700">P2 Monitoreo</span></td>
-          <td>🇩🇪</td>
-          <td>NetBid</td>
-          <td style="color:var(--accent)">40-60%</td>
-          <td><a href="aleo-solar.html" style="color:var(--accent2);font-weight:600;text-decoration:none;">Analizar →</a></td>
-        </tr>
-        <tr data-sector="automotriz" data-priority="p1" data-margin="47">
-          <td style="font-weight:700; color:#fff;">TI Group Automotive</td>
-          <td>Automotriz</td>
-          <td><span style="color:var(--accent2);font-weight:700">P1 Alta</span></td>
-          <td>🇫🇷</td>
-          <td>Troostwijk</td>
-          <td style="color:var(--accent)">40-55%</td>
-          <td><a href="ti-group.html" style="color:var(--accent2);font-weight:600;text-decoration:none;">Analizar →</a></td>
-        </tr>
-        <tr data-sector="alimentacion" data-priority="p2" data-margin="40">
-          <td style="font-weight:700; color:#fff;">FrieslandCampina</td>
-          <td>Alimentación</td>
-          <td><span style="color:var(--accent5);font-weight:700">P2 Monitoreo</span></td>
-          <td>🇳🇱</td>
-          <td>Ind. Auctions BV</td>
-          <td style="color:var(--accent)">30-50%</td>
-          <td><a href="frieslandcampina.html" style="color:var(--accent2);font-weight:600;text-decoration:none;">Analizar →</a></td>
-        </tr>
-        <tr data-sector="automotriz" data-priority="p2" data-margin="37">
-          <td style="font-weight:700; color:#fff;">Neapco Europe</td>
-          <td>Automotriz</td>
-          <td><span style="color:var(--accent5);font-weight:700">P2 Monitoreo</span></td>
-          <td>🇩🇪</td>
-          <td>NetBid</td>
-          <td style="color:var(--accent)">30-45%</td>
-          <td><a href="neapco.html" style="color:var(--accent2);font-weight:600;text-decoration:none;">Analizar →</a></td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</section>
-
-<!-- CTA -->
-<section class="section">
-  <div class="cta">
-    <h3>10 Expedientes Aprobados · Operaciones Exclusivas</h3>
-    <p>La investigación garantiza la exclusión de plataformas minoristas. Todas las operaciones detalladas provienen de liquidaciones B2B, NetBid, Troostwijk o ventas privadas directas.</p>
-  </div>
-</section>
-
-<footer>
-  <p>SURUS Inversa S.L. — Investigación Estratégica · Documento Confidencial</p>
-  <p style="margin-top:.25rem;font-size:.6rem">Actualizado: <span id="update-date"></span> · <a href="https://surusin.com" style="color:var(--accent2)">surusin.com</a></p>
-</footer>
-
-<script>
-// FILTER LOGIC
-const filters = {
-  sector: 'all',
-  priority: 'all',
-  margin: 'all'
-};
-
-function applyFilters() {
-  const cards = document.querySelectorAll('.opp');
-  const rows = document.querySelectorAll('#data-table tbody tr');
-  
-  let p0Count = 0; let p1Count = 0; let p2Count = 0;
-  
-  const filterLogic = (element) => {
-    const s = element.dataset.sector;
-    const p = element.dataset.priority;
-    const m = parseInt(element.dataset.margin || 0);
-    
-    let sectorMatch = filters.sector === 'all' || s === filters.sector;
-    let priorityMatch = filters.priority === 'all' || p === filters.priority;
-    let marginMatch = filters.margin === 'all' || m >= parseInt(filters.margin);
-    
-    const isVisible = sectorMatch && priorityMatch && marginMatch;
-    
-    if(isVisible) {
-      if(p === 'p0') p0Count++;
-      if(p === 'p1') p1Count++;
-      if(p === 'p2') p2Count++;
-    }
-    return isVisible;
-  };
-
-  cards.forEach(c => c.classList.toggle('hidden', !filterLogic(c)));
-  rows.forEach(r => r.classList.toggle('hidden', !filterLogic(r)));
-  
-  // Update KPIs
-  document.getElementById('kpi-p0').textContent = p0Count;
-  document.getElementById('kpi-p1').textContent = p1Count;
-  document.getElementById('kpi-p2').textContent = p2Count;
-}
-
-document.querySelectorAll('.filter-btn').forEach(btn => {
-  btn.addEventListener('click', (e) => {
-    const filterType = e.target.dataset.filter;
-    const filterValue = e.target.dataset.value;
-    
-    // Update active state in UI
-    document.querySelectorAll(`.filter-btn[data-filter="${filterType}"]`).forEach(b => b.classList.remove('active'));
-    e.target.classList.add('active');
-    
-    // Update state and apply
-    filters[filterType] = filterValue;
-    applyFilters();
-  });
-});
-
-// Animate KPI counters on load
-function animateCounters() {
-  document.querySelectorAll('.kpi .value').forEach(el => {
-    const target = parseInt(el.dataset.count || el.textContent);
-    const duration = 1500;
-    const start = performance.now();
-    function update(now) {
-      const progress = Math.min((now - start) / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      el.textContent = Math.round(target * eased);
-      if (progress < 1) requestAnimationFrame(update);
-    }
-    requestAnimationFrame(update);
-  });
-}
-
-// Animate bar fills
-function animateBars() {
-  document.querySelectorAll('.bar-fill').forEach(bar => {
-    const target = parseFloat(bar.dataset.width);
-    setTimeout(() => { bar.style.width = target + '%'; }, 300);
-  });
-}
-
-// Fade in on scroll
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-    }
-  });
-}, { threshold: 0.1 });
-document.querySelectorAll('.opp, .chart-card, .table-container, .timeline-item').forEach(el => {
-  el.classList.add('fade-in');
-  observer.observe(el);
-});
-
-// Init
-document.getElementById('update-date').textContent = new Date().toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' });
-window.addEventListener('load', () => {
-  setTimeout(animateCounters, 500);
-  setTimeout(animateBars, 800);
-});
-</script>
+<script src="intel-data.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="app.js"></script>
 </body>
 </html>
