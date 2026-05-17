@@ -1,8 +1,9 @@
 // SURUS Intel — Stats API Serverless Function v2
 // Reads visitor data + time metrics from Supabase for the secret admin panel
 
-const SUPABASE_URL = 'https://kvuvzzegszduglogxrwr.supabase.co';
-const SUPABASE_SERVICE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt2dXZ6emVnc3pkdWdsb2d4cndyIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3MDI2NzU0MywiZXhwIjoyMDg1ODQzNTQzfQ.LYKjIYF38kLo20bODYyrHTrL0XL8w2R37M6VpBLlqTA';
+const SUPABASE_URL = process.env.SUPABASE_URL || 'https://kvuvzzegszduglogxrwr.supabase.co';
+const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY;
+
 
 function formatDuration(seconds) {
   if (!seconds || seconds < 0) return '0s';
