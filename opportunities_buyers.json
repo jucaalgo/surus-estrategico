@@ -1,0 +1,344 @@
+[
+  {
+    "id": "liberty-galati",
+    "name": "Liberty Galați — Siderurgia Integral",
+    "potential_clients": [
+      "Metinvest (Ucrania/Global)",
+      "ArcelorMittal",
+      "Inversores Estratégicos China"
+    ]
+  },
+  {
+    "id": "goodyear-fulda",
+    "name": "Goodyear Fulda — Planta Neumáticos",
+    "potential_clients": [
+      "Lassa Tyres (Turquía)",
+      "Apollo Tyres (India)",
+      "Continental"
+    ]
+  },
+  {
+    "id": "allgaier-automotive",
+    "name": "Allgaier Automotive — Estampación Metálica",
+    "potential_clients": [
+      "Gestamp (España)",
+      "CIE Automotive",
+      "Estructuristas en Polonia"
+    ]
+  },
+  {
+    "id": "ford-saarlouis-robots",
+    "name": "Ford Saarlouis — 450+ Robots KUKA",
+    "potential_clients": [
+      "Stellantis",
+      "Startups EV (Rivian/Lucid)",
+      "Integradores robótica"
+    ]
+  },
+  {
+    "id": "marelli-casting",
+    "name": "Marelli Crevalcore — Inyección Aluminio",
+    "potential_clients": [
+      "Nemak",
+      "Teksid",
+      "Fabricantes componentes EV"
+    ]
+  },
+  {
+    "id": "zf-precision",
+    "name": "ZF Friedrichshafen — Mecanizado 5 Ejes",
+    "potential_clients": [
+      "Aeroespacial (Airbus Tier-2)",
+      "Médico (Implantes)",
+      "Moldistas"
+    ]
+  },
+  {
+    "id": "bosch-smt",
+    "name": "Bosch SMT Lines — Electrónica",
+    "potential_clients": [
+      "Foxconn",
+      "Flex",
+      "Jabil (México/China/Vietnam)"
+    ]
+  },
+  {
+    "id": "michelin-mixing",
+    "name": "Michelin Tours — Planta Mezclado Inox",
+    "potential_clients": [
+      "Danone",
+      "Nestlé",
+      "Empresas químicas/cosméticas"
+    ]
+  },
+  {
+    "id": "bsh-esquiroz-2026",
+    "name": "BSH Esquiroz — Navarra (P0)",
+    "potential_clients": [
+      "Fagor",
+      "Teknion",
+      "Empresas Metalmecánicas Norte España"
+    ]
+  },
+  {
+    "id": "vallourec-tube",
+    "name": "Vallourec — Tubos Acero (Düsseldorf)",
+    "potential_clients": [
+      "Tenaris (México/Global)",
+      "TMK",
+      "Fabricantes tubos energía"
+    ]
+  },
+  {
+    "id": "cat-336d-ocana",
+    "name": "Caterpillar 336D L — Excavadora Hidráulica",
+    "potential_clients": [
+      "Constructoras Obra Civil",
+      "Explotaciones Mineras",
+      "Alquiladores"
+    ]
+  },
+  {
+    "id": "liebherr-ltm-ocana",
+    "name": "Liebherr LTM 1055-3.1 — Grúa Todo Terreno",
+    "potential_clients": [
+      "Empresas de Grúas",
+      "Montajes Industriales",
+      "Eólicos"
+    ]
+  },
+  {
+    "id": "dmg-mori-ctx-france",
+    "name": "DMG Mori CTX BETA 800 — Torno CNC",
+    "potential_clients": [
+      "Talleres de Mecanizado",
+      "Sector Automoción",
+      "Aeronáutica"
+    ]
+  },
+  {
+    "id": "okuma-mx60-terrassa",
+    "name": "Okuma MX-60HB — Centro Horizontal",
+    "potential_clients": [
+      "Fabricantes de Válvulas",
+      "Sector Energético",
+      "Moldes grandes"
+    ]
+  },
+  {
+    "id": "golden-laser-romania",
+    "name": "Golden Laser JG-180100 — Corte Láser",
+    "potential_clients": [
+      "Textil Industrial",
+      "Carpintería Técnica",
+      "Publicidad"
+    ]
+  },
+  {
+    "id": "koyama-elorrio",
+    "name": "Koyama Machining Line — Línea Automatizada",
+    "potential_clients": [
+      "Fundiciones",
+      "Empresas de Acabado Metálico",
+      "Integradores"
+    ]
+  },
+  {
+    "id": "kleen-tek-bcn",
+    "name": "Kleen-Tek Custom MCS — Limpieza Industrial",
+    "potential_clients": [
+      "Talleres de Reparación",
+      "Plantas de Alimentación",
+      "Químicas"
+    ]
+  },
+  {
+    "id": "volvo-l150g-ocana",
+    "name": "Volvo L150G — Pala Cargadora",
+    "potential_clients": [
+      "Canteras",
+      "Plantas de Reciclaje",
+      "Movimiento de Tierras"
+    ]
+  },
+  {
+    "id": "mori-seiki-sh5000-zestoa",
+    "name": "Mori Seiki SH5000/40 — Centro Horizontal",
+    "potential_clients": [
+      "Automoción",
+      "Aeronáutica",
+      "Ingeniería de Precisión"
+    ]
+  },
+  {
+    "id": "kira-kn40-terrassa",
+    "name": "Kira KN-40VB — Centro Vertical",
+    "potential_clients": [
+      "Talleres de Utillaje",
+      "Micro-mecánica",
+      "Prototipado"
+    ]
+  },
+  {
+    "id": "thyssenkrupp-galmed",
+    "name": "Thyssenkrupp Galmed — Línea Galvanizado",
+    "potential_clients": [
+      "Siderúrgicas en Marruecos",
+      "Sudáfrica (Mercados en expansión)",
+      "ArcelorMittal"
+    ]
+  },
+  {
+    "id": "ae-group-aluminio",
+    "name": "ae Group — Fundición Aluminio + 55 CNC",
+    "potential_clients": [
+      "Tier-1 Automotriz México (Nearshoring)",
+      "Fundiciones Brasil",
+      "Integradores CNC Polonia"
+    ]
+  },
+  {
+    "id": "lumileds-semiconductores",
+    "name": "Lumileds — 3.000+ Lotes Semiconductores",
+    "potential_clients": [
+      "Fab Semiconductores Asia (TSMC, Samsung)",
+      "Centros I+D Europa",
+      "Startups Fotovoltaica"
+    ]
+  },
+  {
+    "id": "hilco-seamless-tube",
+    "name": "Hilco Seamless Tube — Planta Tubo Sin Costura",
+    "potential_clients": [
+      "Siderúrgicas Brasil (Vallourec BR)",
+      "Pemex/CFE México",
+      "Tenaris Argentina"
+    ]
+  },
+  {
+    "id": "allgaier-werke-cnc",
+    "name": "Allgaier Werke — CNC Trimill + Blanking Line",
+    "potential_clients": [
+      "Tier-1 Automotriz LATAM",
+      "Talleres Mecanizado Precisión",
+      "Revendedores CNC Europa"
+    ]
+  },
+  {
+    "id": "allgaier-france-prensas",
+    "name": "Allgaier France — Prensas Arisa 1600t + Eisenmann KTL",
+    "potential_clients": [
+      "Automotriz México (Nearshoring)",
+      "Estampadores Brasil",
+      "Tier-1 Colombia"
+    ]
+  },
+  {
+    "id": "prensas-saarlouis",
+    "name": "Prensas Saarlouis — Weingarten/Schuler Press Line",
+    "potential_clients": [
+      "Automotriz México",
+      "Estampadores Brasil",
+      "Fabricantes Electrodomésticos"
+    ]
+  },
+  {
+    "id": "marel-carne-cz",
+    "name": "Marel DMM10 — Línea Procesado Carne",
+    "potential_clients": [
+      "Procesadoras Cárnicas LATAM",
+      "Frial México",
+      "JBS Brasil"
+    ]
+  },
+  {
+    "id": "zeewolde-eolico",
+    "name": "Windpark Zeewolde — 93 Aerogeneradores",
+    "potential_clients": [
+      "Parques Eólicos LATAM (México, Brasil, Chile)",
+      "Utilities África",
+      "Revendedores Turbinas"
+    ]
+  },
+  {
+    "id": "ritchie-ocana",
+    "name": "Ritchie Bros Ocaña — 1.587 Lotes Construcción",
+    "potential_clients": [
+      "Constructoras LATAM",
+      "Mineras Perú/Chile",
+      "Distribuidores Maquinaria Usada"
+    ]
+  },
+  {
+    "id": "ritchie-southeast-us",
+    "name": "Ritchie Bros Southeast US — 2.150 Lotes",
+    "potential_clients": [
+      "Constructoras Centroamérica",
+      "Distribuidores Maquinaria México",
+      "Mineras Colombia"
+    ]
+  },
+  {
+    "id": "ritchie-quebec",
+    "name": "Ritchie Bros Quebec — 3.263 Lotes",
+    "potential_clients": [
+      "Constructoras México (USMCA)",
+      "Distribuidores Centroamérica",
+      "Mineras Sudamérica"
+    ]
+  },
+  {
+    "id": "azteca-ceramicas",
+    "name": "Azteca Cerámicas — Fábrica Cerámica Completa",
+    "potential_clients": [
+      "Fabricantes de Cerámica Argelia/Turquía",
+      "Cerámicas de Castellón (expansión)",
+      "Revendedores internacionales"
+    ]
+  },
+  {
+    "id": "frost-trol-refrigeracion",
+    "name": "Frost-Trol — Fábrica Refrigeración 47.484m²",
+    "potential_clients": [
+      "Fabricantes de climatización (Carrier, Daikin)",
+      "Grupos logísticos frío",
+      "Fondos inmobiliarios industriales"
+    ]
+  },
+  {
+    "id": "harinas-bufort",
+    "name": "Harinas Bufort — Fábrica Harinas Centenaria",
+    "potential_clients": [
+      "Coleccionistas de maquinaria harinera",
+      "Promotores turísticos/Museos",
+      "Fabricantes de harina orgánica artesanal"
+    ]
+  },
+  {
+    "id": "troostwijk-belgium",
+    "name": "Troostwijk Industry — Prensa LVD + Chocolate",
+    "potential_clients": [
+      "Talleres de calderería metálica",
+      "Fabricantes confitería industrial",
+      "Revendedores maquinaria"
+    ]
+  },
+  {
+    "id": "ritchie-las-vegas",
+    "name": "Ritchie Bros Las Vegas — 646 Lotes",
+    "potential_clients": [
+      "Constructoras e infraestructuras México/Colombia",
+      "Revendedores maquinaria usada",
+      "Alquiladores de maquinaria"
+    ]
+  },
+  {
+    "id": "govplanet-generators",
+    "name": "GovPlanet — Generadores INI + Vehículos Militares",
+    "potential_clients": [
+      "Empresas mineras/agrícolas LATAM",
+      "Compañías eléctricas de emergencia",
+      "Coleccionistas de vehículos militares"
+    ]
+  }
+]

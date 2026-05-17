@@ -4,6 +4,26 @@
 const opps = INTEL_DATA.opportunities;
 let map, markers = [], currentFilter = 'all', sortCol = 'roi_num', sortAsc = false;
 let filteredOpps = [...opps];
+let favorites = JSON.parse(localStorage.getItem('surus_favorites')) || [];
+
+function toggleFavorite(id, event) {
+  if (event) event.stopPropagation();
+  if (favorites.includes(id)) {
+    favorites = favorites.filter(f => f !== id);
+  } else {
+    favorites.push(id);
+  }
+  localStorage.setItem('surus_favorites', JSON.stringify(favorites));
+  applyFilters(); // Re-render to update stars
+  
+  const favBtn = document.getElementById('dosFavBtn');
+  if (favBtn && document.getElementById('dossierOverlay').classList.contains('open')) {
+    const isFav = favorites.includes(id);
+    favBtn.innerHTML = isFav ? '🌟 Quitar Fav' : '⭐ Añadir Fav';
+    if(isFav) { favBtn.classList.replace('dos-link-s', 'dos-link-p'); }
+    else { favBtn.classList.replace('dos-link-p', 'dos-link-s'); }
+  }
+}
 
 // ── UTILS ──
 function animateValue(id, start, end, duration, prefix = '', suffix = '') {
@@ -77,7 +97,7 @@ function renderSidebar(list) {
     card.dataset.id = opp.id;
     const mVal = parseFloat(opp.financials.margin);
     card.innerHTML = `
-      <div class="sc-name">${opp.name}</div>
+      <div class="sc-name">${favorites.includes(opp.id) ? '⭐ ' : ''}${opp.name}</div>
       <div class="sc-meta">${opp.location.city}, ${opp.location.country} · ${opp.status}</div>
       <div class="sc-tags">
         <span class="tag tag-p0">${opp.priority}</span>
@@ -128,7 +148,14 @@ function applyFilters() {
 
   const filtered = opps.filter(o => {
     const text = `${o.name} ${o.location.city} ${o.location.country} ${o.type} ${o.technical.assets}`.toLowerCase();
-    const matchType = currentFilter === 'all' || o.priority === currentFilter || o.type === currentFilter;
+    
+    let matchType = true;
+    if (currentFilter === 'favorites') {
+      matchType = favorites.includes(o.id);
+    } else if (currentFilter !== 'all') {
+      matchType = o.priority === currentFilter || o.type === currentFilter;
+    }
+
     const matchQ = q === '' || text.includes(q);
     const matchLoc = loc === '' || o.location.country === loc;
     
@@ -190,7 +217,7 @@ function addMapMarkers(list) {
     
     circle.bindTooltip(`<strong>${opp.name}</strong><br>Margen: ${opp.financials.margin} | ROI: ${opp.financials.roi}`, { direction: 'top' });
     circle.on('click', () => {
-      openDossier(opp.id);
+      loadSimFromDossier(opp.id);
     });
     
     markers.push(circle);
@@ -255,9 +282,9 @@ function initGrid() { renderGrid(); initGridSort(); }
 
 function getRiskBadge(risk) {
   const r = (risk || '').toLowerCase();
-  if (r.includes('alto')) return `<span class="tag" style="background:rgba(255,64,129,.2);color:var(--r);border:1px solid rgba(255,64,129,.3)">Alto</span>`;
-  if (r.includes('medio')) return `<span class="tag" style="background:rgba(255,215,64,.2);color:var(--y);border:1px solid rgba(255,215,64,.3)">Medio</span>`;
-  return `<span class="tag" style="background:rgba(0,230,118,.2);color:var(--g);border:1px solid rgba(0,230,118,.3)">Bajo</span>`;
+  if (r.includes('alto') || r.includes('extremo')) return `<span class="tag" style="background:rgba(255,64,129,.15);color:var(--r);border:1px solid rgba(255,64,129,.3);box-shadow:0 0 10px rgba(255,64,129,.1)">Alto</span>`;
+  if (r.includes('medio')) return `<span class="tag" style="background:rgba(255,215,64,.15);color:var(--y);border:1px solid rgba(255,215,64,.3);box-shadow:0 0 10px rgba(255,215,64,.1)">Medio</span>`;
+  return `<span class="tag" style="background:rgba(0,230,118,.15);color:var(--g);border:1px solid rgba(0,230,118,.3);box-shadow:0 0 10px rgba(0,230,118,.1)">Bajo</span>`;
 }
 
 function renderGrid() {
@@ -277,7 +304,7 @@ function renderGrid() {
     const mc = getMarkerColor(o.financials.margin);
     const link = o.links[0] ? `<a href="${o.links[0].url}" target="_blank" onclick="event.stopPropagation()">${o.links[0].label}</a>` : '—';
     return `<tr onclick="openDossier('${o.id}')" style="cursor:pointer">
-      <td><strong>${o.name}</strong></td>
+      <td><strong>${favorites.includes(o.id) ? '⭐ ' : ''}${o.name}</strong></td>
       <td><span class="tag tag-type">${o.type}</span></td>
       <td>${o.location.city}, ${o.location.country}</td>
       <td style="font-family:'JetBrains Mono',monospace">${o.financials.investment}</td>
@@ -340,12 +367,12 @@ function runSimulation() {
 
   // Metrics
   document.getElementById('simMetrics').innerHTML = `
-    <div class="sim-metric"><div class="sv" style="color:var(--o)">€${(totalCost/1e3).toFixed(0)}K</div><div class="sl">Coste Total</div></div>
-    <div class="sim-metric"><div class="sv" style="color:${profit>0?'var(--g)':'var(--r)'}">€${(profit/1e3).toFixed(0)}K</div><div class="sl">Beneficio Neto</div></div>
-    <div class="sim-metric"><div class="sv" style="color:var(--y)">${margin}%</div><div class="sl">Margen</div></div>
-    <div class="sim-metric"><div class="sv" style="color:var(--c)">${roi}%</div><div class="sl">ROI</div></div>
-    <div class="sim-metric"><div class="sv" style="color:var(--p)">${paybackMonths}m</div><div class="sl">Payback Est.</div></div>
-    <div class="sim-metric"><div class="sv" style="color:${roiNum>=50?'var(--g)':'var(--r)'}">${roiNum>=80?'🟢 Excelente':roiNum>=40?'🟡 Viable':'🔴 Riesgo'}</div><div class="sl">Rating</div></div>
+    <div class="sim-metric" style="background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.05);padding:.8rem;border-radius:10px"><div class="sv" style="color:var(--o)">€${(totalCost/1e3).toFixed(0)}K</div><div class="sl" style="color:var(--dm);font-size:.6rem;font-weight:600;margin-top:.2rem">Coste Total</div></div>
+    <div class="sim-metric" style="background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.05);padding:.8rem;border-radius:10px"><div class="sv" style="color:${profit>0?'var(--g)':'var(--r)'}">€${(profit/1e3).toFixed(0)}K</div><div class="sl" style="color:var(--dm);font-size:.6rem;font-weight:600;margin-top:.2rem">Beneficio Neto</div></div>
+    <div class="sim-metric" style="background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.05);padding:.8rem;border-radius:10px"><div class="sv" style="color:var(--y)">${margin}%</div><div class="sl" style="color:var(--dm);font-size:.6rem;font-weight:600;margin-top:.2rem">Margen</div></div>
+    <div class="sim-metric" style="background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.05);padding:.8rem;border-radius:10px"><div class="sv" style="color:var(--c)">${roi}%</div><div class="sl" style="color:var(--dm);font-size:.6rem;font-weight:600;margin-top:.2rem">ROI</div></div>
+    <div class="sim-metric" style="background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.05);padding:.8rem;border-radius:10px"><div class="sv" style="color:var(--p)">${paybackMonths}m</div><div class="sl" style="color:var(--dm);font-size:.6rem;font-weight:600;margin-top:.2rem">Payback Est.</div></div>
+    <div class="sim-metric" style="background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.05);padding:.8rem;border-radius:10px"><div class="sv" style="font-size:.8rem;margin-bottom:.2rem">${roiNum>=80?'<span class="tag" style="background:rgba(0,230,118,.15);color:var(--g)">Excelente</span>':roiNum>=40?'<span class="tag" style="background:rgba(255,215,64,.15);color:var(--y)">Viable</span>':'<span class="tag" style="background:rgba(255,64,129,.15);color:var(--r)">Riesgo</span>'}</div><div class="sl" style="color:var(--dm);font-size:.6rem;font-weight:600;margin-top:.2rem">Rating</div></div>
   `;
 }
 
@@ -439,6 +466,7 @@ function openDossier(id) {
     <div class="dos-links">
       ${opp.links.map(l => `<a href="${l.url}" target="_blank" class="dos-link dos-link-s">🔗 ${l.label}</a>`).join('')}
       <button class="dos-link dos-link-p" onclick="loadSimFromDossier('${opp.id}')">🧮 Simular ROI</button>
+      <button id="dosFavBtn" class="dos-link ${favorites.includes(opp.id) ? 'dos-link-p' : 'dos-link-s'}" onclick="toggleFavorite('${opp.id}')">${favorites.includes(opp.id) ? '🌟 Quitar Fav' : '⭐ Añadir Fav'}</button>
     </div>
 
     ${opp.pdf_dossier ? `
