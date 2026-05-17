@@ -217,7 +217,7 @@ function addMapMarkers(list) {
     
     circle.bindTooltip(`<strong>${opp.name}</strong><br>Margen: ${opp.financials.margin} | ROI: ${opp.financials.roi}`, { direction: 'top' });
     circle.on('click', () => {
-      loadSimFromDossier(opp.id);
+      openDossier(opp.id);
     });
     
     markers.push(circle);
