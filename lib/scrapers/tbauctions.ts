@@ -3,48 +3,6 @@ import { fetchWithRetry, getNextHeaders, fetchPageAs$, logScrape, checkZeroResul
 
 const GRAPHQL_ENDPOINT = 'https://storefront.tbauctions.com/storefront/graphql';
 
-const AUCTIONS_QUERY = `
-query AllAuctions($request: AllAuctionsInput!, $platform: Platform!) {
-  allAuctionsV2(request: $request, platform: $platform) {
-    totalSize
-    hasNext
-    pageNumber
-    results {
-      id
-      name
-      urlSlug
-      platform
-      lotCount
-      biddingStatus
-      minEndDate
-      maxEndDate
-      images { url alt order }
-    }
-  }
-}`;
-
-const AUCTION_LOTS_QUERY = `
-query AuctionLots($request: AuctionWithLotsInputV3!, $platform: Platform!) {
-  auctionWithLotsV5(request: $request, platform: $platform) {
-    auction { id name urlSlug platform lotCount minEndDate maxEndDate }
-    lots {
-      hasNext
-      totalSize
-      results {
-        id
-        title
-        urlSlug
-        platform
-        currentBidAmount { cents currency }
-        bidsCount
-        biddingStatus
-        image { url alt }
-        location { city countryCode }
-      }
-    }
-  }
-}`;
-
 function buildLotUrl(platform: string, urlSlug: string): string {
   const domains: Record<string, string> = {
     SPX: 'https://www.surplex.com/es/l/',
@@ -170,6 +128,17 @@ async function tryGraphQL(platform: string): Promise<RawAuctionItem[]> {
     BVA: 'https://www.bva-auctions.com',
   };
 
+  // Inline query — GraphQL enums must NOT be quoted
+  const auctionsQuery = `query {
+    allAuctionsV2(
+      request: {pageNumber: 1, pageSize: 100, locale: "es", biddingStatuses: [BIDDING_OPEN], hideZeroLotAuctions: true, facets: [], rangeFacets: [], sortBy: END_DATE_ASC}
+      platform: ${platform}
+    ) {
+      totalSize hasNext pageNumber
+      results { id name urlSlug platform lotCount biddingStatus minEndDate maxEndDate images { url alt order } }
+    }
+  }`;
+
   const res = await fetch(GRAPHQL_ENDPOINT, {
     method: 'POST',
     headers: {
@@ -178,22 +147,7 @@ async function tryGraphQL(platform: string): Promise<RawAuctionItem[]> {
       'Origin': originMap[platform] || 'https://www.surplex.com',
       'Referer': `${originMap[platform] || 'https://www.surplex.com'}/`,
     },
-    body: JSON.stringify({
-      query: AUCTIONS_QUERY,
-      variables: {
-        request: {
-          pageNumber: 1,
-          pageSize: 100,
-          locale: 'es',
-          biddingStatuses: ['BIDDING_OPEN'],
-          hideZeroLotAuctions: true,
-          facets: [],
-          rangeFacets: [],
-          sortBy: 'END_DATE_ASC',
-        },
-        platform,
-      },
-    }),
+    body: JSON.stringify({ query: auctionsQuery }),
   });
 
   if (!res.ok) {
@@ -202,6 +156,11 @@ async function tryGraphQL(platform: string): Promise<RawAuctionItem[]> {
   }
 
   const data = await res.json();
+  if (data.errors) {
+    logScrape('tbauctions', 'warn', `GraphQL error: ${data.errors[0].message}`);
+    return [];
+  }
+
   const auctionsResult = data?.data?.allAuctionsV2;
   const auctions = auctionsResult?.results || [];
 
@@ -214,8 +173,19 @@ async function tryGraphQL(platform: string): Promise<RawAuctionItem[]> {
 
   const allItems: RawAuctionItem[] = [];
   for (const auction of auctions.slice(0, 25)) {
+    const displayId = auction.urlSlug?.split('-').slice(-1)[0] || auction.id;
+
+    const lotsQuery = `query {
+      auctionWithLotsV5(
+        request: {displayId: "${displayId}", locale: "es", pageNumber: 1, pageSize: 20, rangeFacetInputs: [], sortBy: END_DATE_ASC, valueFacetInputs: []}
+        platform: ${platform}
+      ) {
+        auction { id name urlSlug platform lotCount minEndDate maxEndDate location { city countryCode } }
+        lots { hasNext totalSize results { id title urlSlug platform currentBidAmount { cents currency } bidsCount biddingStatus image { url alt } location { city countryCode } } }
+      }
+    }`;
+
     try {
-      const displayId = auction.urlSlug?.split('-').slice(-1)[0] || auction.id;
       const lotsRes = await fetch(GRAPHQL_ENDPOINT, {
         method: 'POST',
         headers: {
@@ -224,18 +194,20 @@ async function tryGraphQL(platform: string): Promise<RawAuctionItem[]> {
           'Origin': originMap[platform] || 'https://www.surplex.com',
           'Referer': `${originMap[platform] || 'https://www.surplex.com'}/`,
         },
-        body: JSON.stringify({
-          query: AUCTION_LOTS_QUERY,
-          variables: {
-            request: { displayId, locale: 'es', pageNumber: 1, pageSize: 20, rangeFacetInputs: [], sortBy: 'END_DATE_ASC', valueFacetInputs: [] },
-            platform,
-          },
-        }),
+        body: JSON.stringify({ query: lotsQuery }),
       });
 
-      if (!lotsRes.ok) continue;
+      if (!lotsRes.ok) {
+        allItems.push(auctionToItem(auction, platform));
+        continue;
+      }
 
       const lotsData = await lotsRes.json();
+      if (lotsData.errors) {
+        allItems.push(auctionToItem(auction, platform));
+        continue;
+      }
+
       const lotsResult = lotsData?.data?.auctionWithLotsV5;
       const lots = lotsResult?.lots?.results || [];
       const auctionInfo = lotsResult?.auction || auction;
