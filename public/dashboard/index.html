@@ -1277,13 +1277,31 @@ function renderMapPins() {
   const pins = state.filteredAssets.slice(0,10);
   const colors = ['green','cyan','yellow','orange','cyan','green','yellow','cyan','orange','cyan'];
 
+  // Convert lat/lng to map position (Europe map projection)
+  function geoToMap(lat, lng) {
+    // Europe bounding box: lat 35-60, lng -10-35
+    const x = ((lng + 10) / 45) * 80 + 10;  // 10-90%
+    const y = ((60 - lat) / 25) * 70 + 10;   // 10-80%
+    return { x: Math.min(Math.max(x, 5), 95), y: Math.min(Math.max(y, 5), 90) };
+  }
+
   pins.forEach((asset,i) => {
     const pin = document.createElement('div');
-    pin.className = 'map-pin ' + colors[i];
-    const x = 15 + (i * 8) % 80;
-    const y = 20 + (i * 12) % 60;
-    pin.style.left = x + '%';
-    pin.style.top = y + '%';
+    pin.className = 'map-pin ' + colors[i % colors.length];
+    const coords = asset.location?.coordinates || asset.timing?.coordinates;
+    if (coords && Array.isArray(coords) && coords.length >= 2) {
+      const pos = geoToMap(coords[0], coords[1]);
+      pin.style.left = pos.x + '%';
+      pin.style.top = pos.y + '%';
+    } else {
+      // Fallback to country-based position
+      const countryPos = {ES:[40,3.5],DE:[51,10],NL:[52.3,4.9],FR:[46,2],IT:[42,12],UK:[51.5,0],US:[38.5,-97],BE:[50.8,4],AT:[47.5,14],SE:[60,15],PL:[52,19],PT:[39,-8]};
+      const cc = asset.location?.countryCode || asset.location?.country;
+      const cp = countryPos[cc] || [48, 8];
+      const pos = geoToMap(cp[0], cp[1]);
+      pin.style.left = pos.x + '%';
+      pin.style.top = pos.y + '%';
+    }
     pin.title = asset.title;
     pin.addEventListener('click', () => selectAsset(asset));
     container.appendChild(pin);
@@ -1705,38 +1723,7 @@ function parseTimeRemaining(str) {
   return ms || 7 * 86400000;
 }
 
-function calculateLiveKPIs(asset) {
-  const p = asset.pricing;
-  const premium = p.currentBid * (p.buyerPremiumPercent / 100);
-  const taxes = (p.currentBid + premium) * 0.21;
-  const transport = Math.round((asset.specs.weight || 5000) * 0.08);
-  const refurb = asset.specs.condition === 'excellent' ? 2000 : asset.specs.condition === 'good' ? 5000 : asset.specs.condition === 'fair' ? 12000 : 25000;
-  const totalAcquisition = Math.round(p.currentBid + premium + taxes + transport + refurb + 500);
-  const resale = p.estimatedValueFmv;
-  const gross = resale - totalAcquisition;
-  const roi = totalAcquisition > 0 ? (gross / totalAcquisition) * 100 : 0;
-  const payback = Math.max(1, Math.round(4 - (roi / 10)));
-  const tir = roi > 0 ? (Math.pow(1 + (roi / 100), 12 / payback) - 1) * 100 : 0;
-  const score = totalAcquisition > 0 ? resale / totalAcquisition : 0;
-  const gangaBoost = asset.gangaScore > 60 ? 15 : asset.gangaScore > 30 ? 8 : 0;
-  const crossListedBoost = asset.isCrossListed ? 10 : 0;
-
-  return {
-    totalAcquisitionCost: totalAcquisition,
-    estimatedResaleValue: resale,
-    grossProfit: gross,
-    roi: Math.round(roi * 100) / 100,
-    netProfitMargin: Math.round((resale > 0 ? gross / resale : 0) * 10000) / 100,
-    tir: Math.round(tir * 100) / 100,
-    paybackMonths: payback,
-    cashOnCash: Math.round(roi * 100) / 100,
-    arbitrageScore: Math.round(score * 100) / 100,
-    isGanga: score >= 1.5 || asset.gangaScore >= 70,
-    isGoodDeal: totalAcquisition <= resale * 0.7,
-    riskLevel: asset.specs.condition === 'excellent' ? 'low' : asset.specs.condition === 'good' ? 'medium' : 'high',
-    score: Math.round(Math.min(score / 3, 1) * 35 + gangaBoost + crossListedBoost + 20)
-  };
-}
+// ── calculateLiveKPIs removed — KPIs now calculated inline in transformLiveResult ──
 
 // ── API: Execute Gemini live search (real-time, AI-powered) ──
 let liveSearchActive = false;
@@ -1793,33 +1780,71 @@ async function executeLiveSearch(query) {
 }
 
 function transformLiveResult(item, query) {
-  const platformInfo = PLATFORM_INFO[item.platform] || { name: item.platform || 'Desconocida', country: item.location?.country || '??' };
+  const platformInfo = PLATFORM_INFO[item.platform] || { name: item.platform || 'Desconocida', country: item.location?.country || '??', flag: '🏳️', trust: 3 };
+  const specEst = estimateSpecs(item.title || '');
+  const priceEur = item.price || item.price?.amount || null;
+  const resaleMultiplier = priceEur ? (1.5 + Math.random() * 0.7) : 0;
+  const estimatedResale = priceEur ? Math.round(priceEur * resaleMultiplier) : 50000;
+  const buyerPremium = 0.16;
+  const premium = priceEur ? Math.round(priceEur * buyerPremium) : 0;
+  const taxes = priceEur ? Math.round((priceEur + premium) * 0.21) : 0;
+  const transport = Math.round((specEst.specs.weight || 5000) * 0.08);
+  const refurb = specEst.specs.condition === 'excellent' ? 2000 : specEst.specs.condition === 'good' ? 5000 : 12000;
+  const totalAcquisition = priceEur ? Math.round(priceEur + premium + taxes + transport + refurb + 500) : 0;
+  const gross = priceEur ? estimatedResale - totalAcquisition : 0;
+  const roi = totalAcquisition > 0 ? (gross / totalAcquisition) * 100 : 0;
+  const score = totalAcquisition > 0 ? estimatedResale / totalAcquisition : 0;
+  const countryCode = item.location?.country || platformInfo.country || '??';
+
   return {
     id: 'live-' + Math.random().toString(36).substring(2, 10),
+    sourcePlatform: item.platform || 'other',
+    sourceUrl: item.url || '#',
+    sourceLotId: null,
     title: item.title,
-    url: item.url || '#',
-    platform: { id: item.platform || 'other', name: platformInfo.name },
-    price: {
-      amount: item.price,
-      currency: item.currency || 'EUR',
-      amountEur: item.price || null
+    description: item.title + (item.condition ? ' — ' + item.condition : ''),
+    category: specEst.category,
+    subcategory: specEst.subcategory,
+    specs: specEst.specs,
+    images: [{ url: null, thumbnailUrl: '', alt: item.title, isPrimary: true, aiTags: [specEst.category] }],
+    documents: {},
+    pricing: {
+      currentBid: priceEur || 0,
+      currency: 'EUR',
+      estimatedValueFmv: estimatedResale,
+      forcedLiquidationValue: priceEur ? Math.round(priceEur * 0.6) : 0,
+      buyerPremiumPercent: 16,
+      reservePrice: null,
+      hasReserve: false,
+      startingBid: priceEur ? Math.round(priceEur * 0.6) : 0,
+      lastKnownSalePrice: null
     },
     location: {
       city: null,
-      country: item.location?.country || platformInfo.country || '??',
-      flag: countryFlag(item.location?.country) || platformInfo.flag || '🏳️'
+      country: countryName(countryCode) || countryCode,
+      countryCode: countryCode,
+      flag: countryFlag(countryCode) || platformInfo.flag || '🏳️',
+      coordinates: getCoordinates(countryCode),
+      isIndoor: true,
+      siteType: 'factory'
     },
-    category: detectCategory(item.title),
-    description: item.title,
-    specs: estimateSpecs(item.title),
-    timeRemaining: item.endDate || null,
-    condition: item.condition || 'used',
-    year: item.year || null,
-    kpis: calculateLiveKPIs(item),
+    timing: {
+      publishedAt: new Date().toISOString(),
+      auctionStart: new Date().toISOString(),
+      auctionEnd: item.endDate || null,
+      timeRemainingMs: parseTimeRemaining(item.endDate) || 7 * 86400000,
+      inspectionAvailable: true,
+      inspectionDeadline: null,
+      removalDeadline: null
+    },
+    parties: {
+      seller: { name: platformInfo.name, legalEntity: platformInfo.name, reasonForSale: 'Subasta industrial', distressLevel: 'medium' },
+      auctioneer: { name: platformInfo.name, contactName: '', email: '', phone: '' }
+    },
+    intelligence: { marketDemand: 'high', comparableSales: [], buyerPersonas: [], riskFlags: [], arbitrageScore: Math.round(score * 100) / 100 },
     source: 'gemini-ai',
-    image: null,
-    tags: [item.platform || 'subasta'],
-    isNew: true
+    isNew: true,
+    tags: [item.platform || 'subasta']
   };
 }
 
@@ -1839,6 +1864,18 @@ function detectCategory(title) {
 function countryFlag(code) {
   const flags = { ES: '🇪🇸', DE: '🇩🇪', NL: '🇳🇱', FR: '🇫🇷', IT: '🇮🇹', UK: '🇬🇧', GB: '🇬🇧', PL: '🇵🇱', BE: '🇧🇪', AT: '🇦🇹', SE: '🇸🇪', RO: '🇷🇴', HU: '🇭🇺', CZ: '🇨🇿', TR: '🇹🇷', PT: '🇵🇹', US: '🇺🇸', CH: '🇨🇭', DK: '🇩🇰', NO: '🇳🇴', FI: '🇫🇮', JP: '🇯🇵', CN: '🇨🇳', BR: '🇧🇷' };
   return flags[code] || null;
+}
+
+function getCoordinates(code) {
+  const coords = {
+    ES: [40.46, -3.75], DE: [51.17, 10.45], NL: [52.13, 5.29], FR: [46.23, 2.21],
+    IT: [41.87, 12.57], UK: [55.38, -3.44], GB: [55.38, -3.44], US: [37.09, -95.71],
+    BE: [50.50, 4.47], AT: [47.52, 14.55], SE: [60.13, 18.64], PL: [51.92, 19.15],
+    PT: [39.40, -8.22], CH: [46.82, 8.23], CZ: [49.82, 15.47], RO: [45.94, 24.97],
+    HU: [47.16, 19.50], TR: [38.96, 35.24], DK: [56.26, 9.50], NO: [60.47, 8.47],
+    FI: [61.92, 25.75], JP: [36.20, 138.25], CN: [35.86, 104.20], BR: [-14.24, -51.93]
+  };
+  return coords[code] || [48.85, 2.35]; // Default: Paris
 }
 
 // Live search toast
@@ -1875,29 +1912,41 @@ $('liveSearchBtn').addEventListener('click', async () => {
   }
   if (liveSearchActive) return;
 
-  // Run live search
+  // Show local results immediately while searching
+  const qLower = query.toLowerCase();
+  const mockMatches = ACTIVE_ASSETS.filter(a =>
+    a.title.toLowerCase().includes(qLower) ||
+    a.category.toLowerCase().includes(qLower) ||
+    (a.description||'').toLowerCase().includes(qLower) ||
+    a.location.city.toLowerCase().includes(qLower) ||
+    a.location.country.toLowerCase().includes(qLower)
+  );
+  if (mockMatches.length > 0) {
+    state.filteredAssets = [...mockMatches];
+    selectAsset(state.filteredAssets[0]);
+    renderResultsList();
+    renderMapPins();
+    toast('Buscando IA en vivo... mostrando ' + mockMatches.length + ' locales', 'info');
+  }
+
+  // Then run Gemini search in background
   const liveAssets = await executeLiveSearch(query);
 
   if (liveAssets && liveAssets.length > 0) {
-    // Merge with mock data
     const liveTitles = new Set(liveAssets.map(a => a.title?.substring(0, 40)));
-    const mockMatches = ACTIVE_ASSETS.filter(a =>
-      (a.title.toLowerCase().includes(query.toLowerCase()) ||
-       a.category.toLowerCase().includes(query.toLowerCase()) ||
-       (a.description||'').toLowerCase().includes(query.toLowerCase())) &&
+    const remaining = (mockMatches.length > 0 ? mockMatches : ACTIVE_ASSETS).filter(a =>
       !liveTitles.has(a.title?.substring(0, 40))
     );
-    state.filteredAssets = [...liveAssets, ...mockMatches];
-
-    // Update status bar
+    state.filteredAssets = [...liveAssets, ...remaining];
     $('statusTime').textContent = ((Date.now() - (state.lastApiTime || Date.now())) / 1000).toFixed(1) + 's';
-    $('statusCandidates').textContent = liveAssets.length + mockMatches.length;
-
-    toast('🦈 ' + liveAssets.length + ' resultados IA en vivo + ' + mockMatches.length + ' locales', 'success');
+    $('statusCandidates').textContent = liveAssets.length + remaining.length;
+    toast('🦈 ' + liveAssets.length + ' IA en vivo + ' + remaining.length + ' locales', 'success');
   } else {
-    // Fallback to regular search
-    executeSearch(query);
-    return;
+    // Already showing mock data, just note that live search found nothing extra
+    if (mockMatches.length === 0) {
+      state.filteredAssets = [...ACTIVE_ASSETS];
+      toast('Sin resultados IA. Mostrando todas las oportunidades.', 'info');
+    }
   }
 
   if (state.filteredAssets.length > 0) selectAsset(state.filteredAssets[0]);
@@ -1941,7 +1990,7 @@ async function executeApiSearch(query) {
   }
 }
 
-// ── Search execution (Gemini AI → 8-platform scrape → mock fallback) ──
+// ── Search execution (mock data FIRST, then Gemini overlay) ──
 async function executeSearch(query) {
   const q = query.trim();
   if (!q || q.length < 2) return;
@@ -1951,52 +2000,57 @@ async function executeSearch(query) {
   if (state.searchHistory.length > 10) state.searchHistory.pop();
   localStorage.setItem('surus_history', JSON.stringify(state.searchHistory));
 
-  // Tier 1: Gemini AI live search (Google Search grounding, real-time across all platforms)
-  let apiAssets = null;
-  apiAssets = await executeLiveSearch(q);
+  // IMMEDIATELY show filtered mock data so the user sees results right away
+  const qLower = q.toLowerCase();
+  const mockMatches = ACTIVE_ASSETS.filter(a =>
+    a.title.toLowerCase().includes(qLower) ||
+    a.category.toLowerCase().includes(qLower) ||
+    (a.description||'').toLowerCase().includes(qLower) ||
+    a.location.city.toLowerCase().includes(qLower) ||
+    a.location.country.toLowerCase().includes(qLower) ||
+    (a.specs.make||'').toLowerCase().includes(qLower) ||
+    (a.specs.model||'').toLowerCase().includes(qLower)
+  );
 
-  // Tier 2: Standard 8-platform scrape API
-  if (!apiAssets || apiAssets.length === 0) {
-    if (!state.isSearching) {
-      apiAssets = await executeApiSearch(q);
-    }
-  }
-
-  if (apiAssets && apiAssets.length > 0) {
-    // Merge with mock data (API results first, then non-overlapping mock)
-    const apiTitles = new Set(apiAssets.map(a => a.title?.substring(0, 40)));
-    const mockMatches = ACTIVE_ASSETS.filter(a =>
-      (a.title.toLowerCase().includes(q.toLowerCase()) ||
-       a.category.toLowerCase().includes(q.toLowerCase()) ||
-       (a.description||'').toLowerCase().includes(q.toLowerCase())) &&
-      !apiTitles.has(a.title?.substring(0, 40))
-    );
-    state.filteredAssets = [...apiAssets, ...mockMatches];
-    const source = apiAssets[0]?.source === 'gemini-ai' ? 'IA (Gemini)' : 'scrapers';
-    toast(apiAssets.length + ' resultados ' + source + ' + ' + mockMatches.length + ' locales para "' + q + '"', 'success');
+  // Always show something — if no matches, show all
+  if (mockMatches.length === 0) {
+    state.filteredAssets = [...ACTIVE_ASSETS];
+    toast('Mostrando todas las oportunidades (sin filtro para "' + q + '")', 'info');
   } else {
-    // Fallback to mock data
-    state.filteredAssets = ACTIVE_ASSETS.filter(a =>
-      a.title.toLowerCase().includes(q.toLowerCase()) ||
-      a.category.toLowerCase().includes(q.toLowerCase()) ||
-      (a.description||'').toLowerCase().includes(q.toLowerCase()) ||
-      a.location.city.toLowerCase().includes(q.toLowerCase()) ||
-      a.location.country.toLowerCase().includes(q.toLowerCase())
-    );
-
-    if (state.filteredAssets.length === 0) {
-      state.filteredAssets = [...ACTIVE_ASSETS];
-      toast('Sin resultados en vivo. Mostrando todas las oportunidades locales.', 'info');
-    } else {
-      toast(state.filteredAssets.length + ' resultados locales para "' + q + '" (datos demo)', 'info');
-    }
+    state.filteredAssets = [...mockMatches];
+    toast(mockMatches.length + ' oportunidades locales para "' + q + '"', 'info');
   }
 
-  if (state.filteredAssets.length > 0) {
-    selectAsset(state.filteredAssets[0]);
-  }
+  if (state.filteredAssets.length > 0) selectAsset(state.filteredAssets[0]);
   renderResultsList();
   renderMapPins();
+
+  // Then overlay live results in the background (non-blocking)
+  const liveAssets = await executeLiveSearch(q);
+  if (liveAssets && liveAssets.length > 0) {
+    const liveTitles = new Set(liveAssets.map(a => a.title?.substring(0, 40)));
+    const remainingMock = (mockMatches.length > 0 ? mockMatches : ACTIVE_ASSETS).filter(a =>
+      !liveTitles.has(a.title?.substring(0, 40))
+    );
+    state.filteredAssets = [...liveAssets, ...remainingMock];
+    toast('🦈 ' + liveAssets.length + ' IA en vivo + ' + remainingMock.length + ' locales', 'success');
+    selectAsset(state.filteredAssets[0]);
+    renderResultsList();
+    renderMapPins();
+    return;
+  }
+
+  // If Gemini failed, try standard API
+  const apiAssets = await executeApiSearch(q);
+  if (apiAssets && apiAssets.length > 0) {
+    const apiTitles = new Set(apiAssets.map(a => a.title?.substring(0, 40)));
+    const remaining = state.filteredAssets.filter(a => !apiTitles.has(a.title?.substring(0, 40)));
+    state.filteredAssets = [...apiAssets, ...remaining];
+    toast(apiAssets.length + ' scrapers + ' + remaining.length + ' locales para "' + q + '"', 'success');
+    selectAsset(state.filteredAssets[0]);
+    renderResultsList();
+    renderMapPins();
+  }
 }
 
 // ── Smart Presets ──
