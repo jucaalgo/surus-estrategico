@@ -1,0 +1,39 @@
+name: Scrape Industrial Auction Platforms
+
+# Runs every 30 minutes during European business hours (6:00-22:00 CET)
+on:
+  schedule:
+    - cron: '*/30 6-22 * * *'
+  workflow_dispatch:  # Manual trigger
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Playwright
+        run: |
+          npm init -y
+          npm install playwright
+          npx playwright install chromium
+
+      - name: Scrape all platforms
+        run: node .github/workflows/scraper.js
+
+      - name: Commit scraped data
+        run: |
+          git config user.name "SURUS Shark Bot"
+          git config user.email "shark@surus.ai"
+          git add public/dashboard/scraped-data.json
+          git diff --staged --quiet || git commit -m "chore: update scraped auction data [skip ci]"
+          git push
+
+env:
+  TZ: Europe/Madrid

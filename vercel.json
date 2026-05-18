@@ -12,6 +12,14 @@
   ],
   "routes": [
     {
+      "src": "/api/search",
+      "dest": "/api/search.js"
+    },
+    {
+      "src": "/api/exchange-rates",
+      "dest": "/api/exchange-rates.js"
+    },
+    {
       "src": "/api/track",
       "dest": "/api/track.js"
     },
