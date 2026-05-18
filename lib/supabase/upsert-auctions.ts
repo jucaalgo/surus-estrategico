@@ -5,8 +5,17 @@ import type { RawAuctionImage } from '@/lib/scrapers/types';
 export async function upsertAuctions(items: TransformedAuction[]): Promise<number> {
   if (items.length === 0) return 0;
 
+  // Deduplicate by platform_id + lot_id — keep first occurrence
+  const seen = new Set<string>();
+  const deduped = items.filter(item => {
+    const key = `${item.platform_id}:${item.lot_id}`;
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+
   // 1. Upsert main auction records
-  const auctionRows = items.map(({ images: _, extra_specs: __, ...row }) => row);
+  const auctionRows = deduped.map(({ images: _, extra_specs: __, ...row }) => row);
 
   const { data, error } = await supabaseAdmin
     .from('auctions')
@@ -29,7 +38,7 @@ export async function upsertAuctions(items: TransformedAuction[]): Promise<numbe
   // 3. Upsert images
   const imageRows: { auction_id: string; url: string; proxy_url: string | null; alt_text: string | null; sort_order: number; is_primary: boolean }[] = [];
 
-  for (const item of items) {
+  for (const item of deduped) {
     const dbId = idMap.get(`${item.platform_id}:${item.lot_id}`);
     if (!dbId || !item.images || item.images.length === 0) continue;
 
@@ -66,7 +75,7 @@ export async function upsertAuctions(items: TransformedAuction[]): Promise<numbe
   // 4. Upsert extra specs
   const specRows: { auction_id: string; key: string; value: string; unit: string | null }[] = [];
 
-  for (const item of items) {
+  for (const item of deduped) {
     if (!item.extra_specs) continue;
     const dbId = idMap.get(`${item.platform_id}:${item.lot_id}`);
     if (!dbId) continue;
