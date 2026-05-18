@@ -23,7 +23,7 @@ interface PlatformStatus {
 }
 
 const PLATFORMS = [
-  { id: 'tbauctions', name: 'Surplex + Troostwijk + Maynards', icon: '🏭' },
+  { id: 'tbauctions', name: 'Surplex + Troostwijk + BVA', icon: '🏭' },
   { id: 'netbid', name: 'NetBid / Auctelia', icon: '📋' },
   { id: 'industrial', name: 'Industrial Auctions', icon: '🔧' },
 ];

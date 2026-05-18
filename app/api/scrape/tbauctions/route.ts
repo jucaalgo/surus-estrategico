@@ -6,13 +6,16 @@ import { upsertAuctions, deactivateStale, createScrapeRun, completeScrapeRun, fa
 const PLATFORM_ID_MAP: Record<string, string> = {
   SPX: 'surplex',
   TWK: 'troostwijk',
-  MAY: 'maynards',
+  BVA: 'bva',
+  VAVATO: 'vavato',
+  AUK: 'auctionuk',
+  EPIC: 'epic',
 };
 
 export async function POST(request: NextRequest) {
   const startTime = Date.now();
   const body = await request.json().catch(() => ({}));
-  const platforms = body.platforms || ['SPX', 'TWK', 'MAY'];
+  const platforms = body.platforms || ['SPX', 'TWK'];
 
   let runId: string | null = null;
 
@@ -75,7 +78,7 @@ export async function GET() {
   return NextResponse.json({
     platform: 'tbauctions',
     status: 'ready',
-    platforms: ['SPX', 'TWK', 'MAY'],
+    platforms: ['SPX', 'TWK', 'BVA'],
     message: 'Send POST to trigger scrape',
   });
 }

@@ -4,148 +4,59 @@ const GRAPHQL_ENDPOINT = 'https://storefront.tbauctions.com/storefront/graphql';
 
 interface GraphQLResponse {
   data?: Record<string, unknown>;
-  errors?: Array<{ message: string }>;
+  errors?: Array<{ message: string; path?: string }>;
 }
 
-interface AuctionFacet {
-  id: string;
-  title: string;
-  slug: string;
-  platform: { id: string; name: string };
-  auctionType: { id: string; name: string };
-  location: { city: string; region: string; country: { code: string; name: string }; lat: number; lng: number } | null;
-  auctionEndDate: string;
-  images: Array<{ key: string; uuid: string }>;
-  lotCount: number;
-  isOnline: boolean;
-  inspectionAvailable: boolean;
-  category: { id: string; name: string; slug: string } | null;
-  site: { name: string; type: string } | null;
-  lots?: Array<{
-    id: string;
-    title: string;
-    slug: string;
-    currentBid: { amount: number; currency: string } | null;
-    startingBid: { amount: number; currency: string } | null;
-    estimatedPrice: { amount: number; currency: string } | null;
-    reservePrice: { amount: number; currency: string } | null;
-    hasReserve: boolean;
-    bidCount: number;
-    imageUrl: string | null;
-    make: { name: string } | null;
-    model: { name: string } | null;
-    year: number | null;
-    condition: { id: string; name: string } | null;
-    description: string | null;
-  }>;
-}
+// ── Real TBAuctions GraphQL schema (introspected 2026-05-18) ──
 
-interface LotDetail {
-  id: string;
-  title: string;
-  description: string;
-  slug: string;
-  make: { name: string } | null;
-  model: { name: string } | null;
-  year: number | null;
-  condition: { id: string; name: string } | null;
-  hours: number | null;
-  weight: { value: number; unit: string } | null;
-  power: { value: number; unit: string } | null;
-  currentBid: { amount: number; currency: string } | null;
-  buyerPremium: { percentage: number } | null;
-  estimatedResale: { amount: number; currency: string } | null;
-  images: Array<{ key: string; uuid: string; alt: string }>;
-  auction: { id: string; endDate: string; site: { name: string; type: string } } | null;
-  location: { city: string; region: string; country: { code: string; name: string }; lat: number; lng: number; siteType: string } | null;
-  specs: Array<{ key: string; value: string; unit: string }>;
-}
-
-// Get auction listings with lot summary data
-const AUCTIONS_WITH_LOTS_QUERY = `
-query AllAuctionFacets($page: Int, $limit: Int, $platform: [String]) {
-  allAuctionFacets(page: $page, limit: $limit, platform: $platform) {
-    pagination { totalResults page totalPages }
+// Get auction listings
+const AUCTIONS_QUERY = `
+query AllAuctions($request: AllAuctionsInput!, $platform: Platform!) {
+  allAuctionsV2(request: $request, platform: $platform) {
+    totalSize
+    hasNext
+    pageNumber
     results {
       id
-      title
-      slug
-      platform { id name }
-      auctionType { id name }
-      location { city region country { code name } lat lng }
-      auctionEndDate
-      images { key uuid }
+      name
+      urlSlug
+      platform
       lotCount
-      isOnline
-      inspectionAvailable
-      category { id name slug }
-      site { name type }
+      biddingStatus
+      minEndDate
+      maxEndDate
+      images { url alt order }
     }
-  }
-}`;
-
-// Get real-time bid data for lots
-const LOT_DATA_QUERY = `
-query VolatileLotDataByIds($ids: [ID!]!) {
-  volatileLotDataByIds(ids: $ids) {
-    lotId
-    currentBid { amount currency }
-    startingBid { amount currency }
-    reservePrice { amount currency }
-    hasReserve
-    bidCount
-  }
-}`;
-
-// Get detailed lot info
-const LOT_DETAIL_QUERY = `
-query LotDetail($id: ID!) {
-  lot(id: $id) {
-    id
-    title
-    description
-    slug
-    make { name }
-    model { name }
-    year
-    condition { id name }
-    hours
-    weight { value unit }
-    power { value unit }
-    currentBid { amount currency }
-    buyerPremium { percentage }
-    estimatedResale { amount currency }
-    images { key uuid alt }
-    auction { id endDate site { name type } }
-    location { city region country { code name } lat lng siteType }
-    specs { key value unit }
   }
 }`;
 
 // Get lots within an auction
 const AUCTION_LOTS_QUERY = `
-query AuctionLots($auctionId: ID!, $page: Int, $limit: Int) {
-  auction(id: $auctionId) {
-    id
-    lots(page: $page, limit: $limit) {
+query AuctionLots($request: AuctionWithLotsInputV3!, $platform: Platform!) {
+  auctionWithLotsV5(request: $request, platform: $platform) {
+    auction {
+      id
+      name
+      urlSlug
+      platform
+      lotCount
+      minEndDate
+      maxEndDate
+    }
+    lots {
+      hasNext
+      totalSize
       results {
         id
         title
-        slug
-        currentBid { amount currency }
-        startingBid { amount currency }
-        estimatedPrice { amount currency }
-        reservePrice { amount currency }
-        hasReserve
-        bidCount
-        imageUrl
-        make { name }
-        model { name }
-        year
-        condition { id name }
-        description
+        urlSlug
+        platform
+        currentBidAmount { cents currency }
+        bidsCount
+        biddingStatus
+        image { url alt }
+        location { city countryCode }
       }
-      pagination { totalResults page totalPages }
     }
   }
 }`;
@@ -167,27 +78,50 @@ async function graphqlRequest(query: string, variables: Record<string, unknown> 
   return res.json();
 }
 
-function buildImageUrl(uuid: string, width = 768, height = 576): string {
-  return `https://media.tbauctions.com/image-media/${uuid}/file?imageSize=${width}x${height}&imageFormat=webp`;
-}
-
-function buildLotUrl(platform: string, slug: string, lotId: string): string {
+function buildLotUrl(platform: string, urlSlug: string): string {
   const domains: Record<string, string> = {
     SPX: 'https://www.surplex.com/es/l/',
     TWK: 'https://www.troostwijkauctions.com/es/l/',
-    MAY: 'https://www.maynards.com/es/l/',
+    BVA: 'https://www.bva-auctions.com/es/l/',
+    VAVATO: 'https://www.vavato.com/es/l/',
+    AUK: 'https://www.auctionuk.com/es/l/',
+    EPIC: 'https://www.epic-auctions.com/es/l/',
   };
-  return `${domains[platform] || 'https://www.surplex.com/es/l/'}${slug}-${lotId}`;
+  return `${domains[platform] || 'https://www.surplex.com/es/l/'}${urlSlug}`;
+}
+
+function buildAuctionUrl(platform: string, urlSlug: string): string {
+  const domains: Record<string, string> = {
+    SPX: 'https://www.surplex.com/es/a/',
+    TWK: 'https://www.troostwijkauctions.com/es/a/',
+    BVA: 'https://www.bva-auctions.com/es/a/',
+    VAVATO: 'https://www.vavato.com/es/a/',
+    AUK: 'https://www.auctionuk.com/es/a/',
+    EPIC: 'https://www.epic-auctions.com/es/a/',
+  };
+  return `${domains[platform] || 'https://www.surplex.com/es/a/'}${urlSlug}`;
 }
 
 function mapPlatformId(platformCode: string): string {
   const map: Record<string, string> = {
     SPX: 'surplex',
     TWK: 'troostwijk',
-    MAY: 'maynards',
+    BVA: 'bva',
+    VAVATO: 'vavato',
+    AUK: 'auctionuk',
+    EPIC: 'epic',
   };
   return map[platformCode] || platformCode.toLowerCase();
 }
+
+// Country code mapping
+const COUNTRY_NAMES: Record<string, string> = {
+  es: 'España', de: 'Alemania', nl: 'Países Bajos', fr: 'Francia',
+  it: 'Italia', uk: 'Reino Unido', us: 'EE.UU.', cz: 'Chequia',
+  pl: 'Polonia', be: 'Bélgica', ch: 'Suiza', at: 'Austria',
+  se: 'Suecia', fi: 'Finlandia', dk: 'Dinamarca', pt: 'Portugal',
+  ro: 'Rumanía', hu: 'Hungría', tr: 'Turquía',
+};
 
 export interface TBAuctionsOptions {
   platforms?: string[];
@@ -195,64 +129,76 @@ export interface TBAuctionsOptions {
 }
 
 export async function scrapeTBAuctions(options: TBAuctionsOptions = {}): Promise<RawAuctionItem[]> {
-  const platforms = options.platforms || ['SPX', 'TWK', 'MAY'];
-  const maxPages = options.maxPages || 5;
-
+  const platforms = options.platforms || ['SPX', 'TWK'];
+  const maxPages = options.maxPages || 3;
   const allItems: RawAuctionItem[] = [];
 
   for (const platform of platforms) {
     try {
+      console.log(`[TBAuctions] Scraping platform ${platform}...`);
+
       // Step 1: Get auction listings
-      const auctionsData = await graphqlRequest(AUCTIONS_WITH_LOTS_QUERY, {
-        page: 1,
-        limit: 100,
-        platform: [platform],
+      const auctionsData = await graphqlRequest(AUCTIONS_QUERY, {
+        request: {
+          pageNumber: 1,
+          pageSize: 100,
+          locale: 'es',
+          biddingStatuses: ['BIDDING_OPEN'],
+          hideZeroLotAuctions: true,
+          facets: [],
+          rangeFacets: [],
+          sortBy: 'END_DATE_ASC',
+        },
+        platform,
       });
 
-      const results = (auctionsData.data?.allAuctionFacets as any)?.results as AuctionFacet[] || [];
-      if (results.length === 0) continue;
+      const auctionsResult = (auctionsData.data as any)?.allAuctionsV2;
+      const auctions = auctionsResult?.results || [];
+      if (auctions.length === 0) {
+        console.log(`[TBAuctions] No auctions found for platform ${platform}`);
+        continue;
+      }
 
-      console.log(`[TBAuctions] Found ${results.length} auctions for platform ${platform}`);
+      console.log(`[TBAuctions] Found ${auctionsResult.totalSize} auctions for ${platform}, fetching lots for ${Math.min(auctions.length, maxPages * 5)}...`);
 
       // Step 2: For each auction, get its lots
-      for (const auction of results) {
+      let auctionsProcessed = 0;
+      for (const auction of auctions) {
+        if (auctionsProcessed >= maxPages * 5) break;
+        auctionsProcessed++;
+
         try {
-          // Try to get lots within this auction
+          const displayId = auction.urlSlug?.split('-').slice(-1)[0] || auction.id;
           const lotsData = await graphqlRequest(AUCTION_LOTS_QUERY, {
-            auctionId: auction.id,
-            page: 1,
-            limit: 50,
+            request: {
+              displayId,
+              locale: 'es',
+              pageNumber: 1,
+              pageSize: 20,
+              rangeFacetInputs: [],
+              sortBy: 'END_DATE_ASC',
+              valueFacetInputs: [],
+            },
+            platform,
           });
 
-          const lots = (lotsData.data?.auction as any)?.lots?.results as any[] || [];
+          const lotsResult = (lotsData.data as any)?.auctionWithLotsV5;
+          const lots = lotsResult?.lots?.results || [];
+          const auctionInfo = lotsResult?.auction || auction;
 
           if (lots.length === 0) {
-            // No lots found — create item from auction facet data
-            allItems.push(auctionFacetToItem(auction, platform));
+            // Create item from auction-level data
+            allItems.push(auctionToItem(auctionInfo || auction, platform));
             continue;
           }
 
-          // Step 3: For each lot, try to get detailed info (but limit to avoid too many requests)
-          for (const lot of lots.slice(0, 10)) {
-            try {
-              const detailData = await graphqlRequest(LOT_DETAIL_QUERY, { id: lot.id });
-              const lotDetail = detailData.data?.lot as LotDetail | null;
-
-              if (lotDetail) {
-                allItems.push(lotDetailToItem(lotDetail, auction, platform));
-              } else {
-                // Use what we have from the lot summary
-                allItems.push(lotSummaryToItem(lot, auction, platform));
-              }
-            } catch (err) {
-              // Individual lot error — use summary data
-              allItems.push(lotSummaryToItem(lot, auction, platform));
-            }
+          // Step 3: Convert lots to items
+          for (const lot of lots) {
+            allItems.push(lotToItem(lot, auctionInfo || auction, platform));
           }
         } catch (err) {
-          // Could not get lots for this auction — fallback to auction facet
-          console.error(`[TBAuctions] Error fetching lots for auction ${auction.id}:`, err);
-          allItems.push(auctionFacetToItem(auction, platform));
+          // Individual auction error — create item from listing data
+          allItems.push(auctionToItem(auction, platform));
         }
       }
 
@@ -265,109 +211,54 @@ export async function scrapeTBAuctions(options: TBAuctionsOptions = {}): Promise
   return allItems;
 }
 
-function lotDetailToItem(lot: LotDetail, auction: AuctionFacet, platform: string): RawAuctionItem {
-  const lotUrl = lot.slug
-    ? buildLotUrl(platform, lot.slug, lot.id)
-    : `https://www.surplex.com/es/a/${auction.slug}`;
+function lotToItem(lot: any, auction: any, platform: string): RawAuctionItem {
+  const currentBidCents = lot.currentBidAmount?.cents || 0;
+  const currency = lot.currentBidAmount?.currency || 'EUR';
+  const endDate = lot.endDate || auction.maxEndDate || auction.minEndDate;
+  const endDateStr = endDate ? new Date(endDate * 1000).toISOString() : new Date(Date.now() + 7 * 86400000).toISOString();
 
-  const images = (lot.images || []).map((img, i) => ({
-    url: buildImageUrl(img.uuid),
-    alt: img.alt || lot.title,
-    isPrimary: i === 0,
-    sortOrder: i,
-  }));
-
-  const extraSpecs: Record<string, string> = {};
-  if (lot.specs) {
-    for (const spec of lot.specs) {
-      extraSpecs[spec.key] = spec.value + (spec.unit ? ` ${spec.unit}` : '');
-    }
+  const images = [];
+  if (lot.image?.url) {
+    images.push({ url: lot.image.url, alt: lot.image.alt || lot.title, isPrimary: true, sortOrder: 0 });
+  } else if (auction.images?.[0]?.url) {
+    images.push({ url: auction.images[0].url, alt: lot.title || auction.name, isPrimary: true, sortOrder: 0 });
   }
 
   return {
     platformId: mapPlatformId(platform),
     lotId: lot.id,
-    title: lot.title || auction.title,
-    description: lot.description || '',
-    category: auction.category?.name || 'Industrial',
-    subcategory: auction.category?.slug,
-    sourceUrl: lotUrl,
-    currentBid: lot.currentBid?.amount || null,
-    currency: lot.currentBid?.currency || 'EUR',
-    estimatedResale: lot.estimatedResale?.amount || undefined,
-    buyerPremiumPercent: lot.buyerPremium?.percentage || 16,
+    title: lot.title || auction.name,
+    description: lot.title || auction.name,
+    category: 'Industrial',
+    sourceUrl: lot.urlSlug ? buildLotUrl(platform, lot.urlSlug) : buildAuctionUrl(platform, auction.urlSlug),
+    currentBid: currentBidCents > 0 ? currentBidCents / 100 : null,
+    currency,
+    estimatedResale: currentBidCents > 0 ? (currentBidCents / 100) * 2 : undefined,
+    buyerPremiumPercent: 16,
     reservePrice: null,
     hasReserve: false,
     startingBid: null,
     city: lot.location?.city || auction.location?.city || '',
-    region: lot.location?.region || auction.location?.region,
-    country: lot.location?.country?.name || auction.location?.country?.name || '',
-    countryCode: lot.location?.country?.code || auction.location?.country?.code || 'DE',
-    lat: lot.location?.lat || auction.location?.lat || 48.0,
-    lng: lot.location?.lng || auction.location?.lng || 4.0,
-    siteType: lot.location?.siteType || auction.site?.type,
-    auctionEnd: lot.auction?.endDate || auction.auctionEndDate || new Date(Date.now() + 7 * 86400000).toISOString(),
-    inspectionAvailable: auction.inspectionAvailable ?? true,
-    make: lot.make?.name,
-    model: lot.model?.name,
-    year: lot.year || undefined,
-    condition: lot.condition?.name || 'good',
-    hours: lot.hours || undefined,
-    power: lot.power ? `${lot.power.value} ${lot.power.unit}` : undefined,
-    weightKg: lot.weight?.value || undefined,
-    images,
-    extraSpecs: Object.keys(extraSpecs).length > 0 ? extraSpecs : undefined,
-  };
-}
-
-function lotSummaryToItem(lot: any, auction: AuctionFacet, platform: string): RawAuctionItem {
-  const lotUrl = lot.slug
-    ? buildLotUrl(platform, lot.slug, lot.id)
-    : `https://www.surplex.com/es/a/${auction.slug}`;
-
-  const images: Array<{ url: string; alt?: string; isPrimary: boolean; sortOrder: number }> = [];
-  if (lot.imageUrl) {
-    images.push({ url: lot.imageUrl, alt: lot.title, isPrimary: true, sortOrder: 0 });
-  } else if (auction.images?.[0]) {
-    images.push({ url: buildImageUrl(auction.images[0].uuid), alt: lot.title, isPrimary: true, sortOrder: 0 });
-  }
-
-  return {
-    platformId: mapPlatformId(platform),
-    lotId: lot.id,
-    title: lot.title || auction.title,
-    description: lot.description || '',
-    category: auction.category?.name || 'Industrial',
-    subcategory: auction.category?.slug,
-    sourceUrl: lotUrl,
-    currentBid: lot.currentBid?.amount || null,
-    currency: lot.currentBid?.currency || 'EUR',
-    estimatedResale: lot.estimatedPrice?.amount || undefined,
-    buyerPremiumPercent: 16,
-    reservePrice: lot.reservePrice?.amount || null,
-    hasReserve: lot.hasReserve || false,
-    startingBid: lot.startingBid?.amount || null,
-    city: auction.location?.city || '',
-    region: auction.location?.region,
-    country: auction.location?.country?.name || '',
-    countryCode: auction.location?.country?.code || 'DE',
-    lat: auction.location?.lat || 48.0,
-    lng: auction.location?.lng || 4.0,
-    siteType: auction.site?.type,
-    auctionEnd: auction.auctionEndDate || new Date(Date.now() + 7 * 86400000).toISOString(),
-    inspectionAvailable: auction.inspectionAvailable ?? true,
-    make: lot.make?.name,
-    model: lot.model?.name,
-    year: lot.year || undefined,
-    condition: lot.condition?.name || 'good',
+    region: undefined,
+    country: COUNTRY_NAMES[lot.location?.countryCode?.toUpperCase()] || COUNTRY_NAMES[auction.location?.countryCode?.toUpperCase()] || '',
+    countryCode: lot.location?.countryCode?.toUpperCase() || auction.location?.countryCode?.toUpperCase() || 'DE',
+    lat: 48.0,
+    lng: 4.0,
+    siteType: undefined,
+    auctionEnd: endDateStr,
+    inspectionAvailable: true,
+    condition: 'good',
     images,
   };
 }
 
-function auctionFacetToItem(auction: AuctionFacet, platform: string): RawAuctionItem {
-  const images = (auction.images || []).map((img, i) => ({
-    url: buildImageUrl(img.uuid),
-    alt: auction.title,
+function auctionToItem(auction: any, platform: string): RawAuctionItem {
+  const endDate = auction.maxEndDate || auction.minEndDate;
+  const endDateStr = endDate ? new Date(endDate * 1000).toISOString() : new Date(Date.now() + 7 * 86400000).toISOString();
+
+  const images = (auction.images || []).slice(0, 3).map((img: any, i: number) => ({
+    url: img.url,
+    alt: img.alt || auction.name,
     isPrimary: i === 0,
     sortOrder: i,
   }));
@@ -375,24 +266,21 @@ function auctionFacetToItem(auction: AuctionFacet, platform: string): RawAuction
   return {
     platformId: mapPlatformId(platform),
     lotId: auction.id,
-    title: auction.title,
-    description: '',
-    category: auction.category?.name || 'Industrial',
-    subcategory: auction.category?.slug,
-    sourceUrl: buildLotUrl(platform, auction.slug, auction.id),
+    title: auction.name,
+    description: auction.name,
+    category: 'Industrial',
+    sourceUrl: buildAuctionUrl(platform, auction.urlSlug),
     currentBid: null,
     currency: 'EUR',
     buyerPremiumPercent: 16,
     hasReserve: false,
-    city: auction.location?.city || '',
-    region: auction.location?.region,
-    country: auction.location?.country?.name || '',
-    countryCode: auction.location?.country?.code || 'DE',
-    lat: auction.location?.lat || 48.0,
-    lng: auction.location?.lng || 4.0,
-    siteType: auction.site?.type,
-    auctionEnd: auction.auctionEndDate || new Date(Date.now() + 7 * 86400000).toISOString(),
-    inspectionAvailable: auction.inspectionAvailable ?? true,
+    city: '',
+    country: '',
+    countryCode: 'DE',
+    lat: 48.0,
+    lng: 4.0,
+    auctionEnd: endDateStr,
+    inspectionAvailable: true,
     condition: 'good',
     images,
   };
