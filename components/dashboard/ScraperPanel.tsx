@@ -53,10 +53,9 @@ interface AllScrapeResult {
 }
 
 const PLATFORMS = [
-  { id: 'tbauctions', name: 'Surplex + Troostwijk + BVA', icon: '🏭', color: '#00ccff' },
-  { id: 'netbid', name: 'NetBid / Auctelia', icon: '📋', color: '#ff6b35' },
+  { id: 'netbid', name: 'NetBid', icon: '📋', color: '#ff6b35' },
   { id: 'industrial', name: 'Industrial Auctions', icon: '🔧', color: '#00ff88' },
-  { id: 'bidspotter', name: 'HiBid / BidSpotter', icon: '🔨', color: '#ffcc00' },
+  { id: 'bidspotter', name: 'HiBid', icon: '🔨', color: '#ffcc00' },
   { id: 'euro-auctions', name: 'Euro Auctions', icon: '🇪🇺', color: '#ff4488' },
 ];
 
@@ -108,12 +107,12 @@ export function ScraperPanel({ onScrapeComplete }: ScraperPanelProps) {
 
       if (data.success) {
         addLog(platformId, 'success', `${data.itemsFound} encontrados, ${data.itemsUpserted} guardados (${((data.durationMs || 0) / 1000).toFixed(1)}s)`);
+        if (data.itemsUpserted > 0 && onScrapeComplete) {
+          onScrapeComplete();
+          setTimeout(() => window.location.reload(), 2000);
+        }
       } else {
         addLog(platformId, 'error', `Error: ${data.error}`);
-      }
-
-      if (data.success && onScrapeComplete) {
-        onScrapeComplete();
       }
     } catch (err) {
       const errMsg = err instanceof Error ? err.message : 'Network error';
@@ -137,36 +136,30 @@ export function ScraperPanel({ onScrapeComplete }: ScraperPanelProps) {
       const data: AllScrapeResult = await res.json();
       setAllResult(data);
 
-      if (data.success) {
-        addLog('all', 'success', `Completado: ${data.summary.totalFound} encontrados, ${data.summary.totalUpserted} guardados`);
-        // Update individual results from the parallel run
-        for (const pr of data.platforms) {
-          setResults(prev => ({ ...prev, [pr.platformId]: {
-            success: pr.success,
-            platform: pr.platformId,
-            itemsFound: pr.itemsFound,
-            itemsUpserted: pr.itemsUpserted,
-            itemsDeactivated: pr.itemsDeactivated,
-            durationMs: pr.durationMs,
-            error: pr.error,
-          } }));
-        }
-      } else {
-        addLog('all', 'error', `Parcialmente completado: ${data.summary.successfulPlatforms}/${PLATFORMS.length} plataformas exitosas`);
-        for (const pr of data.platforms) {
-          setResults(prev => ({ ...prev, [pr.platformId]: {
-            success: pr.success,
-            platform: pr.platformId,
-            itemsFound: pr.itemsFound,
-            itemsUpserted: pr.itemsUpserted,
-            itemsDeactivated: pr.itemsDeactivated,
-            durationMs: pr.durationMs,
-            error: pr.error,
-          } }));
-        }
+      // Update individual results
+      for (const pr of data.platforms) {
+        setResults(prev => ({ ...prev, [pr.platformId]: {
+          success: pr.success,
+          platform: pr.platformId,
+          itemsFound: pr.itemsFound,
+          itemsUpserted: pr.itemsUpserted,
+          itemsDeactivated: pr.itemsDeactivated,
+          durationMs: pr.durationMs,
+          error: pr.error,
+        } }));
       }
 
-      if (onScrapeComplete) onScrapeComplete();
+      if (data.summary.totalUpserted > 0) {
+        addLog('all', 'success', `Completado: ${data.summary.totalFound} encontrados, ${data.summary.totalUpserted} guardados. Refrescando...`);
+        if (onScrapeComplete) onScrapeComplete();
+        // Force page reload after 2s to show new data
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
+      } else {
+        addLog('all', 'warn', 'Ningun dato nuevo guardado.');
+      }
+
       refreshStatus();
     } catch (err) {
       addLog('all', 'error', `Error: ${err instanceof Error ? err.message : 'Unknown'}`);

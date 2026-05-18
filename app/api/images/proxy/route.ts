@@ -7,6 +7,13 @@ const ALLOWED_DOMAINS = [
   'surplex.com',
   'troostwijkauctions.com',
   'maynards.com',
+  'cdn.hibid.com',
+  'hibid.com',
+  'euroauctions.com',
+  'euroauctions.co.uk',
+  'auctioneersapps.com',
+  'bidspotter.co.uk',
+  'i-bidder.com',
 ];
 
 const CACHE = new Map<string, { data: ArrayBuffer; contentType: string; expires: number }>();
@@ -47,8 +54,9 @@ export async function GET(request: NextRequest) {
   try {
     const res = await fetch(url, {
       headers: {
-        'User-Agent': 'SURUS-ImageProxy/1.0',
-        'Accept': 'image/webp,image/jpeg,image/png,*/*',
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36',
+        'Accept': 'image/webp,image/avif,image/jpeg,image/png,*/*',
+        'Referer': 'https://www.google.com/',
       },
       next: { revalidate: 1800 },
     });

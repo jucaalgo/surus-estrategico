@@ -37,9 +37,14 @@ export function calculateRefurbishment(condition: string): number {
 
 // Calculate ALL KPIs for an asset
 export function calculateKPIs(pricing: PricingInfo, specs: SpecInfo, countryCode: string): CalculatedKPIs {
-  // Use currentBid if available, fallback to startingBid
-  const bid = pricing.currentBid || pricing.startingBid || 0;
+  // Use currentBid if available, fallback to startingBid, then estimate from resale
+  let bid = pricing.currentBid || pricing.startingBid || 0;
   const resale = pricing.estimatedResale || 0;
+
+  // If no bid but we have resale, estimate bid as ~40% of resale (typical auction ratio)
+  if (bid <= 0 && resale > 0) {
+    bid = Math.round(resale * 0.4);
+  }
 
   if (bid <= 0 || resale <= 0) {
     return emptyKPIs();

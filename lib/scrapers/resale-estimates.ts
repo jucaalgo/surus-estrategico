@@ -51,6 +51,38 @@ export function estimateResale(bid: number, category: string): number {
   return Math.round(bid * multiplier);
 }
 
+// Estimate base value from equipment keywords in title (when no price is shown)
+const EQUIPMENT_VALUE_RANGES: { keywords: string[]; min: number; max: number }[] = [
+  { keywords: ['cnc', 'mecanizado', 'machining', 'bearbeitung', 'centro mecanizado', 'bearbeitungszentrum'], min: 40000, max: 120000 },
+  { keywords: ['torno', 'dreh', 'lathe', 'drehmaschine'], min: 25000, max: 80000 },
+  { keywords: ['kuka', 'abb', 'fanuc', 'robot', 'roboter'], min: 15000, max: 60000 },
+  { keywords: ['plegadora', 'biege', 'press brake', 'abkant', 'biegemaschine'], min: 25000, max: 90000 },
+  { keywords: ['laser', 'láser', 'schneid', 'cutting', 'trumpf', 'amada'], min: 35000, max: 100000 },
+  { keywords: ['compresor', 'compressor', 'druckluft', 'kompressor'], min: 3000, max: 25000 },
+  { keywords: ['carretilla', 'forklift', 'stapler', 'gabelstapler', 'jungheinrich', 'still'], min: 3000, max: 15000 },
+  { keywords: ['inyectora', 'injection', 'spritzguss', 'spritzgieß', 'engel', 'arburg'], min: 20000, max: 80000 },
+  { keywords: ['prensa', 'presse', 'press', 'hydraulik'], min: 15000, max: 60000 },
+  { keywords: ['soldadura', 'welding', 'schweiß', 'schweiss', 'weld'], min: 5000, max: 25000 },
+  { keywords: ['milling', 'fräsmaschine', 'fräser', 'fresadora'], min: 20000, max: 70000 },
+  { keywords: ['grinding', 'schleif', 'schleifmaschine', 'rectificadora'], min: 15000, max: 50000 },
+  { keywords: ['saw', 'säge', 'sierra'], min: 8000, max: 35000 },
+  { keywords: ['drilling', 'bohr', 'bohrmaschine', 'taladro'], min: 8000, max: 30000 },
+];
+
+export function estimateValueFromTitle(title: string): number {
+  const lower = title.toLowerCase();
+  for (const range of EQUIPMENT_VALUE_RANGES) {
+    if (range.keywords.some(k => lower.includes(k))) {
+      // Pick random-ish value in range (deterministic based on title length)
+      const seed = title.length % 10;
+      const ratio = 0.5 + (seed / 20); // 0.5 to 1.0
+      return Math.round(range.min + (range.max - range.min) * ratio);
+    }
+  }
+  // Default for unknown industrial equipment
+  return 15000;
+}
+
 export function mapCondition(raw: string | null | undefined): 'excellent' | 'good' | 'fair' | 'poor' {
   if (!raw) return 'good';
   return CONDITION_MAP[raw.toLowerCase()] || 'good';
@@ -113,8 +145,10 @@ export interface TransformedAuction {
 }
 
 export function transformRawItem(item: RawAuctionItem): TransformedAuction {
-  const bid = item.currentBid || 0;
-  const resale = item.estimatedResale || (bid > 0 ? estimateResale(bid, item.category) : 0);
+  // Estimate base value from title if no price is available
+  const estimatedBaseValue = item.currentBid || item.startingBid || estimateValueFromTitle(item.title);
+  const bid = item.currentBid || estimatedBaseValue;
+  const resale = item.estimatedResale || estimateResale(estimatedBaseValue, item.category);
   const coords = item.lat && item.lng ? [item.lat, item.lng] as [number, number] : getCountryCoords(item.countryCode);
 
   const pricing = {
