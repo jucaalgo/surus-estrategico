@@ -1842,6 +1842,21 @@ function transformLiveResult(item, query) {
       auctioneer: { name: platformInfo.name, contactName: '', email: '', phone: '' }
     },
     intelligence: { marketDemand: 'high', comparableSales: [], buyerPersonas: [], riskFlags: [], arbitrageScore: Math.round(score * 100) / 100 },
+    kpis: {
+      totalAcquisitionCost: totalAcquisition,
+      estimatedResaleValue: estimatedResale,
+      grossProfit: gross,
+      roi: Math.round(roi * 100) / 100,
+      netProfitMargin: Math.round((estimatedResale > 0 ? gross / estimatedResale : 0) * 10000) / 100,
+      tir: Math.round((roi > 0 ? (Math.pow(1 + roi / 100, 12 / payback) - 1) * 100 : 0) * 100) / 100,
+      paybackMonths: payback,
+      cashOnCash: Math.round(roi * 100) / 100,
+      arbitrageScore: Math.round(score * 100) / 100,
+      isGanga: score >= 1.5,
+      isGoodDeal: totalAcquisition > 0 && totalAcquisition <= estimatedResale * 0.7,
+      riskLevel: specEst.specs.condition === 'excellent' ? 'low' : specEst.specs.condition === 'good' ? 'medium' : 'high',
+      score: Math.round(Math.min(score / 3, 1) * 35 + (score >= 1.5 ? 15 : score >= 1.0 ? 8 : 0) + 20)
+    },
     source: 'gemini-ai',
     isNew: true,
     tags: [item.platform || 'subasta']
