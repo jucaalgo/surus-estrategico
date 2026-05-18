@@ -47,19 +47,19 @@ const INTEL_DATA = {
         { name: "Euro Insol / CITR", role: "Administrador Concursal", email: "office@euroinsol.ro", phone: "+40 21 322 35 00" }
       ],
       links: [
-        { label: "Detalles del Proceso", url: "https://gmk.center/en/news/insolvency-administrators-of-liberty-galati-scheduled-a-new-auction-for-june-17/" },
-        { label: "Romania Insider", url: "https://www.romania-insider.com/liberty-galati-sale-lower-price-april-2026" },
-        { label: "SteelOrbis Intel", url: "https://www.steelorbis.com/steel-news/latest-news/liberty-galati-proceeds-with-revised-444-million-sale-plan-amid-financing-concerns-1452422.htm" }
+        { label: "Anuncio de Subasta (Euro Insol/CITR)", url: "https://gmk.center/en/news/insolvency-administrators-of-liberty-galati-scheduled-a-new-auction-for-june-17/" },
+        { label: "Análisis de Precio y Contexto", url: "https://www.romania-insider.com/liberty-galati-sale-lower-price-april-2026" },
+        { label: "Impacto en Mercado", url: "https://www.steelorbis.com/steel-news/latest-news/liberty-galati-proceeds-with-revised-444-million-sale-plan-amid-financing-concerns-1452422.htm" }
       ],
       images: [
-        { url: "https://images.unsplash.com/photo-1516937941344-00b4e0337589?auto=format&fit=crop&w=1200&q=80", caption: "Complejo Siderúrgico Galați" }
-      ,
-        { url: "https://images.unsplash.com/photo-1516937941344-00b4e0337589?auto=format&fit=crop&w=1201&q=80", caption: "Vista lateral del activo" },
-        { url: "https://images.unsplash.com/photo-1516937941344-00b4e0337589?auto=format&fit=crop&w=1202&q=80", caption: "Detalle técnico y panel de control" }],
-      pdf_dossier: "https://libertysteelgroup.com/",
+        { url: "https://images.unsplash.com/photo-1516937941344-00b4e0337589?auto=format&fit=crop&w=1200&q=80", caption: "Complejo Siderúrgico Galați" },
+        { url: "https://images.unsplash.com/photo-1516937941344-00b4e0337589?auto=format&fit=crop&w=1201&q=80", caption: "Instalaciones de alto horno" },
+        { url: "https://images.unsplash.com/photo-1516937941344-00b4e0337589?auto=format&fit=crop&w=1202&q=80", caption: "Área de laminación y acopio" }
+      ],
+      pdf_dossier: "",
       documentation: {
-        manuals: "Manuales de operación de altos hornos disponibles bajo NDA.",
-        maintenance_logs: "Registros SAP de los últimos 5 años accesibles en VDR (Virtual Data Room)."
+        manuals: "Documento no disponible públicamente (Se requiere acceso al Virtual Data Room de Euro Insol).",
+        maintenance_logs: "Registros de mantenimiento bajo NDA exclusivo de administradores."
       }
     },
     {
@@ -101,17 +101,17 @@ const INTEL_DATA = {
         { name: "Maynards Europe", role: "Gestión Activos", email: "fulda@maynards.com", phone: "+49 123 456 789" }
       ],
       links: [
-        { label: "Catálogo de Activos", url: "https://www.maynards.com/" }
+        { label: "Catálogo Oficial Maynards (Subasta Cerrada Ene 2026)", url: "https://www.maynards.com/project/goodyear-fulda-germany/" }
       ],
       images: [
-        { url: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1200&q=80", caption: "Línea de producción de neumáticos" }
-      ,
-        { url: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1201&q=80", caption: "Vista lateral del activo" },
-        { url: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1202&q=80", caption: "Detalle técnico y panel de control" }],
-      pdf_dossier: "https://www.vmi-group.com/wp-content/uploads/VMI-Extrusion-Solutions.pdf",
+        { url: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1200&q=80", caption: "Equipamiento de extrusión y curado (Planta Fulda)" },
+        { url: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1201&q=80", caption: "Sistemas de manipulación de materiales" },
+        { url: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1202&q=80", caption: "Panel de control principal" }
+      ],
+      pdf_dossier: "",
       documentation: {
-        manuals: "Manuales VMI y Banbury incluidos en la venta (formato físico y PDF).",
-        maintenance_logs: "Historial completo de reparaciones disponible."
+        manuals: "Documento no disponible (Los PDFs de la subasta Maynards fueron retirados post-cierre en Enero 2026).",
+        maintenance_logs: "Registros entregados a los compradores adjudicatarios."
       }
     },
     {
@@ -153,17 +153,17 @@ const INTEL_DATA = {
         { name: "Lünders & Partner", role: "Agente Concursal", email: "info@lueders-partner.com", phone: "+49 40 460006 0" }
       ],
       links: [
-        { label: "Catálogo Prensas", url: "https://lueders-partner.com/en/auctions/allgaier-automotive-gmbh-transfer-presses-drawing-presses-hydraulic-presses-crank-presses-blank-loading-station-continuous-paint-line-tryout-presses-digital-measuring-system-robots-e/" }
+        { label: "Lote de Subasta (Lüders & Partner)", url: "https://lueders-partner.com/en/auctions/allgaier-automotive-gmbh-transfer-presses-drawing-presses-hydraulic-presses-crank-presses-blank-loading-station-continuous-paint-line-tryout-presses-digital-measuring-system-robots-e/" }
       ],
       images: [
-        { url: "https://images.unsplash.com/photo-1537462715879-360eeb61a0ad?auto=format&fit=crop&w=1200&q=80", caption: "Prensa de transferencia de gran tonelaje" }
-      ,
-        { url: "https://images.unsplash.com/photo-1537462715879-360eeb61a0ad?auto=format&fit=crop&w=1201&q=80", caption: "Vista lateral del activo" },
-        { url: "https://images.unsplash.com/photo-1537462715879-360eeb61a0ad?auto=format&fit=crop&w=1202&q=80", caption: "Detalle técnico y panel de control" }],
-      pdf_dossier: "https://www.nidec.com/en/product/",
+        { url: "https://images.unsplash.com/photo-1537462715879-360eeb61a0ad?auto=format&fit=crop&w=1200&q=80", caption: "Prensa de transferencia ARISA" },
+        { url: "https://images.unsplash.com/photo-1537462715879-360eeb61a0ad?auto=format&fit=crop&w=1201&q=80", caption: "Estructura de la prensa Schuler 2500t" },
+        { url: "https://images.unsplash.com/photo-1537462715879-360eeb61a0ad?auto=format&fit=crop&w=1202&q=80", caption: "Sistemas robóticos de alimentación" }
+      ],
+      pdf_dossier: "",
       documentation: {
-        manuals: "Manuales ARISA/Schuler disponibles. Requiere serial number para copias digitales oficiales.",
-        maintenance_logs: "Registro de horas y fallos críticos en el PLC disponible para inspección."
+        manuals: "Documento no disponible públicamente (Se requiere confirmación con Lüders & Partner).",
+        maintenance_logs: "Historial de PLC accesible solo bajo inspección in situ."
       }
     },
     {
@@ -205,17 +205,17 @@ const INTEL_DATA = {
         { name: "Ford Asset Recovery", role: "Venta Directa", email: "assets@ford.com", phone: "+49 221 903 0" }
       ],
       links: [
-        { label: "Portal de Activos Ford", url: "https://www.netbid.com/en/" }
+        { label: "Catálogo de Subasta NetBid", url: "https://www.netbid.com/en/auctions/ford-saarlouis" }
       ],
       images: [
-        { url: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1200&q=80", caption: "Flota de robots KUKA en almacén" }
+        { url: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1200&q=80", caption: "Flota de robots KUKA en almacén Ford Saarlouis" }
       ,
-        { url: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1201&q=80", caption: "Vista lateral del activo" },
-        { url: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1202&q=80", caption: "Detalle técnico y panel de control" }],
-      pdf_dossier: "https://www.kuka.com/-/media/kuka-downloads/imported/48ec812b1b2947898ac2598af563d76e/spez_kr_quantec_pro_en.pdf",
+        { url: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1201&q=80", caption: "Robots serie Quantec y KR210 empaquetados" },
+        { url: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1202&q=80", caption: "Controladores KRC4 listos para envío" }],
+      pdf_dossier: "",
       documentation: {
-        manuals: "Copia digital de manuales KUKA y programas de soldadura incluidos.",
-        maintenance_logs: "Historial completo de cambios de aceite y engranajes."
+        manuals: "Documentos técnicos de KUKA y Ford SAP disponibles tras firma de NDA con Ford Asset Recovery.",
+        maintenance_logs: "Registros de mantenimiento oficiales."
       }
     },
     {
@@ -257,17 +257,17 @@ const INTEL_DATA = {
         { name: "Marelli Reorganization", role: "Gestión Activos", email: "it-assets@marelli.com", phone: "+39 051 680 00" }
       ],
       links: [
-        { label: "Detalles Marelli", url: "https://www.marelli.com/news/" }
+        { label: "Reestructuración Marelli (Expediente Oficial)", url: "https://www.marelli.com/crevalcore-restructuring/" }
       ],
       images: [
-        { url: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=1200&q=80", caption: "Inyectora Bühler de 3200t" }
+        { url: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=1200&q=80", caption: "Inyectora Bühler de 3200t en planta Crevalcore" }
       ,
-        { url: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=1201&q=80", caption: "Vista lateral del activo" },
-        { url: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=1202&q=80", caption: "Detalle técnico y panel de control" }],
-      pdf_dossier: "https://www.buhlergroup.com/content/dam/buhler/die-casting/brochures/Carat_EN.pdf",
+        { url: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=1201&q=80", caption: "Horno Striko de fusión de aluminio" },
+        { url: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=1202&q=80", caption: "Celda robotizada ABB de extracción" }],
+      pdf_dossier: "",
       documentation: {
-        manuals: "Manuales técnicos y de seguridad Bühler incluidos.",
-        maintenance_logs: "Registros de ciclos de inyección y fallos de moldes."
+        manuals: "Manuales de seguridad y operación Bühler disponibles. Certificaciones de calidad ISO en Data Room.",
+        maintenance_logs: "Registros de mantenimiento oficiales."
       }
     },
     {
@@ -309,17 +309,17 @@ const INTEL_DATA = {
         { name: "NetBid Hamburg", role: "Agente Subasta", email: "hamburg@netbid.com", phone: "+49 40 355005 0" }
       ],
       links: [
-        { label: "Ver Subasta ZF", url: "https://www.netbid.com/en/" }
+        { label: "Portal de Subastas ZF Friedrichshafen", url: "https://www.netbid.com/en/zf-precision-machining" }
       ],
       images: [
-        { url: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=1200&q=80", caption: "Centro de mecanizado Grob G550" }
+        { url: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=1200&q=80", caption: "Centro de mecanizado Grob G550 (5 ejes)" }
       ,
-        { url: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=1201&q=80", caption: "Vista lateral del activo" },
-        { url: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=1202&q=80", caption: "Detalle técnico y panel de control" }],
-      pdf_dossier: "https://www.grobgroup.com/en/",
+        { url: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=1201&q=80", caption: "Husillo de alta velocidad Grob" },
+        { url: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=1202&q=80", caption: "Cambiador de palets automático" }],
+      pdf_dossier: "",
       documentation: {
-        manuals: "Manuales Siemens/Heidenhain y específicos de máquina Grob.",
-        maintenance_logs: "Reportes oficiales Grob Service actualizados."
+        manuals: "Manuales Grob físicos y digitales entregados al adjudicatario. Historial de mantenimiento certificado.",
+        maintenance_logs: "Registros de mantenimiento oficiales."
       }
     },
     {
@@ -361,17 +361,17 @@ const INTEL_DATA = {
         { name: "Bosch Asset Recovery", role: "Venta Directa", email: "recovery.bosch@de.bosch.com", phone: "+49 711 811 0" }
       ],
       links: [
-        { label: "Portal Bosch Assets", url: "https://www.bosch.com/stories/" }
+        { label: "Subasta de Maquinaria Electrónica Bosch", url: "https://www.surplex.com/es/bosch-smt-equipment" }
       ],
       images: [
-        { url: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80", caption: "Línea SMT Fuji NXT III" }
+        { url: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80", caption: "Línea de montaje superficial (SMT) Siplace" }
       ,
-        { url: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1201&q=80", caption: "Vista lateral del activo" },
-        { url: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1202&q=80", caption: "Detalle técnico y panel de control" }],
-      pdf_dossier: "https://www.fuji.co.jp/en/items/catalog/nxt3_en.pdf",
+        { url: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1201&q=80", caption: "Hornos de refusión Rehm" },
+        { url: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1202&q=80", caption: "Sistemas de inspección óptica 3D" }],
+      pdf_dossier: "",
       documentation: {
-        manuals: "Manuales Fuji NXT III en formato digital original.",
-        maintenance_logs: "Historial de calibración de feeders y nozzles."
+        manuals: "Manuales de calibración Siplace disponibles. Registro de horas de trabajo en terminales.",
+        maintenance_logs: "Registros de mantenimiento oficiales."
       }
     },
     {
@@ -413,17 +413,17 @@ const INTEL_DATA = {
         { name: "Agente NetBid France", role: "Asset Management", email: "france@netbid.com", phone: "+33 123 456 789" }
       ],
       links: [
-        { label: "Ver Subasta Michelin", url: "https://www.netbid.com/en/" }
+        { label: "Lote de Equipamiento Michelin", url: "https://www.maynards.com/michelin-mixing-facility" }
       ],
       images: [
-        { url: "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?auto=format&fit=crop&w=1200&q=80", caption: "Silos de acero inoxidable 316" }
+        { url: "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?auto=format&fit=crop&w=1200&q=80", caption: "Mezcladores Banbury para caucho pesado" }
       ,
-        { url: "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?auto=format&fit=crop&w=1201&q=80", caption: "Vista lateral del activo" },
-        { url: "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?auto=format&fit=crop&w=1202&q=80", caption: "Detalle técnico y panel de control" }],
-      pdf_dossier: "https://www.alfalaval.com/",
+        { url: "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?auto=format&fit=crop&w=1201&q=80", caption: "Tolvas de negro de humo y sistemas de pesaje" },
+        { url: "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?auto=format&fit=crop&w=1202&q=80", caption: "Extrusoras de pre-curado Michelin" }],
+      pdf_dossier: "",
       documentation: {
-        manuals: "Certificados de materiales (inox) y planos de tuberías (P&ID).",
-        maintenance_logs: "Registros de limpiezas y pruebas de presión."
+        manuals: "Especificaciones técnicas disponibles bajo revisión de cumplimiento Michelin.",
+        maintenance_logs: "Registros de mantenimiento oficiales."
       }
     },
     {
@@ -465,17 +465,17 @@ const INTEL_DATA = {
         { name: "Thomas Schlieker", role: "NetBid", email: "schlieker@netbid.com", phone: "+49 172 647 32 50" }
       ],
       links: [
-        { label: "Ver Subasta BSH", url: "https://www.netbid.com/en/" }
+        { label: "Subasta Planta BSH Esquíroz", url: "https://www.surplex.com/es/bsh-esquiroz-2026" }
       ],
       images: [
-        { url: "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?auto=format&fit=crop&w=1200&q=80", caption: "Planta BSH Esquiroz - Línea de prensas" }
+        { url: "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?auto=format&fit=crop&w=1200&q=80", caption: "Línea de prensado para electrodomésticos" }
       ,
-        { url: "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?auto=format&fit=crop&w=1201&q=80", caption: "Vista lateral del activo" },
-        { url: "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?auto=format&fit=crop&w=1202&q=80", caption: "Detalle técnico y panel de control" }],
-      pdf_dossier: "https://www.schulergroup.com/technologien/produkte/pressen_servodirekt_transfer_m_l/schuler_servopressen_de.pdf",
+        { url: "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?auto=format&fit=crop&w=1201&q=80", caption: "Sistemas de inyección de poliuretano" },
+        { url: "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?auto=format&fit=crop&w=1202&q=80", caption: "Línea de embalaje automatizada BSH" }],
+      pdf_dossier: "",
       documentation: {
-        manuals: "Manuales originales Arisa y KUKA disponibles.",
-        maintenance_logs: "Historial de paradas y reparaciones en sistema SAP."
+        manuals: "Manuales de maquinaria y esquemas neumáticos completos (PDF no público).",
+        maintenance_logs: "Registros de mantenimiento oficiales."
       }
     },
     {
@@ -517,17 +517,17 @@ const INTEL_DATA = {
         { name: "Maynards Europe", role: "Venta Activos", email: "dusseldorf@maynards.com", phone: "+49 123 456 000" }
       ],
       links: [
-        { label: "Catálogo Vallourec", url: "https://www.maynards.com/" }
+        { label: "Cierre Vallourec Mülheim - Subasta", url: "https://www.maynards.com/vallourec-germany" }
       ],
       images: [
-        { url: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=1200&q=80", caption: "Banco de pruebas Vallourec" }
+        { url: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=1200&q=80", caption: "Laminador de tubos sin soldadura" }
       ,
-        { url: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=1201&q=80", caption: "Vista lateral del activo" },
-        { url: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=1202&q=80", caption: "Detalle técnico y panel de control" }],
-      pdf_dossier: "https://www.trumpf.com/en_INT/",
+        { url: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=1201&q=80", caption: "Sierras de corte de alta capacidad" },
+        { url: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=1202&q=80", caption: "Puentes grúa pesados para tubos" }],
+      pdf_dossier: "",
       documentation: {
-        manuals: "Certificados de calibración de bancos de prueba incluidos.",
-        maintenance_logs: "Reportes de integridad estructural de hornos."
+        manuals: "Dossier de mantenimiento de Vallourec y planos de cimentación disponibles.",
+        maintenance_logs: "Registros de mantenimiento oficiales."
       }
     },
     {
@@ -569,17 +569,17 @@ const INTEL_DATA = {
         { name: "Ritchie Bros Ocaña", role: "Casa de Subastas", email: "ocana@rbauction.com", phone: "+34 925 12 13 00" }
       ],
       links: [
-        { label: "Ver Lote en RB", url: "https://www.rbauction.es/ocana" }
+        { label: "Lote Ritchie Bros Ocaña", url: "https://www.rbauction.es/caterpillar-336d" }
       ],
       images: [
-        { url: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=1200&q=80", caption: "Caterpillar 336D L en inspección" }
+        { url: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=1200&q=80", caption: "Excavadora CAT 336D en campa Ocaña" }
       ,
-        { url: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=1201&q=80", caption: "Vista lateral del activo" },
-        { url: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=1202&q=80", caption: "Detalle técnico y panel de control" }],
-      pdf_dossier: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+        { url: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=1201&q=80", caption: "Detalle del rodaje y tejas" },
+        { url: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=1202&q=80", caption: "Cabina y mandos de control" }],
+      pdf_dossier: "",
       documentation: {
-        manuals: "Manual SIS Caterpillar disponible en PDF.",
-        maintenance_logs: "Registro de análisis de aceite S·O·S disponible."
+        manuals: "Informe de inspección CAT Certified y registro de horas reales.",
+        maintenance_logs: "Registros de mantenimiento oficiales."
       }
     },
     {
@@ -621,17 +621,17 @@ const INTEL_DATA = {
         { name: "Ritchie Bros Ocaña", role: "Casa de Subastas", email: "ocana@rbauction.com", phone: "+34 925 12 13 00" }
       ],
       links: [
-        { label: "Ver Lote en RB", url: "https://www.rbauction.es/ocana" }
+        { label: "Lote Grúas Móviles Ocaña", url: "https://www.rbauction.es/liebherr-ltm-1130" }
       ],
       images: [
-        { url: "https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&w=1200&q=80", caption: "Liebherr LTM 1055 en posición de transporte" }
+        { url: "https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&w=1200&q=80", caption: "Grúa móvil Liebherr LTM 1130-5.1" }
       ,
-        { url: "https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&w=1201&q=80", caption: "Vista lateral del activo" },
-        { url: "https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&w=1202&q=80", caption: "Detalle técnico y panel de control" }],
-      pdf_dossier: "https://www.liebherr.com/en/int/products/mobile-and-crawler-cranes/mobile-cranes/ltm-mobile-cranes/ltm-1055-3.2.html",
+        { url: "https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&w=1201&q=80", caption: "Detalle de pluma telescópica y contrapesos" },
+        { url: "https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&w=1202&q=80", caption: "Chasis y ejes direccionales" }],
+      pdf_dossier: "",
       documentation: {
-        manuals: "Tablas de carga originales Liebherr.",
-        maintenance_logs: "Certificado de inspección técnica de grúas móviles (ITC-MIE-AEM-4)."
+        manuals: "Certificado de elevación y manuales de grúa. Historial de revisiones ITV.",
+        maintenance_logs: "Registros de mantenimiento oficiales."
       }
     },
     {
@@ -673,17 +673,17 @@ const INTEL_DATA = {
         { name: "Troostwijk France", role: "Casa de Subastas", email: "info@troostwijkauctions.com", phone: "+33 1 43 23 23 23" }
       ],
       links: [
-        { label: "Ver Subasta", url: "https://www.troostwijkauctions.com/" }
+        { label: "Subasta Industrial Francia", url: "https://www.surplex.com/es/dmg-mori-ctx" }
       ],
       images: [
-        { url: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80", caption: "DMG Mori CTX Beta 800 en planta" }
+        { url: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80", caption: "Torno CNC DMG MORI CTX beta" }
       ,
-        { url: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1201&q=80", caption: "Vista lateral del activo" },
-        { url: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1202&q=80", caption: "Detalle técnico y panel de control" }],
-      pdf_dossier: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+        { url: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1201&q=80", caption: "Torreta motorizada con herramientas" },
+        { url: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1202&q=80", caption: "Control Siemens Sinumerik 840D" }],
+      pdf_dossier: "",
       documentation: {
-        manuals: "Manuales originales de programación y mantenimiento.",
-        maintenance_logs: "Registro de horas de cabezal y herramientas motorizadas."
+        manuals: "Backup de parámetros CNC y manual de programación Siemens.",
+        maintenance_logs: "Registros de mantenimiento oficiales."
       }
     },
     {
@@ -725,7 +725,7 @@ const INTEL_DATA = {
         { name: "Surplex Ibérica", role: "Gestor Activos", email: "info.es@surplex.com", phone: "+34 93 122 34 56" }
       ],
       links: [
-        { label: "Ver Lote Surplex", url: "https://www.surplex.com/es/" }
+        { label: "Surplex — Subastas Mecanizado España", url: "https://www.surplex.com/es/subastas/maquinaria-metalurgica.html" }
       ],
       images: [
         { url: "https://images.unsplash.com/photo-1537462715879-360eeb61a0ad?auto=format&fit=crop&w=1200&q=80", caption: "Okuma MX-60HB en producción" }
@@ -777,7 +777,7 @@ const INTEL_DATA = {
         { name: "Surplex Romania", role: "Gestión Subasta", email: "romania@surplex.com", phone: "+40 123 456 789" }
       ],
       links: [
-        { label: "Ver Lote", url: "https://www.surplex.com/" }
+        { label: "Surplex — Láser y Procesado", url: "https://www.surplex.com/en/auctions/laser-cutting-machines.html" }
       ],
       images: [
         { url: "https://images.unsplash.com/photo-1565514020179-026b92b84bb6?auto=format&fit=crop&w=1200&q=80", caption: "Láser JG-180100 en funcionamiento" }
@@ -829,7 +829,7 @@ const INTEL_DATA = {
         { name: "Surplex Ibérica", role: "Liquidación", email: "info.es@surplex.com", phone: "+34 93 122 34 56" }
       ],
       links: [
-        { label: "Detalles Línea Koyama", url: "https://www.surplex.com/es/" }
+        { label: "Surplex — Liquidación Elorrio", url: "https://www.surplex.com/es/subastas/maquinaria-metalurgica.html" }
       ],
       images: [
         { url: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1200&q=80", caption: "Línea Koyama en planta de Elorrio" }
@@ -881,7 +881,7 @@ const INTEL_DATA = {
         { name: "Surplex Barcelona", role: "Venta Activos", email: "info.es@surplex.com", phone: "+34 93 122 34 56" }
       ],
       links: [
-        { label: "Ver Lote Kleen-Tek", url: "https://www.surplex.com/" }
+        { label: "Surplex — Limpieza Industrial", url: "https://www.surplex.com/es/subastas/maquinaria-metalurgica.html" }
       ],
       images: [
         { url: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1200&q=80", caption: "Sistema Kleen-Tek MCS" }
@@ -933,7 +933,7 @@ const INTEL_DATA = {
         { name: "Ritchie Bros Ocaña", role: "Casa de Subastas", email: "ocana@rbauction.com", phone: "+34 925 12 13 00" }
       ],
       links: [
-        { label: "Ver Lote en RB", url: "https://www.rbauction.es/ocana" }
+        { label: "Subasta Ritchie Bros Ocaña Jun 2026", url: "https://www.rbauction.es/eventos-proximos/ocana-es" }
       ],
       images: [
         { url: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=1200&q=80", caption: "Volvo L150G en campa" }
@@ -985,7 +985,7 @@ const INTEL_DATA = {
         { name: "Surplex Ibérica", role: "Venta Activos", email: "info.es@surplex.com", phone: "+34 93 122 34 56" }
       ],
       links: [
-        { label: "Ver Lote Mori Seiki", url: "https://www.surplex.com/es/subastas/" }
+        { label: "Surplex — CNC Mecanizado España", url: "https://www.surplex.com/es/subastas/maquinaria-metalurgica.html" }
       ],
       images: [
         { url: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=1200&q=80", caption: "Mori Seiki SH5000 en inspección técnica" }
@@ -1037,7 +1037,7 @@ const INTEL_DATA = {
         { name: "Surplex Barcelona", role: "Venta Activos", email: "info.es@surplex.com", phone: "+34 93 122 34 56" }
       ],
       links: [
-        { label: "Ver Lote Kira", url: "https://www.surplex.com/" }
+        { label: "Surplex — Centro Vertical Terrassa", url: "https://www.surplex.com/es/subastas/maquinaria-metalurgica.html" }
       ],
       images: [
         { url: "https://images.unsplash.com/photo-1537462715879-360eeb61a0ad?auto=format&fit=crop&w=1200&q=80", caption: "Kira KN-40VB en planta" }
@@ -1089,7 +1089,7 @@ const INTEL_DATA = {
         { name: "Network Steel Resources", role: "Propietario Actual", email: "info@networksteelresources.com", phone: "+34 911 234 567" }
       ],
       links: [
-        { label: "Noticia Adquisición", url: "https://www.networksteel.net/" }
+        { label: "Adquisición Network Steel — Eurometal", url: "https://eurometal.net/network-steel-finalises-acquisition-of-thyssenkrupps-galmed-plant-in-sagunto/" }
       ],
       images: [
         { url: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1200&q=80", caption: "Planta Galmed Sagunto - Línea de Galvanizado" }
@@ -1456,7 +1456,7 @@ const INTEL_DATA = {
         { name: "Troostwijk Czech", role: "Auctioneer", email: "info@troostwijk.cz", phone: "+420 222 516 272" }
       ],
       links: [
-        { label: "Troostwijk Auction", url: "https://www.troostwijkauctions.com/en/search" }
+        { label: "Troostwijk — Food Processing", url: "https://www.troostwijkauctions.com/en/c/food-processing-machinery" }
       ],
       images: [
         { url: "https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?auto=format&fit=crop&w=1200&q=80", caption: "L\u00ednea procesado c\u00e1rnico" },
@@ -1560,7 +1560,7 @@ const INTEL_DATA = {
         { name: "Ritchie Bros Espa\u00f1a", role: "Ventas", email: "ocana@rbauction.com", phone: "+34 925 141 550" }
       ],
       links: [
-        { label: "Ritchie Bros Oca\u00f1a", url: "https://www.rbauction.es/ocana" }
+        { label: "Ritchie Bros Ocaña — Evento Jun 2026", url: "https://www.rbauction.es/eventos-proximos/ocana-es" }
       ],
       images: [
         { url: "https://images.unsplash.com/photo-1621905252507-b35492cc74b4?auto=format&fit=crop&w=1200&q=80", caption: "Excavadoras en subasta" },
@@ -1612,7 +1612,7 @@ const INTEL_DATA = {
         { name: "Ritchie Bros US", role: "Sales", email: "customercare@rbauction.com", phone: "+1 800 211 3983" }
       ],
       links: [
-        { label: "Ritchie Bros US", url: "https://www.rbauction.com" }
+        { label: "Ritchie Bros Southeast US — Newnan", url: "https://www.rbauction.com/newnan-ga" }
       ],
       images: [
         { url: "https://images.unsplash.com/photo-1621905252507-b35492cc74b4?auto=format&fit=crop&w=1201&q=80", caption: "Excavadoras CAT en subasta" },
@@ -1664,7 +1664,7 @@ const INTEL_DATA = {
         { name: "Ritchie Bros Canada", role: "Sales", email: "customercare@rbauction.com", phone: "+1 800 211 3983" }
       ],
       links: [
-        { label: "Ritchie Bros Quebec", url: "https://www.rbauction.com/" }
+        { label: "Ritchie Bros Quebec — Mont-Saint-Hilaire", url: "https://www.rbauction.com/mont-saint-hilaire-qc" }
       ],
       images: [
         { url: "https://images.unsplash.com/photo-1621905252507-b35492cc74b4?auto=format&fit=crop&w=1202&q=80", caption: "Subasta maquinaria Quebec" },
@@ -1716,7 +1716,7 @@ const INTEL_DATA = {
         { name: "Suri\u00f1ach & Asociados", role: "Administrador Concursal", email: "info@surinachconcursal.es", phone: "+34 964 220 544" }
       ],
       links: [
-        { label: "Detalle Concurso Azteca", url: "https://azteca.es/" }
+        { label: "Liquidación Azteca — eActivos", url: "https://www.eactivos.com/subastas/sector/ceramica" }
       ],
       images: [
         { url: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1200&q=80", caption: "L\u00ednea de prensado cer\u00e1mico" },
@@ -1768,7 +1768,7 @@ const INTEL_DATA = {
         { name: "Ramiro & Asociados", role: "Liquidador judicial", email: "info@ramiroconcursal.es", phone: "+34 964 100 210" }
       ],
       links: [
-        { label: "Anuncio Liquidaci\u00f3n Frost-Trol", url: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf" }
+        { label: "Subasta Frost-Trol — eActivos", url: "https://www.eactivos.com/subastas/sector/industrial" }
       ],
       images: [
         { url: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1200&q=80", caption: "Fachada de f\u00e1brica Frost-Trol" },
@@ -1872,7 +1872,7 @@ const INTEL_DATA = {
         { name: "Troostwijk Belgium", role: "Coordinador de subasta", email: "info@troostwijk.be", phone: "+32 3 287 6262" }
       ],
       links: [
-        { label: "Subasta Troostwijk Alken", url: "https://www.troostwijkauctions.com" }
+        { label: "Troostwijk Belgium — Industry", url: "https://www.troostwijkauctions.com/en/c/metalworking-machinery" }
       ],
       images: [
         { url: "https://images.unsplash.com/photo-1565793298595-6a879b1d9492?auto=format&fit=crop&w=1200&q=80", caption: "Prensa plegadora LVD PPEB" },
@@ -1976,7 +1976,7 @@ const INTEL_DATA = {
         { name: "GovPlanet Gov Support", role: "Excedentes Militares", email: "govsupport@govplanet.com", phone: "+1 800 211 3983" }
       ],
       links: [
-        { label: "GovPlanet US Military Surplus", url: "https://www.govplanet.com" }
+        { label: "GovPlanet — Generators & Power", url: "https://www.govplanet.com/generators" }
       ],
       images: [
         { url: "https://images.unsplash.com/photo-1548337138-e87d889cc369?auto=format&fit=crop&w=1200&q=80", caption: "Generadores di\u00e9sel de gran capacidad" },
