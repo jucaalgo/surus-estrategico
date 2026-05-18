@@ -1794,6 +1794,7 @@ function transformLiveResult(item, query) {
   const gross = priceEur ? estimatedResale - totalAcquisition : 0;
   const roi = totalAcquisition > 0 ? (gross / totalAcquisition) * 100 : 0;
   const score = totalAcquisition > 0 ? estimatedResale / totalAcquisition : 0;
+  const payback = Math.max(1, Math.round(4 - (roi / 10)));
   const countryCode = item.location?.country || platformInfo.country || '??';
 
   return {
