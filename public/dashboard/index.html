@@ -255,6 +255,98 @@ body::after{
 }
 .nav-history:hover{color:var(--cyan);border-color:var(--cyan)}
 
+/* ── LIVE SEARCH BUTTON ── */
+.nav-live{
+  background:linear-gradient(135deg,rgba(0,255,136,.15),rgba(0,204,255,.1));
+  border:1px solid rgba(0,255,136,.35);
+  border-radius:var(--radius);
+  padding:9px 16px;
+  color:var(--green);
+  font-family:var(--font-sans);
+  font-size:12px;
+  font-weight:700;
+  cursor:pointer;
+  transition:all .25s;
+  white-space:nowrap;
+  letter-spacing:.3px;
+  text-transform:uppercase;
+  position:relative;
+  overflow:hidden;
+}
+.nav-live::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(135deg,var(--green),var(--cyan));
+  opacity:0;
+  transition:opacity .25s;
+  z-index:-1;
+}
+.nav-live:hover{
+  color:#fff;
+  border-color:var(--green);
+  box-shadow:0 0 24px rgba(0,255,136,.25),0 0 48px rgba(0,204,255,.1);
+  transform:translateY(-1px);
+}
+.nav-live:hover::before{opacity:.15}
+.nav-live:active{transform:translateY(0)}
+.nav-live.searching{
+  animation:livePulse 1.5s infinite;
+  pointer-events:none;
+  opacity:.8;
+}
+@keyframes livePulse{
+  0%,100%{box-shadow:0 0 12px rgba(0,255,136,.2)}
+  50%{box-shadow:0 0 28px rgba(0,255,136,.5),0 0 56px rgba(0,204,255,.25)}
+}
+.nav-live .live-dot{
+  display:inline-block;
+  width:7px;height:7px;
+  border-radius:50%;
+  background:var(--green);
+  margin-right:6px;
+  vertical-align:middle;
+  box-shadow:0 0 8px var(--green);
+}
+.nav-live.searching .live-dot{
+  background:var(--yellow);
+  box-shadow:0 0 12px var(--yellow);
+  animation:blink .6s infinite;
+}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* Live search progress toast */
+.live-toast{
+  position:fixed;
+  bottom:24px;
+  left:50%;
+  transform:translateX(-50%);
+  background:var(--surface2);
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+  border:1px solid var(--border-glow);
+  border-radius:var(--radius-lg);
+  padding:14px 28px;
+  z-index:1000;
+  display:flex;
+  align-items:center;
+  gap:16px;
+  box-shadow:0 8px 40px rgba(0,0,0,.5),0 0 30px rgba(0,204,255,.08);
+  animation:slideUp .3s ease;
+}
+@keyframes slideUp{from{transform:translate(-50%,20px);opacity:0}to{transform:translate(-50%,0);opacity:1}}
+.live-toast .spinner{
+  width:18px;height:18px;
+  border:2px solid var(--border);
+  border-top-color:var(--cyan);
+  border-radius:50%;
+  animation:spin .7s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.live-toast .lt-text{font-size:13px;color:var(--text)}
+.live-toast .lt-count{font-family:var(--font-mono);color:var(--green);font-weight:700}
+.live-toast .lt-platforms{font-size:11px;color:var(--text-dim)}
+
 /* ── FILTER BAR ── */
 .filter-bar{
   display:flex;
@@ -424,6 +516,7 @@ body::after{
 .tag-p1{background:rgba(255,215,64,.08);color:var(--yellow);border:1px solid rgba(255,215,64,.2)}
 .tag-country{background:rgba(255,255,255,.04);color:var(--text-dim);border:1px solid var(--border)}
 .tag-ganga{background:rgba(0,255,136,.08);color:var(--green);border:1px solid rgba(0,255,136,.2)}
+.tag-ai{background:rgba(179,136,255,.1);color:var(--purple);border:1px solid rgba(179,136,255,.25)}
 .asset-title{
   font-size:18px;
   font-weight:800;
@@ -880,6 +973,9 @@ body::after{
       <button class="presets-btn" id="presetsBtn">📋 Smart Presets ▾</button>
       <div class="presets-dropdown" id="presetsDropdown"></div>
     </div>
+    <button class="nav-live" id="liveSearchBtn" title="Búsqueda activa en tiempo real con IA">
+      <span class="live-dot"></span>BUSCAR AHORA
+    </button>
     <button class="nav-history" id="historyBtn" title="Historial de búsquedas">🕐 Historial</button>
   </nav>
 
@@ -1082,8 +1178,25 @@ body::after{
 // ============================================================
 
 // ── API Configuration ──
+const PLATFORM_INFO = {
+  surplex: { name: 'Surplex', country: 'DE', flag: '🇩🇪', trust: 8 },
+  netbid: { name: 'NetBid', country: 'DE', flag: '🇩🇪', trust: 7 },
+  troostwijk: { name: 'Troostwijk', country: 'NL', flag: '🇳🇱', trust: 7 },
+  goindustry: { name: 'GoIndustry', country: 'UK', flag: '🇬🇧', trust: 7 },
+  maynards: { name: 'Maynards', country: 'DE', flag: '🇩🇪', trust: 5 },
+  industrial_auctions: { name: 'Industrial Auctions', country: 'NL', flag: '🇳🇱', trust: 5 },
+  auctelia: { name: 'Auctelia', country: 'FR', flag: '🇫🇷', trust: 4 },
+  bidspotter: { name: 'BidSpotter', country: 'UK', flag: '🇬🇧', trust: 5 },
+  machinio: { name: 'Machinio', country: 'US', flag: '🇺🇸', trust: 6 },
+  exapro: { name: 'Exapro', country: 'FR', flag: '🇫🇷', trust: 6 },
+  trademachines: { name: 'TradeMachines', country: 'DE', flag: '🇩🇪', trust: 5 },
+  asset_trade: { name: 'Asset-Trade', country: 'DE', flag: '🇩🇪', trust: 5 },
+  other: { name: 'Portal Subastas', country: '??', flag: '🏳️', trust: 3 }
+};
+
 const API = {
   search: '/api/search',
+  liveSearch: '/api/live-search',
   rates: '/api/exchange-rates',
   cacheMs: 30000
 };
@@ -1206,6 +1319,7 @@ function renderAssetDetail() {
   const countryFlag = {ES:'🇪🇸',DE:'🇩🇪',NL:'🇳🇱',FR:'🇫🇷',UK:'🇬🇧',US:'🇺🇸',IT:'🇮🇹'};
 
   const tags = [];
+  if (a.source === 'gemini-ai') tags.push('<span class="tag tag-ai">🤖 Gemini AI</span>');
   if (isUrgent) tags.push('<span class="tag tag-p0">P0 URGENTE</span>');
   if (isGanga) tags.push('<span class="tag tag-ganga">GANGA</span>');
   const cc = a.location.countryCode || 'ES';
@@ -1624,7 +1738,174 @@ function calculateLiveKPIs(asset) {
   };
 }
 
-// ── API: Execute live search ──
+// ── API: Execute Gemini live search (real-time, AI-powered) ──
+let liveSearchActive = false;
+
+async function executeLiveSearch(query) {
+  if (liveSearchActive) return null;
+  liveSearchActive = true;
+
+  const btn = $('liveSearchBtn');
+  btn.classList.add('searching');
+  btn.innerHTML = '<span class="live-dot"></span>BUSCANDO...';
+
+  // Show progress toast
+  showLiveToast('Buscando en 12+ plataformas con IA...', 0, 'iniciando');
+
+  try {
+    const res = await fetch(API.liveSearch + '?q=' + encodeURIComponent(query), {
+      headers: { 'Accept': 'application/json' }
+    });
+    if (!res.ok) throw new Error('Live search error ' + res.status);
+    const data = await res.json();
+
+    if (data.error) {
+      console.warn('Live search:', data.error, data.note || '');
+      showLiveToast(data.error + (data.note ? ' — ' + data.note : ''), 0, 'error');
+      return null;
+    }
+
+    const results = data.results || [];
+    const platformCount = data.platforms || 0;
+    const elapsed = (data.elapsed || 0) / 1000;
+
+    if (results.length > 0) {
+      showLiveToast('Resultados IA en tiempo real', results.length, platformCount + ' plataformas · ' + elapsed.toFixed(1) + 's');
+      state.lastApiTime = Date.now();
+
+      const apiAssets = results.map(item => transformLiveResult(item, query));
+      return apiAssets;
+    } else {
+      showLiveToast('Sin resultados IA. Probando búsqueda directa...', 0, 'fallback');
+      return null;
+    }
+  } catch (e) {
+    console.warn('Live search failed:', e.message);
+    showLiveToast('Búsqueda IA no disponible. Usando búsqueda directa...', 0, 'error');
+    return null;
+  } finally {
+    liveSearchActive = false;
+    btn.classList.remove('searching');
+    btn.innerHTML = '<span class="live-dot"></span>BUSCAR AHORA';
+    // Auto-hide toast after 5s
+    setTimeout(hideLiveToast, 5000);
+  }
+}
+
+function transformLiveResult(item, query) {
+  const platformInfo = PLATFORM_INFO[item.platform] || { name: item.platform || 'Desconocida', country: item.location?.country || '??' };
+  return {
+    id: 'live-' + Math.random().toString(36).substring(2, 10),
+    title: item.title,
+    url: item.url || '#',
+    platform: { id: item.platform || 'other', name: platformInfo.name },
+    price: {
+      amount: item.price,
+      currency: item.currency || 'EUR',
+      amountEur: item.price || null
+    },
+    location: {
+      city: null,
+      country: item.location?.country || platformInfo.country || '??',
+      flag: countryFlag(item.location?.country) || platformInfo.flag || '🏳️'
+    },
+    category: detectCategory(item.title),
+    description: item.title,
+    specs: estimateSpecs(item.title),
+    timeRemaining: item.endDate || null,
+    condition: item.condition || 'used',
+    year: item.year || null,
+    kpis: calculateLiveKPIs(item),
+    source: 'gemini-ai',
+    image: null,
+    tags: [item.platform || 'subasta'],
+    isNew: true
+  };
+}
+
+function detectCategory(title) {
+  const lower = (title || '').toLowerCase();
+  if (/robot|kuka|fanuc|abb|weld/i.test(lower)) return 'Robótica';
+  if (/cnc|machining|milling|lathe|drill|mazak|haas|dmg|mori/i.test(lower)) return 'CNC';
+  if (/press|stamp|punch/i.test(lower)) return 'Prensas';
+  if (/injection|mold|extrud/i.test(lower)) return 'Inyección';
+  if (/packag|fill|label|seal|wrap/i.test(lower)) return 'Embalaje';
+  if (/laser|cut|plasma/i.test(lower)) return 'Corte';
+  if (/solar|panel|photovolt/i.test(lower)) return 'Energía Solar';
+  if (/compress|pump|motor|generat/i.test(lower)) return 'Equipamiento Industrial';
+  return 'Maquinaria';
+}
+
+function countryFlag(code) {
+  const flags = { ES: '🇪🇸', DE: '🇩🇪', NL: '🇳🇱', FR: '🇫🇷', IT: '🇮🇹', UK: '🇬🇧', GB: '🇬🇧', PL: '🇵🇱', BE: '🇧🇪', AT: '🇦🇹', SE: '🇸🇪', RO: '🇷🇴', HU: '🇭🇺', CZ: '🇨🇿', TR: '🇹🇷', PT: '🇵🇹', US: '🇺🇸', CH: '🇨🇭', DK: '🇩🇰', NO: '🇳🇴', FI: '🇫🇮', JP: '🇯🇵', CN: '🇨🇳', BR: '🇧🇷' };
+  return flags[code] || null;
+}
+
+// Live search toast
+function showLiveToast(text, count, subtext) {
+  let toast = document.getElementById('liveToast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'liveToast';
+    toast.className = 'live-toast';
+    document.body.appendChild(toast);
+  }
+  const countHtml = count > 0 ? `<span class="lt-count">${count}</span> resultados` : '';
+  const subHtml = subtext ? `<span class="lt-platforms">${subtext}</span>` : '';
+  toast.innerHTML = `
+    <div class="spinner"></div>
+    <span class="lt-text">${text}</span>
+    ${countHtml}
+    ${subHtml}
+  `;
+  toast.style.display = 'flex';
+}
+
+function hideLiveToast() {
+  const toast = document.getElementById('liveToast');
+  if (toast) toast.style.display = 'none';
+}
+
+// ── Live Search Button ──
+$('liveSearchBtn').addEventListener('click', async () => {
+  const query = searchInput.value.trim();
+  if (!query || query.length < 2) {
+    toast('Escribe al menos 2 caracteres para buscar', 'info');
+    return;
+  }
+  if (liveSearchActive) return;
+
+  // Run live search
+  const liveAssets = await executeLiveSearch(query);
+
+  if (liveAssets && liveAssets.length > 0) {
+    // Merge with mock data
+    const liveTitles = new Set(liveAssets.map(a => a.title?.substring(0, 40)));
+    const mockMatches = ACTIVE_ASSETS.filter(a =>
+      (a.title.toLowerCase().includes(query.toLowerCase()) ||
+       a.category.toLowerCase().includes(query.toLowerCase()) ||
+       (a.description||'').toLowerCase().includes(query.toLowerCase())) &&
+      !liveTitles.has(a.title?.substring(0, 40))
+    );
+    state.filteredAssets = [...liveAssets, ...mockMatches];
+
+    // Update status bar
+    $('statusTime').textContent = ((Date.now() - (state.lastApiTime || Date.now())) / 1000).toFixed(1) + 's';
+    $('statusCandidates').textContent = liveAssets.length + mockMatches.length;
+
+    toast('🦈 ' + liveAssets.length + ' resultados IA en vivo + ' + mockMatches.length + ' locales', 'success');
+  } else {
+    // Fallback to regular search
+    executeSearch(query);
+    return;
+  }
+
+  if (state.filteredAssets.length > 0) selectAsset(state.filteredAssets[0]);
+  renderResultsList();
+  renderMapPins();
+});
+
+// ── API: Execute standard search (8 platforms via fetch) ──
 async function executeApiSearch(query) {
   state.isSearching = true;
   $('statusTime').textContent = '...';
@@ -1660,7 +1941,7 @@ async function executeApiSearch(query) {
   }
 }
 
-// ── Search execution (live API + mock fallback) ──
+// ── Search execution (Gemini AI → 8-platform scrape → mock fallback) ──
 async function executeSearch(query) {
   const q = query.trim();
   if (!q || q.length < 2) return;
@@ -1670,14 +1951,19 @@ async function executeSearch(query) {
   if (state.searchHistory.length > 10) state.searchHistory.pop();
   localStorage.setItem('surus_history', JSON.stringify(state.searchHistory));
 
-  // Try live API first
+  // Tier 1: Gemini AI live search (Google Search grounding, real-time across all platforms)
   let apiAssets = null;
-  if (!state.isSearching) {
-    apiAssets = await executeApiSearch(q);
+  apiAssets = await executeLiveSearch(q);
+
+  // Tier 2: Standard 8-platform scrape API
+  if (!apiAssets || apiAssets.length === 0) {
+    if (!state.isSearching) {
+      apiAssets = await executeApiSearch(q);
+    }
   }
 
   if (apiAssets && apiAssets.length > 0) {
-    // Merge API results with mock data (API first, then mock results not overlapping)
+    // Merge with mock data (API results first, then non-overlapping mock)
     const apiTitles = new Set(apiAssets.map(a => a.title?.substring(0, 40)));
     const mockMatches = ACTIVE_ASSETS.filter(a =>
       (a.title.toLowerCase().includes(q.toLowerCase()) ||
@@ -1686,7 +1972,8 @@ async function executeSearch(query) {
       !apiTitles.has(a.title?.substring(0, 40))
     );
     state.filteredAssets = [...apiAssets, ...mockMatches];
-    toast(apiAssets.length + ' resultados en vivo + ' + mockMatches.length + ' locales para "' + q + '"', 'success');
+    const source = apiAssets[0]?.source === 'gemini-ai' ? 'IA (Gemini)' : 'scrapers';
+    toast(apiAssets.length + ' resultados ' + source + ' + ' + mockMatches.length + ' locales para "' + q + '"', 'success');
   } else {
     // Fallback to mock data
     state.filteredAssets = ACTIVE_ASSETS.filter(a =>
@@ -1973,12 +2260,12 @@ async function init() {
   $('statusGangas').textContent = ACTIVE_ASSETS.filter(a => a.kpis.isGanga).length;
   $('statusTime').textContent = '--';
 
-  console.log('%c🦈 SURUS Shark Engine v4.0 %c— %cLIVE API + 8 PLATFORMS',
+  console.log('%c🦈 SURUS Shark Engine v4.1 %c— %cGEMINI AI + LIVE SEARCH',
     'color:#00ccff;font-weight:bold;font-size:14px;',
     '',
     'color:#00ff88;');
-  console.log('%c/api/search %c→ %c8 real-time scrapers %c| %c/api/exchange-rates %c→ %cfrankfurter.app',
-    'color:#ffd740;', '', 'color:#00ff88;', '', 'color:#ffd740;', '', 'color:#00ccff;');
+  console.log('%c/api/live-search %c→ %cGemini 2.5 Flash + Google Search %c| %c/api/search %c→ %c8 scrapers %c| %c/api/exchange-rates %c→ %cfrankfurter.app',
+    'color:#ffd740;', '', 'color:#b388ff;', '', 'color:#ffd740;', '', 'color:#00ff88;', '', 'color:#ffd740;', '', 'color:#00ccff;');
   console.log('%c' + ACTIVE_ASSETS.length + ' active · ' + ACTIVE_ASSETS.filter(a=>a.kpis.isGanga).length + ' gangas · ' + fmt.eur(ACTIVE_ASSETS.reduce((s,a)=>s+a.kpis.totalAcquisitionCost,0)) + ' total',
     'color:#6b6b8a;');
 }

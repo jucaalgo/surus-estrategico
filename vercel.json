@@ -12,6 +12,10 @@
   ],
   "routes": [
     {
+      "src": "/api/live-search",
+      "dest": "/api/live-search.js"
+    },
+    {
       "src": "/api/search",
       "dest": "/api/search.js"
     },
