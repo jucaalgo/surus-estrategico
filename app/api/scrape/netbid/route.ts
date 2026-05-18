@@ -31,6 +31,7 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     const durationMs = Date.now() - startTime;
     const errorMessage = error instanceof Error ? error.message : typeof error === 'string' ? error : JSON.stringify(error);
+    console.error('[scrape/netbid] Caught error:', error);
     if (runId) await failScrapeRun(runId, errorMessage);
 
     return NextResponse.json({
