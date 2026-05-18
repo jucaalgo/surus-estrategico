@@ -324,18 +324,14 @@ export async function scrapeTBAuctions(options: TBAuctionsOptions = {}): Promise
 
   for (const platform of platforms) {
     logScrape('tbauctions', 'info', `Scraping platform ${platform}...`);
-    try {
-      let items = await tryGraphQL(platform);
-      if (items.length === 0) {
-        items = await tryHTMLFallback(platform);
-      }
-      const check = checkZeroResults(`tbauctions-${platform}`, items.length, 3);
-      if (check.isWarning) logScrape('tbauctions', 'warn', check.message);
-      allItems.push(...items);
-      logScrape('tbauctions', 'success', `Collected ${items.length} items for ${platform}`);
-    } catch (err) {
-      logScrape('tbauctions', 'error', `Error scraping ${platform}: ${err instanceof Error ? err.message : String(err)}`);
+    let items = await tryGraphQL(platform);
+    if (items.length === 0) {
+      items = await tryHTMLFallback(platform);
     }
+    const check = checkZeroResults(`tbauctions-${platform}`, items.length, 3);
+    if (check.isWarning) logScrape('tbauctions', 'warn', check.message);
+    allItems.push(...items);
+    logScrape('tbauctions', 'success', `Collected ${items.length} items for ${platform}`);
   }
 
   return allItems;

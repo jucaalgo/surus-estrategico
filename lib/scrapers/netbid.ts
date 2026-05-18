@@ -131,30 +131,26 @@ export async function scrapeNetBid(options: NetBidScrapeOptions = {}): Promise<R
   const { maxPages = 3 } = options;
   const items: RawAuctionItem[] = [];
 
-  try {
-    logScrape('netbid', 'info', 'Fetching NetBid auction listings...');
-    const $ = await fetchPageAs$(`${BASE_URL}/en/auctions`);
-    const pageItems = parseNetBidAuctions($);
-    items.push(...pageItems);
-    logScrape('netbid', 'success', `Found ${pageItems.length} auctions on page 1`);
+  logScrape('netbid', 'info', 'Fetching NetBid auction listings...');
+  const $ = await fetchPageAs$(`${BASE_URL}/en/auctions`);
+  const pageItems = parseNetBidAuctions($);
+  items.push(...pageItems);
+  logScrape('netbid', 'success', `Found ${pageItems.length} auctions on page 1`);
 
-    for (let page = 2; page <= maxPages && pageItems.length > 0; page++) {
-      try {
-        const $next = await fetchPageAs$(`${BASE_URL}/en/auctions?page=${page}`);
-        const nextPageItems = parseNetBidAuctions($next);
-        if (nextPageItems.length === 0) break;
-        items.push(...nextPageItems);
-        logScrape('netbid', 'info', `Found ${nextPageItems.length} auctions on page ${page}`);
-      } catch {
-        break;
-      }
+  for (let page = 2; page <= maxPages && pageItems.length > 0; page++) {
+    try {
+      const $next = await fetchPageAs$(`${BASE_URL}/en/auctions?page=${page}`);
+      const nextPageItems = parseNetBidAuctions($next);
+      if (nextPageItems.length === 0) break;
+      items.push(...nextPageItems);
+      logScrape('netbid', 'info', `Found ${nextPageItems.length} auctions on page ${page}`);
+    } catch {
+      break;
     }
-
-    const check = checkZeroResults('netbid', items.length, 3);
-    if (check.isWarning) logScrape('netbid', 'warn', check.message);
-  } catch (error) {
-    logScrape('netbid', 'error', `Scrape error: ${error instanceof Error ? error.message : String(error)}`);
   }
+
+  const check = checkZeroResults('netbid', items.length, 3);
+  if (check.isWarning) logScrape('netbid', 'warn', check.message);
 
   return items;
 }

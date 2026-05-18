@@ -227,7 +227,7 @@ export function ScraperPanel({ onScrapeComplete }: ScraperPanelProps) {
     return (
       <button
         onClick={() => { setShowPanel(true); refreshStatus(); }}
-        className="fixed bottom-4 left-4 z-50 bg-[#0d0d2b] border border-[#00ccff]/30 text-[#00ccff] px-3 py-2 rounded-lg text-xs font-mono hover:bg-[#00ccff]/10 transition-colors flex items-center gap-2"
+        className="fixed bottom-4 right-4 z-40 bg-[#0d0d2b] border border-[#00ccff]/30 text-[#00ccff] px-3 py-2 rounded-lg text-xs font-mono hover:bg-[#00ccff]/10 transition-colors flex items-center gap-2 shadow-lg"
       >
         <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
         Scrapers
@@ -239,7 +239,7 @@ export function ScraperPanel({ onScrapeComplete }: ScraperPanelProps) {
   }
 
   return (
-    <div className="fixed bottom-4 left-4 z-50 w-[480px] max-h-[80vh] bg-[#0a0a1a] border border-[#1e1e38] rounded-xl shadow-2xl overflow-hidden flex flex-col">
+    <div className="fixed bottom-4 right-4 z-40 w-[420px] max-h-[70vh] bg-[#0a0a1a]/95 border border-[#1e1e38] rounded-xl shadow-2xl overflow-hidden flex flex-col backdrop-blur-sm">
       {/* Header */}
       <div className="flex items-center justify-between px-4 py-3 border-b border-[#1e1e38] shrink-0">
         <h3 className="text-[#00ccff] font-mono text-sm font-bold">Scraper Control Panel</h3>

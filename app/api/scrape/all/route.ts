@@ -48,7 +48,7 @@ async function runPlatformScraper(
     };
   } catch (error) {
     const durationMs = Date.now() - startTime;
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    const errorMessage = error instanceof Error ? error.message : typeof error === 'string' ? error : JSON.stringify(error);
     if (runId) await failScrapeRun(runId, errorMessage);
     logScrape(platformId, 'error', `Platform scrape failed: ${errorMessage}`);
 

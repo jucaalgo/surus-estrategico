@@ -124,18 +124,14 @@ export interface IndustrialScrapeOptions {
 export async function scrapeIndustrial(options: IndustrialScrapeOptions = {}): Promise<RawAuctionItem[]> {
   const items: RawAuctionItem[] = [];
 
-  try {
-    logScrape('industrial', 'info', 'Fetching Industrial Auctions homepage...');
-    const $ = await fetchPageAs$(BASE_URL);
-    const pageItems = parseIndustrialAuctions($);
-    items.push(...pageItems);
-    logScrape('industrial', 'success', `Found ${pageItems.length} auctions on homepage`);
+  logScrape('industrial', 'info', 'Fetching Industrial Auctions homepage...');
+  const $ = await fetchPageAs$(BASE_URL);
+  const pageItems = parseIndustrialAuctions($);
+  items.push(...pageItems);
+  logScrape('industrial', 'success', `Found ${pageItems.length} auctions on homepage`);
 
-    const check = checkZeroResults('industrial', items.length, 3);
-    if (check.isWarning) logScrape('industrial', 'warn', check.message);
-  } catch (error) {
-    logScrape('industrial', 'error', `Scrape error: ${error instanceof Error ? error.message : String(error)}`);
-  }
+  const check = checkZeroResults('industrial', items.length, 3);
+  if (check.isWarning) logScrape('industrial', 'warn', check.message);
 
   return items;
 }

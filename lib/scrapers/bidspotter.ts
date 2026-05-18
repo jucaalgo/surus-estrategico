@@ -158,32 +158,27 @@ export async function scrapeBidSpotter(options: BidSpotterScrapeOptions = {}): P
   const { maxPages = 3 } = options;
   const items: RawAuctionItem[] = [];
 
-  try {
-    // Try HiBid (works well with cheerio) — BidSpotter.co.uk blocks automated access
-    logScrape('bidspotter', 'info', 'Fetching HiBid auction listings...');
+  logScrape('bidspotter', 'info', 'Fetching HiBid auction listings...');
 
-    const $ = await fetchPageAs$(`${BASE_URL}/auctions/`);
-    const pageItems = parseHibidAuctions($);
-    items.push(...pageItems);
-    logScrape('bidspotter', 'success', `Found ${pageItems.length} auctions on page 1`);
+  const $ = await fetchPageAs$(`${BASE_URL}/auctions/`);
+  const pageItems = parseHibidAuctions($);
+  items.push(...pageItems);
+  logScrape('bidspotter', 'success', `Found ${pageItems.length} auctions on page 1`);
 
-    for (let page = 2; page <= maxPages && pageItems.length > 0; page++) {
-      try {
-        const $next = await fetchPageAs$(`${BASE_URL}/auctions/?page=${page}`);
-        const nextPageItems = parseHibidAuctions($next);
-        if (nextPageItems.length === 0) break;
-        items.push(...nextPageItems);
-        logScrape('bidspotter', 'info', `Found ${nextPageItems.length} auctions on page ${page}`);
-      } catch {
-        break;
-      }
+  for (let page = 2; page <= maxPages && pageItems.length > 0; page++) {
+    try {
+      const $next = await fetchPageAs$(`${BASE_URL}/auctions/?page=${page}`);
+      const nextPageItems = parseHibidAuctions($next);
+      if (nextPageItems.length === 0) break;
+      items.push(...nextPageItems);
+      logScrape('bidspotter', 'info', `Found ${nextPageItems.length} auctions on page ${page}`);
+    } catch {
+      break;
     }
-
-    const check = checkZeroResults('bidspotter', items.length, 3);
-    if (check.isWarning) logScrape('bidspotter', 'warn', check.message);
-  } catch (error) {
-    logScrape('bidspotter', 'error', `Scrape error: ${error instanceof Error ? error.message : String(error)}`);
   }
+
+  const check = checkZeroResults('bidspotter', items.length, 3);
+  if (check.isWarning) logScrape('bidspotter', 'warn', check.message);
 
   return items;
 }
