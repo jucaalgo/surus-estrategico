@@ -119,7 +119,21 @@ export function ResultsList({ assets, selectedAsset, onSelect, sortBy, onSortCha
                 </div>
                 <div className="flex flex-col items-end shrink-0">
                   <div className="text-sm font-bold text-gray-200 font-mono">
-                    {formatCurrency(asset.pricing.currentBid || asset.pricing.startingBid || 0)}
+                    {(() => {
+                      const cb = asset.pricing.currentBid ?? 0;
+                      const sb = asset.pricing.startingBid ?? 0;
+                      const er = asset.pricing.estimatedResale ?? 0;
+                      const price = cb > 0 ? cb : sb > 0 ? sb : er > 0 ? er : 0;
+                      const isEstimated = !(cb > 0);
+                      return (
+                        <span className={isEstimated ? 'text-[#ffcc00]' : ''}>
+                          {formatCurrency(price)}
+                          {isEstimated && price > 0 && (
+                            <span className="text-[9px] text-gray-500 ml-1">(est.)</span>
+                          )}
+                        </span>
+                      );
+                    })()}
                   </div>
                   <Badge variant={roiVariant} size="sm">
                     ROI {asset.kpis.roi.toFixed(0)}%

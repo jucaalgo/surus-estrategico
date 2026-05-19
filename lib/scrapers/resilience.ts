@@ -191,25 +191,164 @@ export function extractImages($: cheerio.CheerioAPI, baseUrl: string, title: str
   return images.length > 0 ? images.slice(0, 5) : existingImages;
 }
 
+// Known brand names for make extraction
+const KNOWN_BRANDS = [
+  'trumpf', 'amada', 'bystronic', 'mazak', 'dmg', 'mori', 'hermle', 'deckel maho',
+  'kuka', 'abb', 'fanuc', 'motoman', 'yaskawa', 'kawasaki', 'staubli',
+  'engel', 'arburg', 'kraussmaffei', 'battenfeld', 'demag',
+  'jungheinrich', 'linde', 'still', 'toyota', 'hyster', 'clark',
+  'haas', 'okuma', 'doosan', 'hyundai', 'samsung',
+  'siemens', 'bosch', ' Festo', 'parker',
+  'heidelberg', 'kba', 'manroland',
+  'homag', 'biesse', 'scm', 'weinig',
+  'gildemeister', 'emag', 'schuler',
+  ' atlas copco', 'kaeser', 'ingersoll rand',
+  'gea', 'alfa laval', 'tetra pak',
+];
+
+function extractMakeFromText(text: string): string | undefined {
+  const lower = text.toLowerCase();
+  for (const brand of KNOWN_BRANDS) {
+    // Use word boundary matching for single-word brands
+    const pattern = brand.includes(' ')
+      ? brand.toLowerCase()
+      : `\\b${brand.toLowerCase()}\\b`;
+    const regex = new RegExp(pattern, 'i');
+    if (regex.test(lower)) {
+      return brand
+        .split(' ')
+        .map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase())
+        .join(' ');
+    }
+  }
+  return undefined;
+}
+
+function extractModelFromText(text: string, make?: string): string | undefined {
+  // Common model patterns: "Model: X123", "Type Y-200", "Series Z"
+  const patterns = [
+    /(?:model|type|typ|serie|series|maschinentype)[:\s]+([A-Z0-9][A-Z0-9\-\/\.]*)/i,
+    /(?:model|type|typ|serie|series)[:\s]+([A-Z][a-z]+\s*\d+)/i,
+    /\b([A-Z]{1,3}[\-\s]?\d{3,}[A-Z0-9]*)\b/, // e.g. "TMX-1250", "CTX 400"
+  ];
+  for (const pattern of patterns) {
+    const match = text.match(pattern);
+    if (match && match[1]) {
+      const model = match[1].trim();
+      // Don't return the make as model
+      if (make && model.toLowerCase() === make.toLowerCase()) continue;
+      if (model.length >= 3) return model;
+    }
+  }
+  return undefined;
+}
+
+function extractFromSpecTables($: cheerio.CheerioAPI): Record<string, string> {
+  const data: Record<string, string> = {};
+
+  // Try common spec table structures
+  const selectors = [
+    'table tr', '.specs tr', '.specifications tr', '.technical-data tr',
+    'dl dt, dl dd', '.spec-list li', '.auction-specs tr',
+  ];
+
+  for (const sel of selectors) {
+    $(sel).each((_, el) => {
+      const text = $(el).text().toLowerCase();
+      const fullText = $(el).text();
+
+      // Year
+      if (text.includes('year') || text.includes('baujahr') || text.includes('año') || text.includes('jahrgang')) {
+        const yearMatch = fullText.match(/(19|20)\d{2}/);
+        if (yearMatch && !data.year) data.year = yearMatch[0];
+      }
+      // Hours
+      if (text.includes('hours') || text.includes('betriebsstunden') || text.includes('horas') || text.includes('bh') || text.includes('h/h')) {
+        const hoursMatch = fullText.match(/(\d[\d.,\s]*)\s*(?:hours|stunden|horas|bh)/i);
+        if (hoursMatch && !data.hours) data.hours = hoursMatch[1].replace(/[.,\s]/g, '');
+      }
+      // Weight
+      if (text.includes('weight') || text.includes('gewicht') || text.includes('peso') || text.includes('masse')) {
+        const weightMatch = fullText.match(/(\d[\d.,\s]*)\s*(?:kg|kilo|t\b)/i);
+        if (weightMatch && !data.weight) data.weight = weightMatch[1].replace(/[.,\s]/g, '');
+      }
+      // Power
+      if (text.includes('power') || text.includes('leistung') || text.includes('potencia') || text.includes('kw')) {
+        const powerMatch = fullText.match(/(\d+[\d.,]*)\s*(kw|hp|ps|cv)/i);
+        if (powerMatch && !data.power) data.power = `${powerMatch[1]} ${powerMatch[2].toUpperCase()}`;
+      }
+      // Make / Manufacturer
+      if (text.includes('manufacturer') || text.includes('hersteller') || text.includes('fabricante') || text.includes('make') || text.includes('marke') || text.includes('brand')) {
+        const makeMatch = fullText.match(/[:\s]+([A-Za-z][A-Za-z0-9\s\-]{1,30})/);
+        if (makeMatch && !data.make) data.make = makeMatch[1].trim();
+      }
+      // Model
+      if (text.includes('model') || text.includes('modell') || text.includes('modelo') || text.includes('type') || text.includes('typ')) {
+        const modelMatch = fullText.match(/[:\s]+([A-Z0-9][A-Z0-9\-\/\.\s]{1,25})/i);
+        if (modelMatch && !data.model) data.model = modelMatch[1].trim();
+      }
+    });
+  }
+
+  return data;
+}
+
 export function extractSpecs($: cheerio.CheerioAPI): Partial<{ year?: number; hours?: number; weightKg?: number; power?: string; make?: string; model?: string }> {
   const specs: any = {};
-  const text = $('body').text().toLowerCase();
+  const bodyText = $('body').text();
+  const lowerText = bodyText.toLowerCase();
 
-  // Year
-  const yearMatch = text.match(/\b(19|20)\d{2}\b/);
-  if (yearMatch) specs.year = parseInt(yearMatch[0], 10);
+  // 1. Try structured spec tables first
+  const tableData = extractFromSpecTables($);
+  if (tableData.year) specs.year = parseInt(tableData.year, 10);
+  if (tableData.hours) specs.hours = parseInt(tableData.hours, 10);
+  if (tableData.weight) specs.weightKg = parseInt(tableData.weight, 10);
+  if (tableData.power) specs.power = tableData.power;
+  if (tableData.make) specs.make = tableData.make;
+  if (tableData.model) specs.model = tableData.model;
 
-  // Hours
-  const hoursMatch = text.match(/(\d[\d.,]*)\s*(?:betriebsstunden|operating hours|hours|horas|betriebsstd|bh)/i);
-  if (hoursMatch) specs.hours = parseInt(hoursMatch[1].replace(/[.,]/g, ''), 10);
+  // 2. Fallback: regex on full body text
+  if (!specs.year) {
+    const yearMatch = lowerText.match(/\b(19|20)\d{2}\b/);
+    if (yearMatch) specs.year = parseInt(yearMatch[0], 10);
+  }
 
-  // Weight
-  const weightMatch = text.match(/(\d[\d.,]*)\s*(?:kg|kilo)/i);
-  if (weightMatch) specs.weightKg = parseInt(weightMatch[1].replace(/[.,]/g, ''), 10);
+  if (!specs.hours) {
+    const hoursMatch = lowerText.match(/(\d[\d.,]*)\s*(?:betriebsstunden|operating hours|hours|horas|betriebsstd|bh|h\/h)/i);
+    if (hoursMatch) specs.hours = parseInt(hoursMatch[1].replace(/[.,]/g, ''), 10);
+  }
 
-  // Power
-  const powerMatch = text.match(/(\d+)\s*(kw|hp|ps|cv)/i);
-  if (powerMatch) specs.power = `${powerMatch[1]} ${powerMatch[2].toUpperCase()}`;
+  if (!specs.weightKg) {
+    const weightMatch = lowerText.match(/(\d[\d.,]*)\s*(?:kg|kilo)\b/i);
+    if (weightMatch) specs.weightKg = parseInt(weightMatch[1].replace(/[.,]/g, ''), 10);
+  }
+
+  if (!specs.power) {
+    const powerMatch = lowerText.match(/(\d+[\d.,]*)\s*(kw|hp|ps|cv)\b/i);
+    if (powerMatch) specs.power = `${powerMatch[1]} ${powerMatch[2].toUpperCase()}`;
+  }
+
+  // 3. Make extraction from full text (with known brands)
+  if (!specs.make) {
+    const make = extractMakeFromText(bodyText);
+    if (make) specs.make = make;
+  }
+
+  // 4. Model extraction (only if we have a make or standalone)
+  if (!specs.model) {
+    const model = extractModelFromText(bodyText, specs.make);
+    if (model) specs.model = model;
+  }
+
+  // Validate year is reasonable (1980-2026)
+  if (specs.year && (specs.year < 1980 || specs.year > 2026)) {
+    delete specs.year;
+  }
+
+  // Validate hours is reasonable (< 1,000,000)
+  if (specs.hours && (specs.hours < 0 || specs.hours > 1000000)) {
+    delete specs.hours;
+  }
 
   return specs;
 }

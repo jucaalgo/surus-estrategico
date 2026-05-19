@@ -112,34 +112,56 @@ function emptyKPIs(): CalculatedKPIs {
   };
 }
 
-// ROI Simulator calculation
+// ROI Simulator calculation — uses corrected engine formulas
 export function calculateROI(inputs: ROIInputs): CalculatedKPIs {
   const { investment, logisticsCost, estimatedResale } = inputs;
-  const totalAcquisitionCost = investment + logisticsCost + 500;
+
+  // Guard against zero investment
+  const effectiveInvestment = investment > 0 ? investment : estimatedResale > 0 ? Math.round(estimatedResale * 0.35) : 0;
+
+  const buyerPremium = Math.round(effectiveInvestment * 0.16);
+  const taxes = Math.round((effectiveInvestment + buyerPremium) * 0.21);
+  const fixedFees = 500;
+
+  const totalAcquisitionCost = effectiveInvestment + buyerPremium + taxes + logisticsCost + fixedFees;
   const grossProfit = estimatedResale - totalAcquisitionCost;
   const roi = totalAcquisitionCost > 0 ? (grossProfit / totalAcquisitionCost) * 100 : 0;
   const netProfitMargin = estimatedResale > 0 ? (grossProfit / estimatedResale) * 100 : 0;
+  const arbitrageScore = totalAcquisitionCost > 0 ? estimatedResale / totalAcquisitionCost : 0;
+
+  // Payback: how many months to recover at 12-month profit spread
   const monthlyProfit = grossProfit > 0 ? grossProfit / 12 : 0;
   const paybackMonths = monthlyProfit > 0 ? Math.ceil(totalAcquisitionCost / monthlyProfit) : 999;
-  const tir = paybackMonths > 0 && paybackMonths < 999
-    ? (Math.pow(1 + roi / 100, 12 / paybackMonths) - 1) * 100 : 0;
-  const arbitrageScore = totalAcquisitionCost > 0 ? estimatedResale / totalAcquisitionCost : 0;
-  const riskScore = Math.min(20 + (arbitrageScore >= 1.5 ? 40 : arbitrageScore >= 1.2 ? 20 : 0) + (paybackMonths <= 6 ? 20 : 10), 100);
+
+  // TIR: annualized compound return, capped at 200%
+  let tir = 0;
+  if (grossProfit > 0 && totalAcquisitionCost > 0) {
+    const effectiveMonths = Math.max(paybackMonths, 6); // Minimum 6 months for realism
+    tir = ((Math.pow(estimatedResale / totalAcquisitionCost, 12 / effectiveMonths) - 1)) * 100;
+    tir = Math.min(tir, 200);
+  }
+
+  const riskScore = Math.min(
+    20 +
+    (arbitrageScore >= 1.8 ? 40 : arbitrageScore >= 1.2 ? 20 : 0) +
+    (paybackMonths <= 6 ? 20 : paybackMonths <= 12 ? 10 : 0),
+    100
+  );
 
   return {
     totalAcquisitionCost,
-    buyerPremium: Math.round(investment * 0.16),
-    taxes: Math.round((investment + investment * 0.16) * 0.21),
+    buyerPremium,
+    taxes,
     transport: logisticsCost,
     refurbishment: 0,
     estimatedResaleValue: estimatedResale,
     grossProfit: Math.round(grossProfit),
     roi: Math.round(roi * 10) / 10,
     netProfitMargin: Math.round(netProfitMargin * 10) / 10,
-    paybackMonths,
+    paybackMonths: Math.min(paybackMonths, 999),
     tir: Math.round(tir * 10) / 10,
     arbitrageScore: Math.round(arbitrageScore * 100) / 100,
-    isGanga: arbitrageScore >= 1.5,
+    isGanga: arbitrageScore >= 1.8 && roi >= 30 && riskScore <= 55,
     riskScore,
     riskLevel: riskScore >= 65 ? 'low' : riskScore >= 40 ? 'medium' : 'high'
   };

@@ -9,20 +9,40 @@ interface TacticalMapProps {
   onAssetClick: (asset: Asset) => void;
 }
 
-const PROFIT_LEVELS = [
-  { minROI: 60, color: '#00ff88', label: 'Ganga', description: 'ROI > 60%' },
-  { minROI: 40, color: '#c8e600', label: 'Alta rent.', description: 'ROI 40-60%' },
-  { minROI: 20, color: '#ff9800', label: 'Rentable', description: 'ROI 20-40%' },
-  { minROI: 1,  color: '#ff1744', label: 'Marginal', description: 'ROI < 20%' },
-  { minROI: -Infinity, color: '#666666', label: 'Sin datos', description: 'ROI = 0' },
-];
+// Composite scoring: combines ROI, risk, arbitrage, and data quality
+function getMarkerColor(asset: Asset): string {
+  const { roi, arbitrageScore, riskScore, isGanga } = asset.kpis;
+  const hasData = asset.pricing.currentBid != null && asset.pricing.currentBid > 0;
+  const goodQuality = (asset.dataQuality ?? 0) >= 30;
 
-function getMarkerColor(roi: number): string {
-  for (const level of PROFIT_LEVELS) {
-    if (roi >= level.minROI) return level.color;
-  }
+  if (!hasData && !goodQuality) return '#666666'; // Grey = no data
+
+  // Ganga = isGanga flag (arbitrage >= 1.8, ROI >= 30, risk <= 55)
+  if (isGanga) return '#00ff88'; // Bright green
+
+  // Excellent opportunity: high ROI + low risk
+  if (roi >= 40 && riskScore <= 40) return '#c8e600'; // Lime
+
+  // Good opportunity: decent ROI + manageable risk
+  if (roi >= 20 && riskScore <= 55) return '#ff9800'; // Orange
+
+  // Risky but potentially profitable
+  if (roi >= 15 || arbitrageScore >= 1.2) return '#ff5722'; // Deep orange
+
+  // Poor / high risk
+  if (roi < 15 || riskScore > 55) return '#ff1744'; // Red
+
   return '#666666';
 }
+
+const PROFIT_LEVELS = [
+  { color: '#00ff88', label: 'Ganga', description: 'ROI >=30, Score >=1.8, Riesgo Bajo' },
+  { color: '#c8e600', label: 'Excelente', description: 'ROI >=40, Riesgo <=40' },
+  { color: '#ff9800', label: 'Rentable', description: 'ROI >=20, Riesgo <=55' },
+  { color: '#ff5722', label: 'Arriesgado', description: 'ROI >=15 o Score >=1.2' },
+  { color: '#ff1744', label: 'Marginal', description: 'ROI < 15 o Riesgo > 55' },
+  { color: '#666666', label: 'Sin datos', description: 'Sin precio ni calidad' },
+];
 
 export function TacticalMap({ assets, selectedAsset, onAssetClick }: TacticalMapProps) {
   const mapRef = useRef<HTMLDivElement>(null);
@@ -73,7 +93,7 @@ export function TacticalMap({ assets, selectedAsset, onAssetClick }: TacticalMap
         const { lat, lng } = asset.location;
         if (!lat || !lng) return;
 
-        const color = getMarkerColor(asset.kpis.roi);
+        const color = getMarkerColor(asset);
         const isSelected = selectedAsset?.id === asset.id;
 
         const marker = L.circleMarker([lat, lng], {

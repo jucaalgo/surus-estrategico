@@ -18,10 +18,12 @@ export function calculateKPIs(
     : 999;
 
   // Correct TIR: annualized compound return over holding period
-  // If payback > holding, we won't recover in holding period → TIR = 0
+  // Always calculate if there's profit, regardless of payback vs holding period
   let tir = 0;
-  if (grossProfit > 0 && paybackMonths <= profile.holdingMonths) {
-    tir = ((Math.pow(resale.value / totalCost, 12 / profile.holdingMonths) - 1)) * 100;
+  if (grossProfit > 0 && totalCost > 0) {
+    // Use actual holding period or payback, whichever is longer
+    const effectiveMonths = Math.max(profile.holdingMonths, paybackMonths, 1);
+    tir = ((Math.pow(resale.value / totalCost, 12 / effectiveMonths) - 1)) * 100;
     // Cap at 200% — anything higher is meaningless for business decisions
     tir = Math.min(tir, 200);
   }
