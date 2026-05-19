@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "jest"
+    "test": "jest",
+    "recalc": "tsx scripts/recalculate-kpis.ts",
+    "geocode": "tsx scripts/geocode-batch.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.106.0",
@@ -25,11 +27,13 @@
     "@types/node": "^22.0.0",
     "@types/react": "^19.1.0",
     "@types/react-dom": "^19.1.0",
+    "dotenv": "^17.4.2",
     "eslint": "^9.0.0",
     "eslint-config-next": "^15.3.0",
     "jest": "^30.4.2",
     "tailwindcss": "^4.1.0",
     "ts-jest": "^29.4.10",
+    "tsx": "^4.22.2",
     "typescript": "^5.8.0"
   }
 }
