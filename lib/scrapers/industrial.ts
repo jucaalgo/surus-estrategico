@@ -180,8 +180,8 @@ export async function scrapeIndustrial(options: IndustrialScrapeOptions = {}): P
   }
   logScrape('industrial', 'success', `Geocoded ${geoCount}/${items.length} locations`);
 
-  // Detail scraping for ALL items (limit 25 to avoid timeout)
-  const detailLimit = 25;
+  // Detail scraping for ALL items (limit 50 to avoid timeout)
+  const detailLimit = 50;
   logScrape('industrial', 'info', `Fetching details for ${Math.min(items.length, detailLimit)} lots...`);
   let detailCount = 0;
   for (let i = 0; i < Math.min(items.length, detailLimit); i++) {

@@ -67,10 +67,18 @@ export function SearchBar({ onSearch, onPreset, isSearching }: SearchBarProps) {
     setShowHistory(false);
   };
 
+  const [activePreset, setActivePreset] = useState<SmartPreset | null>(null);
+
   const handlePresetSelect = (preset: SmartPreset) => {
-    setQuery(preset.label);
+    setActivePreset(preset);
     onPreset(preset);
     setShowPresets(false);
+  };
+
+  const clearPreset = () => {
+    setActivePreset(null);
+    setQuery('');
+    onSearch('');
   };
 
   const autocompleteItems = query.length > 0
@@ -112,6 +120,14 @@ export function SearchBar({ onSearch, onPreset, isSearching }: SearchBarProps) {
           </div>
         )}
       </div>
+
+      {activePreset && (
+        <div className="flex items-center gap-1.5 rounded-lg border border-[#00ccff]/30 bg-[#00ccff]/10 px-2.5 py-1.5">
+          <span className="text-[10px] font-bold text-[#00ccff] font-mono">[{activePreset.icon}]</span>
+          <span className="text-[10px] text-gray-300 font-mono truncate max-w-[120px]">{activePreset.label}</span>
+          <button onClick={clearPreset} className="text-gray-500 hover:text-white text-xs leading-none ml-1">×</button>
+        </div>
+      )}
 
       <div className="relative">
         <button onClick={() => { setShowPresets(!showPresets); setShowHistory(false); }} className="rounded-lg border border-[#1e1e38] bg-[#0a0a1a] px-3 py-2 text-xs font-mono uppercase text-gray-400 hover:bg-[#1e1e38] hover:text-gray-200 transition-colors" title="Presets estrategicos">

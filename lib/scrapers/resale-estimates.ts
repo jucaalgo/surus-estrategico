@@ -62,19 +62,26 @@ export function getResaleMarkets(category: string): string[] {
 }
 
 export function detectLotQuantity(title: string): number {
+  const lower = title.toLowerCase();
+  // Only match quantities >= 2 to avoid false positives like "1 x" in "1 x Axis CNC"
   const patterns = [
-    /(\d+)\s*x\s+/i,
-    /lote\s+de\s+(\d+)/i,
-    /lote\s+(\d+)/i,
-    /(\d+)\s+unidades/i,
-    /(\d+)\s+maschinen/i,
-    /(\d+)\s+machines/i,
-    /(\d+)\s+stk/i,
-    /(\d+)\s+stück/i,
+    /\b(\d+)\s*x\s+\d+/i,            // "5 x 3" or "10 x 2" (multi-lot pattern)
+    /lote\s+de\s+(\d{2,})/i,         // "lote de 15" (2+ digits)
+    /lote\s+(\d{2,})/i,              // "lote 20" (2+ digits)
+    /(\d{2,})\s+unidades/i,          // "15 unidades"
+    /(\d{2,})\s+maschinen/i,         // "10 maschinen"
+    /(\d{2,})\s+machines/i,          // "20 machines"
+    /(\d{2,})\s+stk/i,               // "12 stk"
+    /(\d{2,})\s+stück/i,             // "8 stück"
+    /\blot\s+of\s+(\d{2,})/i,        // "lot of 5"
+    /\bpaket\s+(\d{2,})/i,           // "paket 10"
   ];
   for (const pattern of patterns) {
     const match = title.match(pattern);
-    if (match) return parseInt(match[1], 10);
+    if (match) {
+      const qty = parseInt(match[1], 10);
+      if (qty >= 2) return qty;
+    }
   }
   return 1;
 }
@@ -195,8 +202,14 @@ function computeDataQuality(item: RawAuctionItem): number {
 export function transformRawItem(item: RawAuctionItem): TransformedAuction {
   const lotQuantity = detectLotQuantity(item.title);
   const dataQualityScore = item.dataQualityScore ?? computeDataQuality(item);
+
+  // Fallback: if scraper found no price, estimate from title so KPIs don't collapse to 0
+  const hasRealPrice = (item.currentBid ?? 0) > 0;
+  const titleEstimatedValue = hasRealPrice ? 0 : estimateValueFromTitle(item.title);
+  const currentBid = hasRealPrice ? (item.currentBid as number) : Math.round(titleEstimatedValue * 0.35);
+  const estimatedResale = ((item.estimatedResale ?? 0) > 0) ? item.estimatedResale : titleEstimatedValue;
   const priceConfidence: 'real' | 'estimated' | 'unknown' =
-    item.currentBid != null && item.currentBid > 0 ? 'real' : item.estimatedResale ? 'estimated' : 'unknown';
+    hasRealPrice ? 'real' : titleEstimatedValue > 0 ? 'estimated' : 'unknown';
 
   const result = analyzeAsset({
     title: item.title,
@@ -217,9 +230,9 @@ export function transformRawItem(item: RawAuctionItem): TransformedAuction {
       lng: item.lng,
     },
     pricing: {
-      currentBid: item.currentBid,
+      currentBid: currentBid > 0 ? currentBid : null,
       startingBid: item.startingBid || null,
-      estimatedResale: item.estimatedResale || null,
+      estimatedResale: (estimatedResale ?? 0) > 0 ? (estimatedResale as number) : null,
       buyerPremiumPercent: item.buyerPremiumPercent || 16,
       hasReserve: item.hasReserve,
       reservePrice: item.reservePrice || null,
