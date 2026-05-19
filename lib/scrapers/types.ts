@@ -28,8 +28,8 @@ export interface RawAuctionItem {
   region?: string;
   country: string;
   countryCode: string;
-  lat: number;
-  lng: number;
+  lat?: number;
+  lng?: number;
   siteType?: string;
 
   // Timing
@@ -50,6 +50,11 @@ export interface RawAuctionItem {
 
   // Extra specs (key-value pairs)
   extraSpecs?: Record<string, string>;
+
+  // Scraping metadata
+  detailScraped?: boolean;
+  dataQualityScore?: number;
+  priceConfidence?: 'real' | 'estimated' | 'unknown';
 }
 
 export interface ScrapeResult {

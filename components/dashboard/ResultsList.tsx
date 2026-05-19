@@ -28,6 +28,12 @@ function getROIBadgeVariant(roi: number): 'success' | 'warning' | 'urgent' {
   return 'urgent';
 }
 
+function getQualityBadge(asset: Asset): { label: string; color: string } | null {
+  if (!asset.detailScraped) return null;
+  if ((asset.dataQuality ?? 0) >= 60) return { label: 'completo', color: 'text-[#00ff88]' };
+  return { label: 'parcial', color: 'text-[#ffcc00]' };
+}
+
 function getCountryFlag(code: string): string {
   const flags: Record<string, string> = {
     ES: 'ES', DE: 'DE', NL: 'NL', FR: 'FR', IT: 'IT', UK: 'UK',
@@ -97,6 +103,12 @@ export function ResultsList({ assets, selectedAsset, onSelect, sortBy, onSortCha
                     <span className="text-[10px] text-gray-600 font-mono">
                       {asset.platform.name}
                     </span>
+                    {(() => {
+                      const q = getQualityBadge(asset);
+                      return q ? (
+                        <span className={`text-[9px] font-mono ${q.color}`}>[{q.label}]</span>
+                      ) : null;
+                    })()}
                   </div>
                   <div className="text-sm text-gray-300 font-mono truncate">
                     {asset.title}

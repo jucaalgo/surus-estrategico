@@ -1,4 +1,4 @@
-import { calculateKPIs } from '@/lib/calculations';
+import { analyzeAsset } from '@/lib/engine';
 import type { RawAuctionItem, RawAuctionImage } from './types';
 
 const RESALE_MULTIPLIERS: Record<string, number> = {
@@ -177,40 +177,58 @@ export interface TransformedAuction {
   extra_specs: Record<string, string> | null;
   resale_markets: string[];
   lot_quantity: number;
+  detail_scraped: boolean;
+  data_quality_score: number;
+  price_confidence: 'real' | 'estimated' | 'unknown';
+}
+
+function computeDataQuality(item: RawAuctionItem): number {
+  let score = 30; // Base for having a listing
+  if (item.description && item.description.length > 50 && item.description !== item.title) score += 20;
+  if (item.make) score += 15;
+  if (item.year && item.year > 1980) score += 15;
+  if (item.hours !== undefined && item.hours >= 0) score += 10;
+  if (item.images && item.images.length > 0) score += 10;
+  return Math.min(100, score);
 }
 
 export function transformRawItem(item: RawAuctionItem): TransformedAuction {
-  // Estimate base value from title (full market value of the equipment)
-  const estimatedBaseValue = estimateValueFromTitle(item.title);
   const lotQuantity = detectLotQuantity(item.title);
-  const totalEstimatedBaseValue = estimatedBaseValue * lotQuantity;
-  // Only use real scraped prices for bid; if none exists, leave null so calculateKPIs
-  // can estimate bid as ~40% of resale (typical auction ratio)
-  const bid = item.currentBid || item.startingBid || null;
-  const resale = item.estimatedResale || totalEstimatedBaseValue;
+  const dataQualityScore = item.dataQualityScore ?? computeDataQuality(item);
+  const priceConfidence: 'real' | 'estimated' | 'unknown' =
+    item.currentBid != null && item.currentBid > 0 ? 'real' : item.estimatedResale ? 'estimated' : 'unknown';
+
+  const result = analyzeAsset({
+    title: item.title,
+    category: item.category,
+    specs: {
+      year: item.year,
+      hours: item.hours,
+      weightKg: item.weightKg,
+      power: item.power,
+      make: item.make,
+      model: item.model,
+      condition: mapCondition(item.condition),
+    },
+    location: {
+      city: item.city,
+      countryCode: item.countryCode,
+      lat: item.lat,
+      lng: item.lng,
+    },
+    pricing: {
+      currentBid: item.currentBid,
+      startingBid: item.startingBid || null,
+      estimatedResale: item.estimatedResale || null,
+      buyerPremiumPercent: item.buyerPremiumPercent || 16,
+      hasReserve: item.hasReserve,
+      reservePrice: item.reservePrice || null,
+      currency: item.currency || 'EUR',
+    },
+    lotQuantity,
+  });
+
   const coords = item.lat && item.lng ? [item.lat, item.lng] as [number, number] : getCountryCoords(item.countryCode);
-
-  const pricing = {
-    currentBid: bid,
-    currency: item.currency || 'EUR',
-    estimatedResale: resale,
-    buyerPremiumPercent: item.buyerPremiumPercent || 16,
-    reservePrice: item.reservePrice || null,
-    hasReserve: item.hasReserve,
-    startingBid: item.startingBid || null,
-  };
-
-  const specs = {
-    make: item.make,
-    model: item.model,
-    year: item.year,
-    condition: mapCondition(item.condition),
-    hours: item.hours,
-    power: item.power,
-    weight: item.weightKg || 2000,
-  };
-
-  const kpis = calculateKPIs(pricing, specs, item.countryCode);
 
   return {
     platform_id: item.platformId,
@@ -221,9 +239,9 @@ export function transformRawItem(item: RawAuctionItem): TransformedAuction {
     subcategory: item.subcategory || null,
     source_url: item.sourceUrl,
     source: 'scraped',
-    current_bid: bid || null,
+    current_bid: item.currentBid || null,
     currency: item.currency || 'EUR',
-    estimated_resale: resale || null,
+    estimated_resale: result.resale.value || null,
     buyer_premium_pct: item.buyerPremiumPercent || 16,
     reserve_price: item.reservePrice || null,
     has_reserve: item.hasReserve,
@@ -237,32 +255,35 @@ export function transformRawItem(item: RawAuctionItem): TransformedAuction {
     site_type: item.siteType || null,
     auction_end: item.auctionEnd,
     inspection_available: item.inspectionAvailable,
-    make: specs.make || null,
-    model: specs.model || null,
-    year: specs.year || null,
-    condition: specs.condition,
-    hours: specs.hours || null,
-    power: specs.power || null,
-    weight_kg: specs.weight,
-    total_acquisition_cost: kpis.totalAcquisitionCost,
-    buyer_premium: kpis.buyerPremium,
-    taxes: kpis.taxes,
-    transport: kpis.transport,
-    refurbishment: kpis.refurbishment,
-    estimated_resale_value: kpis.estimatedResaleValue,
-    gross_profit: kpis.grossProfit,
-    roi: kpis.roi,
-    net_profit_margin: kpis.netProfitMargin,
-    payback_months: kpis.paybackMonths,
-    tir: kpis.tir,
-    arbitrage_score: kpis.arbitrageScore,
-    is_ganga: kpis.isGanga,
-    risk_score: kpis.riskScore,
-    risk_level: kpis.riskLevel,
+    make: item.make || null,
+    model: item.model || null,
+    year: item.year || null,
+    condition: mapCondition(item.condition),
+    hours: item.hours || null,
+    power: item.power || null,
+    weight_kg: item.weightKg || null,
+    total_acquisition_cost: result.kpis.totalAcquisitionCost,
+    buyer_premium: result.costs.buyerPremium,
+    taxes: result.costs.taxes,
+    transport: result.costs.transport,
+    refurbishment: result.costs.refurbishment,
+    estimated_resale_value: result.resale.value,
+    gross_profit: result.kpis.grossProfit,
+    roi: result.kpis.roi,
+    net_profit_margin: result.kpis.netProfitMargin,
+    payback_months: result.kpis.paybackMonths,
+    tir: result.kpis.tir,
+    arbitrage_score: result.kpis.arbitrageScore,
+    is_ganga: result.kpis.isGanga,
+    risk_score: result.risk.score,
+    risk_level: result.risk.level,
     images: item.images || [],
     extra_specs: item.extraSpecs || null,
     resale_markets: getResaleMarkets(item.category),
-    lot_quantity: detectLotQuantity(item.title),
+    lot_quantity: lotQuantity,
+    detail_scraped: item.detailScraped ?? false,
+    data_quality_score: dataQualityScore,
+    price_confidence: item.priceConfidence || priceConfidence,
   };
 }
 

@@ -5,31 +5,37 @@ import { SELECTORS } from './selectors';
 
 const BASE_URL = 'https://www.industrial-auctions.com';
 
-const COUNTRY_MAP: Record<string, { country: string; countryCode: string; lat: number; lng: number }> = {
-  'de': { country: 'Alemania', countryCode: 'DE', lat: 51.1657, lng: 10.4515 },
-  'nl': { country: 'Países Bajos', countryCode: 'NL', lat: 52.1326, lng: 5.2913 },
-  'uk': { country: 'Reino Unido', countryCode: 'UK', lat: 55.3781, lng: -3.4360 },
-  'fr': { country: 'Francia', countryCode: 'FR', lat: 46.2276, lng: 2.2137 },
-  'pl': { country: 'Polonia', countryCode: 'PL', lat: 51.9194, lng: 19.1451 },
-  'lv': { country: 'Letonia', countryCode: 'LV', lat: 56.8796, lng: 24.6032 },
-  'se': { country: 'Suecia', countryCode: 'SE', lat: 60.1282, lng: 18.6435 },
-  'at': { country: 'Austria', countryCode: 'AT', lat: 47.5162, lng: 14.5501 },
-  'cz': { country: 'Chequia', countryCode: 'CZ', lat: 49.8175, lng: 15.4730 },
-  'es': { country: 'España', countryCode: 'ES', lat: 40.4637, lng: -3.7492 },
+import { geocodeLocation } from '@/lib/engine/geocode';
+
+const COUNTRY_MAP: Record<string, { country: string; countryCode: string }> = {
+  'de': { country: 'Alemania', countryCode: 'DE' },
+  'nl': { country: 'Países Bajos', countryCode: 'NL' },
+  'uk': { country: 'Reino Unido', countryCode: 'UK' },
+  'fr': { country: 'Francia', countryCode: 'FR' },
+  'pl': { country: 'Polonia', countryCode: 'PL' },
+  'lv': { country: 'Letonia', countryCode: 'LV' },
+  'se': { country: 'Suecia', countryCode: 'SE' },
+  'at': { country: 'Austria', countryCode: 'AT' },
+  'cz': { country: 'Chequia', countryCode: 'CZ' },
+  'es': { country: 'España', countryCode: 'ES' },
 };
 
-function extractCountry(locationText: string): { country: string; countryCode: string; lat: number; lng: number } {
+function extractCountryCode(locationText: string): string {
   const lower = locationText.toLowerCase();
   for (const [code, data] of Object.entries(COUNTRY_MAP)) {
     if (lower.includes(code.toUpperCase()) || lower.includes(data.country.toLowerCase())) {
-      return data;
+      return data.countryCode;
     }
   }
-  if (lower.includes('deutschland') || lower.includes('germany')) return COUNTRY_MAP['de'];
-  if (lower.includes('nederland') || lower.includes('netherlands')) return COUNTRY_MAP['nl'];
-  if (lower.includes('österreich') || lower.includes('austria')) return COUNTRY_MAP['at'];
-  if (lower.includes('polen') || lower.includes('poland')) return COUNTRY_MAP['pl'];
-  return COUNTRY_MAP['nl']; // default — Industrial Auctions is NL-based
+  if (lower.includes('deutschland') || lower.includes('germany')) return 'DE';
+  if (lower.includes('nederland') || lower.includes('netherlands')) return 'NL';
+  if (lower.includes('österreich') || lower.includes('austria')) return 'AT';
+  if (lower.includes('polen') || lower.includes('poland')) return 'PL';
+  if (lower.includes('spain') || lower.includes('españa')) return 'ES';
+  if (lower.includes('france')) return 'FR';
+  if (lower.includes('italy') || lower.includes('italia')) return 'IT';
+  if (lower.includes('united kingdom') || lower.includes('great britain')) return 'UK';
+  return 'NL'; // default
 }
 
 function parseIndustrialAuctions($: CheerioAPI): RawAuctionItem[] {
@@ -91,7 +97,8 @@ function parseIndustrialAuctions($: CheerioAPI): RawAuctionItem[] {
     const lotIdMatch = href.match(/\/auctions\/(\d+)/);
     const lotId = lotIdMatch ? `IND-${lotIdMatch[1]}` : `IND-${Date.now()}-${items.length}`;
 
-    const countryData = extractCountry(locationText);
+    const countryCode = extractCountryCode(locationText);
+    const city = locationText.split(',')[0]?.trim() || '';
 
     const images: RawAuctionImage[] = [];
     if (imgUrl) {
@@ -107,19 +114,20 @@ function parseIndustrialAuctions($: CheerioAPI): RawAuctionItem[] {
       sourceUrl,
       currentBid: price,
       currency: priceMatch ? (priceMatch[2] || 'EUR') : 'EUR',
-      estimatedResale: price ? price * 2 : undefined,
+      estimatedResale: price ? price * 1.5 : undefined,
       buyerPremiumPercent: 15,
       hasReserve: false,
       startingBid: price ? price * 0.5 : null,
-      city: locationText.split(',')[0]?.trim() || '',
-      country: countryData.country,
-      countryCode: countryData.countryCode,
-      lat: countryData.lat,
-      lng: countryData.lng,
+      city,
+      country: COUNTRY_MAP[countryCode.toLowerCase()]?.country || countryCode,
+      countryCode,
+      lat: undefined, // will be geocoded later
+      lng: undefined,
       auctionEnd: endDate.toISOString(),
       inspectionAvailable: true,
-      condition: 'good',
+      condition: 'unknown',
       images,
+      detailScraped: false,
     });
   });
 
@@ -157,21 +165,35 @@ export async function scrapeIndustrial(options: IndustrialScrapeOptions = {}): P
   items.push(...pageItems);
   logScrape('industrial', 'success', `Found ${pageItems.length} auctions on homepage`);
 
-  // Two-phase: score and fetch detail for top 15
-  const scored = items.map(item => ({ item, score: scoreLot(item.title) }));
-  scored.sort((a, b) => b.score - a.score);
-  const topForDetail = scored.slice(0, 15);
+  // Geocode all items with rate limiting
+  logScrape('industrial', 'info', `Geocoding ${items.length} locations...`);
+  let geoCount = 0;
+  for (const item of items) {
+    try {
+      const geo = await geocodeLocation(item.city, item.countryCode);
+      item.lat = geo.lat;
+      item.lng = geo.lng;
+      geoCount++;
+    } catch {
+      // keep undefined coordinates — fallback will apply later
+    }
+  }
+  logScrape('industrial', 'success', `Geocoded ${geoCount}/${items.length} locations`);
 
-  logScrape('industrial', 'info', `Fetching details for top ${topForDetail.length} lots...`);
+  // Detail scraping for ALL items (limit 25 to avoid timeout)
+  const detailLimit = 25;
+  logScrape('industrial', 'info', `Fetching details for ${Math.min(items.length, detailLimit)} lots...`);
   let detailCount = 0;
-  for (const { item } of topForDetail) {
+  for (let i = 0; i < Math.min(items.length, detailLimit); i++) {
+    const item = items[i];
     const detail = await scrapeIndustrialDetail(item);
     if (Object.keys(detail).length > 0) {
       Object.assign(item, detail);
+      item.detailScraped = true;
       detailCount++;
     }
   }
-  logScrape('industrial', 'success', `Details extracted: ${detailCount}/${topForDetail.length}`);
+  logScrape('industrial', 'success', `Details extracted: ${detailCount}/${Math.min(items.length, detailLimit)}`);
 
   const check = checkZeroResults('industrial', items.length, 3);
   if (check.isWarning) logScrape('industrial', 'warn', check.message);

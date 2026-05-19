@@ -77,19 +77,48 @@ export function AssetDetail({ asset }: AssetDetailProps) {
           </span>
         </div>
 
-        {/* Image placeholder */}
-        <div className="rounded-lg border border-[#1e1e38] bg-[#050510] h-40 flex items-center justify-center overflow-hidden">
-          {asset.imageUrl ? (
-            <img src={asset.imageUrl} alt={asset.title} className="h-full w-full object-contain" />
+        {/* Image carousel */}
+        <div className="rounded-lg border border-[#1e1e38] bg-[#050510] overflow-hidden">
+          {asset.images && asset.images.length > 0 ? (
+            <div className="relative h-40">
+              <img
+                src={asset.images[0].url}
+                alt={asset.images[0].alt}
+                className="h-full w-full object-contain"
+              />
+              {asset.images.length > 1 && (
+                <div className="absolute bottom-2 right-2 bg-[#0a0a1a]/80 px-2 py-0.5 rounded text-[10px] font-mono text-gray-400">
+                  1 / {asset.images.length}
+                </div>
+              )}
+            </div>
+          ) : asset.imageUrl ? (
+            <div className="h-40 flex items-center justify-center">
+              <img src={asset.imageUrl} alt={asset.title} className="h-full w-full object-contain" />
+            </div>
           ) : (
-            <div className="text-center text-gray-600">
-              <svg className="mx-auto h-10 w-10 mb-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                <rect x="3" y="3" width="18" height="18" rx="2" /><circle cx="8.5" cy="8.5" r="1.5" /><path d="M21 15l-5-5L5 21" />
-              </svg>
-              <span className="text-xs font-mono">Sin imagen</span>
+            <div className="h-40 flex items-center justify-center text-gray-600">
+              <div className="text-center">
+                <svg className="mx-auto h-10 w-10 mb-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                  <rect x="3" y="3" width="18" height="18" rx="2" /><circle cx="8.5" cy="8.5" r="1.5" /><path d="M21 15l-5-5L5 21" />
+                </svg>
+                <span className="text-xs font-mono">Sin imagen</span>
+              </div>
             </div>
           )}
         </div>
+
+        {/* Data quality badge */}
+        {asset.detailScraped !== undefined && (
+          <div className={`rounded border px-2 py-1 text-[10px] font-mono ${
+            asset.detailScraped
+              ? 'border-[#00ff88]/30 bg-[#00ff88]/10 text-[#00ff88]'
+              : 'border-[#ffcc00]/30 bg-[#ffcc00]/10 text-[#ffcc00]'
+          }`}>
+            {asset.detailScraped ? 'Análisis completo' : 'Análisis parcial'}
+            {asset.dataQuality !== undefined && ` · Calidad ${asset.dataQuality}/100`}
+          </div>
+        )}
 
         {/* Tech specs grid */}
         <div className="grid grid-cols-2 gap-2">
