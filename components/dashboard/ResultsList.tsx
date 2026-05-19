@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import type { Asset } from '@/lib/types';
 import { formatCurrency } from '@/lib/calculations';
 import { Badge } from '@/components/ui/Badge';
@@ -42,8 +42,6 @@ function getCountryFlag(code: string): string {
 }
 
 export function ResultsList({ assets, selectedAsset, onSelect, sortBy, onSortChange }: ResultsListProps) {
-  const [showCount, setShowCount] = useState(15);
-
   if (assets.length === 0) {
     return (
       <div className="rounded-lg border border-[#1e1e38] bg-[#0a0a1a] p-4">
@@ -54,9 +52,6 @@ export function ResultsList({ assets, selectedAsset, onSelect, sortBy, onSortCha
       </div>
     );
   }
-
-  const visibleAssets = assets.slice(0, showCount);
-  const hasMore = showCount < assets.length;
 
   return (
     <div className="rounded-lg border border-[#1e1e38] bg-[#0a0a1a] overflow-hidden">
@@ -77,8 +72,8 @@ export function ResultsList({ assets, selectedAsset, onSelect, sortBy, onSortCha
           </span>
         </div>
       </div>
-      <div className="max-h-[340px] overflow-y-auto divide-y divide-[#1e1e38]">
-        {visibleAssets.map(asset => {
+      <div className="max-h-[560px] overflow-y-auto divide-y divide-[#1e1e38]">
+        {assets.map(asset => {
           const isSelected = selectedAsset?.id === asset.id;
           const roiVariant = getROIBadgeVariant(asset.kpis.roi);
 
@@ -144,14 +139,6 @@ export function ResultsList({ assets, selectedAsset, onSelect, sortBy, onSortCha
           );
         })}
       </div>
-      {hasMore && (
-        <button
-          onClick={() => setShowCount(prev => prev + 15)}
-          className="w-full py-2 text-xs font-mono text-[#00ccff] hover:text-white border-t border-[#1e1e38] bg-[#0d0d2b] hover:bg-[#1e1e38]/50 transition-colors"
-        >
-          Cargar mas ({assets.length - showCount} restantes)
-        </button>
-      )}
     </div>
   );
 }
