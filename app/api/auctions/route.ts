@@ -1,11 +1,23 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabase/client';
 import type { Asset, PlatformInfo } from '@/lib/types';
-import { ACTIVE_ASSETS, getActiveAssets, PLATFORMS } from '@/lib/mock-data';
+import { PLATFORMS } from '@/lib/mock-data';
+import { getResaleMarkets, detectLotQuantity } from '@/lib/scrapers/resale-estimates';
 
 const PLATFORM_MAP: Record<string, PlatformInfo> = Object.fromEntries(
   PLATFORMS.map(p => [p.id, p])
 );
+
+// Preset SQL filter definitions
+const PRESET_FILTERS: Record<string, (q: any) => any> = {
+  gangas: (q) => q.gte('roi', 30).gte('arbitrage_score', 1.8).lte('risk_score', 55),
+  liquidaciones: (q) => q.or('title.ilike.%planta%,title.ilike.%línea completa%,title.ilike.%liquidación%,title.ilike.%linea completa%,title.ilike.%liquidacion%'),
+  insolvencias: (q) => q.or('title.ilike.%insolvenc%,title.ilike.%bankrupt%,title.ilike.%closing%'),
+  'sin-reserva': (q) => q.eq('has_reserve', false),
+  alimentaria: (q) => q.or('title.ilike.%food%,title.ilike.%aliment%,title.ilike.%bakery%,title.ilike.%meat%,title.ilike.%dairy%'),
+  robotica: (q) => q.or('category.eq.Robótica,title.ilike.%robot%,title.ilike.%kuka%,title.ilike.%fanuc%'),
+  cnc: (q) => q.or('category.eq.CNC,title.ilike.%cnc%,title.ilike.%mecanizado%'),
+};
 
 function dbRowToAsset(row: any): Asset {
   const platformInfo: PlatformInfo = PLATFORM_MAP[row.platform_id] || {
@@ -77,8 +89,14 @@ function dbRowToAsset(row: any): Asset {
       riskLevel: row.risk_level || 'medium',
     },
     sourceUrl: row.source_url || undefined,
-    imageUrl: undefined, // Will be populated from auction_images
+    imageUrl: undefined,
+    images: [],
     source: (row.source || 'scraped') as 'scraped' | 'mock' | 'gemini',
+    resaleMarkets: getResaleMarkets(row.category || 'Industrial'),
+    lotQuantity: detectLotQuantity(row.title || ''),
+    detailScraped: row.detail_scraped || false,
+    dataQuality: row.data_quality_score || 0,
+    priceConfidence: row.price_confidence || 'unknown',
   };
 }
 
@@ -92,108 +110,85 @@ export async function GET(request: NextRequest) {
   const sortBy = params.get('sort') || 'auction_end';
   const limit = Math.min(parseInt(params.get('limit') || '50', 10) || 50, 200);
   const offset = parseInt(params.get('offset') || '0', 10) || 0;
+  const preset = params.get('preset') || '';
+  const includeClosed = params.get('includeClosed') === 'true';
+  const dataQuality = parseInt(params.get('dataQuality') || '0', 10) || 0;
 
-  // Try Supabase first
-  try {
-    let dbQuery = supabase
-      .from('auctions')
-      .select('*, auction_images(url, proxy_url, alt_text, is_primary, sort_order)', { count: 'exact' })
-      .eq('is_active', true);
+  let dbQuery = supabase
+    .from('auctions')
+    .select('*, auction_images(url, proxy_url, alt_text, is_primary, sort_order)', { count: 'exact' })
+    .eq('is_active', true);
 
-    if (query) {
-      dbQuery = dbQuery.textSearch('title', query);
-    }
-    if (platforms.length) {
-      dbQuery = dbQuery.in('platform_id', platforms);
-    }
-    if (countries.length) {
-      dbQuery = dbQuery.in('country_code', countries);
-    }
-    if (category) {
-      dbQuery = dbQuery.eq('category', category);
-    }
-    if (isGanga) {
-      dbQuery = dbQuery.eq('is_ganga', true);
-    }
-
-    // Sorting
-    const sortMap: Record<string, { column: string; ascending: boolean }> = {
-      auction_end: { column: 'auction_end', ascending: true },
-      roi: { column: 'roi', ascending: false },
-      risk_score: { column: 'risk_score', ascending: false },
-      current_bid: { column: 'current_bid', ascending: true },
-      arbitrage_score: { column: 'arbitrage_score', ascending: false },
-    };
-    const sort = sortMap[sortBy] || sortMap.auction_end;
-    dbQuery = dbQuery.order(sort.column, { ascending: sort.ascending });
-
-    dbQuery = dbQuery.range(offset, offset + limit - 1);
-
-    const { data, error, count } = await dbQuery;
-
-    if (!error && data && data.length > 0) {
-      const assets = data.map((row: any) => {
-        const asset = dbRowToAsset(row);
-
-        // Attach primary image
-        const images = row.auction_images || [];
-        const primaryImage = images.find((img: any) => img.is_primary) || images[0];
-        if (primaryImage) {
-          asset.imageUrl = `/api/images/proxy?url=${encodeURIComponent(primaryImage.url)}`;
-        }
-
-        return asset;
-      });
-
-      return NextResponse.json({
-        assets,
-        total: count || assets.length,
-        offset,
-        limit,
-        source: 'supabase',
-      });
-    }
-  } catch (err) {
-    console.error('[/api/auctions] Supabase error, falling back to mock:', err);
+  // Filter expired auctions by default
+  if (!includeClosed) {
+    dbQuery = dbQuery.gt('auction_end', new Date().toISOString());
   }
-
-  // Fallback to mock data
-  const mockAssets = getActiveAssets();
-  let filtered = mockAssets;
 
   if (query) {
-    const q = query.toLowerCase();
-    filtered = filtered.filter(a =>
-      a.title.toLowerCase().includes(q) ||
-      a.description.toLowerCase().includes(q) ||
-      a.category.toLowerCase().includes(q) ||
-      a.location.city.toLowerCase().includes(q) ||
-      a.location.country.toLowerCase().includes(q) ||
-      (a.specs.make && a.specs.make.toLowerCase().includes(q))
-    );
+    dbQuery = dbQuery.ilike('title', `%${query}%`);
   }
-
   if (platforms.length) {
-    filtered = filtered.filter(a => platforms.includes(a.platform.id) || platforms.includes(a.platform.name));
+    dbQuery = dbQuery.in('platform_id', platforms);
   }
-
   if (countries.length) {
-    filtered = filtered.filter(a => countries.includes(a.location.countryCode));
+    dbQuery = dbQuery.in('country_code', countries);
   }
-
   if (category) {
-    filtered = filtered.filter(a => a.category.toLowerCase().includes(category.toLowerCase()));
+    dbQuery = dbQuery.eq('category', category);
+  }
+  if (isGanga) {
+    dbQuery = dbQuery.eq('is_ganga', true);
+  }
+  if (preset && PRESET_FILTERS[preset]) {
+    dbQuery = PRESET_FILTERS[preset](dbQuery);
+  }
+  if (dataQuality > 0) {
+    dbQuery = dbQuery.gte('data_quality_score', dataQuality);
   }
 
-  if (isGanga) {
-    filtered = filtered.filter(a => a.kpis.isGanga);
+  const sortMap: Record<string, { column: string; ascending: boolean }> = {
+    auction_end: { column: 'auction_end', ascending: true },
+    roi: { column: 'roi', ascending: false },
+    risk_score: { column: 'risk_score', ascending: false },
+    current_bid: { column: 'current_bid', ascending: true },
+    arbitrage_score: { column: 'arbitrage_score', ascending: false },
+  };
+  const sort = sortMap[sortBy] || sortMap.auction_end;
+  dbQuery = dbQuery.order(sort.column, { ascending: sort.ascending });
+  dbQuery = dbQuery.range(offset, offset + limit - 1);
+
+  const { data, error, count } = await dbQuery;
+
+  if (error) {
+    console.error('[/api/auctions] Supabase error:', error);
+    return NextResponse.json({ error: error.message }, { status: 500 });
   }
+
+  if (!data || data.length === 0) {
+    return NextResponse.json({ assets: [], total: 0, offset, limit, source: 'supabase' });
+  }
+
+  const assets = data.map((row: any) => {
+    const asset = dbRowToAsset(row);
+    const images = row.auction_images || [];
+    const primaryImage = images.find((img: any) => img.is_primary) || images[0];
+    if (primaryImage) {
+      asset.imageUrl = `/api/images/proxy?url=${encodeURIComponent(primaryImage.url)}`;
+    }
+    // Build images array for carousel
+    asset.images = images.slice(0, 5).map((img: any) => ({
+      url: `/api/images/proxy?url=${encodeURIComponent(img.url)}`,
+      alt: img.alt_text || asset.title,
+      isPrimary: img.is_primary,
+    }));
+    return asset;
+  });
 
   return NextResponse.json({
-    assets: filtered.slice(offset, offset + limit),
-    total: filtered.length,
+    assets,
+    total: count || assets.length,
     offset,
     limit,
-    source: 'mock',
+    source: 'supabase',
   });
 }

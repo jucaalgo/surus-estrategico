@@ -1,5 +1,5 @@
 import type { RawAuctionItem, RawAuctionImage } from './types';
-import { fetchPageAs$, logScrape, checkZeroResults } from './resilience';
+import { fetchPageAs$, logScrape, checkZeroResults, scoreLot, fetchDetailPage, extractDescription, extractImages, extractSpecs } from './resilience';
 import type { CheerioAPI } from 'cheerio';
 import { SELECTORS } from './selectors';
 
@@ -54,10 +54,19 @@ function parseIndustrialAuctions($: CheerioAPI): RawAuctionItem[] {
     const title = titleEl.text().trim();
     if (!title || title.length < 5) return;
 
-    let imgEl = card.find(sels.primary.image).first();
-    if (imgEl.length === 0) imgEl = card.find(sels.fallback.image).first();
-    const imgUrl = imgEl.attr('src') || imgEl.attr('data-src') || '';
-    const imgAlt = imgEl.attr('alt') || title;
+    // Pick first non-flag/SVG image in the card
+    let imgUrl = '';
+    let imgAlt = title;
+    const allImgs = card.find('img');
+    for (let i = 0; i < allImgs.length; i++) {
+      const el = allImgs.eq(i);
+      const src = el.attr('src') || el.attr('data-src') || el.attr('data-lazy-src') || '';
+      if (src && !src.includes('/flag-') && !src.endsWith('.svg') && !src.includes('/icon')) {
+        imgUrl = src;
+        imgAlt = el.attr('alt') || title;
+        break;
+      }
+    }
 
     // Extract price
     let price: number | null = null;
@@ -117,6 +126,24 @@ function parseIndustrialAuctions($: CheerioAPI): RawAuctionItem[] {
   return items;
 }
 
+async function scrapeIndustrialDetail(item: RawAuctionItem): Promise<Partial<RawAuctionItem>> {
+  const $ = await fetchDetailPage(item.sourceUrl);
+  if (!$) return {};
+
+  const description = extractDescription($, item.description);
+  const images = extractImages($, BASE_URL, item.title, item.images);
+  const specs = extractSpecs($);
+
+  const bodyText = $('body').text();
+  const priceMatch = bodyText.match(/current\s*bid[:\s\S]{0,40}?([\d.,]+)\s*(€|EUR)/i) ||
+    bodyText.match(/(?:bid|price|current)[:\s\S]{0,30}?([\d.,]+)\s*(€|EUR)/i);
+  const currentBid = priceMatch
+    ? parseFloat(priceMatch[1].replace(/\./g, '').replace(',', '.'))
+    : item.currentBid;
+
+  return { description, images, currentBid, ...specs };
+}
+
 export interface IndustrialScrapeOptions {
   maxPages?: number;
 }
@@ -129,6 +156,22 @@ export async function scrapeIndustrial(options: IndustrialScrapeOptions = {}): P
   const pageItems = parseIndustrialAuctions($);
   items.push(...pageItems);
   logScrape('industrial', 'success', `Found ${pageItems.length} auctions on homepage`);
+
+  // Two-phase: score and fetch detail for top 15
+  const scored = items.map(item => ({ item, score: scoreLot(item.title) }));
+  scored.sort((a, b) => b.score - a.score);
+  const topForDetail = scored.slice(0, 15);
+
+  logScrape('industrial', 'info', `Fetching details for top ${topForDetail.length} lots...`);
+  let detailCount = 0;
+  for (const { item } of topForDetail) {
+    const detail = await scrapeIndustrialDetail(item);
+    if (Object.keys(detail).length > 0) {
+      Object.assign(item, detail);
+      detailCount++;
+    }
+  }
+  logScrape('industrial', 'success', `Details extracted: ${detailCount}/${topForDetail.length}`);
 
   const check = checkZeroResults('industrial', items.length, 3);
   if (check.isWarning) logScrape('industrial', 'warn', check.message);

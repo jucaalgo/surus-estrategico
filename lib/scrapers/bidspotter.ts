@@ -1,5 +1,5 @@
 import type { RawAuctionItem, RawAuctionImage } from './types';
-import { fetchPageAs$, fetchWithRetry, logScrape, checkZeroResults } from './resilience';
+import { fetchPageAs$, fetchWithRetry, logScrape, checkZeroResults, scoreLot, fetchDetailPage, extractDescription, extractImages, extractSpecs } from './resilience';
 import type { CheerioAPI } from 'cheerio';
 
 const BASE_URL = 'https://www.hibid.com';
@@ -84,7 +84,7 @@ function parseHibidAuctions($: CheerioAPI): RawAuctionItem[] {
 
     // Image
     const imgEl = card.find('img').first();
-    const imgUrl = imgEl.attr('src') || imgEl.attr('data-src') || '';
+    const imgUrl = imgEl.attr('src') || imgEl.attr('data-src') || imgEl.attr('data-lazy-src') || '';
     const imgAlt = imgEl.attr('alt') || title;
 
     // Source URL
@@ -149,6 +149,24 @@ function parseHibidAuctions($: CheerioAPI): RawAuctionItem[] {
   return items;
 }
 
+async function scrapeHibidDetail(item: RawAuctionItem): Promise<Partial<RawAuctionItem>> {
+  const $ = await fetchDetailPage(item.sourceUrl);
+  if (!$) return {};
+
+  const description = extractDescription($, item.description);
+  const images = extractImages($, BASE_URL, item.title, item.images);
+  const specs = extractSpecs($);
+
+  const bodyText = $('body').text();
+  const priceMatch = bodyText.match(/current\s*bid[:\s\S]{0,40}?\$?([\d.,]+)/i) ||
+    bodyText.match(/(?:bid|price|current)[:\s\S]{0,30}?\$?([\d.,]+)/i);
+  const currentBid = priceMatch
+    ? parseFloat(priceMatch[1].replace(/,/g, ''))
+    : item.currentBid;
+
+  return { description, images, currentBid, ...specs };
+}
+
 export interface BidSpotterScrapeOptions {
   maxPages?: number;
   category?: string;
@@ -177,8 +195,30 @@ export async function scrapeBidSpotter(options: BidSpotterScrapeOptions = {}): P
     }
   }
 
+  // Two-phase: score and fetch detail for top 15
+  const scored = items.map(item => ({ item, score: scoreLot(item.title) }));
+  scored.sort((a, b) => b.score - a.score);
+  const topForDetail = scored.slice(0, 15);
+
+  logScrape('bidspotter', 'info', `Fetching details for top ${topForDetail.length} lots...`);
+  let detailCount = 0;
+  for (const { item } of topForDetail) {
+    const detail = await scrapeHibidDetail(item);
+    if (Object.keys(detail).length > 0) {
+      Object.assign(item, detail);
+      detailCount++;
+    }
+  }
+  logScrape('bidspotter', 'success', `Details extracted: ${detailCount}/${topForDetail.length}`);
+
   const check = checkZeroResults('bidspotter', items.length, 3);
   if (check.isWarning) logScrape('bidspotter', 'warn', check.message);
 
-  return items;
+  // Filter out non-industrial auctions (no keyword match = not our market)
+  const filtered = items.filter(item => scoreLot(item.title) > 0);
+  if (filtered.length < items.length) {
+    logScrape('bidspotter', 'info', `Filtered out ${items.length - filtered.length} non-industrial lots`);
+  }
+
+  return filtered;
 }

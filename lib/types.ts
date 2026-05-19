@@ -14,6 +14,7 @@ export interface PricingInfo {
   reservePrice: number | null;
   hasReserve: boolean;
   startingBid: number | null;
+  lotQuantity?: number;
 }
 
 export interface LocationInfo {
@@ -74,7 +75,13 @@ export interface Asset {
   kpis: CalculatedKPIs;
   sourceUrl?: string;
   imageUrl?: string;
+  images?: { url: string; alt: string; isPrimary: boolean }[];
   source: 'mock' | 'scraped' | 'gemini';
+  resaleMarkets?: string[];
+  lotQuantity?: number;
+  detailScraped?: boolean;
+  dataQuality?: number;
+  priceConfidence?: 'real' | 'estimated' | 'unknown';
 }
 
 export interface SearchResult {

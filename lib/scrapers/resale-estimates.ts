@@ -46,6 +46,39 @@ const COUNTRY_COORDS: Record<string, [number, number]> = {
   SE: [60.1, 18.6], FI: [61.9, 25.7], DK: [55.7, 9.6], PT: [39.6, -8.2],
 };
 
+const RESALE_MARKETS: Record<string, string[]> = {
+  'Robótica Industrial': ['Exapro', 'RobotWorx', 'DirectIndustry', 'Automotive resale networks'],
+  'Mecanizado CNC': ['Exapro', 'Machinio', 'Kitmondo', 'Metalworking auctions'],
+  'Plástico y Caucho': ['Exapro', 'PlastiWin', 'Kitmondo', 'EU plastic machinery dealers'],
+  'Conformado de Chapa': ['Exapro', 'Machinio', 'Amada outlets'],
+  'Corte Láser': ['Exapro', 'Machinio', 'Laserax reseller network'],
+  'Neumática y Compresores': ['Exapro', 'Kaeser outlet', 'Atlas Copco used'],
+  'Logística y Almacén': ['Mascus', 'MachineryZone', 'ForkliftZone', 'Linde used'],
+  'default': ['Exapro', 'Machinio', 'eBay Industrial', 'Local equipment dealers'],
+};
+
+export function getResaleMarkets(category: string): string[] {
+  return RESALE_MARKETS[category] || RESALE_MARKETS['default'];
+}
+
+export function detectLotQuantity(title: string): number {
+  const patterns = [
+    /(\d+)\s*x\s+/i,
+    /lote\s+de\s+(\d+)/i,
+    /lote\s+(\d+)/i,
+    /(\d+)\s+unidades/i,
+    /(\d+)\s+maschinen/i,
+    /(\d+)\s+machines/i,
+    /(\d+)\s+stk/i,
+    /(\d+)\s+stück/i,
+  ];
+  for (const pattern of patterns) {
+    const match = title.match(pattern);
+    if (match) return parseInt(match[1], 10);
+  }
+  return 1;
+}
+
 export function estimateResale(bid: number, category: string): number {
   const multiplier = RESALE_MULTIPLIERS[category] || 2.0;
   return Math.round(bid * multiplier);
@@ -142,13 +175,19 @@ export interface TransformedAuction {
   risk_level: string;
   images: RawAuctionImage[];
   extra_specs: Record<string, string> | null;
+  resale_markets: string[];
+  lot_quantity: number;
 }
 
 export function transformRawItem(item: RawAuctionItem): TransformedAuction {
-  // Estimate base value from title if no price is available
-  const estimatedBaseValue = item.currentBid || item.startingBid || estimateValueFromTitle(item.title);
-  const bid = item.currentBid || estimatedBaseValue;
-  const resale = item.estimatedResale || estimateResale(estimatedBaseValue, item.category);
+  // Estimate base value from title (full market value of the equipment)
+  const estimatedBaseValue = estimateValueFromTitle(item.title);
+  const lotQuantity = detectLotQuantity(item.title);
+  const totalEstimatedBaseValue = estimatedBaseValue * lotQuantity;
+  // Only use real scraped prices for bid; if none exists, leave null so calculateKPIs
+  // can estimate bid as ~40% of resale (typical auction ratio)
+  const bid = item.currentBid || item.startingBid || null;
+  const resale = item.estimatedResale || totalEstimatedBaseValue;
   const coords = item.lat && item.lng ? [item.lat, item.lng] as [number, number] : getCountryCoords(item.countryCode);
 
   const pricing = {
@@ -222,6 +261,8 @@ export function transformRawItem(item: RawAuctionItem): TransformedAuction {
     risk_level: kpis.riskLevel,
     images: item.images || [],
     extra_specs: item.extraSpecs || null,
+    resale_markets: getResaleMarkets(item.category),
+    lot_quantity: detectLotQuantity(item.title),
   };
 }
 

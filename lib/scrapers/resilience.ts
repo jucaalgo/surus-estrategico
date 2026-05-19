@@ -1,4 +1,5 @@
 import * as cheerio from 'cheerio';
+import type { RawAuctionImage } from './types';
 
 // ── Rotating browser headers ──
 
@@ -112,6 +113,105 @@ export function checkZeroResults(platform: string, itemsFound: number, expectedM
       ? `[WARN] ${platform}: 0 items returned (expected ${expectedMin}+). Possible site structure change.`
       : `[OK] ${platform}: ${itemsFound} items found.`,
   };
+}
+
+// ── Keyword-based lot scoring ──
+
+export const KEYWORD_SCORES: Record<string, number> = {
+  'planta': 10, 'planta de alimentos': 10, 'envasado': 10, 'envasadora': 10,
+  'verpackung': 10, 'abfüllanlage': 10, 'food processing': 10, 'línea completa': 10,
+  'kuka': 9, 'abb': 9, 'fanuc': 9, 'robot': 9, 'roboter': 9, 'robotic': 9,
+  'brazo robot': 9, 'robot paletizado': 9, 'robot soldadura': 9,
+  'laser': 8, 'láser': 8, 'trumpf': 8, 'amada': 8, 'cutting': 8, 'schneid': 8,
+  'laser de fibra': 8, 'corte por láser': 8,
+  'cnc': 7, 'mecanizado': 7, 'bearbeitung': 7, 'machining': 7,
+  'centro mecanizado': 7, 'bearbeitungszentrum': 7, 'centro de mecanizado': 7,
+  'torno': 7, 'dreh': 7, 'lathe': 7, 'torno cnc': 7,
+  'inyectora': 6, 'injection': 6, 'spritzguss': 6, 'spritzgieß': 6,
+  'engel': 6, 'arburg': 6, 'kraussmaffei': 6, 'moldeo': 6,
+  'plegadora': 6, 'press brake': 6, 'abkant': 6, 'biegemaschine': 6,
+  'prensa': 5, 'presse': 5, 'press': 5, 'prensa hidráulica': 5,
+  'milling': 5, 'fräsmaschine': 5, 'fresadora': 5,
+  'compresor': 4, 'compressor': 4, 'kompressor': 4, 'druckluft': 4,
+  'carretilla': 3, 'forklift': 3, 'stapler': 3, 'gabelstapler': 3,
+  'jungheinrich': 3, 'still': 3, 'linde': 3,
+  'soldadura': 2, 'welding': 2, 'schweiß': 2, 'schweiss': 2, 'weld': 2,
+};
+
+export function scoreLot(title: string): number {
+  const lower = title.toLowerCase();
+  let score = 0;
+  for (const [keyword, value] of Object.entries(KEYWORD_SCORES)) {
+    if (lower.includes(keyword.toLowerCase())) score += value;
+  }
+  return Math.min(score, 30);
+}
+
+// ── Detail page fetch with delay ──
+
+export async function fetchDetailPage(url: string): Promise<cheerio.CheerioAPI | null> {
+  try {
+    await sleep(500);
+    const $ = await fetchPageAs$(url);
+    return $;
+  } catch (err) {
+    logScrape('detail', 'warn', `Failed to fetch detail ${url}: ${err instanceof Error ? err.message : String(err)}`);
+    return null;
+  }
+}
+
+// ── Detail extraction helpers ──
+
+export function extractDescription($: cheerio.CheerioAPI, fallback: string): string {
+  const metaDesc = $('meta[name="description"]').attr('content');
+  if (metaDesc && metaDesc.length > 50) return metaDesc.slice(0, 800);
+
+  const paragraphs = $('p, div');
+  for (let i = 0; i < paragraphs.length; i++) {
+    const text = paragraphs.eq(i).text().trim();
+    if (text.length > 100) return text.slice(0, 800);
+  }
+
+  return fallback.slice(0, 800);
+}
+
+export function extractImages($: cheerio.CheerioAPI, baseUrl: string, title: string, existingImages: RawAuctionImage[]): RawAuctionImage[] {
+  const images: RawAuctionImage[] = [];
+  $('img').each((i, el) => {
+    const src = $(el).attr('src') || $(el).attr('data-src') || $(el).attr('data-lazy-src');
+    if (!src || src.includes('logo') || src.includes('icon') || src.includes('flag') || src.endsWith('.svg') || src.startsWith('data:')) return;
+    const fullUrl = src.startsWith('http') ? src : `${baseUrl}${src}`;
+    images.push({
+      url: fullUrl,
+      alt: $(el).attr('alt') || title,
+      isPrimary: i === 0,
+      sortOrder: i,
+    });
+  });
+  return images.length > 0 ? images.slice(0, 5) : existingImages;
+}
+
+export function extractSpecs($: cheerio.CheerioAPI): Partial<{ year?: number; hours?: number; weightKg?: number; power?: string; make?: string; model?: string }> {
+  const specs: any = {};
+  const text = $('body').text().toLowerCase();
+
+  // Year
+  const yearMatch = text.match(/\b(19|20)\d{2}\b/);
+  if (yearMatch) specs.year = parseInt(yearMatch[0], 10);
+
+  // Hours
+  const hoursMatch = text.match(/(\d[\d.,]*)\s*(?:betriebsstunden|operating hours|hours|horas|betriebsstd|bh)/i);
+  if (hoursMatch) specs.hours = parseInt(hoursMatch[1].replace(/[.,]/g, ''), 10);
+
+  // Weight
+  const weightMatch = text.match(/(\d[\d.,]*)\s*(?:kg|kilo)/i);
+  if (weightMatch) specs.weightKg = parseInt(weightMatch[1].replace(/[.,]/g, ''), 10);
+
+  // Power
+  const powerMatch = text.match(/(\d+)\s*(kw|hp|ps|cv)/i);
+  if (powerMatch) specs.power = `${powerMatch[1]} ${powerMatch[2].toUpperCase()}`;
+
+  return specs;
 }
 
 // ── Scrape logger ──

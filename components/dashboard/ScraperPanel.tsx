@@ -109,7 +109,6 @@ export function ScraperPanel({ onScrapeComplete }: ScraperPanelProps) {
         addLog(platformId, 'success', `${data.itemsFound} encontrados, ${data.itemsUpserted} guardados (${((data.durationMs || 0) / 1000).toFixed(1)}s)`);
         if (data.itemsUpserted > 0 && onScrapeComplete) {
           onScrapeComplete();
-          setTimeout(() => window.location.reload(), 2000);
         }
       } else {
         addLog(platformId, 'error', `Error: ${data.error}`);
@@ -129,43 +128,69 @@ export function ScraperPanel({ onScrapeComplete }: ScraperPanelProps) {
   const runAllScrapers = useCallback(async () => {
     setAllLoading(true);
     setAllResult(null);
-    addLog('all', 'info', 'Iniciando scrapeo paralelo de todas las plataformas...');
+    addLog('all', 'info', 'Iniciando scrapeo secuencial de plataformas...');
 
-    try {
-      const res = await fetch('/api/scrape/all', { method: 'POST' });
-      const data: AllScrapeResult = await res.json();
-      setAllResult(data);
+    const platforms = ['netbid', 'industrial', 'bidspotter', 'euro-auctions'];
+    let totalFound = 0;
+    let totalUpserted = 0;
+    let successful = 0;
+    let failed = 0;
 
-      // Update individual results
-      for (const pr of data.platforms) {
-        setResults(prev => ({ ...prev, [pr.platformId]: {
-          success: pr.success,
-          platform: pr.platformId,
-          itemsFound: pr.itemsFound,
-          itemsUpserted: pr.itemsUpserted,
-          itemsDeactivated: pr.itemsDeactivated,
-          durationMs: pr.durationMs,
-          error: pr.error,
-        } }));
+    for (const platformId of platforms) {
+      setLoading(prev => ({ ...prev, [platformId]: true }));
+      addLog(platformId, 'info', `Iniciando...`);
+
+      try {
+        const res = await fetch(`/api/scrape/${platformId}`, { method: 'POST' });
+        const data = await res.json();
+        setResults(prev => ({ ...prev, [platformId]: data }));
+
+        if (data.success) {
+          totalFound += data.itemsFound || 0;
+          totalUpserted += data.itemsUpserted || 0;
+          successful++;
+          addLog(platformId, 'success', `${data.itemsFound} encontrados, ${data.itemsUpserted} guardados (${((data.durationMs || 0) / 1000).toFixed(1)}s)`);
+        } else {
+          failed++;
+          addLog(platformId, 'error', `Error: ${data.error}`);
+        }
+      } catch (err) {
+        failed++;
+        const errMsg = err instanceof Error ? err.message : 'Network error';
+        setResults(prev => ({ ...prev, [platformId]: { success: false, platform: platformId, error: errMsg } }));
+        addLog(platformId, 'error', `Error de red: ${errMsg}`);
+      } finally {
+        setLoading(prev => ({ ...prev, [platformId]: false }));
       }
 
-      if (data.summary.totalUpserted > 0) {
-        addLog('all', 'success', `Completado: ${data.summary.totalFound} encontrados, ${data.summary.totalUpserted} guardados. Refrescando...`);
-        if (onScrapeComplete) onScrapeComplete();
-        // Force page reload after 2s to show new data
-        setTimeout(() => {
-          window.location.reload();
-        }, 2000);
-      } else {
-        addLog('all', 'warn', 'Ningun dato nuevo guardado.');
+      // Small delay between platforms to avoid overwhelming server
+      if (platformId !== platforms[platforms.length - 1]) {
+        await new Promise(r => setTimeout(r, 1000));
       }
-
-      refreshStatus();
-    } catch (err) {
-      addLog('all', 'error', `Error: ${err instanceof Error ? err.message : 'Unknown'}`);
-    } finally {
-      setAllLoading(false);
     }
+
+    setAllResult({
+      success: successful > 0,
+      platforms: [],
+      summary: {
+        totalFound,
+        totalUpserted,
+        totalDeactivated: 0,
+        totalDurationMs: 0,
+        successfulPlatforms: successful,
+        failedPlatforms: failed,
+      },
+    });
+
+    if (totalUpserted > 0) {
+      addLog('all', 'success', `Completado: ${totalFound} encontrados, ${totalUpserted} guardados.`);
+      if (onScrapeComplete) onScrapeComplete();
+    } else {
+      addLog('all', 'warn', 'Ningun dato nuevo guardado.');
+    }
+
+    refreshStatus();
+    setAllLoading(false);
   }, [onScrapeComplete, addLog]);
 
   const refreshStatus = useCallback(async () => {

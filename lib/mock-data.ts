@@ -12,6 +12,9 @@ export const PLATFORMS: PlatformInfo[] = [
   { id: 'hilmann', name: 'Hilmann Binder', country: 'DE', trustScore: 6, active: true },
   { id: 'irsauction', name: 'IRS Auctions', country: 'DE', trustScore: 8, active: true },
   { id: 'scaauction', name: 'SCA Auctions', country: 'US', trustScore: 8, active: false },
+  { id: 'industrial-auctions', name: 'Industrial Auctions', country: 'NL', trustScore: 7, active: true },
+  { id: 'hibid', name: 'BidSpotter', country: 'US', trustScore: 6, active: true },
+  { id: 'euro-auctions', name: 'Euro Auctions', country: 'UK', trustScore: 7, active: true },
 ];
 
 // --- Raw asset definitions (KPIs calculated below) ---

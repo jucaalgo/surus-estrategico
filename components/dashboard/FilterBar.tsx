@@ -11,13 +11,21 @@ const COUNTRIES = [
   { code: 'UK', label: 'UK' },
 ];
 
-const PLATFORMS = ['Surplex', 'Troostwijk', 'NetBid', 'Industrial Auctions', 'Maynards', 'BidSpotter'];
+// IDs must match platform_id stored in the database by each scraper
+const PLATFORMS = [
+  { id: 'surplex', name: 'Surplex' },
+  { id: 'troostwijk', name: 'Troostwijk' },
+  { id: 'netbid', name: 'NetBid' },
+  { id: 'industrial-auctions', name: 'Industrial Auctions' },
+  { id: 'hibid', name: 'BidSpotter' },
+  { id: 'euro-auctions', name: 'Euro Auctions' },
+];
 
 interface FilterBarProps {
   activeCountries: string[];
   activePlatforms: string[];
   onCountryFilter: (country: string) => void;
-  onPlatformFilter: (platform: string) => void;
+  onPlatformFilter: (platformId: string) => void;
   onClear: () => void;
 }
 
@@ -62,11 +70,11 @@ export function FilterBar({
         <div className="flex items-center gap-1 flex-wrap">
           <span className="text-[10px] uppercase text-gray-600 font-mono mr-1">Plataforma:</span>
           {PLATFORMS.map(p => {
-            const isActive = activePlatforms.includes(p);
+            const isActive = activePlatforms.includes(p.id);
             return (
               <button
-                key={p}
-                onClick={() => onPlatformFilter(p)}
+                key={p.id}
+                onClick={() => onPlatformFilter(p.id)}
                 className={`
                   rounded px-2 py-0.5 text-xs font-mono transition-colors border
                   ${isActive
@@ -75,7 +83,7 @@ export function FilterBar({
                   }
                 `}
               >
-                {p}
+                {p.name}
               </button>
             );
           })}

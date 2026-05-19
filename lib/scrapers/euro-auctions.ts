@@ -1,5 +1,5 @@
 import type { RawAuctionItem, RawAuctionImage } from './types';
-import { fetchPageAs$, logScrape, checkZeroResults } from './resilience';
+import { fetchPageAs$, logScrape, checkZeroResults, scoreLot, fetchDetailPage, extractDescription, extractImages, extractSpecs } from './resilience';
 import type { CheerioAPI } from 'cheerio';
 
 const BASE_URL = 'https://www.euroauctions.com';
@@ -71,7 +71,7 @@ function parseEuroAuctions($: CheerioAPI): RawAuctionItem[] {
 
     // Image
     const imgEl = card.find('img').first();
-    const imgUrl = imgEl.attr('src') || imgEl.attr('data-src') || '';
+    const imgUrl = imgEl.attr('src') || imgEl.attr('data-src') || imgEl.attr('data-lazy-src') || '';
     const imgAlt = imgEl.attr('alt') || title;
 
     // Source URL
@@ -141,6 +141,24 @@ function parseEuroAuctions($: CheerioAPI): RawAuctionItem[] {
   return items;
 }
 
+async function scrapeEuroDetail(item: RawAuctionItem): Promise<Partial<RawAuctionItem>> {
+  const $ = await fetchDetailPage(item.sourceUrl);
+  if (!$) return {};
+
+  const description = extractDescription($, item.description);
+  const images = extractImages($, BASE_URL, item.title, item.images);
+  const specs = extractSpecs($);
+
+  const bodyText = $('body').text();
+  const priceMatch = bodyText.match(/current\s*bid[:\s\S]{0,40}?([\d.,]+)\s*(£|€|\$|GBP|EUR|USD)/i) ||
+    bodyText.match(/(?:bid|price|current)[:\s\S]{0,30}?([\d.,]+)\s*(£|€|\$|GBP|EUR|USD)/i);
+  const currentBid = priceMatch
+    ? parseFloat(priceMatch[1].replace(/,/g, ''))
+    : item.currentBid;
+
+  return { description, images, currentBid, ...specs };
+}
+
 export interface EuroAuctionsScrapeOptions {
   maxPages?: number;
 }
@@ -164,13 +182,28 @@ export async function scrapeEuroAuctions(options: EuroAuctionsScrapeOptions = {}
       if (pageItems.length > 0) {
         items.push(...pageItems);
         logScrape('euro-auctions', 'success', `Found ${pageItems.length} auctions from ${url}`);
-        break; // Found results, no need to try other URLs
+        break;
       }
     } catch {
-      // Try next URL
       continue;
     }
   }
+
+  // Two-phase: score and fetch detail for top 15
+  const scored = items.map(item => ({ item, score: scoreLot(item.title) }));
+  scored.sort((a, b) => b.score - a.score);
+  const topForDetail = scored.slice(0, 15);
+
+  logScrape('euro-auctions', 'info', `Fetching details for top ${topForDetail.length} lots...`);
+  let detailCount = 0;
+  for (const { item } of topForDetail) {
+    const detail = await scrapeEuroDetail(item);
+    if (Object.keys(detail).length > 0) {
+      Object.assign(item, detail);
+      detailCount++;
+    }
+  }
+  logScrape('euro-auctions', 'success', `Details extracted: ${detailCount}/${topForDetail.length}`);
 
   const check = checkZeroResults('euro-auctions', items.length, 3);
   if (check.isWarning) logScrape('euro-auctions', 'warn', check.message);

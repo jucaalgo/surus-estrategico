@@ -23,8 +23,8 @@ interface ResultsListProps {
 }
 
 function getROIBadgeVariant(roi: number): 'success' | 'warning' | 'urgent' {
-  if (roi >= 40) return 'success';
-  if (roi >= 20) return 'warning';
+  if (roi >= 30) return 'success';
+  if (roi >= 15) return 'warning';
   return 'urgent';
 }
 
@@ -101,6 +101,9 @@ export function ResultsList({ assets, selectedAsset, onSelect, sortBy, onSortCha
                   <div className="text-sm text-gray-300 font-mono truncate">
                     {asset.title}
                   </div>
+                  {asset.lotQuantity && asset.lotQuantity > 1 && (
+                    <span className="text-[10px] bg-[#ffcc00]/20 text-[#ffcc00] px-1 rounded font-mono">Lote de {asset.lotQuantity}</span>
+                  )}
                 </div>
                 <div className="flex flex-col items-end shrink-0">
                   <div className="text-sm font-bold text-gray-200 font-mono">

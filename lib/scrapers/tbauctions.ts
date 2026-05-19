@@ -248,7 +248,7 @@ async function tryHTMLFallback(platform: string): Promise<RawAuctionItem[]> {
       if (!title || title.length < 5) return;
 
       const imgEl = $(el).find('img').first();
-      const imgUrl = imgEl.attr('src') || imgEl.attr('data-src') || '';
+      const imgUrl = imgEl.attr('src') || imgEl.attr('data-src') || imgEl.attr('data-lazy-src') || '';
       const fullUrl = href.startsWith('http') ? href : `https://www.surplex.com${href}`;
 
       const cc = platform === 'SPX' ? 'DE' : 'NL';

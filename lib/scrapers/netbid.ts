@@ -1,5 +1,5 @@
 import type { RawAuctionItem, RawAuctionImage } from './types';
-import { fetchPageAs$, logScrape, checkZeroResults } from './resilience';
+import { fetchPageAs$, logScrape, checkZeroResults, scoreLot, fetchDetailPage, extractDescription, extractImages, extractSpecs } from './resilience';
 import type { CheerioAPI } from 'cheerio';
 import { SELECTORS } from './selectors';
 
@@ -61,7 +61,7 @@ function parseNetBidAuctions($: CheerioAPI): RawAuctionItem[] {
 
     let imgEl = card.find(sels.primary.image).first();
     if (imgEl.length === 0) imgEl = card.find(sels.fallback.image).first();
-    const imgUrl = imgEl.attr('src') || imgEl.attr('data-src') || '';
+    const imgUrl = imgEl.attr('src') || imgEl.attr('data-src') || imgEl.attr('data-lazy-src') || '';
     const imgAlt = imgEl.attr('alt') || title;
 
     // Extract price
@@ -123,6 +123,30 @@ function parseNetBidAuctions($: CheerioAPI): RawAuctionItem[] {
   return items;
 }
 
+async function scrapeNetBidDetail(item: RawAuctionItem): Promise<Partial<RawAuctionItem>> {
+  const $ = await fetchDetailPage(item.sourceUrl);
+  if (!$) return {};
+
+  const description = extractDescription($, item.description);
+  const images = extractImages($, BASE_URL, item.title, item.images);
+  const specs = extractSpecs($);
+
+  // Try to find real current bid on detail page
+  const bodyText = $('body').text();
+  const priceMatch = bodyText.match(/current\s*bid[:\s\S]{0,40}?([\d.,]+)\s*(€|EUR)/i) ||
+    bodyText.match(/(?:bid|price|current)[:\s\S]{0,30}?([\d.,]+)\s*(€|EUR)/i);
+  const currentBid = priceMatch
+    ? parseFloat(priceMatch[1].replace(/\./g, '').replace(',', '.'))
+    : item.currentBid;
+
+  return {
+    description,
+    images,
+    currentBid,
+    ...specs,
+  };
+}
+
 export interface NetBidScrapeOptions {
   maxPages?: number;
 }
@@ -148,6 +172,22 @@ export async function scrapeNetBid(options: NetBidScrapeOptions = {}): Promise<R
       break;
     }
   }
+
+  // Two-phase: score and fetch detail for top 15
+  const scored = items.map(item => ({ item, score: scoreLot(item.title) }));
+  scored.sort((a, b) => b.score - a.score);
+  const topForDetail = scored.slice(0, 15);
+
+  logScrape('netbid', 'info', `Fetching details for top ${topForDetail.length} lots...`);
+  let detailCount = 0;
+  for (const { item } of topForDetail) {
+    const detail = await scrapeNetBidDetail(item);
+    if (Object.keys(detail).length > 0) {
+      Object.assign(item, detail);
+      detailCount++;
+    }
+  }
+  logScrape('netbid', 'success', `Details extracted: ${detailCount}/${topForDetail.length}`);
 
   const check = checkZeroResults('netbid', items.length, 3);
   if (check.isWarning) logScrape('netbid', 'warn', check.message);

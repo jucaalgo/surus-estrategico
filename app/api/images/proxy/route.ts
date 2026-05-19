@@ -4,6 +4,7 @@ const ALLOWED_DOMAINS = [
   'media.tbauctions.com',
   'files.netbid.com',
   'www.industrial-auctions.com',
+  'shared.s3.exonet.io',
   'surplex.com',
   'troostwijkauctions.com',
   'maynards.com',

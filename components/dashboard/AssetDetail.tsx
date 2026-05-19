@@ -11,8 +11,8 @@ interface AssetDetailProps {
 }
 
 function getPriorityBadge(kpis: Asset['kpis']) {
-  if (kpis.isGanga) return <Badge variant="success">GANGA</Badge>;
-  if (kpis.riskLevel === 'high') return <Badge variant="urgent">ALTO RIESGO</Badge>;
+  if (kpis.isGanga || kpis.roi >= 30) return <Badge variant="success">GANGA</Badge>;
+  if (kpis.riskLevel === 'high' || kpis.roi < 15) return <Badge variant="urgent">ALTO RIESGO</Badge>;
   return <Badge variant="info">ESTANDAR</Badge>;
 }
 
@@ -80,7 +80,7 @@ export function AssetDetail({ asset }: AssetDetailProps) {
         {/* Image placeholder */}
         <div className="rounded-lg border border-[#1e1e38] bg-[#050510] h-40 flex items-center justify-center overflow-hidden">
           {asset.imageUrl ? (
-            <img src={asset.imageUrl} alt={asset.title} className="h-full w-full object-cover" />
+            <img src={asset.imageUrl} alt={asset.title} className="h-full w-full object-contain" />
           ) : (
             <div className="text-center text-gray-600">
               <svg className="mx-auto h-10 w-10 mb-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
@@ -105,6 +105,25 @@ export function AssetDetail({ asset }: AssetDetailProps) {
         <p className="text-xs text-gray-400 leading-relaxed line-clamp-4">
           {asset.description}
         </p>
+
+        {/* Resale markets */}
+        {asset.resaleMarkets && asset.resaleMarkets.length > 0 && (
+          <div className="rounded border border-[#1e1e38] bg-[#050510] px-2 py-1.5">
+            <div className="text-[10px] uppercase text-gray-600 font-mono mb-1">Mercados de Reventa</div>
+            <div className="flex flex-wrap gap-1">
+              {asset.resaleMarkets.map(m => (
+                <span key={m} className="text-[10px] bg-[#00ccff]/10 text-[#00ccff] px-1.5 py-0.5 rounded font-mono">{m}</span>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Lot quantity */}
+        {asset.lotQuantity && asset.lotQuantity > 1 && (
+          <div className="rounded border border-[#ffcc00]/30 bg-[#ffcc00]/5 px-2 py-1.5">
+            <div className="text-[10px] uppercase text-[#ffcc00] font-mono">Lote de {asset.lotQuantity} equipos — Precio por unidad estimado: {(asset.pricing.currentBid || asset.pricing.estimatedResale || 0) / asset.lotQuantity} €</div>
+          </div>
+        )}
       </div>
     </Card>
   );

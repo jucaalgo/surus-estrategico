@@ -15,7 +15,10 @@ export async function upsertAuctions(items: TransformedAuction[]): Promise<numbe
   });
 
   // 1. Upsert main auction records
-  const auctionRows = deduped.map(({ images: _, extra_specs: __, ...row }) => row);
+  const auctionRows = deduped.map(({ images: _, extra_specs: __, resale_markets: ___, lot_quantity: ____, ...row }) => ({
+    ...row,
+    is_active: true,
+  }));
 
   const { data, error } = await supabaseAdmin
     .from('auctions')
