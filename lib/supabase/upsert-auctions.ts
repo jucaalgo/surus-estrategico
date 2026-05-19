@@ -15,15 +15,41 @@ export async function upsertAuctions(items: TransformedAuction[]): Promise<numbe
   });
 
   // 1. Upsert main auction records
-  const auctionRows = deduped.map(({ images: _, extra_specs: __, resale_markets: ___, lot_quantity: ____, ...row }) => ({
+  const baseRows = deduped.map(({ images: _, extra_specs: __, resale_markets: ___, lot_quantity: ____, detail_scraped, data_quality_score, price_confidence, ...row }) => ({
     ...row,
     is_active: true,
   }));
 
-  const { data, error } = await supabaseAdmin
+  let data: any[] | null = null;
+  let error: any = null;
+
+  // Try upsert with all columns (including new ones from migration 002)
+  const extendedRows = baseRows.map((r, i) => ({
+    ...r,
+    detail_scraped: deduped[i].detail_scraped,
+    data_quality_score: deduped[i].data_quality_score,
+    price_confidence: deduped[i].price_confidence,
+  }));
+
+  const result = await supabaseAdmin
     .from('auctions')
-    .upsert(auctionRows, { onConflict: 'platform_id,lot_id' })
+    .upsert(extendedRows, { onConflict: 'platform_id,lot_id' })
     .select('id, platform_id, lot_id');
+
+  data = result.data;
+  error = result.error;
+
+  // Defensive fallback: if new columns don't exist in DB (migration 002 not applied),
+  // retry without them and log a clear warning.
+  if (error && error.code === 'PGRST204' && error.message?.includes('data_quality_score')) {
+    console.warn('[upsertAuctions] DB missing migration 002 columns (data_quality_score, detail_scraped, price_confidence). Retrying without them. Please apply supabase/migrations/002_data_quality.sql');
+    const fallback = await supabaseAdmin
+      .from('auctions')
+      .upsert(baseRows, { onConflict: 'platform_id,lot_id' })
+      .select('id, platform_id, lot_id');
+    data = fallback.data;
+    error = fallback.error;
+  }
 
   if (error) {
     console.error('[upsertAuctions] Error upserting auctions:', error);
